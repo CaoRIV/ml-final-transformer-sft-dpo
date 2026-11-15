@@ -1,0 +1,38 @@
+# Đề tài 9 — Kiến trúc Transformer và tinh chỉnh mô hình ngôn ngữ
+
+Ứng dụng: trợ lý hỏi đáp thủ tục hành chính công. Giai đoạn hiện tại: **hồ sơ tuần 1**, chưa có dữ liệu đã thu thập, mô hình đã huấn luyện hoặc kết quả đánh giá. Mục tiêu làm việc 85–90/100, không phải cam kết điểm.
+
+## Đọc hồ sơ
+
+- [Kiểm kê và tài liệu gốc](references/README.md).
+- [Bảng đối chiếu yêu cầu](docs/progress/requirements-matrix.md).
+- [Bối cảnh, quyết định, tiến độ](docs/progress/project-context.md).
+- [Đề cương tuần 1](docs/proposal/proposal.md).
+- [Kế hoạch dữ liệu](docs/proposal/data-plan.md).
+- [Nhật ký hỗ trợ AI](docs/progress/ai-use.md).
+
+Đề gốc ngày 12/11/2026: phần II trang 2; Đề tài 9 trang 18–19. Yêu cầu giảng viên ưu tiên hơn đề xuất nội bộ. Mốc tuần 3 ở phần II mâu thuẫn thời lượng 2 tuần ở phần I; cần hỏi giảng viên, tạm lập kế hoạch theo phần II, chưa đặt ngày nộp.
+
+## Kiểm tra môi trường Colab
+
+1. Mở `notebooks/00_environment_check.ipynb` bằng Colab, chọn runtime GPU.
+2. Chạy tuần tự từ phiên sạch. Notebook không cài hoặc nâng cấp PyTorch, không tải mô hình.
+3. Ô đầu cấu hình mặc định lưu báo cáo trong `/content/environment_checks` (tạm thời). Để lưu bền vững, đặt `MOUNT_DRIVE = True` và `OUTPUT_DIR` thành thư mục dưới `/content/drive/MyDrive/`; chạy ô mount và chấp thuận quyền trong Colab. Chưa giả định agent có quyền Drive.
+4. Sau khi chạy, lưu JSON và tệp phiên bản gói từ thư mục in ra. Nếu không mount Drive, tải chúng xuống trước khi phiên kết thúc.
+5. GPU smoke test phải báo `passed`; kết quả `not_run` không phải GPU đạt. Chạy lại notebook khi đổi phiên Colab.
+
+Notebook dùng thư viện chuẩn Python và PyTorch có sẵn. Chưa chốt môi trường huấn luyện nên chưa tạo `requirements.txt` giả định phiên bản. Trước khi cài Transformers/PEFT/TRL/bitsandbytes phải kiểm tra tài liệu chính thức và tương thích môi trường đo thực tế. Kiểm tra này **không chứng minh SFT hay DPO vừa VRAM**.
+
+Thông tin người dùng đã cung cấp từ một phiên trước: Tesla T4, 15.360 MiB (15 GiB), PyTorch `2.14.1+cu130`, CUDA của PyTorch `13.0`, CUDA khả dụng và nhân ma trận thành công. Đây không phải kết quả agent chạy và không áp đặt cho phiên sau.
+
+## Tổ chức theo giai đoạn
+
+Hiện chỉ tạo `references/`, `docs/proposal/`, `docs/progress/`, `notebooks/` và các hướng dẫn gốc có nội dung. Khi bắt đầu cài đặt, mã dùng lại vào `src/`; notebook điều khiển thí nghiệm, không sao chép thuật toán. Khi có dữ liệu và thí nghiệm mới bổ sung `configs/`, `scripts/`, `tests/`, `data/samples/`, `results/`, tài liệu lý thuyết/bài tập/LaTeX/datasheet/model card/slide. Không có các thư mục đó chưa có nghĩa thiếu sản phẩm tuần 1.
+
+## Git, dữ liệu và quyền phân phối
+
+Repository đã có Git và remote `origin` cấu hình; chưa xác minh quyền truy cập hoặc trạng thái công khai. Không push nếu chưa được yêu cầu và xác nhận remote. Sáu PDF đã được Git theo dõi từ trước: `.gitignore` không gỡ chúng và không xóa lịch sử. **Cần kiểm tra quyền phân phối trước lần công khai/push tiếp theo**; nếu chưa rõ, giữ riêng và chia sẻ thông tin trích dẫn/đường dẫn thay vì PDF. Không tự xóa công việc hiện hữu.
+
+Không commit token, `.env`, dữ liệu định danh, phiếu đồng ý, câu hỏi khảo sát thô, checkpoint, trọng số, cache. Dữ liệu lớn/checkpoint ở Drive hoặc kho riêng có kiểm soát, có manifest phiên bản và hướng dẫn lấy lại khi được phép. Chỉ dữ liệu mẫu đã ẩn danh, có quyền chia sẻ mới đưa vào `data/samples/`.
+
+Mỗi thí nghiệm về sau phải lưu seed, cấu hình, phiên bản code/dữ liệu/mô hình, môi trường và kết quả; checkpoint tiếp tục huấn luyện phải có cả trạng thái optimizer, scheduler, bước hiện tại và RNG, không chỉ adapter.
