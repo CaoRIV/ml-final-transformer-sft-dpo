@@ -24,7 +24,7 @@ Mục tiêu đánh giá nội bộ có thể hướng tới mức 85–90/100, n
 
 ### 1.2. Phạm vi có chủ ý hẹp
 
-Người dùng đã đồng ý chọn **Hà Nội**, tập trung **hộ tịch–chứng thực**, hướng tới sinh viên, người trẻ và gia đình. Danh mục thủ tục và các phiên bản văn bản cụ thể vẫn cần kiểm kê, đối chiếu hiệu lực và quyền sử dụng trước thu thập. Mẫu **5–10 thủ tục và 20–50 câu hỏi–đáp** là mục tiêu thăm dò nội bộ, chưa phải dữ liệu tồn tại hay ngưỡng bắt buộc của giảng viên.
+Người dùng đã đồng ý chọn **Hà Nội**, tập trung **hộ tịch–chứng thực**, hướng tới sinh viên, người trẻ và gia đình. Vòng nghiên cứu đầu đã kiểm 9 nguồn cho 5 họ thủ tục ứng viên và chuẩn bị 20 QA nháp có dẫn đoạn nguồn. Chưa QA nào được con người phê duyệt hoặc đủ điều kiện huấn luyện; chi tiết nằm trong sổ kiểm nguồn và báo cáo pilot. Mục tiêu 5–10 thủ tục/20–50 QA là mốc thăm dò nội bộ, không phải ngưỡng bắt buộc của giảng viên.
 
 Trong phạm vi đã chọn, sản phẩm tập trung vào hỏi đáp một lượt có trích dẫn, dựa trên mô tả thủ tục và văn bản/cổng công khai được phép sử dụng. Sản phẩm không thay thế tư vấn pháp lý, không đưa ra quyết định hành chính, không xử lý hồ sơ thật và không yêu cầu người dùng cung cấp dữ liệu cá nhân.
 
@@ -47,6 +47,8 @@ Người dùng không nên dùng hệ thống cho tình huống khẩn cấp, tr
 Nhánh này phục vụ yêu cầu “từ đầu”, không dùng mô-đun attention dựng sẵn cho phần cài đặt cốt lõi. Các thành phần dự kiến gồm: scaled dot-product attention, multi-head attention, causal mask, positional encoding hình sin và một block Transformer decoder bằng PyTorch; mô hình ngôn ngữ mức ký tự nhỏ; lớp LoRA bao quanh linear layer với cơ chế hợp nhất trọng số khi suy luận; và hàm mất mát DPO.
 
 Mô hình ký tự nhỏ chỉ dùng văn bản tiếng Việt thuộc phạm vi công cộng hoặc giấy phép mở đã được kiểm tra. Nhóm sẽ tách train/validation riêng và báo cáo PPL validation. Đây là bài kiểm chứng kiến trúc/phương pháp, không phải mô hình trợ lý Phần D và không được dùng văn bản hành chính chưa có quyền sử dụng.
+
+Đã audit kỹ thuật bản Truyện Kiều Wikisource revision `206607` trong kho cục bộ riêng: trích 3.254 dòng, chia tập liên tục, học từ vựng từ train và kiểm cửa sổ không vượt ranh giới. Đây là kiểm tra dữ liệu nghiên cứu, **không phải huấn luyện hoặc phê duyệt quyền dùng**. Trước huấn luyện phải hoàn tất review quyền của bản số hóa; không đưa corpus vào Git khi chưa được phép.
 
 Cần kiểm chứng từng hạng mục có thể quan sát được: causal mask không lộ token tương lai; shape/head của attention đúng; tham số LoRA trainable bằng $r(d+k)$; hợp nhất LoRA bảo toàn đầu ra trong sai số số học; hàm DPO có dấu và gradient nhất quán với công thức. Các bài C.1–C.4, gồm C.4 về giá trị–gradient DPO và ảnh hưởng của $\beta$, sẽ được giải và dùng làm phép kiểm tra độc lập, không thay cho đánh giá ứng dụng.
 
@@ -144,7 +146,7 @@ Các mốc phản ánh quy định đề bài: tuần 1 nộp đề cương và 
 | 5 run vượt ngân sách | Không đáp ứng báo cáo tái lập | Dự trù 5 seed ngay từ thiết kế; nếu không đủ, xin điều chỉnh với giảng viên và ghi rõ, không đổi âm thầm hay chỉ dựa vào đồng thuận nội bộ |
 | Rò rỉ split/gần trùng | Test quá lạc quan | Nhóm theo thủ tục/nguồn, lọc exact/near duplicate và audit citation trước khóa test |
 
-Phạm vi Hà Nội/hộ tịch–chứng thực và phương án khảo sát/chấm đã được đồng ý. Cần giải quyết tiếp: danh mục thủ tục và nguồn cụ thể, điều khoản/hiệu lực nguồn, biểu mẫu đồng ý và quy trình ẩn danh, lịch khảo sát/chấm, ngân sách Colab và mô hình nền sau pilot. Chưa tuyên bố có dữ liệu hành chính hoặc benchmark hoàn chỉnh khi chưa có bằng chứng.
+Phạm vi Hà Nội/hộ tịch–chứng thực và phương án khảo sát/chấm đã được đồng ý. Đã có danh mục nguồn sơ bộ, 20 QA nháp nghiên cứu và bộ biểu mẫu/protocol. Cần giải quyết tiếp: khác biệt thời hạn/phiên bản nguồn, nguồn địa phương/biểu phí còn thiếu, quyền dùng nội dung, review QA bởi thành viên, xác nhận vận hành khảo sát, lịch, ngân sách Colab và mô hình nền sau pilot. Chưa có khảo sát, dữ liệu DPO hoặc benchmark hoàn chỉnh.
 
 ## 8. Tài nguyên và sản phẩm dự kiến
 
@@ -155,4 +157,4 @@ Sản phẩm cuối theo đề bài dự kiến gồm báo cáo LaTeX 25–40 tr
 ## 9. Tài liệu căn cứ
 
 1. TS. Phạm Văn Khánh, *Danh mục 20 bài tập lớn: Học máy cơ bản, mô hình ngôn ngữ lớn, học tăng cường và tích hợp*, ngày 12/11/2026: Phần I–II (tr. 1–2) và Đề tài 9 (tr. 18–19).
-2. Các đầu mối nguồn hành chính quốc gia/Hà Nội và Truyện Kiều được ghi trong [kế hoạch dữ liệu](data-plan.md). Chúng chưa thay thế sổ nguồn đã kiểm quyền/hiệu lực; chưa có bộ mẫu được nhập kho và kiểm định.
+2. [Kế hoạch dữ liệu](data-plan.md) dẫn tới sổ nguồn, báo cáo 20 QA nháp, audit Truyện Kiều và bộ đồng ý/khảo sát/chấm. Những bằng chứng kỹ thuật này không thay cho thẩm định quyền/hiệu lực, kiểm thủ công hoặc kết quả huấn luyện.

@@ -1,6 +1,6 @@
 # Kế hoạch dữ liệu bản nháp — Trợ lý hỏi đáp thủ tục hành chính công
 
-> **Trạng thái:** kế hoạch tuần 1, chưa phải datasheet của một bộ dữ liệu đã thu thập. Các ngưỡng, mẫu thăm dò và quy trình dưới đây chuyển yêu cầu của Đề tài 9 thành công việc có thể kiểm tra; chúng không chứng minh dữ liệu, quyền dùng nguồn hay người tham gia đã sẵn sàng.
+> **Trạng thái:** kế hoạch tuần 1, đã có sổ kiểm nguồn, 20 QA nháp nghiên cứu, audit kỹ thuật Truyện Kiều và bộ biểu mẫu vận hành. **Chưa có QA được con người phê duyệt, khảo sát thật hoặc dữ liệu DPO.** Những số đo audit và kiểm tra cấu trúc không chứng minh quyền dùng nguồn hay mức sẵn sàng huấn luyện; đây chưa phải datasheet của một release đã được chấp nhận.
 
 ## 1. Mục đích, ranh giới và quyết định tiền điều kiện
 
@@ -24,21 +24,23 @@ Người dùng đã đồng ý phương án Hà Nội/hộ tịch–chứng th�
 
 **Đã được người dùng đồng ý về phương án:** địa bàn Hà Nội; đối tượng trọng tâm là sinh viên/người trẻ và gia đình; nhóm thủ tục hộ tịch–chứng thực. Bắt đầu mẫu nhỏ từ cấp bản sao trích lục hộ tịch/bản sao giấy khai sinh và chứng thực bản sao từ bản chính; xem xét thêm chứng thực chữ ký, xác nhận thông tin hộ tịch, cải chính/bổ sung hộ tịch sau khi kiểm tra từng nguồn. Không coi các trường hợp cấp bản sao cho từng loại giấy tờ là nhiều thủ tục độc lập chỉ để tăng số lượng. Chưa đưa đất đai, tranh chấp, yếu tố nước ngoài vào phạm vi chính.
 
-Nguồn đã khảo sát sơ bộ:
+Vòng kiểm nguồn đầu đã lưu **9 nguồn cho 5 họ thủ tục ứng viên**, cùng thời điểm truy xuất, hash bản trích xuất, kết quả kiểm robots và điều khoản. Xem [sổ metadata nguồn](../data/source-ledger.json) và [phân tích nguồn](../data/source-audit.md).
 
-- [Cổng Dịch vụ công quốc gia — mã 2.000635](https://vpcp.dichvucong.gov.vn/p/home/dvc-tthc-thu-tuc-hanh-chinh-chi-tiet.html?ma_thu_tuc=1943): đã đọc nội dung về hồ sơ, cách nộp, thời hạn, lệ phí và căn cứ pháp lý. Có trường trống và thông tin cấp thực hiện/địa chỉ cần đối chiếu; chưa coi toàn trang là đáp án chuẩn áp dụng tại Hà Nội.
-- [Cổng phường Ô Chợ Dừa — chứng thực bản sao](https://ochodua.hanoi.gov.vn/cai-cach-hanh-chinh/thu-tuc-chung-thuc-ban-sao-tu-ban-chinh-giay-to-van-ban-2832250922082409942.htm): công cụ đọc hiện chỉ lấy được tiêu đề và mô tả, chưa xác minh đầy đủ nội dung thủ tục.
-- [Trung tâm Phục vụ hành chính công Hà Nội — thông tin tái cấu trúc thủ tục trích lục](https://ttpvhcc.hanoi.gov.vn/cai-cach-hanh-chinh-va-tin-khac/ha-noi-tai-cau-truc-thu-tuc-cap-ban-sao-trich-luc-ho-tich-ban-sao-giay-khai-sinh-tiet-kiem-hon-160-ty-dong-moi-nam-2850260102122029782.htm): mới đọc metadata nhắc Quyết định 1818/QĐ-TTPVHCC; đây là đầu mối kiểm tra phiên bản địa phương, không thay văn bản quyết định gốc.
+- Cổng quốc gia đã đọc: trích lục `2.000635`, chứng thực bản sao `2.000815`, chứng thực chữ ký `2.000884`, cải chính/bổ sung hộ tịch `1.004859`.
+- Cổng Hà Nội/Ô Chợ Dừa đã đọc bằng trình duyệt: bài trích lục, tệp phương án được bài liên kết, hướng dẫn chứng thực bản sao, xác nhận thông tin hộ tịch; riêng cải chính chỉ đọc mô tả video, chưa kiểm nội dung video.
+- Có **khác biệt thời hạn trích lục**: trang quốc gia nêu trong ngày/ngày làm việc kế tiếp; phụ lục phương án Hà Nội B.4 ghi dự kiến 03 ngày, có thể đến 10 ngày khi kiểm tra/xác minh. Tệp liên kết chưa phải quyết định đầy đủ có số/ngày được kiểm rõ. Không chọn một thời hạn làm đáp án hiện hành khi chưa giải quyết khác biệt.
 
-Đây là các đầu mối nghiên cứu, **không phải dữ liệu đã nhập kho hay nguồn đã được duyệt quyền thu thập/phân phối**. Chưa kiểm robots.txt/điều khoản từng cổng. Không lấy danh sách hồ sơ đã xử lý, danh tính công dân hoặc thông tin nộp hồ sơ làm dữ liệu. Đối chiếu quy định quốc gia với quy trình địa phương, ngày hiệu lực và hình thức nộp; không chép lệ phí hay thời hạn giữa các địa phương.
+Robots Trung tâm Hà Nội/Ô Chợ Dừa yêu cầu cách 5 giây; robots VPCP và kho CDN trả 404 trong lần kiểm. Điều khoản quốc gia yêu cầu tuân thủ pháp luật khi dùng lại, footer Hà Nội yêu cầu ghi nguồn; **chưa xác nhận giấy phép cho dataset/huấn luyện/phân phối phần nội dung cụ thể**. Không thu dữ liệu hồ sơ cá nhân. Các bản lưu/trích đoạn và QA nghiên cứu giữ ngoài Git, chưa đưa vào SFT.
 
 Để đạt 2.000 QA có giá trị, đánh giá độ phủ sau mẫu 5–10 thủ tục/20–50 QA; nếu nguồn không đủ tình huống độc lập thì đề xuất mở rộng trong hộ tịch–chứng thực, không nhân bản hàng trăm cách diễn đạt của cùng câu hỏi. Chưa hứa số lượng thủ tục cần thiết trước kiểm kê.
 
-**Corpus ký tự đã chọn về phương án:** [Truyện Kiều trên Wikisource](https://vi.wikisource.org/wiki/Truy%E1%BB%87n_Ki%E1%BB%81u). Đã đọc phần văn bản và nhãn phạm vi công cộng của trang; liên kết phiên bản hiển thị `oldid=206607`. Khi nhập kho cần chốt revision, trích riêng thân tác phẩm, ghi công Nguyễn Du và nguồn, kiểm điều kiện của bản số hóa, lưu hash; không lấy menu/chú thích giao diện làm văn bản huấn luyện. Chia đoạn liên tục train/validation trước khi tạo cửa sổ token; không để cửa sổ chồng lấp vượt ranh giới split. Từ vựng học từ train, có cách xử lý ký tự chưa gặp. Văn bản thơ nhỏ phù hợp mục tiêu kiểm chứng A nhưng dễ overfit và không đại diện văn xuôi hành chính; PPL chỉ diễn giải trong corpus này. Không đưa văn bản Kiều vào SFT hành chính.
+**Corpus ký tự đã chọn về phương án:** Truyện Kiều trên Wikisource, revision `206607`. Đã audit đường `/wiki/` được robots cho phép, trích riêng thân tác phẩm và kiểm hash/NFC: 3.254 dòng, 104.204 Unicode code point; chia 93.783 train và 10.421 validation trước tạo cửa sổ, từ vựng train-only 133 token gồm `<UNK>`. Với độ dài 128 đã kiểm 732/81 cửa sổ train/validation, không vượt ranh giới. Xem [provenance và giới hạn quyền](../data/char-corpus.md), [báo cáo số đo thực](../data/char-corpus-audit-report.json). Mọi hiện vật ở `.cache`, trạng thái research-only; chưa dùng để huấn luyện/phân phối vì review quyền bản số hóa chưa hoàn tất. Corpus thơ nhỏ không đại diện văn xuôi hành chính và không đưa vào SFT hành chính.
 
 **Khảo sát test đề xuất:** mời người từ 18 tuổi trở lên trong lớp, câu lạc bộ và mạng lưới người thân có nhu cầu tìm hiểu thủ tục. Mục tiêu vận hành ban đầu 50–80 người, mỗi người tự đặt 2–3 câu hỏi thật sự muốn biết; tương ứng 100–240 câu thô trước lọc, không bảo đảm số test hợp lệ. Đề không ấn định số người hay số câu test này. Không yêu cầu mỗi người cố nghĩ đủ số câu, không đưa QA mẫu hoặc câu trả lời mô hình cho họ chép. Thu tự nguyện, không gắn điểm học tập, không mặc định đồng ý vì quen biết.
 
 Biểu mẫu dự kiến hỏi: đồng ý tham gia sau thông tin mục đích/quyền rút; đã đủ 18 tuổi hay chưa; từng làm/đang tìm hiểu nhóm thủ tục nào (không hỏi số hồ sơ); câu hỏi muốn được giải đáp; câu hỏi có đang liên quan Hà Nội hay không. Không thu tên, mã sinh viên, email tự động, địa chỉ cụ thể hoặc ảnh giấy tờ. Xác nhận hình thức đồng ý điện tử đáp ứng yêu cầu bằng văn bản trước thu; biểu mẫu không được lưu tự động nội dung nhạy cảm chưa kiểm soát. Hướng dẫn người tham gia không nhập PII và có quy trình ẩn danh trước lưu dữ liệu nghiên cứu. Cần quy định rõ thời hạn rút trước khi phá liên kết định danh; sau ẩn danh hoàn toàn không hứa truy tìm được dữ liệu từng người.
+
+Bộ vận hành đã soạn: [thông tin/đồng ý và phiếu khảo sát](../data/consent-and-survey.md), [quy trình riêng tư](../data/privacy-workflow.md), [hướng dẫn kiểm QA và chấm ưu tiên](../data/annotation-guide.md). Phương án mặc định dùng phiếu giấy/phỏng vấn tại chỗ để kiểm ẩn danh trước số hóa; chưa mở Google Forms hoặc khảo sát công khai. Trước thu thập cần xác nhận hình thức đồng ý, kênh liên hệ, kho riêng, thời hạn rút và người phụ trách; không coi bản nháp protocol là chấp thuận pháp lý hay đã có người tham gia.
 
 Khảo sát chủ yếu sinh viên là mẫu thuận tiện, không đại diện toàn bộ cư dân Hà Nội. Giữ câu hỏi ngoài phạm vi phát sinh tự nhiên để đánh giá từ chối; nếu không đủ, thu thêm câu hỏi thật cho nhóm này, không giả câu hỏi AI là khảo sát. Khóa test và tách họ thủ tục theo thiết kế trước tạo QA train; các câu bị trùng/rò rỉ phải xử lý trước huấn luyện, không sau khi xem điểm.
 
@@ -55,7 +57,7 @@ Khảo sát chủ yếu sinh viên là mẫu thuận tiện, không đại diệ
 
 Cách triển khai ưu tiên là **đủ 2.000 QA train và 500 cặp DPO train, cộng validation riêng**, vì train/validation không nên dùng chung record. Đây là đề xuất bảo thủ để đáp ứng ngưỡng của đề bài sau chia tách, không phải cam kết số lượng đã có. Quy mô `USER_TEST` sẽ chỉ được đặt sau khi biết khả năng khảo sát và số cụm người tham gia; không làm đầy bằng dữ liệu mô phỏng.
 
-Một pilot 5–10 thủ tục với 20–50 QA có thể giúp thử schema, citation, split và rubric. Mẫu này **chưa thu thập**, phải kiểm danh mục nguồn và quyền sử dụng trong phạm vi đã thống nhất trước khi thực hiện. Pilot không thay thế bộ train yêu cầu và không phải ngưỡng nộp tuần 1 của giảng viên.
+Đã chuẩn bị mẫu **20 QA nháp cho 5 họ thủ tục**, kèm 21 trích đoạn, chỉ để kiểm quy trình nghiên cứu. Script đã kiểm hash, vị trí trích đoạn và cấu trúc citation; **0 QA được human phê duyệt, 0 QA đủ điều kiện huấn luyện**. Xem [báo cáo pilot](../data/admin-pilot.md). Các record ở `data/review/admin-pilot-v1/` bị Git bỏ qua do quyền/phiên bản và review chưa hoàn tất. Pilot không thay thế bộ train yêu cầu, không phải test khảo sát và không phải ngưỡng nộp tuần 1.
 
 ## 3. Sổ nguồn, provenance và phiên bản
 
@@ -270,3 +272,14 @@ Tất cả hyperparameter (mô hình nền, LoRA/QLoRA $r$, $\alpha$, learning r
 **Cuối tuần 1–đầu tuần 2:** dùng checkpoint pilot để tạo candidate DPO, chạy hai người chấm độc lập và thống kê agreement; tiếp tục tăng dữ liệu SFT/DPO theo count đã review. Mốc tuần 2 của đề bài là bộ dữ liệu Phần D cùng A/B cho báo cáo tiến độ; vì vậy cần ưu tiên thiết lập pipeline preference sớm thay vì đợi đến sau khi đóng dữ liệu SFT.
 
 Không có mục nào trong tài liệu này tuyên bố rằng 2.000 QA, 500 cặp, khảo sát thật, checkpoint hay 5 run đã hoàn thành. Mọi số liệu cuối phải dẫn về dataset/run manifest tương ứng.
+
+## 10. Bằng chứng hiện tại và điều kiện bàn giao tiếp
+
+| Hiện vật | Đã thực hiện | Chưa được suy ra |
+|---|---|---|
+| Sổ nguồn, robots/terms và bản đọc có hash | 9 nguồn, 5 họ thủ tục; ghi rõ thiếu nguồn/khác biệt phiên bản | Không có nghĩa tất cả nguồn còn hiệu lực, được phép train/phân phối |
+| Pilot QA | 20 QA agent-authored, 21 trích đoạn; kiểm cấu trúc và cổng chặn phát hành | Không phải 20 QA được con người kiểm định, không phải khảo sát thật |
+| Truyện Kiều | Chạy audit thực, chia tập/từ vựng/cửa sổ có kiểm chứng | Không phải huấn luyện, chưa có validation PPL hoặc quyền phát hành |
+| Consent/khảo sát/chấm | Có văn bản mẫu, quy trình ẩn danh và phiếu/rubric | Chưa có xác nhận vận hành, consent, người tham gia hoặc nhãn thật |
+
+Ưu tiên bàn giao cho nhóm: rà soát nguồn và khác biệt thời hạn, bổ sung quyết định/biểu phí còn thiếu, review quyền và QA; xác nhận hình thức consent, lịch, lưu trữ, thông tin trường/lớp và mốc giảng viên. Chỉ sau những gate phù hợp mới tăng dữ liệu và pilot SFT; không đánh dấu A–D hoặc bộ dữ liệu tuần 2 hoàn thành vì đã có kế hoạch và script.

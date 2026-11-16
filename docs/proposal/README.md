@@ -48,7 +48,7 @@ Hoặc dùng XeLaTeX/Overleaf, chọn XeLaTeX và biên dịch mỗi tệp hai l
 
 ## Bằng chứng bản biên dịch hiện tại
 
-- Đề cương: **7 trang**; kế hoạch dữ liệu: **11 trang**, gồm toàn bộ bảng schema chi tiết.
+- Đề cương: **7 trang**; kế hoạch dữ liệu cập nhật sau audit: **12 trang**, gồm bảng schema và mục bằng chứng/giới hạn mới.
 - Đã chạy script biên dịch bằng Pandoc 3.14/Tectonic 0.17.0; đã xem ảnh tổng quan toàn bộ trang và kiểm tra chi tiết trang đầu, công thức DPO, bảng schema.
 - Hash Markdown khớp comment trong LaTeX; trích xuất được đầy đủ ba tên thành viên và mục cuối; không có trang trắng. Mọi font trong hai PDF đều được nhúng.
 - Log LaTeX cuối không có `Overfull`, thiếu ký tự, font shape không xác định hoặc cảnh báo thay font; kiểm tra hình học không thấy text nằm ngoài khổ trang.
@@ -57,8 +57,8 @@ Hoặc dùng XeLaTeX/Overleaf, chọn XeLaTeX và biên dịch mỗi tệp hai l
 
 ## Các việc còn thiếu để chốt bản nộp
 
-1. Kiểm danh mục thủ tục, nguồn quốc gia/Hà Nội, hiệu lực, điều khoản và robots; chốt bản số hóa Truyện Kiều trước nhập kho.
-2. Thực hiện mẫu thủ tục/QA nếu được phép và kiểm thủ công; mẫu 5–10 thủ tục/20–50 QA là mục tiêu nội bộ, không phải ngưỡng nộp tuần 1.
-3. Chuẩn bị biểu mẫu đồng ý/khảo sát, quy trình ẩn danh và rubric chấm, lịch huy động người thật.
+1. Xử lý khác biệt thời hạn/phiên bản, quyết định/biểu phí hoặc nguồn đối chiếu còn thiếu trong [sổ kiểm chứng](../data/source-audit.md); hoàn tất review quyền bản số hóa Truyện Kiều trước huấn luyện.
+2. Nhóm kiểm thủ công 20 QA nháp nội bộ; mẫu hiện có chưa được phê duyệt hoặc đủ điều kiện train. Xem [báo cáo pilot](../data/admin-pilot.md).
+3. Nhận bàn giao [bộ biểu mẫu](../data/README.md); xác nhận hình thức consent, kho riêng, kênh liên hệ, mốc rút và lịch trước mời người thật. Đã có bản soạn, chưa có khảo sát/consent.
 4. Bổ sung thông tin trường/lớp và phân công chuyên môn, ngân sách, nơi lưu bền vững; hỏi giảng viên lịch 2 tuần/tuần 3 và hình thức nộp.
 5. Nhóm đọc, hiểu và rà soát hai tài liệu trước nộp; ghi phạm vi AI vào nhật ký/phụ lục theo yêu cầu. PDF biên dịch được không đồng nghĩa các công việc nghiên cứu trên đã hoàn tất.

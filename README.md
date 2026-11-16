@@ -1,6 +1,6 @@
 # Đề tài 9 — Kiến trúc Transformer và tinh chỉnh mô hình ngôn ngữ
 
-Ứng dụng: trợ lý hỏi đáp thủ tục hành chính công. Giai đoạn hiện tại: **hồ sơ tuần 1**, chưa có dữ liệu đã thu thập, mô hình đã huấn luyện hoặc kết quả đánh giá. Mục tiêu làm việc 85–90/100, không phải cam kết điểm.
+Ứng dụng: trợ lý hỏi đáp thủ tục hành chính công. Giai đoạn hiện tại: **hồ sơ tuần 1**. Đã có audit nguồn, 20 QA nháp nghiên cứu và audit corpus ký tự; chưa có dữ liệu được con người phê duyệt cho huấn luyện, khảo sát thật, checkpoint hoặc kết quả đánh giá. Mục tiêu làm việc 85–90/100, không phải cam kết điểm.
 
 ## Đọc hồ sơ
 
@@ -10,10 +10,11 @@
 - Đề cương tuần 1: [Markdown](docs/proposal/proposal.md), [PDF](docs/proposal/proposal.pdf), [LaTeX](docs/proposal/proposal.tex).
 - Kế hoạch dữ liệu: [Markdown](docs/proposal/data-plan.md), [PDF](docs/proposal/data-plan.pdf), [LaTeX](docs/proposal/data-plan.tex).
 - [Nhật ký hỗ trợ AI](docs/progress/ai-use.md).
+- [Gói kiểm chứng dữ liệu tuần 1](docs/data/README.md): sổ nguồn, pilot QA, audit Truyện Kiều, biểu mẫu khảo sát và hướng dẫn chấm.
 
 Đề gốc ngày 12/11/2026: phần II trang 2; Đề tài 9 trang 18–19. Yêu cầu giảng viên ưu tiên hơn đề xuất nội bộ. Mốc tuần 3 ở phần II mâu thuẫn thời lượng 2 tuần ở phần I; cần hỏi giảng viên, tạm lập kế hoạch theo phần II, chưa đặt ngày nộp.
 
-Hai PDF là bản nháp giữ đầy đủ nội dung Markdown, chưa phải xác nhận đã thu thập dữ liệu hoặc đã nộp. [Hướng dẫn biên dịch lại](docs/proposal/README.md) bằng `python scripts/build_week1_pdfs.py` (cần Pandoc và Tectonic). Markdown là nguồn nội dung; không sửa tay hai tệp LaTeX sinh tự động.
+Hai PDF là bản nháp giữ đầy đủ nội dung Markdown, có kết quả audit nghiên cứu nhưng chưa xác nhận dữ liệu đủ điều kiện huấn luyện hoặc đã nộp. [Hướng dẫn biên dịch lại](docs/proposal/README.md) bằng `python scripts/build_week1_pdfs.py` (cần Pandoc và Tectonic). Markdown là nguồn nội dung; không sửa tay hai tệp LaTeX sinh tự động.
 
 ## Kiểm tra môi trường Colab
 
@@ -29,7 +30,7 @@ Thông tin người dùng đã cung cấp từ một phiên trước: Tesla T4, 
 
 ## Tổ chức theo giai đoạn
 
-Hiện có `references/`, `docs/proposal/`, `docs/progress/`, `notebooks/`, `scripts/build_week1_pdfs.py` và các hướng dẫn gốc có nội dung. Khi bắt đầu cài đặt, mã dùng lại vào `src/`; notebook điều khiển thí nghiệm, không sao chép thuật toán. Khi có dữ liệu và thí nghiệm mới bổ sung `configs/`, các script dữ liệu/huấn luyện, `tests/`, `data/samples/`, `results/`, tài liệu lý thuyết/bài tập/LaTeX cuối kỳ/datasheet/model card/slide. Không tạo các thư mục đó chưa có nghĩa thiếu sản phẩm tuần 1.
+Hiện có `references/`, `docs/proposal/`, `docs/progress/`, `docs/data/`, `notebooks/`, các script build/kiểm dữ liệu trong `scripts/` và kiểm thử hồi quy trong `tests/`. QA/trích đoạn nghiên cứu chưa được duyệt ở `data/review/`, corpus/bản nguồn ở `.cache/`, đều bị Git bỏ qua. Khi bắt đầu cài thuật toán, mã dùng lại vào `src/`; notebook điều khiển thí nghiệm, không sao chép thuật toán. Chỉ bổ sung cấu hình/huấn luyện/kết quả/LaTeX cuối kỳ khi có công việc thực, không tạo thư mục rỗng.
 
 ## Git, dữ liệu và quyền phân phối
 

@@ -31,9 +31,9 @@ Git ban đầu sạch trên nhánh `main`, có upstream `origin/main`; remote c�
 | Vấn đề | Cần làm | Ảnh hưởng |
 |---|---|---|
 | Phần I nói 2 tuần, phần II có tuần 3 | Hỏi giảng viên; tạm theo phần II, chưa đặt ngày | Lịch nộp |
-| Danh mục thủ tục và nguồn cụ thể | Phạm vi Hà Nội/hộ tịch–chứng thực đã được đồng ý; kiểm văn bản, hiệu lực, điều khoản và robots trước thu thập | Mẫu và chiến lược thu thập |
-| Tổ chức khảo sát và chấm | Phương án người khảo sát/người chấm đã được đồng ý; cần lịch, biểu mẫu đồng ý, quy trình ẩn danh và rubric trước thực hiện | Test thật và 500 cặp DPO |
-| Model nền, bản văn ký tự | Model nền còn mở; chọn Truyện Kiều nhưng cần đóng băng bản số hóa, điều kiện sử dụng và hash trước nhập kho | Huấn luyện A/D |
+| Nguồn hiện hành và quyền dùng | Đã kiểm 9 nguồn/5 họ thủ tục, robots/terms và lưu hash; còn khác biệt thời hạn trích lục, quyết định/biểu phí hoặc nguồn xác nhận thiếu | Chưa được phát hành/huấn luyện từ pilot |
+| Vận hành khảo sát và chấm | Đã soạn consent/survey/privacy/rubric; cần xác nhận hình thức đồng ý, kho riêng, kênh liên hệ, mốc rút và lịch trước mở | Chưa có người tham gia/consent/nhãn thật |
+| Model nền, quyền bản văn ký tự | Model nền còn mở; đã audit Truyện Kiều revision206607 research-only, review quyền bản số hóa chưa hoàn tất | Chưa huấn luyện A/D |
 | Ngân sách Colab/Drive | Xác nhận khả năng dùng, đường dẫn lưu bền vững | 5 lần chạy và resume |
 | Phân công chuyên môn | Trưởng nhóm và phương án Thế/Hưng chấm độc lập, Hà phân xử đã được đồng ý; còn bố trí lịch và xác nhận phân công chuyên môn | Nộp hồ sơ và tổ chức thực hiện |
 | Q,K,V bài C.1 | Xin dữ liệu chính thức giảng viên | Không tự tạo đáp án chính thức |
@@ -41,7 +41,7 @@ Git ban đầu sạch trên nhánh `main`, có upstream `origin/main`; remote c�
 | Quyền PDF và remote | Kiểm tra quyền chia sẻ, xác nhận remote trước push | Không công khai ngoài ý muốn |
 | Quy định AI | Giữ nguyên “Không dùng bản AI miễn phí”; nhóm xác nhận loại công cụ đang dùng | Liêm chính; không suy ra cấm Colab miễn phí |
 
-## Bằng chứng kiểm tra cục bộ
+## Bằng chứng kiểm tra giai đoạn khởi tạo (lịch sử)
 
 - Đã kiểm kê và đọc tài liệu gốc nêu trên; chưa thu thập thủ tục, khảo sát, QA, cặp ưu tiên hoặc chạy huấn luyện.
 - Đã chạy tuần tự tất cả ô code của `00_environment_check.ipynb` trong một namespace sạch bằng Python3.11.6 trên máy hiện tại; output ghi JSON môi trường và danh sách gói vào thư mục tạm, đọc lại JSON xác nhận tách nguồn bằng chứng. Đã xóa thư mục tạm sau kiểm tra.
@@ -55,17 +55,28 @@ Git ban đầu sạch trên nhánh `main`, có upstream `origin/main`; remote c�
 
 Hồ sơ nháp, bảng đối chiếu, hướng dẫn repo và notebook môi trường là sản phẩm của phiên này; không phải bằng chứng đã hoàn thành A–D. Chưa có datasheet/model card/LaTeX cuối kỳ vì chưa tới giai đoạn và chưa có dữ liệu/mô hình.
 
-1. Cụ thể hóa phạm vi đã đồng ý thành danh mục thủ tục/nguồn; chuẩn bị biểu mẫu đồng ý, khảo sát và hướng dẫn chấm; xác định lịch và trách nhiệm thực hiện.
-2. Kiểm tra điều khoản/robots/nguồn hiện hành, lấy mẫu5–10 thủ tục và20–50QA nếu được phép; lưu URL/thời điểm/hash/đoạn dẫn, kiểm thủ công toàn bộ mẫu.
-3. Hoàn thiện hồ sơ tuần1 từ mẫu thực; xác nhận lịch giảng viên.
+1. Giải quyết khác biệt phiên bản/thời hạn nguồn, bổ sung quyết định/biểu phí và nguồn đối chiếu còn thiếu; nhóm review quyền và QA nháp trước khi mở rộng.
+2. Nhận bàn giao bộ biểu mẫu, chốt hình thức consent, kho riêng, kênh liên hệ, mốc rút và lịch; không phát hành khảo sát khi gate chưa đạt.
+3. Rà soát hồ sơ tuần 1 có kết quả audit; bổ sung trường/lớp và xác nhận mốc/định dạng nộp với giảng viên.
 4. Chạy notebook Colab, lưu báo cáo bền vững; chốt API/package theo tài liệu chính thức rồi pilot SFT và DPO riêng.
 5. SFT sơ bộ cần đủ sớm để sinh và chấm dữ liệu DPO trước mốc tuần2; nếu không đạt phải báo rủi ro và xin điều chỉnh, không giả dữ liệu hay âm thầm giảm yêu cầu.
 
 ## Bàn giao bản LaTeX/PDF tuần 1
 
-- Đã tạo `docs/proposal/proposal.tex` + `proposal.pdf` (**7 trang**) và `data-plan.tex` + `data-plan.pdf` (**11 trang**); cả hai giữ toàn bộ nội dung Markdown, không cắt bảng/schema để ép số trang nội bộ.
+- Hiện có `docs/proposal/proposal.tex` + `proposal.pdf` (**7 trang**) và `data-plan.tex` + `data-plan.pdf` (**12 trang** sau cập nhật audit); cả hai giữ đầy đủ nội dung Markdown và giới hạn trạng thái.
 - Markdown tiếp tục là nguồn nội dung; `scripts/build_week1_pdfs.py` sinh LaTeX bằng Pandoc và biên dịch bằng Tectonic. Mẫu/bộ lọc và hướng dẫn tái lập nằm trong `docs/proposal/`.
 - Đã đồng bộ những đoạn còn nói phạm vi/người chấm chưa được đồng ý; phân biệt chấp thuận kế hoạch với dữ liệu, consent, quyền dùng nguồn và kết quả thực tế.
 - Đã biên dịch bằng Pandoc 3.14/Tectonic 0.17.0 portable ngoài repo, xác thực SHA-256 archive theo bản phát hành chính thức. Không cài lại PyTorch; công cụ xem PDF cài vào thư mục riêng ngoài môi trường ML.
 - Kiểm tra: đã xem tổng quan mọi trang, chi tiết trang đầu/công thức/bảng; font nhúng; tên tiếng Việt và mục cuối; hash Markdown–LaTeX; không trang trắng hoặc text ngoài khổ giấy. Log cuối không có overfull, thiếu glyph hoặc cảnh báo thay font. Tectonic còn chẩn đoán Fontconfig thiếu cấu hình mặc định, nhưng dùng tệp font bundle chỉ định trực tiếp và thoát mã 0. Chưa kiểm Overleaf/máy khác.
-- Đây vẫn là **bản nháp chưa nộp**. Chưa có mẫu thủ tục/QA đã kiểm duyệt, biểu mẫu khảo sát/đồng ý hoàn chỉnh, nguồn được nhập kho hoặc huấn luyện. Biên dịch PDF không thay thế các bằng chứng đó.
+- Đây vẫn là **bản nháp chưa nộp**. Đã có QA nháp nghiên cứu, audit corpus và bộ biểu mẫu; chưa có dữ liệu được phê duyệt, xác nhận vận hành khảo sát, consent thật hoặc huấn luyện. Biên dịch PDF không thay thế các bằng chứng đó.
+
+## Gói kiểm chứng dữ liệu đã triển khai
+
+- Danh mục và kết quả: `docs/data/README.md`, `source-audit.md`, `source-ledger.json`. Đã đọc 9 nguồn cho 5 họ thủ tục, kiểm 5 robots URL và điều khoản quốc gia; nguồn Hà Nội động đã được đọc bằng trình duyệt. Chưa phê duyệt hiệu lực/phân phối/huấn luyện. Phụ lục trích lục Hà Nội ghi thời hạn dự kiến khác trang quốc gia và thiếu số/ngày quyết định trong bản trích; không tự chọn một số làm đáp án hiện hành.
+- Pilot riêng: `data/review/admin-pilot-v1/qa.jsonl` và `source-spans.json` (ignored): **20 QA agent-authored, 21 span, 0 human approval, 0 train-ready**. Snapshot/chính sách ở `.cache/admin-source-audit/` (ignored). Report công khai metadata tại `docs/data/admin-pilot-report.json`, không chứa toàn văn/QA.
+- Đã chạy `scripts/validate_admin_pilot.py`: hash snapshot/policy/span, vị trí quote, ID/URL/locator/citation và duplicate screening đạt. 5 tình huống lỗi bị từ chối; `--require-training-ready` thoát mã2 đúng kỳ vọng, không coi kiểm cấu trúc là kiểm thủ công.
+- Đã chạy audit Truyện Kiều bằng Python3.12, chỉ fetch robots và URL `/wiki/` pinned được cho phép: **3.254 dòng, 104.204 code point, split93.783/10.421, vocab133 gồmUNK, 732/81 windows độ dài128**. Đã kiểm hash, ghép split, train-only vocab và mọi cửa sổ; output research-only dưới `.cache/char-corpus/audit-206607-final/`, report metadata tại `docs/data/char-corpus-audit-report.json`. Chưa duyệt quyền/training.
+- Phát hiện/reproduce việc urllib theo redirect trước kiểm URL; đã sửa chặn trước request đích. Smoke HTTP loopback trước/sau và `python -m unittest discover -s tests -p \"test_char_corpus.py\" -v`: 1 test đạt. Không kiểm raw-wikitext mode với attestation quyền thật.
+- Đã soạn `consent-and-survey.md`, `privacy-workflow.md`, `annotation-guide.md`: bản người tham gia đọc/điền, quy trình ẩn danh/lưu/rút, QA review và hai nhãn độc lập/đo đồng thuận trước phân xử. Chưa mở khảo sát, không có dữ liệu người hoặc DPO giả.
+- Các phần cần con người còn nguyên: xác nhận vận hành/consent theo quy định áp dụng, review nguồn/quyền/QA, tổ chức khảo sát/chấm, thông tin trường/lớp, lịch, ngân sách và Colab. Không commit/push trong gói này.
+- Đã biên dịch lại hai PDF sau cập nhật audit bằng công cụ portable hiện có; kiểm hash Markdown–LaTeX, tên tiếng Việt, nội dung audit/mục cuối, font nhúng và hình học đạt; không có overfull/thiếu glyph/thay font trong log. Đã xem tổng quan mọi trang và mục bằng chứng mới ở trang cuối data-plan. Chưa kiểm trên Overleaf/máy khác; chẩn đoán Fontconfig thiếu cấu hình mặc định của Tectonic vẫn còn như lần trước.

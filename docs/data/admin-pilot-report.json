@@ -1,0 +1,28 @@
+{
+  "checked_at_utc": "2026-11-16T09:04:19.908938+00:00",
+  "check_origin": "agent_executed_structural_validation_not_human_review",
+  "qa_count": 20,
+  "span_count": 21,
+  "source_count": 9,
+  "procedure_family_counts": {
+    "trich-luc": 4,
+    "chung-thuc-ban-sao": 4,
+    "chung-thuc-chu-ky": 4,
+    "cai-chinh-ho-tich": 4,
+    "xac-nhan-thong-tin-ho-tich": 4
+  },
+  "human_approved_qa_count": 0,
+  "training_ready_qa_count": 0,
+  "near_duplicate_candidates": [],
+  "all_snapshot_hashes_and_quote_locations_match": true,
+  "release_status": "not_ready",
+  "limits": [
+    "Exact quote checks do not establish answer entailment, legal validity or copyright clearance.",
+    "No real-user survey or DPO labeling is performed.",
+    "Lexical duplicate screening cannot prove absence of semantic duplicates."
+  ],
+  "input_sha256": {
+    "qa.jsonl": "988561d4b7f6d373b7091804260be013dbc60a9c81d805190fc67fe167896c3c",
+    "source-spans.json": "8e06b2301070f9efed9c1cc128229ea60799c4650f868818caf9362b81104067"
+  }
+}

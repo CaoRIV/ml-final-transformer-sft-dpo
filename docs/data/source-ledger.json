@@ -1,0 +1,303 @@
+{
+  "audit_version": "week1-research-1",
+  "audited_by": "AI_assistant",
+  "training_release_status": "blocked_pending_rights_version_and_human_review",
+  "sources": [
+    {
+      "source_id": "NAT-EXTRACT",
+      "procedure_code": "2.000635",
+      "title": "Cấp bản sao trích lục hộ tịch, bản sao giấy khai sinh",
+      "canonical_url": "https://vpcp.dichvucong.gov.vn/p/home/dvc-tthc-thu-tuc-hanh-chinh-chi-tiet.html?ma_thu_tuc=1943",
+      "source_type": "national_procedure",
+      "retrieved_at_utc": "2026-11-16T08:54:41.844577+00:00",
+      "snapshot_path": ".cache/admin-source-audit/NAT-EXTRACT.txt",
+      "snapshot_sha256": "43c3b3f53c8a9b83aa9bdcc707a44351bc6ac8fa28509592b0827624cb6b08de",
+      "snapshot_representation": "reader_text",
+      "published_at": null,
+      "effective_from": null,
+      "effective_status": "not_fully_verified",
+      "training_allowed": false,
+      "redistribution_allowed": false,
+      "review_status": "research_only_pending_rights_and_version_review",
+      "notes": "Mã 2.000635; trường trình tự trống; địa chỉ cấp Bộ không được dùng làm địa chỉ tiếp nhận tại Hà Nội. Thời hạn khác phụ lục HN-ANNEX. Chưa xác minh toàn bộ văn bản sửa đổi, không phê duyệt thời hạn/lệ phí hiện hành.",
+      "policy_refs": [
+        "ROBOTS-VPCP",
+        "TERMS-NAT"
+      ]
+    },
+    {
+      "source_id": "NAT-COPY",
+      "procedure_code": "2.000815",
+      "title": "Chứng thực bản sao từ bản chính",
+      "canonical_url": "https://vpcp.dichvucong.gov.vn/p/home/dvc-tthc-thu-tuc-hanh-chinh-chi-tiet.html?ma_thu_tuc=2630",
+      "source_type": "national_procedure",
+      "retrieved_at_utc": "2026-11-16T08:54:47.288606+00:00",
+      "snapshot_path": ".cache/admin-source-audit/NAT-COPY.txt",
+      "snapshot_sha256": "efbdf920dc4c71d665bad8c3bf55e85de2dcd080b9eb1898fccc8e2c095a3c5a",
+      "snapshot_representation": "reader_text",
+      "published_at": null,
+      "effective_from": null,
+      "effective_status": "not_fully_verified",
+      "training_allowed": false,
+      "redistribution_allowed": false,
+      "review_status": "research_only_pending_rights_and_version_review",
+      "notes": "Mã 2.000815; hiển thị hình thức trực tiếp và nhắc Phòng Tư pháp/thị trấn; cần đối chiếu phân cấp/phiên bản. HN-COPY là hướng dẫn nộp trực tuyến, không chứng minh bỏ yêu cầu đối chiếu bản chính.",
+      "policy_refs": [
+        "ROBOTS-VPCP",
+        "TERMS-NAT"
+      ]
+    },
+    {
+      "source_id": "NAT-SIGN",
+      "procedure_code": "2.000884",
+      "title": "Chứng thực chữ ký trong các văn bản",
+      "canonical_url": "https://vpcp.dichvucong.gov.vn/p/home/dvc-tthc-thu-tuc-hanh-chinh-chi-tiet.html?ma_thu_tuc=2886",
+      "source_type": "national_procedure",
+      "retrieved_at_utc": "2026-11-16T08:54:52.559891+00:00",
+      "snapshot_path": ".cache/admin-source-audit/NAT-SIGN.txt",
+      "snapshot_sha256": "9df522eb5f98b376d80e48ea688cfdb0d6c4abcb68eb19ff6143f05deb7178c9",
+      "snapshot_representation": "reader_text",
+      "published_at": null,
+      "effective_from": null,
+      "effective_status": "not_fully_verified",
+      "training_allowed": false,
+      "redistribution_allowed": false,
+      "review_status": "research_only_pending_rights_and_version_review",
+      "notes": "Mã 2.000884; đọc hồ sơ/phí/thời hạn; chưa có nguồn áp dụng Hà Nội đủ để xác nhận bản hiện hành tại địa phương.",
+      "policy_refs": [
+        "ROBOTS-VPCP",
+        "TERMS-NAT"
+      ]
+    },
+    {
+      "source_id": "NAT-CORRECT",
+      "procedure_code": "1.004859",
+      "title": "Thay đổi, cải chính, bổ sung thông tin hộ tịch, xác định lại dân tộc",
+      "canonical_url": "https://vpcp.dichvucong.gov.vn/p/home/dvc-tthc-thu-tuc-hanh-chinh-chi-tiet.html?ma_thu_tuc=6790",
+      "source_type": "national_procedure",
+      "retrieved_at_utc": "2026-11-16T08:54:58.444705+00:00",
+      "snapshot_path": ".cache/admin-source-audit/NAT-CORRECT.txt",
+      "snapshot_sha256": "ef6d34e11c5ee081f3b000e314a16f1fb4948274c412d60c40a0d401e8cdcf57",
+      "snapshot_representation": "reader_text",
+      "published_at": null,
+      "effective_from": null,
+      "effective_status": "not_fully_verified",
+      "training_allowed": false,
+      "redistribution_allowed": false,
+      "review_status": "research_only_pending_rights_and_version_review",
+      "notes": "Mã 1.004859; lệ phí do HĐND tỉnh/thành phố quyết định; không suy ra con số Hà Nội. Trình tự ở trang chi tiết trống, chưa thẩm định đầy đủ tình trạng hiệu lực văn bản dẫn chiếu.",
+      "policy_refs": [
+        "ROBOTS-VPCP",
+        "TERMS-NAT"
+      ]
+    },
+    {
+      "source_id": "HN-EXTRACT",
+      "procedure_code": "2.000635",
+      "title": "Hà Nội tái cấu trúc thủ tục cấp bản sao trích lục hộ tịch",
+      "canonical_url": "https://ttpvhcc.hanoi.gov.vn/cai-cach-hanh-chinh-va-tin-khac/ha-noi-tai-cau-truc-thu-tuc-cap-ban-sao-trich-luc-ho-tich-ban-sao-giay-khai-sinh-tiet-kiem-hon-160-ty-dong-moi-nam-2850260102122029782.htm",
+      "source_type": "local_news",
+      "retrieved_at_utc": "2026-11-16T08:55:04.392731+00:00",
+      "snapshot_path": ".cache/admin-source-audit/HN-EXTRACT.txt",
+      "snapshot_sha256": "bc9e219a96c85a0931b75ece96191ae786706093ca993766a6b328004cb34a59",
+      "snapshot_representation": "rendered_detail_content_innerText",
+      "published_at": "2026-01-05",
+      "effective_from": null,
+      "effective_status": "not_fully_verified",
+      "training_allowed": false,
+      "redistribution_allowed": false,
+      "review_status": "research_only_pending_rights_and_version_review",
+      "notes": "Bài công bố 05/01/2026, nhắc QĐ1818 ngày24/12/2025 và hiệu lực01/01/2026. Footer yêu cầu ghi rõ nguồn khi phát hành lại thông tin, không coi là giấy phép huấn luyện/phân phối dữ liệu không giới hạn.",
+      "policy_refs": [
+        "ROBOTS-HN"
+      ]
+    },
+    {
+      "source_id": "HN-ANNEX",
+      "procedure_code": "2.000635",
+      "title": "Phương án tái cấu trúc cấp bản sao trích lục — phụ lục liên kết từ bài Hà Nội",
+      "canonical_url": "https://sqhx-hanoi.mediacdn.vn/91579363132710912/2026/1/2/qd-1818-pl-17673355608911154670020.pdf",
+      "source_type": "local_annex",
+      "retrieved_at_utc": "2026-11-16T08:55:09.676759+00:00",
+      "snapshot_path": ".cache/admin-source-audit/HN-ANNEX.txt",
+      "snapshot_sha256": "c0a323324ce6b5ff22ba411ec2d45d0cd6009eee9c0093ff5162695eed261073",
+      "snapshot_representation": "reader_text",
+      "published_at": null,
+      "effective_from": null,
+      "effective_status": "not_fully_verified",
+      "training_allowed": false,
+      "redistribution_allowed": false,
+      "review_status": "research_only_pending_rights_and_version_review",
+      "notes": "Tệp đính kèm từ HN-EXTRACT gồm7trang phương án/phụ lục; không phải toàn văn quyết định có số/ngày ký đầy đủ. Số/ngày ở đầu trống trong text; thời gian B.4 ghi dự kiến03ngày, tối đa10khi xác minh, khácNAT. Bảng chi phí tuân thủ không phải biểu lệ phí hiện hành.",
+      "policy_refs": [
+        "ROBOTS-CDN"
+      ]
+    },
+    {
+      "source_id": "HN-COPY",
+      "procedure_code": "2.000815",
+      "title": "Hướng dẫn chứng thực bản sao — phường Ô Chợ Dừa",
+      "canonical_url": "https://ochodua.hanoi.gov.vn/cai-cach-hanh-chinh/thu-tuc-chung-thuc-ban-sao-tu-ban-chinh-giay-to-van-ban-2832250922082409942.htm",
+      "source_type": "local_guidance",
+      "retrieved_at_utc": "2026-11-16T08:55:15.351859+00:00",
+      "snapshot_path": ".cache/admin-source-audit/HN-COPY.txt",
+      "snapshot_sha256": "9737e7e7a7210ab17db87eb725a50c991c6f38fb0875b9cd2a7b503311c9955a",
+      "snapshot_representation": "rendered_detail_content_innerText",
+      "published_at": "2025-09-18",
+      "effective_from": null,
+      "effective_status": "not_fully_verified",
+      "training_allowed": false,
+      "redistribution_allowed": false,
+      "review_status": "research_only_pending_rights_and_version_review",
+      "notes": "Bài18/09/2025 phườngÔChợDừa: đã đọc phần hướng dẫn đầy đủ bằng trình duyệt, không còn chỉmetadata; chưa kiểm lại UI hiện tại/hiệu lực văn bản.",
+      "policy_refs": [
+        "ROBOTS-OCD"
+      ]
+    },
+    {
+      "source_id": "HN-CONFIRM",
+      "procedure_code": null,
+      "title": "Hướng dẫn xác nhận thông tin hộ tịch trực tuyến",
+      "canonical_url": "https://ttpvhcc.hanoi.gov.vn/video/huong-dan-cong-dan-thuc-hien-thu-tuc-xac-nhan-thong-tin-ho-tich-truc-tuyen-toan-trinh-tren-cong-dich-vu-cong-quoc-gia-2850250922112613773.htm",
+      "source_type": "local_guidance",
+      "retrieved_at_utc": "2026-11-16T08:55:21.051859+00:00",
+      "snapshot_path": ".cache/admin-source-audit/HN-CONFIRM.txt",
+      "snapshot_sha256": "3662f89041460951802448298ba02b45f8ff541d79c0820d36bd80c6431bf86b",
+      "snapshot_representation": "rendered_detail_content_innerText",
+      "published_at": "2025-09-25",
+      "effective_from": null,
+      "effective_status": "not_fully_verified",
+      "training_allowed": false,
+      "redistribution_allowed": false,
+      "review_status": "research_only_pending_rights_and_version_review",
+      "notes": "Bài25/09/2025: đã đọc văn bản hướng dẫn đầy đủ; chưa xác minh mãquốcgia/quyếtđịnh và phiên bản UI hiện tại. Không tự gán mã2.002516 từ địa phương khác.",
+      "policy_refs": [
+        "ROBOTS-HN"
+      ]
+    },
+    {
+      "source_id": "HN-CORRECT",
+      "procedure_code": "1.004859",
+      "title": "Hướng dẫn cải chính hộ tịch trực tuyến",
+      "canonical_url": "https://ttpvhcc.hanoi.gov.vn/video/huong-dan-cong-dan-thuc-hien-thu-tuc-thay-doi-cai-chinh-bo-sung-thong-tin-ho-tich-xac-dinh-lai-dan-toc-truc-tuyen-tren-cong-dich-vu-cong-quoc-gia-2850250807084550697.htm",
+      "source_type": "local_guidance",
+      "retrieved_at_utc": "2026-11-16T08:56:07.463919+00:00",
+      "snapshot_path": ".cache/admin-source-audit/HN-CORRECT.txt",
+      "snapshot_sha256": "7a95e32e419d1537d71c47aca82d7d15993ef3c3d1dc494f4465fd163f6da603",
+      "snapshot_representation": "rendered_article_before_comments_video_not_transcribed",
+      "published_at": "2025-08-08",
+      "effective_from": null,
+      "effective_status": "not_fully_verified",
+      "training_allowed": false,
+      "redistribution_allowed": false,
+      "review_status": "research_only_video_not_transcribed",
+      "notes": "Bài08/08/2025 chủ yếu video: chỉ đọc tiêu đề/mô tả, không phiên âm/kiểm video; không đủ làm căn cứ chi tiết hồ sơ, thời hạn, lệ phí.",
+      "policy_refs": [
+        "ROBOTS-HN"
+      ]
+    }
+  ],
+  "access_policies": [
+    {
+      "policy_id": "ROBOTS-NAT",
+      "url": "https://dichvucong.gov.vn/robots.txt",
+      "retrieved_at_utc": "2026-11-16T08:58:20.125680+00:00",
+      "snapshot_path": ".cache/admin-source-audit/ROBOTS-NAT.txt",
+      "snapshot_sha256": "ddc75c8cacc7099343702138e33c965ee316d0b63aa48afaaaebc1f1f4e98db4",
+      "http_404_observed": false
+    },
+    {
+      "policy_id": "ROBOTS-VPCP",
+      "url": "https://vpcp.dichvucong.gov.vn/robots.txt",
+      "retrieved_at_utc": "2026-11-16T08:58:20.226215+00:00",
+      "snapshot_path": ".cache/admin-source-audit/ROBOTS-VPCP.txt",
+      "snapshot_sha256": "f54f447aa9e96510fe5b394b68621687673b12bf3ca63eada88c6fbae414d663",
+      "http_404_observed": true
+    },
+    {
+      "policy_id": "ROBOTS-HN",
+      "url": "https://ttpvhcc.hanoi.gov.vn/robots.txt",
+      "retrieved_at_utc": "2026-11-16T08:58:20.327107+00:00",
+      "snapshot_path": ".cache/admin-source-audit/ROBOTS-HN.txt",
+      "snapshot_sha256": "66b6620e0e31b9166af28742e052f184050c4667f4f1c18a8062f725d2b44ed9",
+      "http_404_observed": false
+    },
+    {
+      "policy_id": "ROBOTS-OCD",
+      "url": "https://ochodua.hanoi.gov.vn/robots.txt",
+      "retrieved_at_utc": "2026-11-16T08:58:20.465257+00:00",
+      "snapshot_path": ".cache/admin-source-audit/ROBOTS-OCD.txt",
+      "snapshot_sha256": "322876e8d703907ba1f21be9e1fcc23df7c3df1cf97a64e2ed7185f98673b1cc",
+      "http_404_observed": false
+    },
+    {
+      "policy_id": "ROBOTS-CDN",
+      "url": "https://sqhx-hanoi.mediacdn.vn/robots.txt",
+      "retrieved_at_utc": "2026-11-16T08:58:20.599392+00:00",
+      "snapshot_path": ".cache/admin-source-audit/ROBOTS-CDN.txt",
+      "snapshot_sha256": "de8dccf0e6d0bc766cd099eb5b373858a7c8d45e12d2fd841f05c06cf7f4629c",
+      "http_404_observed": true
+    },
+    {
+      "policy_id": "TERMS-NAT",
+      "url": "https://vpcp.dichvucong.gov.vn/p/home/dvc-dieu-khoan-su-dung.html",
+      "retrieved_at_utc": "2026-11-16T08:58:20.688615+00:00",
+      "snapshot_path": ".cache/admin-source-audit/TERMS-NAT.txt",
+      "snapshot_sha256": "59559b61b9e13b546be7bac997a651fa4d5b1a28402fdd597d88228b57c01414",
+      "http_404_observed": false
+    }
+  ],
+  "policy_interpretation": {
+    "robots_national": "User-agent* Allow/; disallow personal/application/login routes; policy applies only its origin",
+    "robots_vpcp": "404 observed, no robots file found; not inherited from national main host, not a copyright license",
+    "robots_hanoi": "User-agent* Allow/; Crawl-delay5; sequential research only",
+    "terms_national": "Reuse must comply with law; no explicit dataset redistribution/training license verified",
+    "hanoi_footer": "Attribution requested on republication; not unconditional dataset/training approval"
+  },
+  "procedure_families": [
+    {
+      "id": "trich-luc",
+      "code": "2.000635",
+      "sources": [
+        "NAT-EXTRACT",
+        "HN-EXTRACT",
+        "HN-ANNEX"
+      ],
+      "status": "hold_version_conflict"
+    },
+    {
+      "id": "chung-thuc-ban-sao",
+      "code": "2.000815",
+      "sources": [
+        "NAT-COPY",
+        "HN-COPY"
+      ],
+      "status": "hold_local_version_review"
+    },
+    {
+      "id": "chung-thuc-chu-ky",
+      "code": "2.000884",
+      "sources": [
+        "NAT-SIGN"
+      ],
+      "status": "hold_missing_local_confirmation"
+    },
+    {
+      "id": "cai-chinh-ho-tich",
+      "code": "1.004859",
+      "sources": [
+        "NAT-CORRECT",
+        "HN-CORRECT"
+      ],
+      "status": "hold_local_video_and_fee_review"
+    },
+    {
+      "id": "xac-nhan-thong-tin-ho-tich",
+      "code": null,
+      "sources": [
+        "HN-CONFIRM"
+      ],
+      "status": "hold_missing_national_confirmation"
+    }
+  ]
+}

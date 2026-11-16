@@ -1,0 +1,27 @@
+{
+  "checked_at_utc": "2026-11-16T09:09:52.126972+00:00",
+  "origin": "agent_executed_research_audit_not_training",
+  "revision": 206607,
+  "source_url": "https://vi.wikisource.org/wiki/Truy%E1%BB%87n_Ki%E1%BB%81u?oldid=206607",
+  "status": "research_only_not_approved_for_training_or_distribution",
+  "actual_verse_lines": 3254,
+  "content_codepoints": 104204,
+  "content_sha256": "75cceb4768cc0a01ab6a3226a9c202101452ecbe640864208d5eee88e0efbc64",
+  "train_codepoints": 93783,
+  "validation_codepoints": 10421,
+  "vocabulary_size_including_unk": 133,
+  "validation_unknown_codepoints": 0,
+  "sequence_length": 128,
+  "window_counts": {
+    "train": 732,
+    "validation": 81
+  },
+  "artifact_hashes_verified": true,
+  "every_window_matches_own_split": true,
+  "train_only_vocabulary_verified": true,
+  "cross_split_boundary_verified": true,
+  "human_rights_review_status": "pending",
+  "training_allowed": false,
+  "distribution_allowed": false,
+  "private_manifest_path": ".cache/char-corpus/audit-206607-final-manifest.json"
+}

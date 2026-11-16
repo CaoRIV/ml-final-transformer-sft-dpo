@@ -1,5 +1,5 @@
 % Generated from proposal.md; edit the Markdown, then rebuild.
-% Markdown SHA256: aff1c61a1fb48cd93f4162352b676a7401cf350de7c340bc944f27af8848d78a
+% Markdown SHA256: 822392782bdac5d3281b3a8aec72e368f15ba780c966b35a4e1c96b6612f0b74
 % Shared template for Pandoc -> XeLaTeX/Tectonic. Content lives in the .md files.
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=22mm,headheight=14pt]{geometry}
@@ -49,7 +49,7 @@
 \vspace{4pt}
 \textbf{Ứng dụng:} Hỏi đáp thủ tục hộ tịch–chứng thực tại Hà Nội.\\
 \textbf{Nhóm:} Cao Văn Hà (trưởng nhóm), Hà Mạnh Thế, Trần Duy Hưng.\\
-\textbf{Phiên bản:} Bản nháp tuần 1 — chưa có dữ liệu/huấn luyện đã kiểm chứng.
+\textbf{Phiên bản:} Bản nháp tuần 1 — có audit nghiên cứu, chưa có dữ liệu huấn luyện được phê duyệt.
 \vspace{5pt}\hrule\vspace{8pt}
 \begin{quote}
 \textbf{Trạng thái:} bản nháp tuần 1, đã thống nhất phạm vi dữ liệu và
@@ -129,10 +129,11 @@ và bảo vệ.
 hẹp}\label{phux1ea1m-vi-cuxf3-chux1ee7-uxfd-hux1eb9p}
 
 Người dùng đã đồng ý chọn \textbf{Hà Nội}, tập trung \textbf{hộ
-tịch--chứng thực}, hướng tới sinh viên, người trẻ và gia đình. Danh mục
-thủ tục và các phiên bản văn bản cụ thể vẫn cần kiểm kê, đối chiếu hiệu
-lực và quyền sử dụng trước thu thập. Mẫu \textbf{5--10 thủ tục và 20--50
-câu hỏi--đáp} là mục tiêu thăm dò nội bộ, chưa phải dữ liệu tồn tại hay
+tịch--chứng thực}, hướng tới sinh viên, người trẻ và gia đình. Vòng
+nghiên cứu đầu đã kiểm 9 nguồn cho 5 họ thủ tục ứng viên và chuẩn bị 20
+QA nháp có dẫn đoạn nguồn. Chưa QA nào được con người phê duyệt hoặc đủ
+điều kiện huấn luyện; chi tiết nằm trong sổ kiểm nguồn và báo cáo pilot.
+Mục tiêu 5--10 thủ tục/20--50 QA là mốc thăm dò nội bộ, không phải
 ngưỡng bắt buộc của giảng viên.
 
 Trong phạm vi đã chọn, sản phẩm tập trung vào hỏi đáp một lượt có trích
@@ -192,6 +193,13 @@ hoặc giấy phép mở đã được kiểm tra. Nhóm sẽ tách train/valida
 và báo cáo PPL validation. Đây là bài kiểm chứng kiến trúc/phương pháp,
 không phải mô hình trợ lý Phần D và không được dùng văn bản hành chính
 chưa có quyền sử dụng.
+
+Đã audit kỹ thuật bản Truyện Kiều Wikisource revision \nolinkurl{206607}
+trong kho cục bộ riêng: trích 3.254 dòng, chia tập liên tục, học từ vựng
+từ train và kiểm cửa sổ không vượt ranh giới. Đây là kiểm tra dữ liệu
+nghiên cứu, \textbf{không phải huấn luyện hoặc phê duyệt quyền dùng}.
+Trước huấn luyện phải hoàn tất review quyền của bản số hóa; không đưa
+corpus vào Git khi chưa được phép.
 
 Cần kiểm chứng từng hạng mục có thể quan sát được: causal mask không lộ
 token tương lai; shape/head của attention đúng; tham số LoRA trainable
@@ -504,10 +512,11 @@ exact/near duplicate và audit citation trước khóa test \\
 }
 
 Phạm vi Hà Nội/hộ tịch--chứng thực và phương án khảo sát/chấm đã được
-đồng ý. Cần giải quyết tiếp: danh mục thủ tục và nguồn cụ thể, điều
-khoản/hiệu lực nguồn, biểu mẫu đồng ý và quy trình ẩn danh, lịch khảo
-sát/chấm, ngân sách Colab và mô hình nền sau pilot. Chưa tuyên bố có dữ
-liệu hành chính hoặc benchmark hoàn chỉnh khi chưa có bằng chứng.
+đồng ý. Đã có danh mục nguồn sơ bộ, 20 QA nháp nghiên cứu và bộ biểu
+mẫu/protocol. Cần giải quyết tiếp: khác biệt thời hạn/phiên bản nguồn,
+nguồn địa phương/biểu phí còn thiếu, quyền dùng nội dung, review QA bởi
+thành viên, xác nhận vận hành khảo sát, lịch, ngân sách Colab và mô hình
+nền sau pilot. Chưa có khảo sát, dữ liệu DPO hoặc benchmark hoàn chỉnh.
 
 \section{8. Tài nguyên và sản phẩm dự
 kiến}\label{tuxe0i-nguyuxean-vuxe0-sux1ea3n-phux1ea9m-dux1ef1-kiux1ebfn}
@@ -534,9 +543,9 @@ các sản phẩm đó đã tồn tại.
   hình ngôn ngữ lớn, học tăng cường và tích hợp}, ngày 12/11/2026: Phần
   I--II (tr. 1--2) và Đề tài 9 (tr. 18--19).
 \item
-  Các đầu mối nguồn hành chính quốc gia/Hà Nội và Truyện Kiều được ghi
-  trong \href{data-plan.pdf}{kế hoạch dữ liệu}. Chúng chưa thay thế sổ
-  nguồn đã kiểm quyền/hiệu lực; chưa có bộ mẫu được nhập kho và kiểm
-  định.
+  \href{data-plan.pdf}{Kế hoạch dữ liệu} dẫn tới sổ nguồn, báo cáo 20 QA
+  nháp, audit Truyện Kiều và bộ đồng ý/khảo sát/chấm. Những bằng chứng
+  kỹ thuật này không thay cho thẩm định quyền/hiệu lực, kiểm thủ công
+  hoặc kết quả huấn luyện.
 \end{enumerate}
 \end{document}
