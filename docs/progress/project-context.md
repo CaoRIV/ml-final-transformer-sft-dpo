@@ -2,7 +2,7 @@
 
 ## Phạm vi phiên làm việc
 
-Hồ sơ tuần 1 của Đề tài 9 — Kiến trúc Transformer và tinh chỉnh mô hình ngôn ngữ; trợ lý hỏi đáp thủ tục hành chính công. Không khởi động lại chọn đề tài. Mục tiêu 85–90/100 là định hướng, không bảo đảm. Nhóm dự kiến ba người, hiện dùng Thành viên 1/2/3.
+Hồ sơ tuần 1 của Đề tài 9 — Kiến trúc Transformer và tinh chỉnh mô hình ngôn ngữ; trợ lý hỏi đáp thủ tục hành chính công. Không khởi động lại chọn đề tài. Mục tiêu 85–90/100 là định hướng, không bảo đảm. Nhóm gồm ba sinh viên tại một trường đại học ở Hà Nội: Cao Văn Hà, Hà Mạnh Thế, Trần Duy Hưng. Cao Văn Hà là trưởng nhóm, phụ trách tổng hợp và nộp bài theo xác nhận của người dùng; tên trường và phân công chuyên môn chưa chốt.
 
 ## Kiểm kê ban đầu và nguồn quyết định
 
@@ -17,6 +17,7 @@ Git ban đầu sạch trên nhánh `main`, có upstream `origin/main`; remote c�
 - Laptop không có GPU đủ mạnh; huấn luyện dự kiến ở Colab T4. Kết quả T4 do người dùng báo, không phải agent đo.
 - Giữ code/tài liệu/cấu hình trong một repo; dữ liệu riêng và trọng số nặng không vào Git. Chỉ push sau yêu cầu rõ.
 - Theo yêu cầu gốc: A20/B25/C15/D30, báo cáo/tái lập/bảo vệ10; báo cáo cuối LaTeX25–40 trang. Các ngưỡng dữ liệu, kiểm định và yêu cầu đánh giá nằm trong bảng đối chiếu, không được ngầm giảm.
+- Người dùng đã đồng ý phương án dữ liệu: Hà Nội, hộ tịch–chứng thực; Truyện Kiều cho mô hình ký tự; khảo sát sinh viên/người thân và hai người chấm độc lập là Hà Mạnh Thế, Trần Duy Hưng, với Cao Văn Hà phân xử sau khi khóa nhãn. Chấp thuận phương án không xác nhận đã có dữ liệu, sự đồng ý của người khảo sát hoặc quyền dùng nguồn; các số lượng khảo sát/sinh cặp là mục tiêu vận hành, chưa đo.
 
 ## Đề xuất kỹ thuật, chưa phải phê duyệt của người dùng
 
@@ -30,11 +31,11 @@ Git ban đầu sạch trên nhánh `main`, có upstream `origin/main`; remote c�
 | Vấn đề | Cần làm | Ảnh hưởng |
 |---|---|---|
 | Phần I nói 2 tuần, phần II có tuần 3 | Hỏi giảng viên; tạm theo phần II, chưa đặt ngày | Lịch nộp |
-| Địa phương và nhóm thủ tục | Người dùng chọn phạm vi; sau đó kiểm tra nguồn thực | Mẫu và chiến lược thu thập |
-| Khảo sát và người chấm | Xác định nhóm người thật có thể tiếp cận, ít nhất2người chấm độc lập, consent | Test thật và500cặp DPO |
-| Model nền, corpus ký tự | Kiểm tra nguồn/license và pilot | Huấn luyện A/D |
+| Danh mục thủ tục và nguồn cụ thể | Phạm vi Hà Nội/hộ tịch–chứng thực đã được đồng ý; kiểm văn bản, hiệu lực, điều khoản và robots trước thu thập | Mẫu và chiến lược thu thập |
+| Tổ chức khảo sát và chấm | Phương án người khảo sát/người chấm đã được đồng ý; cần lịch, biểu mẫu đồng ý, quy trình ẩn danh và rubric trước thực hiện | Test thật và 500 cặp DPO |
+| Model nền, bản văn ký tự | Model nền còn mở; chọn Truyện Kiều nhưng cần đóng băng bản số hóa, điều kiện sử dụng và hash trước nhập kho | Huấn luyện A/D |
 | Ngân sách Colab/Drive | Xác nhận khả năng dùng, đường dẫn lưu bền vững | 5 lần chạy và resume |
-| Tên/phân công | Nhóm điền sau | Nộp hồ sơ |
+| Phân công chuyên môn | Trưởng nhóm và phương án Thế/Hưng chấm độc lập, Hà phân xử đã được đồng ý; còn bố trí lịch và xác nhận phân công chuyên môn | Nộp hồ sơ và tổ chức thực hiện |
 | Q,K,V bài C.1 | Xin dữ liệu chính thức giảng viên | Không tự tạo đáp án chính thức |
 | Logprob C.4 | Xác nhận bộ số giảng viên yêu cầu nếu có | Không gắn số minh họa thành đề gốc |
 | Quyền PDF và remote | Kiểm tra quyền chia sẻ, xác nhận remote trước push | Không công khai ngoài ý muốn |
@@ -54,8 +55,17 @@ Git ban đầu sạch trên nhánh `main`, có upstream `origin/main`; remote c�
 
 Hồ sơ nháp, bảng đối chiếu, hướng dẫn repo và notebook môi trường là sản phẩm của phiên này; không phải bằng chứng đã hoàn thành A–D. Chưa có datasheet/model card/LaTeX cuối kỳ vì chưa tới giai đoạn và chưa có dữ liệu/mô hình.
 
-1. Chốt địa phương, nhóm thủ tục và khả năng khảo sát/chấm độc lập.
+1. Cụ thể hóa phạm vi đã đồng ý thành danh mục thủ tục/nguồn; chuẩn bị biểu mẫu đồng ý, khảo sát và hướng dẫn chấm; xác định lịch và trách nhiệm thực hiện.
 2. Kiểm tra điều khoản/robots/nguồn hiện hành, lấy mẫu5–10 thủ tục và20–50QA nếu được phép; lưu URL/thời điểm/hash/đoạn dẫn, kiểm thủ công toàn bộ mẫu.
 3. Hoàn thiện hồ sơ tuần1 từ mẫu thực; xác nhận lịch giảng viên.
 4. Chạy notebook Colab, lưu báo cáo bền vững; chốt API/package theo tài liệu chính thức rồi pilot SFT và DPO riêng.
 5. SFT sơ bộ cần đủ sớm để sinh và chấm dữ liệu DPO trước mốc tuần2; nếu không đạt phải báo rủi ro và xin điều chỉnh, không giả dữ liệu hay âm thầm giảm yêu cầu.
+
+## Bàn giao bản LaTeX/PDF tuần 1
+
+- Đã tạo `docs/proposal/proposal.tex` + `proposal.pdf` (**7 trang**) và `data-plan.tex` + `data-plan.pdf` (**11 trang**); cả hai giữ toàn bộ nội dung Markdown, không cắt bảng/schema để ép số trang nội bộ.
+- Markdown tiếp tục là nguồn nội dung; `scripts/build_week1_pdfs.py` sinh LaTeX bằng Pandoc và biên dịch bằng Tectonic. Mẫu/bộ lọc và hướng dẫn tái lập nằm trong `docs/proposal/`.
+- Đã đồng bộ những đoạn còn nói phạm vi/người chấm chưa được đồng ý; phân biệt chấp thuận kế hoạch với dữ liệu, consent, quyền dùng nguồn và kết quả thực tế.
+- Đã biên dịch bằng Pandoc 3.14/Tectonic 0.17.0 portable ngoài repo, xác thực SHA-256 archive theo bản phát hành chính thức. Không cài lại PyTorch; công cụ xem PDF cài vào thư mục riêng ngoài môi trường ML.
+- Kiểm tra: đã xem tổng quan mọi trang, chi tiết trang đầu/công thức/bảng; font nhúng; tên tiếng Việt và mục cuối; hash Markdown–LaTeX; không trang trắng hoặc text ngoài khổ giấy. Log cuối không có overfull, thiếu glyph hoặc cảnh báo thay font. Tectonic còn chẩn đoán Fontconfig thiếu cấu hình mặc định, nhưng dùng tệp font bundle chỉ định trực tiếp và thoát mã 0. Chưa kiểm Overleaf/máy khác.
+- Đây vẫn là **bản nháp chưa nộp**. Chưa có mẫu thủ tục/QA đã kiểm duyệt, biểu mẫu khảo sát/đồng ý hoàn chỉnh, nguồn được nhập kho hoặc huấn luyện. Biên dịch PDF không thay thế các bằng chứng đó.

@@ -12,13 +12,37 @@ Bộ dữ liệu phục vụ ba mục tiêu tách biệt:
 
 Đề tài không dùng PPO hay RAG. Không coi mô hình là nguồn pháp lý, không thu hồ sơ cá nhân, không thu thông tin định danh để “cá nhân hóa” câu trả lời. Dataset chỉ nhằm kiểm chứng nghiên cứu trong phạm vi thủ tục đã công bố, không thay thế cổng/cơ quan có thẩm quyền.
 
-Trước bất kỳ crawl, tải hay khảo sát nào, nhóm phải chốt ba câu hỏi tối thiểu:
+Trước bất kỳ thu thập tự động hoặc khảo sát nào, nhóm phải kiểm tra ba điều kiện vận hành:
 
-1. **Địa phương/cơ quan và nhóm thủ tục nào** sẽ thuộc phạm vi?
-2. **Có thể tiếp cận người khảo sát với consent bằng văn bản hay không?** Nếu không, không được mô tả test là câu hỏi thực của người dùng.
-3. **Hai người nào có thể chấm preference độc lập?** Cần xác định vai trò, thời gian và quy tắc phân xử.
+1. **Danh mục thủ tục và phiên bản nguồn nào** nằm trong phạm vi Hà Nội/hộ tịch–chứng thực đã thống nhất?
+2. **Có thể tiếp cận người khảo sát với đồng ý bằng văn bản hay không?** Kế hoạch khảo sát đã được chấp thuận, nhưng chỉ gọi là test người dùng thật khi thực sự thu thập hợp lệ.
+3. **Lịch chấm độc lập và phân xử thế nào?** Phương án Thế/Hưng chấm độc lập, Hà phân xử đã được đồng ý; cần hướng dẫn chấm và bố trí thời gian.
 
-Các quyết định về văn bản nguồn, tài khoản/Drive, ngân sách, tên thành viên, ngày nộp và mô hình cuối cũng đang mở. Không tự suy diễn phạm vi “hộ gia đình” hoặc bất kỳ thủ tục cụ thể nào trước khi có quyết định (1).
+Người dùng đã đồng ý phương án Hà Nội/hộ tịch–chứng thực, Truyện Kiều cho mô hình ký tự, khảo sát sinh viên/người thân và bố trí Hà Mạnh Thế–Trần Duy Hưng chấm độc lập, Cao Văn Hà phân xử. Đây là chấp thuận kế hoạch, không phải bằng chứng đã có người tham gia, nhãn hay quyền thu thập. Nhóm gồm Cao Văn Hà (trưởng nhóm, tổng hợp và nộp bài), Hà Mạnh Thế, Trần Duy Hưng. Tài khoản/Drive, ngân sách, ngày nộp và mô hình nền cuối vẫn mở; cần cụ thể hóa lịch chấm và quy trình đồng ý trước khảo sát.
+
+### 1.1. Phương án dữ liệu đã được đồng ý
+
+**Đã được người dùng đồng ý về phương án:** địa bàn Hà Nội; đối tượng trọng tâm là sinh viên/người trẻ và gia đình; nhóm thủ tục hộ tịch–chứng thực. Bắt đầu mẫu nhỏ từ cấp bản sao trích lục hộ tịch/bản sao giấy khai sinh và chứng thực bản sao từ bản chính; xem xét thêm chứng thực chữ ký, xác nhận thông tin hộ tịch, cải chính/bổ sung hộ tịch sau khi kiểm tra từng nguồn. Không coi các trường hợp cấp bản sao cho từng loại giấy tờ là nhiều thủ tục độc lập chỉ để tăng số lượng. Chưa đưa đất đai, tranh chấp, yếu tố nước ngoài vào phạm vi chính.
+
+Nguồn đã khảo sát sơ bộ:
+
+- [Cổng Dịch vụ công quốc gia — mã 2.000635](https://vpcp.dichvucong.gov.vn/p/home/dvc-tthc-thu-tuc-hanh-chinh-chi-tiet.html?ma_thu_tuc=1943): đã đọc nội dung về hồ sơ, cách nộp, thời hạn, lệ phí và căn cứ pháp lý. Có trường trống và thông tin cấp thực hiện/địa chỉ cần đối chiếu; chưa coi toàn trang là đáp án chuẩn áp dụng tại Hà Nội.
+- [Cổng phường Ô Chợ Dừa — chứng thực bản sao](https://ochodua.hanoi.gov.vn/cai-cach-hanh-chinh/thu-tuc-chung-thuc-ban-sao-tu-ban-chinh-giay-to-van-ban-2832250922082409942.htm): công cụ đọc hiện chỉ lấy được tiêu đề và mô tả, chưa xác minh đầy đủ nội dung thủ tục.
+- [Trung tâm Phục vụ hành chính công Hà Nội — thông tin tái cấu trúc thủ tục trích lục](https://ttpvhcc.hanoi.gov.vn/cai-cach-hanh-chinh-va-tin-khac/ha-noi-tai-cau-truc-thu-tuc-cap-ban-sao-trich-luc-ho-tich-ban-sao-giay-khai-sinh-tiet-kiem-hon-160-ty-dong-moi-nam-2850260102122029782.htm): mới đọc metadata nhắc Quyết định 1818/QĐ-TTPVHCC; đây là đầu mối kiểm tra phiên bản địa phương, không thay văn bản quyết định gốc.
+
+Đây là các đầu mối nghiên cứu, **không phải dữ liệu đã nhập kho hay nguồn đã được duyệt quyền thu thập/phân phối**. Chưa kiểm robots.txt/điều khoản từng cổng. Không lấy danh sách hồ sơ đã xử lý, danh tính công dân hoặc thông tin nộp hồ sơ làm dữ liệu. Đối chiếu quy định quốc gia với quy trình địa phương, ngày hiệu lực và hình thức nộp; không chép lệ phí hay thời hạn giữa các địa phương.
+
+Để đạt 2.000 QA có giá trị, đánh giá độ phủ sau mẫu 5–10 thủ tục/20–50 QA; nếu nguồn không đủ tình huống độc lập thì đề xuất mở rộng trong hộ tịch–chứng thực, không nhân bản hàng trăm cách diễn đạt của cùng câu hỏi. Chưa hứa số lượng thủ tục cần thiết trước kiểm kê.
+
+**Corpus ký tự đã chọn về phương án:** [Truyện Kiều trên Wikisource](https://vi.wikisource.org/wiki/Truy%E1%BB%87n_Ki%E1%BB%81u). Đã đọc phần văn bản và nhãn phạm vi công cộng của trang; liên kết phiên bản hiển thị `oldid=206607`. Khi nhập kho cần chốt revision, trích riêng thân tác phẩm, ghi công Nguyễn Du và nguồn, kiểm điều kiện của bản số hóa, lưu hash; không lấy menu/chú thích giao diện làm văn bản huấn luyện. Chia đoạn liên tục train/validation trước khi tạo cửa sổ token; không để cửa sổ chồng lấp vượt ranh giới split. Từ vựng học từ train, có cách xử lý ký tự chưa gặp. Văn bản thơ nhỏ phù hợp mục tiêu kiểm chứng A nhưng dễ overfit và không đại diện văn xuôi hành chính; PPL chỉ diễn giải trong corpus này. Không đưa văn bản Kiều vào SFT hành chính.
+
+**Khảo sát test đề xuất:** mời người từ 18 tuổi trở lên trong lớp, câu lạc bộ và mạng lưới người thân có nhu cầu tìm hiểu thủ tục. Mục tiêu vận hành ban đầu 50–80 người, mỗi người tự đặt 2–3 câu hỏi thật sự muốn biết; tương ứng 100–240 câu thô trước lọc, không bảo đảm số test hợp lệ. Đề không ấn định số người hay số câu test này. Không yêu cầu mỗi người cố nghĩ đủ số câu, không đưa QA mẫu hoặc câu trả lời mô hình cho họ chép. Thu tự nguyện, không gắn điểm học tập, không mặc định đồng ý vì quen biết.
+
+Biểu mẫu dự kiến hỏi: đồng ý tham gia sau thông tin mục đích/quyền rút; đã đủ 18 tuổi hay chưa; từng làm/đang tìm hiểu nhóm thủ tục nào (không hỏi số hồ sơ); câu hỏi muốn được giải đáp; câu hỏi có đang liên quan Hà Nội hay không. Không thu tên, mã sinh viên, email tự động, địa chỉ cụ thể hoặc ảnh giấy tờ. Xác nhận hình thức đồng ý điện tử đáp ứng yêu cầu bằng văn bản trước thu; biểu mẫu không được lưu tự động nội dung nhạy cảm chưa kiểm soát. Hướng dẫn người tham gia không nhập PII và có quy trình ẩn danh trước lưu dữ liệu nghiên cứu. Cần quy định rõ thời hạn rút trước khi phá liên kết định danh; sau ẩn danh hoàn toàn không hứa truy tìm được dữ liệu từng người.
+
+Khảo sát chủ yếu sinh viên là mẫu thuận tiện, không đại diện toàn bộ cư dân Hà Nội. Giữ câu hỏi ngoài phạm vi phát sinh tự nhiên để đánh giá từ chối; nếu không đủ, thu thêm câu hỏi thật cho nhóm này, không giả câu hỏi AI là khảo sát. Khóa test và tách họ thủ tục theo thiết kế trước tạo QA train; các câu bị trùng/rò rỉ phải xử lý trước huấn luyện, không sau khi xem điểm.
+
+**Phương án chấm DPO đã được đồng ý:** Hà Mạnh Thế và Trần Duy Hưng chấm độc lập; Cao Văn Hà phân xử sau khi khóa nhãn và tính đồng thuận. Ba người tập chấm một lô hiệu chuẩn riêng trước khi chấm chính thức; lịch thực hiện cần xác định. Đề xuất sinh khoảng 650–750 cặp thô, giữ ít nhất 500 cặp train hợp lệ và validation riêng sau loại hòa/lỗi; số sinh này không bảo đảm đủ cặp hợp lệ. Đáp án phải sinh từ checkpoint SFT thật, không viết tay chosen/rejected thay thế. Hai người cùng chấm mọi cặp, không chia đôi 250 cặp/người. Chấm mù đánh giá cuối phải dùng tập khác dữ liệu DPO; nếu không có người chấm ngoài nhóm, nêu giới hạn thiên lệch nội bộ.
 
 ## 2. Bốn nguồn/lớp dữ liệu và tiêu chí nhập kho
 
@@ -31,7 +55,7 @@ Các quyết định về văn bản nguồn, tài khoản/Drive, ngân sách, t
 
 Cách triển khai ưu tiên là **đủ 2.000 QA train và 500 cặp DPO train, cộng validation riêng**, vì train/validation không nên dùng chung record. Đây là đề xuất bảo thủ để đáp ứng ngưỡng của đề bài sau chia tách, không phải cam kết số lượng đã có. Quy mô `USER_TEST` sẽ chỉ được đặt sau khi biết khả năng khảo sát và số cụm người tham gia; không làm đầy bằng dữ liệu mô phỏng.
 
-Một pilot 5–10 thủ tục với 20–50 QA có thể giúp thử schema, citation, split và rubric. Pilot đó là đề xuất **chưa thu thập**, phải chờ phạm vi và quyền dùng nguồn. Pilot không thay thế bộ train yêu cầu.
+Một pilot 5–10 thủ tục với 20–50 QA có thể giúp thử schema, citation, split và rubric. Mẫu này **chưa thu thập**, phải kiểm danh mục nguồn và quyền sử dụng trong phạm vi đã thống nhất trước khi thực hiện. Pilot không thay thế bộ train yêu cầu và không phải ngưỡng nộp tuần 1 của giảng viên.
 
 ## 3. Sổ nguồn, provenance và phiên bản
 
@@ -185,7 +209,7 @@ Ngưỡng đề bài là ít nhất 500 cặp so sánh. Kế hoạch chỉ có t
 
 ## 6. Split, phiên bản và quyền truy cập
 
-Mỗi release dữ liệu phải có `dataset_version`, ngày tạo, danh sách file + SHA-256, source/normalization/label/rubric version, split manifest, count theo status và changelog. Bất kỳ thay đổi nào ảnh hưởng text, citation, nhãn, split hoặc nguồn tạo release mới. Huấn luyện phải tham chiếu một `dataset_version` bất biến.
+Mỗi release dữ liệu phải có `dataset_version`, ngày tạo, danh sách file + SHA-256, phiên bản nguồn, quy tắc chuẩn hóa, nhãn và rubric; manifest chia tập, số lượng theo trạng thái và changelog. Bất kỳ thay đổi nào ảnh hưởng text, citation, nhãn, split hoặc nguồn tạo release mới. Huấn luyện phải tham chiếu một `dataset_version` bất biến.
 
 Quyền truy cập tối thiểu:
 

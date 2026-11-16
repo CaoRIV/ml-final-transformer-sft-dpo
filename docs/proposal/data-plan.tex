@@ -1,0 +1,899 @@
+% Generated from data-plan.md; edit the Markdown, then rebuild.
+% Markdown SHA256: a73a5ddba37a3f6a536275db56397825488b291714c69d8c8f1767c8b44e6569
+% Shared template for Pandoc -> XeLaTeX/Tectonic. Content lives in the .md files.
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\setmonofont{texgyrecursor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic,Scale=MatchLowercase]
+\usepackage{amsmath,amssymb}
+\usepackage{array,booktabs,longtable,calc}
+\usepackage{graphicx}
+\usepackage{xurl}
+\usepackage[unicode,hidelinks]{hyperref}
+\usepackage{bookmark}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{microtype}
+\hypersetup{pdftitle={Kế hoạch dữ liệu tuần
+1},pdfauthor={Cao Văn Hà; Hà Mạnh Thế; Trần Duy Hưng},pdflang={vi-VN}}
+\urlstyle{tt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\linespread{1.08}
+\setlist{nosep,leftmargin=*,topsep=4pt}
+\setcounter{secnumdepth}{0}
+\titleformat{\section}{\large\bfseries}{\thesection}{0pt}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0pt}{}
+\titlespacing*{\section}{0pt}{12pt}{5pt}
+\titlespacing*{\subsection}{0pt}{9pt}{4pt}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.16}
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{6pt}
+\setlength{\emergencystretch}{2em}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Đề tài 9 — Hồ sơ tuần 1}
+\fancyhead[R]{\small Bản nháp}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\begin{document}
+{\LARGE\bfseries Kế hoạch dữ liệu tuần 1\par}
+\vspace{4pt}
+{\large Kiến trúc Transformer và tinh chỉnh mô hình ngôn ngữ\par}
+\vspace{4pt}
+\textbf{Ứng dụng:} Hỏi đáp thủ tục hộ tịch–chứng thực tại Hà Nội.\\
+\textbf{Nhóm:} Cao Văn Hà (trưởng nhóm), Hà Mạnh Thế, Trần Duy Hưng.\\
+\textbf{Phiên bản:} Bản nháp tuần 1 — chưa có dữ liệu/huấn luyện đã kiểm chứng.
+\vspace{5pt}\hrule\vspace{8pt}
+\begin{quote}
+\textbf{Trạng thái:} kế hoạch tuần 1, chưa phải datasheet của một bộ dữ
+liệu đã thu thập. Các ngưỡng, mẫu thăm dò và quy trình dưới đây chuyển
+yêu cầu của Đề tài 9 thành công việc có thể kiểm tra; chúng không chứng
+minh dữ liệu, quyền dùng nguồn hay người tham gia đã sẵn sàng.
+\end{quote}
+
+\section{1. Mục đích, ranh giới và quyết định tiền điều
+kiện}\label{mux1ee5c-ux111uxedch-ranh-giux1edbi-vuxe0-quyux1ebft-ux111ux1ecbnh-tiux1ec1n-ux111iux1ec1u-kiux1ec7n}
+
+Bộ dữ liệu phục vụ ba mục tiêu tách biệt:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  huấn luyện/kiểm chứng mô hình ngôn ngữ ký tự nhỏ ở nhánh Phần A từ
+  corpus có quyền dùng;
+\item
+  SFT trợ lý hỏi đáp thủ tục bằng câu hỏi--đáp có citation tới đoạn
+  nguồn;
+\item
+  DPO từ cặp câu trả lời SFT cho cùng prompt, do tối thiểu hai người
+  chấm độc lập đánh giá; và test tách biệt bằng câu hỏi người dùng thật
+  nếu có consent.
+\end{enumerate}
+
+Đề tài không dùng PPO hay RAG. Không coi mô hình là nguồn pháp lý, không
+thu hồ sơ cá nhân, không thu thông tin định danh để ``cá nhân hóa'' câu
+trả lời. Dataset chỉ nhằm kiểm chứng nghiên cứu trong phạm vi thủ tục đã
+công bố, không thay thế cổng/cơ quan có thẩm quyền.
+
+Trước bất kỳ thu thập tự động hoặc khảo sát nào, nhóm phải kiểm tra ba
+điều kiện vận hành:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Danh mục thủ tục và phiên bản nguồn nào} nằm trong phạm vi Hà
+  Nội/hộ tịch--chứng thực đã thống nhất?
+\item
+  \textbf{Có thể tiếp cận người khảo sát với đồng ý bằng văn bản hay
+  không?} Kế hoạch khảo sát đã được chấp thuận, nhưng chỉ gọi là test
+  người dùng thật khi thực sự thu thập hợp lệ.
+\item
+  \textbf{Lịch chấm độc lập và phân xử thế nào?} Phương án Thế/Hưng chấm
+  độc lập, Hà phân xử đã được đồng ý; cần hướng dẫn chấm và bố trí thời
+  gian.
+\end{enumerate}
+
+Người dùng đã đồng ý phương án Hà Nội/hộ tịch--chứng thực, Truyện Kiều
+cho mô hình ký tự, khảo sát sinh viên/người thân và bố trí Hà Mạnh
+Thế--Trần Duy Hưng chấm độc lập, Cao Văn Hà phân xử. Đây là chấp thuận
+kế hoạch, không phải bằng chứng đã có người tham gia, nhãn hay quyền thu
+thập. Nhóm gồm Cao Văn Hà (trưởng nhóm, tổng hợp và nộp bài), Hà Mạnh
+Thế, Trần Duy Hưng. Tài khoản/Drive, ngân sách, ngày nộp và mô hình nền
+cuối vẫn mở; cần cụ thể hóa lịch chấm và quy trình đồng ý trước khảo
+sát.
+
+\subsection{1.1. Phương án dữ liệu đã được đồng
+ý}\label{phux1b0ux1a1ng-uxe1n-dux1eef-liux1ec7u-ux111uxe3-ux111ux1b0ux1ee3c-ux111ux1ed3ng-uxfd}
+
+\textbf{Đã được người dùng đồng ý về phương án:} địa bàn Hà Nội; đối
+tượng trọng tâm là sinh viên/người trẻ và gia đình; nhóm thủ tục hộ
+tịch--chứng thực. Bắt đầu mẫu nhỏ từ cấp bản sao trích lục hộ tịch/bản
+sao giấy khai sinh và chứng thực bản sao từ bản chính; xem xét thêm
+chứng thực chữ ký, xác nhận thông tin hộ tịch, cải chính/bổ sung hộ tịch
+sau khi kiểm tra từng nguồn. Không coi các trường hợp cấp bản sao cho
+từng loại giấy tờ là nhiều thủ tục độc lập chỉ để tăng số lượng. Chưa
+đưa đất đai, tranh chấp, yếu tố nước ngoài vào phạm vi chính.
+
+Nguồn đã khảo sát sơ bộ:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://vpcp.dichvucong.gov.vn/p/home/dvc-tthc-thu-tuc-hanh-chinh-chi-tiet.html?ma_thu_tuc=1943}{Cổng
+  Dịch vụ công quốc gia --- mã 2.000635}: đã đọc nội dung về hồ sơ, cách
+  nộp, thời hạn, lệ phí và căn cứ pháp lý. Có trường trống và thông tin
+  cấp thực hiện/địa chỉ cần đối chiếu; chưa coi toàn trang là đáp án
+  chuẩn áp dụng tại Hà Nội.
+\item
+  \href{https://ochodua.hanoi.gov.vn/cai-cach-hanh-chinh/thu-tuc-chung-thuc-ban-sao-tu-ban-chinh-giay-to-van-ban-2832250922082409942.htm}{Cổng
+  phường Ô Chợ Dừa --- chứng thực bản sao}: công cụ đọc hiện chỉ lấy
+  được tiêu đề và mô tả, chưa xác minh đầy đủ nội dung thủ tục.
+\item
+  \href{https://ttpvhcc.hanoi.gov.vn/cai-cach-hanh-chinh-va-tin-khac/ha-noi-tai-cau-truc-thu-tuc-cap-ban-sao-trich-luc-ho-tich-ban-sao-giay-khai-sinh-tiet-kiem-hon-160-ty-dong-moi-nam-2850260102122029782.htm}{Trung
+  tâm Phục vụ hành chính công Hà Nội --- thông tin tái cấu trúc thủ tục
+  trích lục}: mới đọc metadata nhắc Quyết định 1818/QĐ-TTPVHCC; đây là
+  đầu mối kiểm tra phiên bản địa phương, không thay văn bản quyết định
+  gốc.
+\end{itemize}
+
+Đây là các đầu mối nghiên cứu, \textbf{không phải dữ liệu đã nhập kho
+hay nguồn đã được duyệt quyền thu thập/phân phối}. Chưa kiểm
+robots.txt/điều khoản từng cổng. Không lấy danh sách hồ sơ đã xử lý,
+danh tính công dân hoặc thông tin nộp hồ sơ làm dữ liệu. Đối chiếu quy
+định quốc gia với quy trình địa phương, ngày hiệu lực và hình thức nộp;
+không chép lệ phí hay thời hạn giữa các địa phương.
+
+Để đạt 2.000 QA có giá trị, đánh giá độ phủ sau mẫu 5--10 thủ tục/20--50
+QA; nếu nguồn không đủ tình huống độc lập thì đề xuất mở rộng trong hộ
+tịch--chứng thực, không nhân bản hàng trăm cách diễn đạt của cùng câu
+hỏi. Chưa hứa số lượng thủ tục cần thiết trước kiểm kê.
+
+\textbf{Corpus ký tự đã chọn về phương án:}
+\href{https://vi.wikisource.org/wiki/Truy\%E1\%BB\%87n_Ki\%E1\%BB\%81u}{Truyện
+Kiều trên Wikisource}. Đã đọc phần văn bản và nhãn phạm vi công cộng của
+trang; liên kết phiên bản hiển thị \nolinkurl{oldid=206607}. Khi nhập
+kho cần chốt revision, trích riêng thân tác phẩm, ghi công Nguyễn Du và
+nguồn, kiểm điều kiện của bản số hóa, lưu hash; không lấy menu/chú thích
+giao diện làm văn bản huấn luyện. Chia đoạn liên tục train/validation
+trước khi tạo cửa sổ token; không để cửa sổ chồng lấp vượt ranh giới
+split. Từ vựng học từ train, có cách xử lý ký tự chưa gặp. Văn bản thơ
+nhỏ phù hợp mục tiêu kiểm chứng A nhưng dễ overfit và không đại diện văn
+xuôi hành chính; PPL chỉ diễn giải trong corpus này. Không đưa văn bản
+Kiều vào SFT hành chính.
+
+\textbf{Khảo sát test đề xuất:} mời người từ 18 tuổi trở lên trong lớp,
+câu lạc bộ và mạng lưới người thân có nhu cầu tìm hiểu thủ tục. Mục tiêu
+vận hành ban đầu 50--80 người, mỗi người tự đặt 2--3 câu hỏi thật sự
+muốn biết; tương ứng 100--240 câu thô trước lọc, không bảo đảm số test
+hợp lệ. Đề không ấn định số người hay số câu test này. Không yêu cầu mỗi
+người cố nghĩ đủ số câu, không đưa QA mẫu hoặc câu trả lời mô hình cho
+họ chép. Thu tự nguyện, không gắn điểm học tập, không mặc định đồng ý vì
+quen biết.
+
+Biểu mẫu dự kiến hỏi: đồng ý tham gia sau thông tin mục đích/quyền rút;
+đã đủ 18 tuổi hay chưa; từng làm/đang tìm hiểu nhóm thủ tục nào (không
+hỏi số hồ sơ); câu hỏi muốn được giải đáp; câu hỏi có đang liên quan Hà
+Nội hay không. Không thu tên, mã sinh viên, email tự động, địa chỉ cụ
+thể hoặc ảnh giấy tờ. Xác nhận hình thức đồng ý điện tử đáp ứng yêu cầu
+bằng văn bản trước thu; biểu mẫu không được lưu tự động nội dung nhạy
+cảm chưa kiểm soát. Hướng dẫn người tham gia không nhập PII và có quy
+trình ẩn danh trước lưu dữ liệu nghiên cứu. Cần quy định rõ thời hạn rút
+trước khi phá liên kết định danh; sau ẩn danh hoàn toàn không hứa truy
+tìm được dữ liệu từng người.
+
+Khảo sát chủ yếu sinh viên là mẫu thuận tiện, không đại diện toàn bộ cư
+dân Hà Nội. Giữ câu hỏi ngoài phạm vi phát sinh tự nhiên để đánh giá từ
+chối; nếu không đủ, thu thêm câu hỏi thật cho nhóm này, không giả câu
+hỏi AI là khảo sát. Khóa test và tách họ thủ tục theo thiết kế trước tạo
+QA train; các câu bị trùng/rò rỉ phải xử lý trước huấn luyện, không sau
+khi xem điểm.
+
+\textbf{Phương án chấm DPO đã được đồng ý:} Hà Mạnh Thế và Trần Duy Hưng
+chấm độc lập; Cao Văn Hà phân xử sau khi khóa nhãn và tính đồng thuận.
+Ba người tập chấm một lô hiệu chuẩn riêng trước khi chấm chính thức;
+lịch thực hiện cần xác định. Đề xuất sinh khoảng 650--750 cặp thô, giữ
+ít nhất 500 cặp train hợp lệ và validation riêng sau loại hòa/lỗi; số
+sinh này không bảo đảm đủ cặp hợp lệ. Đáp án phải sinh từ checkpoint SFT
+thật, không viết tay chosen/rejected thay thế. Hai người cùng chấm mọi
+cặp, không chia đôi 250 cặp/người. Chấm mù đánh giá cuối phải dùng tập
+khác dữ liệu DPO; nếu không có người chấm ngoài nhóm, nêu giới hạn thiên
+lệch nội bộ.
+
+\section{2. Bốn nguồn/lớp dữ liệu và tiêu chí nhập
+kho}\label{bux1ed1n-nguux1ed3nlux1edbp-dux1eef-liux1ec7u-vuxe0-tiuxeau-chuxed-nhux1eadp-kho}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Mã lớp
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mục đích
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nguồn được phép và đơn vị thu thập
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Điều kiện nhập kho
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Không được suy diễn
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\nolinkurl{CHAR_CORPUS} & Huấn luyện LM ký tự nhỏ cho Phần A, báo cáo
+PPL validation & Văn bản tiếng Việt thuộc phạm vi công cộng hoặc có giấy
+phép mở, ví dụ Truyện Kiều \textbf{nếu} phiên bản/tình trạng quyền được
+kiểm tra & Tài liệu có URL/định danh, giấy phép hoặc căn cứ phạm vi công
+cộng, bản lưu/fingerprint và split train/val & Không dùng nội dung hành
+chính chưa rõ quyền; không gọi corpus là dữ liệu Phần D \\
+\nolinkurl{ADMIN_SOURCE} & Làm căn cứ cho QA/citation & Mô tả thủ tục
+công khai tại \textbf{Cổng Dịch vụ công quốc gia và cổng của địa phương
+đã chốt}, cùng văn bản/căn cứ công khai liên quan & Kiểm tra điều khoản,
+robots.txt và giới hạn truy cập; lưu thời điểm, phiên bản/ngày hiệu lực
+khi có, URL và span & Không bịa URL/cơ quan/văn bản; không lấy dữ liệu
+cá nhân hay vượt kiểm soát truy cập \\
+\nolinkurl{SFT_QA} và \nolinkurl{DPO_PAIR} & SFT, validation và DPO & QA
+được tạo từ \nolinkurl{ADMIN_SOURCE}; hai ứng viên trả lời sinh từ
+checkpoint SFT trên prompt đã khóa & Citation xác minh; SFT kiểm thủ
+công theo mức tối thiểu từng split; preference có hai nhãn độc lập, rồi
+mới phân xử & Không ghi nhận 2.000 QA hoặc 500 cặp khi chưa đủ count đã
+kiểm; không dùng một người chấm thay cho hai người \\
+\nolinkurl{USER_TEST} & Test độc lập và đánh giá mù & Câu hỏi do người
+dùng thật cung cấp qua khảo sát sau consent bằng văn bản & Ẩn danh trước
+lưu; tách hoàn toàn train/val; lưu consent-state không lưu định danh;
+kiểm tra thuộc cụm người khảo sát & Không dùng câu hỏi ``tự nghĩ ra'' và
+gọi là khảo sát thật; không giữ tên, liên hệ, hồ sơ hay dữ liệu nhạy cảm
+không cần thiết \\
+\end{longtable}
+}
+
+Cách triển khai ưu tiên là \textbf{đủ 2.000 QA train và 500 cặp DPO
+train, cộng validation riêng}, vì train/validation không nên dùng chung
+record. Đây là đề xuất bảo thủ để đáp ứng ngưỡng của đề bài sau chia
+tách, không phải cam kết số lượng đã có. Quy mô \nolinkurl{USER_TEST} sẽ
+chỉ được đặt sau khi biết khả năng khảo sát và số cụm người tham gia;
+không làm đầy bằng dữ liệu mô phỏng.
+
+Một pilot 5--10 thủ tục với 20--50 QA có thể giúp thử schema, citation,
+split và rubric. Mẫu này \textbf{chưa thu thập}, phải kiểm danh mục
+nguồn và quyền sử dụng trong phạm vi đã thống nhất trước khi thực hiện.
+Pilot không thay thế bộ train yêu cầu và không phải ngưỡng nộp tuần 1
+của giảng viên.
+
+\section{3. Sổ nguồn, provenance và phiên
+bản}\label{sux1ed5-nguux1ed3n-provenance-vuxe0-phiuxean-bux1ea3n}
+
+Mọi item nguồn đi qua sổ nguồn trước khi sinh QA. Không scrape hàng loạt
+trước khi kiểm điều kiện của từng domain và biểu mẫu nguồn.
+
+\subsection{\texorpdfstring{3.1. Schema
+\nolinkurl{source_document}}{3.1. Schema }}\label{schema-source_document}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kiểu/gợi ý
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ý nghĩa
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\nolinkurl{source_id} & UUID/chuỗi bất biến & Khóa nội bộ của một tài
+liệu/phiên bản nguồn \\
+\nolinkurl{source_type} & enum: \nolinkurl{char_corpus},
+\nolinkurl{service_page}, \nolinkurl{legal_text}, \nolinkurl{guidance} &
+Loại nguồn; không dùng tên mơ hồ \\
+\nolinkurl{publisher_or_authority} & string & Tác giả/cơ quan phát hành
+đúng như nguồn thể hiện \\
+\nolinkurl{title} & string & Tiêu đề tài liệu/trang \\
+\nolinkurl{canonical_url} & URL & URL chuẩn hoặc định danh công khai;
+lưu nguyên văn \\
+\nolinkurl{retrieved_at_utc} & ISO-8601 & Thời điểm nhóm truy xuất \\
+\nolinkurl{published_at} / \nolinkurl{effective_from} /
+\nolinkurl{effective_to} & nullable date & Ngày công bố/hiệu lực/hết
+hiệu lực nếu nguồn công bố \\
+\nolinkurl{source_version_label} & nullable string & Ký hiệu phiên
+bản/số văn bản; không tự đặt thành ``mới nhất'' \\
+\nolinkurl{content_hash} & SHA-256 & Fingerprint bản nội dung đã dùng \\
+\nolinkurl{license_or_terms_url} & URL/text & Nơi kiểm tra giấy
+phép/điều khoản dùng \\
+\nolinkurl{robots_checked_at} & nullable ISO-8601 & Thời điểm kiểm
+robots, nếu thu từ web \\
+\nolinkurl{access_method} & enum + note & tải tay/API/crawl được phép;
+rate-limit áp dụng \\
+\nolinkurl{scope_group} & string & Nhóm thủ tục đã chốt để phục vụ
+split \\
+\nolinkurl{ingest_status} & enum & \nolinkurl{pending_review},
+\nolinkurl{accepted}, \nolinkurl{rejected}, \nolinkurl{superseded} \\
+\nolinkurl{reviewer_id} & pseudonymous ID & Người kiểm provenance/quyền;
+không là PII công khai \\
+\nolinkurl{notes} & text & Giới hạn, thay đổi hoặc lý do loại \\
+\end{longtable}
+}
+
+Nếu phát hiện văn bản bị thay thế, tạo \nolinkurl{source_id}/phiên bản
+mới hoặc liên kết \nolinkurl{supersedes_source_id}; không ghi đè bản cũ
+rồi mất khả năng tái lập. Khi nguồn thiếu ngày hiệu lực, trường phải là
+null và báo cáo nêu giới hạn.
+
+\subsection{\texorpdfstring{3.2. Schema
+\nolinkurl{source_span}}{3.2. Schema }}\label{schema-source_span}
+
+Citation phải trỏ đến span bất biến của bản nguồn đã lưu, không chỉ đến
+trang chủ.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kiểu/gợi ý
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ý nghĩa
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\nolinkurl{span_id} & UUID & Khóa span \\
+\nolinkurl{source_id} & FK \nolinkurl{source_document} & Bản nguồn chứa
+span \\
+\nolinkurl{locator_type} & \nolinkurl{heading},
+\nolinkurl{article_clause}, \nolinkurl{page}, \nolinkurl{char_offset},
+\nolinkurl{xpath} & Cách xác định vị trí \\
+\nolinkurl{locator_start}, \nolinkurl{locator_end} & string/int & Biên
+span tái lập trong bản đã hash \\
+\nolinkurl{heading_path} & nullable string & Đường dẫn đề
+mục/Điều--Khoản khi có \\
+\nolinkurl{quoted_text} & text & Đoạn trích đã chuẩn hóa tối thiểu để
+review \\
+\nolinkurl{normalization_version} & string & Quy tắc trích xuất/chuẩn
+hóa áp dụng \\
+\nolinkurl{span_hash} & SHA-256 & Fingerprint span \\
+\nolinkurl{claim_tags} & array & Ví dụ: \nolinkurl{required_documents},
+\nolinkurl{process}, \nolinkurl{time_limit}, \nolinkurl{fee},
+\nolinkurl{legal_basis} \\
+\nolinkurl{review_status} & enum & \nolinkurl{unreviewed},
+\nolinkurl{verified}, \nolinkurl{rejected}, \nolinkurl{stale} \\
+\end{longtable}
+}
+
+\nolinkurl{quoted_text} và bản nguồn có thể cần hạn chế quyền truy cập
+nếu điều khoản nguồn yêu cầu; public manifest chỉ nên công khai URL,
+locator và hash khi không được phép phân phối toàn văn.
+
+\section{4. Schema cho QA SFT, DPO và
+test}\label{schema-cho-qa-sft-dpo-vuxe0-test}
+
+\subsection{\texorpdfstring{4.1. Schema
+\nolinkurl{qa_record}}{4.1. Schema }}\label{schema-qa_record}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kiểu/gợi ý
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ý nghĩa
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\nolinkurl{qa_id} & UUID & Khóa bất biến \\
+\nolinkurl{record_version} & semver/string & Phiên bản record sau chỉnh
+sửa \\
+\nolinkurl{split} & \nolinkurl{train}, \nolinkurl{validation},
+\nolinkurl{test_user}, \nolinkurl{holdout} & Split khóa; test user không
+được đưa lại train \\
+\nolinkurl{scope_group} & string & Nhóm thủ tục để split theo nhóm \\
+\nolinkurl{procedure_family_id} & string & Họ thủ tục; dùng phát hiện rò
+rỉ cùng quy trình \\
+\nolinkurl{question_text} & text & Prompt tiếng Việt đã loại PII \\
+\nolinkurl{question_origin} & \nolinkurl{authoring},
+\nolinkurl{user_survey}, \nolinkurl{paraphrase} & Nguồn gốc câu hỏi,
+không nói mơ hồ ``thật'' \\
+\nolinkurl{answer_text} & text & Đáp án SFT tham chiếu, có giới hạn/ từ
+chối khi phù hợp \\
+\nolinkurl{citation_span_ids} & array FK & Một hoặc nhiều span chống đỡ
+từng mệnh đề chính \\
+\nolinkurl{citation_rendering} & text & Dạng citation hiển thị cho mô
+hình/người chấm \\
+\nolinkurl{source_version_ids} & array FK & Phiên bản nguồn thực sự
+dùng \\
+\nolinkurl{claim_coverage} & structured array & Claim → span\_id → trạng
+thái đủ/không đủ căn cứ \\
+\nolinkurl{language} & \nolinkurl{vi} & Ngôn ngữ \\
+\nolinkurl{provenance} & structured object & Tác giả/generator, thời
+điểm, template, record nguồn \\
+\nolinkurl{label_status} & enum & \nolinkurl{draft},
+\nolinkurl{citation_checked}, \nolinkurl{approved},
+\nolinkurl{rejected}, \nolinkurl{superseded} \\
+\nolinkurl{labeler_id}, \nolinkurl{reviewer_id} & pseudonymous IDs &
+Người tạo/kiểm; không đưa PII vào dataset \\
+\nolinkurl{quality_flags} & array & \nolinkurl{needs_refusal},
+\nolinkurl{stale_source}, \nolinkurl{ambiguous},
+\nolinkurl{duplicate_candidate}\ldots{} \\
+\nolinkurl{created_at}, \nolinkurl{updated_at} & ISO-8601 & Audit
+trail \\
+\end{longtable}
+}
+
+QA sinh bán tự động chỉ được chấp nhận sau review theo citation. Với
+\textbf{mỗi split SFT có dùng cho huấn luyện/chọn cấu hình}, lấy mẫu
+ngẫu nhiên phân tầng theo \nolinkurl{scope_group},
+\nolinkurl{question_origin} và nguồn với khối lượng ít nhất
+\(\lceil0{,}20N_{split}\rceil\); vì vậy riêng 2.000 QA train cần kiểm
+thủ công ít nhất 400 record, và validation cũng có mẫu kiểm riêng theo
+quy tắc này. Lưu \nolinkurl{qa_id}, reviewer, ngày, kiểm đủ
+citation/đúng nội dung/đúng scope và quyết định. Nếu lỗi hệ thống xuất
+hiện, mở rộng review hoặc sửa batch có liên quan; không chỉ thay vài mẫu
+lỗi.
+
+\subsection{\texorpdfstring{4.2. Schema
+\nolinkurl{preference_pair}}{4.2. Schema }}\label{schema-preference_pair}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kiểu/gợi ý
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ý nghĩa
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\nolinkurl{pair_id} & UUID & Khóa cặp ưu tiên \\
+\nolinkurl{pair_version} & string & Phiên bản cặp/rubric \\
+\nolinkurl{split} & \nolinkurl{train}, \nolinkurl{validation},
+\nolinkurl{test} & Tách validation DPO khỏi train; test chỉ khi thiết kế
+cho phép \\
+\nolinkurl{qa_id} / \nolinkurl{prompt_id} & FK & Cùng một prompt cho hai
+ứng viên \\
+\nolinkurl{prompt_text} & text/hash & Prompt chính xác đã sinh; có thể
+tham chiếu nếu lặp \\
+\nolinkurl{sft_checkpoint_id} & string/hash & Checkpoint sinh ứng
+viên \\
+\nolinkurl{generation_config} & JSON & temperature, top-p, max tokens,
+seed và template \\
+\nolinkurl{candidate_0_id}, \nolinkurl{candidate_1_id},
+\nolinkurl{candidate_0_text}, \nolinkurl{candidate_1_text} & ID bất biến
++ text & Hai candidate theo thứ tự canonical, độc lập với A/B hiển thị
+cho từng người chấm \\
+\nolinkurl{candidate_0_citations}, \nolinkurl{candidate_1_citations} &
+array FK/text & Citation người chấm có thể đối chiếu \\
+\nolinkurl{rubric_version} & string & Phiên bản hướng dẫn chấm \\
+\nolinkurl{rater_1_id}, \nolinkurl{rater_2_id} & pseudonymous IDs & Danh
+tính vận hành tối thiểu của hai người chấm độc lập \\
+\nolinkurl{rater_1_display_map}, \nolinkurl{rater_2_display_map} & JSON
+& Ánh xạ A/B được hiển thị →
+\nolinkurl{candidate_0_id}/\nolinkurl{candidate_1_id}; cho phép đảo thứ
+tự riêng từng người \\
+\nolinkurl{rater_1_label_raw}, \nolinkurl{rater_2_label_raw} &
+\nolinkurl{A}, \nolinkurl{B}, \nolinkurl{tie}, \nolinkurl{invalid} &
+Nhãn độc lập như người chấm đã thấy \\
+\nolinkurl{rater_1_label_normalized},
+\nolinkurl{rater_2_label_normalized} & \nolinkurl{candidate_0},
+\nolinkurl{candidate_1}, \nolinkurl{tie}, \nolinkurl{invalid} & Nhãn quy
+về candidate thực bằng display map; dùng cho agreement \\
+\nolinkurl{rater_1_reason}, \nolinkurl{rater_2_reason} & coded/text & Lý
+do theo rubric, hạn chế PII \\
+\nolinkurl{rater_1_at}, \nolinkurl{rater_2_at} & ISO-8601 & Audit thời
+điểm \\
+\nolinkurl{independent_agreement} & derived & Đồng ý/bất đồng
+\textbf{trước} phân xử, dựa trên nhãn normalized \\
+\nolinkurl{adjudication_label} & \nolinkurl{candidate_0},
+\nolinkurl{candidate_1}, \nolinkurl{exclude}, null & Quyết định sau bất
+đồng \\
+\nolinkurl{adjudicator_id}, \nolinkurl{adjudicated_at},
+\nolinkurl{adjudication_reason} & audit fields & Ai/quy tắc đã phân
+xử \\
+\nolinkurl{chosen_text}, \nolinkurl{rejected_text} & derived & Chỉ tạo
+sau khi có nhãn quyết định \\
+\nolinkurl{provenance} & structured & Record/SFT checkpoint/nguồn liên
+quan \\
+\nolinkurl{status} & enum & \nolinkurl{pending}, \nolinkurl{labeled},
+\nolinkurl{adjudicated}, \nolinkurl{excluded} \\
+\end{longtable}
+}
+
+Hai người chấm phải xem candidate với thứ tự A/B đã đảo ngẫu nhiên, độc
+lập và không biết nhãn của nhau. Họ dùng rubric: (i) đúng với span
+nguồn, (ii) đầy đủ yêu cầu, (iii) citation đúng và có thể kiểm tra, (iv)
+từ chối đúng khi ngoài phạm vi/thiếu căn cứ, (v) không bịa.
+\nolinkurl{tie} và \nolinkurl{invalid} là kết quả hợp lệ; cặp như vậy
+không được ép thành preference train. Trước phân xử, tính tỷ lệ đồng
+thuận trên nhãn \nolinkurl{normalized} và Cohen's \(\kappa\) trên các
+nhãn hợp lệ \nolinkurl{{candidate_0, candidate_1, tie}};
+\nolinkurl{invalid} được báo riêng và loại khỏi mẫu tính \(\kappa\) theo
+protocol này. Sau khi lưu nhãn độc lập, bất đồng mới được phân xử bằng
+quy tắc đã công bố (ví dụ người thứ ba hoặc họp có biên bản); báo cáo tỷ
+lệ đồng thuận, \(\kappa\), tỷ lệ loại và cách xử lý, không chỉ ghi nhãn
+cuối.
+
+\subsection{\texorpdfstring{4.3. Schema \nolinkurl{user_survey_record}
+và tách dữ liệu con
+người}{4.3. Schema  và tách dữ liệu con người}}\label{schema-user_survey_record-vuxe0-tuxe1ch-dux1eef-liux1ec7u-con-ngux1b0ux1eddi}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kiểu/gợi ý
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ý nghĩa
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\nolinkurl{survey_question_id} & UUID ngẫu nhiên & Khóa câu hỏi đã ẩn
+danh \\
+\nolinkurl{respondent_cluster_id} & UUID ngẫu nhiên, tách bảng liên hệ &
+Cụm bootstrap, không dùng định danh thật \\
+\nolinkurl{consent_version} & string & Phiên bản văn bản consent mà
+người trả lời đã đồng ý \\
+\nolinkurl{consent_status}, \nolinkurl{consented_at} & enum/time & Chỉ
+nhận \nolinkurl{granted} trước khi ingest \\
+\nolinkurl{withdrawn_at} & nullable time & Dấu vết xóa/loại nếu rút đồng
+ý \\
+\nolinkurl{question_text_redacted} & text & Câu hỏi đã xóa PII trước lưu
+dataset \\
+\nolinkurl{scope_group} & string & Kiểm tra thuộc phạm vi \\
+\nolinkurl{survey_channel} & coarse enum & Kênh tổng quát, không lưu
+liên hệ/địa chỉ chính xác \\
+\nolinkurl{test_split_status} & \nolinkurl{eligible},
+\nolinkurl{excluded}, \nolinkurl{heldout} & Khóa khỏi train/val/prompt
+authoring \\
+\nolinkurl{redaction_reviewer_id}, \nolinkurl{redaction_status} & audit
+& Ai kiểm ẩn danh và trạng thái \\
+\end{longtable}
+}
+
+Văn bản consent, thông tin liên hệ (nếu cần để vận hành khảo sát) và câu
+hỏi đã ẩn danh phải lưu tách lớp truy cập. Dataset phân tích không chứa
+tên, số điện thoại, địa chỉ, mã hồ sơ, ảnh giấy tờ, thông tin sức
+khỏe/tài chính hoặc định danh tương tự. Nếu một câu hỏi chứa chi tiết
+không thể ẩn danh mà vẫn giữ ý nghĩa, loại nó. Khi chưa có khảo sát hợp
+lệ, \nolinkurl{USER_TEST} không được tạo bằng placeholder.
+
+\section{5. Quy trình tạo dữ liệu và kiểm soát chất
+lượng}\label{quy-truxecnh-tux1ea1o-dux1eef-liux1ec7u-vuxe0-kiux1ec3m-souxe1t-chux1ea5t-lux1b0ux1ee3ng}
+
+\subsection{5.1. Ingest nguồn → span →
+QA}\label{ingest-nguux1ed3n-span-qa}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Chốt domain/cơ quan/nhóm thủ tục; kiểm điều khoản, robots.txt, tần
+  suất và phạm vi truy cập trước ingest.
+\item
+  Lưu metadata \nolinkurl{source_document}, bản/manifest hoặc hash;
+  không sửa im lặng. Phân đoạn theo đề mục, Điều--Khoản, trang hoặc
+  offset có thể tái xác định.
+\item
+  Lập \nolinkurl{source_span}; người kiểm xác nhận span có thể trả lời
+  claim nào.
+\item
+  Sinh/soạn QA theo template nhưng không vượt phạm vi span. Mỗi mệnh đề
+  chính của đáp án phải liên kết span; nếu nguồn không đủ, đáp án phải
+  giới hạn/từ chối thay vì suy luận.
+\item
+  Kiểm citation thủ công với khối lượng \(\lceil0{,}20N_{split}\rceil\)
+  cho từng split SFT dùng cho train/validation; riêng 2.000 QA train tối
+  thiểu là 400 record. Lưu kết quả review và sửa theo batch khi phát
+  hiện lỗi chung.
+\item
+  Khóa split, tạo manifest số lượng/hashes; chỉ sau đó chuẩn bị dữ liệu
+  huấn luyện.
+\end{enumerate}
+
+Nhóm không nên chờ đủ toàn bộ 2.000 QA mới thử pipeline. Cuối tuần 1
+hoặc đầu tuần 2, sau khi có pilot đúng quyền và citation, chạy
+\textbf{SFT pilot sớm} để phát hiện lỗi tokenizer/template/citation/VRAM
+và để checkpoint SFT tạo ứng viên DPO. Pilot không được biến thành tuyên
+bố rằng 500 cặp DPO đã tồn tại.
+
+\subsection{5.2. Tạo preference cho
+DPO}\label{tux1ea1o-preference-cho-dpo}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Đóng băng checkpoint SFT pilot hoặc checkpoint đã chọn, tokenizer và
+  prompt template.
+\item
+  Với cùng mỗi prompt, sinh hai candidate theo config đã ghi (có
+  diversity đủ để nảy sinh lựa chọn); lưu seed/config/checkpoint, không
+  sửa text sau khi thấy nhãn.
+\item
+  Randomize A/B và giao cho hai người đánh giá độc lập dùng rubric có ví
+  dụ/calibration.
+\item
+  Khóa hai nhãn ban đầu, tính agreement; chỉ sau đó phân xử bất đồng
+  theo quy tắc đã công bố. \nolinkurl{tie}, \nolinkurl{invalid} hoặc
+  không đủ căn cứ bị loại khỏi train DPO và vẫn lưu lý do.
+\item
+  Tách train/validation DPO bằng khóa nhóm prompt/thủ tục, công bố count
+  cuối theo \nolinkurl{status}; không trộn cặp cùng prompt qua split.
+\end{enumerate}
+
+Ngưỡng đề bài là ít nhất 500 cặp so sánh. Kế hoạch chỉ có thể coi ``500
+train pairs'' đạt khi cặp đã qua hai nhãn, phân xử nếu cần, kiểm dữ liệu
+và split. Tính \nolinkurl{pair_id} raw, số chấm độc lập, số đồng
+thuận/bất đồng, số bị loại và số train/validation riêng; không báo một
+con số gộp che mất cặp không dùng được.
+
+\subsection{5.3. Kiểm soát trùng lặp, near duplicate và rò rỉ
+split}\label{kiux1ec3m-souxe1t-truxf9ng-lux1eb7p-near-duplicate-vuxe0-ruxf2-rux1ec9-split}
+
+\begin{itemize}
+\tightlist
+\item
+  Chuẩn hóa Unicode (NFC), khoảng trắng và dạng citation trước khi so
+  exact hash; lưu phiên bản chuẩn hóa.
+\item
+  Phát hiện near duplicate bằng chữ ký n-gram/MinHash hoặc embedding đã
+  được chọn trong manifest, sau đó review thủ công các cặp qua ngưỡng.
+  Không chỉ so text đáp án: phải xét prompt, procedure family, source
+  span và paraphrase.
+\item
+  Split cấp \textbf{nhóm thủ tục/họ thủ tục} và khi phù hợp theo
+  nguồn/phiên bản, thay vì random từng QA. \nolinkurl{holdout} là một
+  hay nhiều họ thủ tục không có QA, source span hay paraphrase liên quan
+  trong train/validation; nó đo khả năng khái quát sang tri thức thủ tục
+  chưa thấy, không phải bằng chứng mô hình biết pháp lý mới.
+\item
+  Giữ toàn bộ \nolinkurl{USER_TEST} ngoài authoring, SFT, DPO train/val,
+  tuning prompt và selection hyperparameter. Nếu người khảo sát gửi
+  nhiều câu hỏi, tất cả phải nằm trong một
+  \nolinkurl{respondent_cluster_id} và không được phân tán qua split.
+\item
+  Sau split chạy audit cross-split: exact hash, near-duplicate
+  candidates, shared \nolinkurl{source_span_id}, shared
+  \nolinkurl{procedure_family_id}, prompt/candidate DPO và
+  \nolinkurl{respondent_cluster_id}. Chiến lược strict split này không
+  được nới sau khi xem kết quả mô hình; nếu cần sửa xung đột trước
+  train, tạo split/dataset version mới và ghi lý do.
+\end{itemize}
+
+\section{6. Split, phiên bản và quyền truy
+cập}\label{split-phiuxean-bux1ea3n-vuxe0-quyux1ec1n-truy-cux1eadp}
+
+Mỗi release dữ liệu phải có \nolinkurl{dataset_version}, ngày tạo, danh
+sách file + SHA-256, phiên bản nguồn, quy tắc chuẩn hóa, nhãn và rubric;
+manifest chia tập, số lượng theo trạng thái và changelog. Bất kỳ thay
+đổi nào ảnh hưởng text, citation, nhãn, split hoặc nguồn tạo release
+mới. Huấn luyện phải tham chiếu một \nolinkurl{dataset_version} bất
+biến.
+
+Quyền truy cập tối thiểu:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Raw/source có điều kiện:} người phụ trách dữ liệu; không công
+  bố lại nếu điều khoản không cho phép.
+\item
+  \textbf{QA/DPO đã review:} nhóm thực hiện, có audit log thay đổi.
+\item
+  \textbf{Survey consent/liên hệ:} người được ủy quyền tối thiểu; không
+  chuyển cho người chấm/huấn luyện.
+\item
+  \textbf{User test đã ẩn danh, khóa:} evaluator được chỉ định; không
+  đưa cho người tune mô hình cho đến khi khóa thử nghiệm theo kế hoạch.
+\end{itemize}
+
+Nếu không thể phát hành raw data, repository vẫn phải chứa script thu
+thập/biến đổi hợp lệ, schema, manifest/hash và hướng dẫn tái lập trong
+phạm vi điều khoản. Datasheet cuối phải mô tả nguồn gốc, giấy phép, lọc,
+PII/consent, split, giới hạn và cách yêu cầu xóa/rút dữ liệu con người.
+
+\section{7. Kế hoạch đánh giá và thống
+kê}\label{kux1ebf-houx1ea1ch-ux111uxe1nh-giuxe1-vuxe0-thux1ed1ng-kuxea}
+
+\subsection{7.1. Đơn vị đánh
+giá}\label{ux111ux1a1n-vux1ecb-ux111uxe1nh-giuxe1}
+
+So sánh mô hình gốc, SFT và SFT+DPO trên cùng \nolinkurl{USER_TEST} khóa
+nếu khảo sát hợp lệ. Người chấm mù model identity và thứ tự phương án;
+họ kiểm tính đúng nội dung, đủ ý, citation đúng, ảo giác và từ chối
+đúng. Vì hệ không có RAG và không cập nhật tri thức thời gian thực, điểm
+tốt trên \nolinkurl{holdout} không cho phép suy ra câu trả lời đúng cho
+văn bản pháp lý mới/chưa có trong nguồn; giới hạn này phải nêu trong báo
+cáo. Nếu chưa có \nolinkurl{USER_TEST}, báo cáo trung thực rằng thiếu
+tập test người dùng thật thay vì thay nó bằng train-derived QA.
+
+Protocol khóa phải định nghĩa mẫu số trước khi chấm:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Độ chính xác mệnh đề thông tin (claim accuracy):} số mệnh đề
+  được người chấm xác nhận đúng và được nguồn hỗ trợ / tổng mệnh đề
+  thông tin trong các câu trả lời được chấm. Mệnh đề không xác định hoặc
+  không đủ nguồn vẫn ở mẫu số, không ở tử số; báo riêng số lượng này.
+  Câu trả lời không có mệnh đề thông tin được đánh giá ở chỉ số từ chối,
+  không tự cho accuracy bằng 1.
+\item
+  \textbf{Tỷ lệ ảo giác theo câu trả lời:} số câu trả lời có ít nhất một
+  mệnh đề thông tin không được nguồn hỗ trợ / tổng câu trả lời được
+  chấm. Đây là định nghĩa vận hành ``không được nguồn hỗ trợ'', không
+  khẳng định mọi mệnh đề đó sai trong thế giới thực; báo số câu bị loại
+  do lỗi kỹ thuật riêng.
+\item
+  \textbf{Từ chối ngoài phạm vi:} số câu ngoài phạm vi hoặc không có căn
+  cứ mà mô hình từ chối/điều hướng đúng / tổng câu thuộc nhóm đó.
+  \textbf{Từ chối sai trong phạm vi:} số câu trong phạm vi, có căn cứ đủ
+  và được protocol xem là trả lời được nhưng mô hình từ chối / tổng câu
+  trong nhóm này; đây không được gộp thành ``từ chối đúng''.
+\item
+  \textbf{Win rate chấm mù theo cặp:} \((W+0{,}5T)/(W+T+L)\), trong đó
+  \(W,T,L\) là số thắng, hòa, thua của một mô hình trên các cặp hợp lệ;
+  báo số \nolinkurl{invalid}/loại riêng.
+\end{itemize}
+
+Mọi CI là \textbf{95\% bootstrap} theo cụm người khảo sát
+(\nolinkurl{respondent_cluster_id}) khi một người có nhiều câu; nếu mỗi
+câu thuộc người khác hoặc không có lặp người, đơn vị cluster chính là
+câu hỏi. Nêu số câu, số cụm, số lần resample, statistic và seed
+bootstrap; không coi các quan sát seed × prompt là độc lập.
+
+\subsection{7.2. Năm run và chọn cấu
+hình}\label{nux103m-run-vuxe0-chux1ecdn-cux1ea5u-huxecnh}
+
+Đề bài yêu cầu trung bình ± độ lệch chuẩn trên ít nhất 5 run hoặc 5
+fold. Đề xuất chạy 5 seed \textbf{độc lập} cho cấu hình cuối (cố định
+dataset split và protocol); mỗi run phải có seed, checkpoint, config,
+môi trường và log riêng. Với seed \(s\), chuỗi run là
+\nolinkurl{SFT_s → DPO_s} với \nolinkurl{ref = SFT_s}; tập ưu tiên đã
+khóa chung từ pilot, không phải chấm lại 500 cặp cho mỗi seed. Nhánh mô
+hình ký tự Phần A cũng chạy ít nhất 5 seed độc lập để báo validation
+PPL. Báo cáo mean và sample SD:
+
+\[s=\sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2},\qquad n=5.\]
+
+Năm lần generation/decoding từ một checkpoint chỉ là biến thiên đầu ra,
+\textbf{không} phải năm run. Baseline checkpoint/config cố định không
+được gán sample SD bằng lặp output. Tương tự, không gộp các quan sát
+seed × prompt như thể chúng độc lập để tạo CI hẹp; variation across
+training run và uncertainty across questions là hai tầng khác nhau, cần
+báo riêng hoặc dùng quy trình tổng hợp đã định trước.
+
+Tất cả hyperparameter (mô hình nền, LoRA/QLoRA \(r\), \(\alpha\),
+learning rate, epoch, length, DPO \(\beta\), generation template) chỉ
+chọn bằng validation. Test khóa chỉ dùng một lần cho tổng kết. Nếu tính
+toán không đủ để hoàn thành 5 run, nhóm phải xin điều chỉnh \textbf{với
+giảng viên} và ghi rõ số run thực hiện cùng lý do; không ngầm giảm
+chuẩn, không chỉ dựa vào đồng thuận nội bộ, và không thay 5 seed bằng 5
+generations.
+
+\subsection{7.3. Cầu nối A--D cần dữ liệu
+thật}\label{cux1ea7u-nux1ed1i-ad-cux1ea7n-dux1eef-liux1ec7u-thux1eadt}
+
+Để đáp ứng yêu cầu phần A tham gia so sánh hoặc dùng trực tiếp ở D, một
+minibatch từ \nolinkurl{DPO_PAIR} Phần D đã review sẽ được token hóa
+theo template SFT/DPO. Cả custom DPO và thư viện chuẩn nhận cùng
+\nolinkurl{input_ids}, response token mask, candidate chosen/rejected,
+policy/ref checkpoint và reduction. Với vanilla DPO,
+\nolinkurl{sequence log-prob} là \textbf{tổng} log-prob token thuộc phần
+trả lời đã mask và loss là trung bình theo ví dụ trong batch, không
+chuẩn hóa trung bình token như PPL. Log artifact phải lưu
+\nolinkurl{pair_id} (hoặc hash nếu dữ liệu hạn chế), length/mask, tổng
+log-prob chosen/rejected, margin, loss, gradient đã chọn để đối chiếu và
+sai khác số học.
+
+Đây là đối chiếu trên log-prob và gradient từ forward/backward pass
+\textbf{thật}, không dùng scalar điền tay. Với trạng thái tham số chung,
+so sánh gradient autograd theo logit đã mask hoặc tham số adapter có thể
+đối chiếu. Trước khi quy lỗi khác biệt, kiểm tokenizer, padding side,
+mask prompt/response, truncation, label shift, beta, ref adapter và
+batch reduction. Kết quả chỉ được kết luận sau run; kế hoạch này không
+khẳng định sai số hay độ khớp đã đo.
+
+\section{8. Rủi ro dữ liệu và điều kiện
+dừng}\label{rux1ee7i-ro-dux1eef-liux1ec7u-vuxe0-ux111iux1ec1u-kiux1ec7n-dux1eebng}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Rủi ro
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Dấu hiệu
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Hành động
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Nguồn thiếu quyền/robots hoặc thay đổi & Không xác minh được terms/phiên
+bản; hash khác sau truy xuất & Không ingest/không phân phối; ghi
+rejected/superseded và thay nguồn hợp lệ sau khi chốt phạm vi \\
+Citation không hỗ trợ claim & Review phát hiện span không nói điều đáp
+án khẳng định & Sửa/loại QA, gắn \nolinkurl{needs_refusal}; audit các
+record chung template/span \\
+QA/pair chưa đủ số lượng đã kiểm & Count
+\nolinkurl{approved}/\nolinkurl{adjudicated} thấp & Pilot và điều phối
+sớm; báo count thật; không đánh dấu hoàn thành ngưỡng \\
+Thiếu hai người chấm & Không có nhãn độc lập & Dừng tạo train DPO từ cặp
+đó; chốt người chấm trước khi mở rộng generation \\
+Không có consent/khảo sát & Không có \nolinkurl{granted} hoặc PII chưa
+redaction & Không lưu vào test; không tuyên bố test người dùng thật \\
+Near duplicate/rò rỉ split & Audit phát hiện chung
+prompt/span/family/cluster & Di chuyển/loại record, tạo split version
+mới trước train; ghi quyết định \\
+GPU/budget làm chậm pilot/5 run & OOM hoặc hết quota & Pilot SFT và DPO
+ref riêng; log cấu hình; xin điều chỉnh minh bạch nếu không thể đáp ứng
+5 run \\
+\end{longtable}
+}
+
+\section{9. Deliverables tuần 1 và mốc tuần
+2}\label{deliverables-tuux1ea7n-1-vuxe0-mux1ed1c-tuux1ea7n-2}
+
+\textbf{Tuần 1:} chốt ba tiền điều kiện; tạo sổ nguồn/schema/rubric và
+split policy; kiểm một mẫu nguồn hợp lệ; thử 5--10 thủ tục/20--50 QA chỉ
+khi quyền và phạm vi đã được chốt; khởi động SFT pilot cuối tuần 1 nếu
+có dữ liệu pilot đủ điều kiện.
+
+\textbf{Cuối tuần 1--đầu tuần 2:} dùng checkpoint pilot để tạo candidate
+DPO, chạy hai người chấm độc lập và thống kê agreement; tiếp tục tăng dữ
+liệu SFT/DPO theo count đã review. Mốc tuần 2 của đề bài là bộ dữ liệu
+Phần D cùng A/B cho báo cáo tiến độ; vì vậy cần ưu tiên thiết lập
+pipeline preference sớm thay vì đợi đến sau khi đóng dữ liệu SFT.
+
+Không có mục nào trong tài liệu này tuyên bố rằng 2.000 QA, 500 cặp,
+khảo sát thật, checkpoint hay 5 run đã hoàn thành. Mọi số liệu cuối phải
+dẫn về dataset/run manifest tương ứng.
+\end{document}

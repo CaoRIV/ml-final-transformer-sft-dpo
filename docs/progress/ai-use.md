@@ -11,3 +11,10 @@
 - Trách nhiệm nhóm: đọc lại nguồn, xác minh các giả thiết, lựa chọn phạm vi/mô hình, hiểu và giải thích được code và chứng minh; ghi sửa đổi do thành viên thực hiện, công cụ/phiên bản và phạm vi AI ở các phiên sau. Chưa ghi tên người kiểm duyệt vì chưa có xác nhận.
 
 Khi lập báo cáo cuối, chuyển nhật ký này thành phụ lục khai báo trung thực, bổ sung các lần hỗ trợ về code/chứng minh/dữ liệu và phần đã được con người kiểm chứng. Không ghi “không dùng AI” hoặc coi văn bản AI là nguồn học thuật thay năm bài báo/đề gốc.
+
+## Phiên dàn trang hồ sơ tuần 1
+
+- Hỗ trợ AI: rà soát trạng thái đã chốt/còn mở; chỉnh diễn đạt để không nhầm chấp thuận kế hoạch với kết quả; tạo mẫu LaTeX, bộ lọc Pandoc và script sinh/biên dịch hai PDF từ Markdown.
+- Giữ Markdown làm nguồn nội dung; không tạo kết quả khảo sát, huấn luyện hoặc đồng thuận người chấm. Nguồn LaTeX/PDF không phải bằng chứng đã hoàn thành A–D.
+- Công cụ biên dịch portable và công cụ kiểm tra PDF được chuẩn bị ngoài repo, tách khỏi môi trường huấn luyện. Bằng chứng biên dịch và giới hạn kiểm tra được cập nhật trong hồ sơ tiến độ sau khi chạy.
+- Chưa có xác nhận nhóm đã duyệt nội dung cuối hoặc xác minh loại tài khoản AI; các thành viên vẫn chịu trách nhiệm đọc, hiểu và bảo vệ tài liệu.

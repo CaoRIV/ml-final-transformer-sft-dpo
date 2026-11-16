@@ -7,11 +7,13 @@
 - [Kiểm kê và tài liệu gốc](references/README.md).
 - [Bảng đối chiếu yêu cầu](docs/progress/requirements-matrix.md).
 - [Bối cảnh, quyết định, tiến độ](docs/progress/project-context.md).
-- [Đề cương tuần 1](docs/proposal/proposal.md).
-- [Kế hoạch dữ liệu](docs/proposal/data-plan.md).
+- Đề cương tuần 1: [Markdown](docs/proposal/proposal.md), [PDF](docs/proposal/proposal.pdf), [LaTeX](docs/proposal/proposal.tex).
+- Kế hoạch dữ liệu: [Markdown](docs/proposal/data-plan.md), [PDF](docs/proposal/data-plan.pdf), [LaTeX](docs/proposal/data-plan.tex).
 - [Nhật ký hỗ trợ AI](docs/progress/ai-use.md).
 
 Đề gốc ngày 12/11/2026: phần II trang 2; Đề tài 9 trang 18–19. Yêu cầu giảng viên ưu tiên hơn đề xuất nội bộ. Mốc tuần 3 ở phần II mâu thuẫn thời lượng 2 tuần ở phần I; cần hỏi giảng viên, tạm lập kế hoạch theo phần II, chưa đặt ngày nộp.
+
+Hai PDF là bản nháp giữ đầy đủ nội dung Markdown, chưa phải xác nhận đã thu thập dữ liệu hoặc đã nộp. [Hướng dẫn biên dịch lại](docs/proposal/README.md) bằng `python scripts/build_week1_pdfs.py` (cần Pandoc và Tectonic). Markdown là nguồn nội dung; không sửa tay hai tệp LaTeX sinh tự động.
 
 ## Kiểm tra môi trường Colab
 
@@ -27,7 +29,7 @@ Thông tin người dùng đã cung cấp từ một phiên trước: Tesla T4, 
 
 ## Tổ chức theo giai đoạn
 
-Hiện chỉ tạo `references/`, `docs/proposal/`, `docs/progress/`, `notebooks/` và các hướng dẫn gốc có nội dung. Khi bắt đầu cài đặt, mã dùng lại vào `src/`; notebook điều khiển thí nghiệm, không sao chép thuật toán. Khi có dữ liệu và thí nghiệm mới bổ sung `configs/`, `scripts/`, `tests/`, `data/samples/`, `results/`, tài liệu lý thuyết/bài tập/LaTeX/datasheet/model card/slide. Không có các thư mục đó chưa có nghĩa thiếu sản phẩm tuần 1.
+Hiện có `references/`, `docs/proposal/`, `docs/progress/`, `notebooks/`, `scripts/build_week1_pdfs.py` và các hướng dẫn gốc có nội dung. Khi bắt đầu cài đặt, mã dùng lại vào `src/`; notebook điều khiển thí nghiệm, không sao chép thuật toán. Khi có dữ liệu và thí nghiệm mới bổ sung `configs/`, các script dữ liệu/huấn luyện, `tests/`, `data/samples/`, `results/`, tài liệu lý thuyết/bài tập/LaTeX cuối kỳ/datasheet/model card/slide. Không tạo các thư mục đó chưa có nghĩa thiếu sản phẩm tuần 1.
 
 ## Git, dữ liệu và quyền phân phối
 

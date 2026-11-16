@@ -1,0 +1,52 @@
+% Shared template for Pandoc -> XeLaTeX/Tectonic. Content lives in the .md files.
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\setmonofont{texgyrecursor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic,Scale=MatchLowercase]
+\usepackage{amsmath,amssymb}
+\usepackage{array,booktabs,longtable,calc}
+\usepackage{graphicx}
+\usepackage{xurl}
+\usepackage[unicode,hidelinks]{hyperref}
+\usepackage{bookmark}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{microtype}
+\hypersetup{pdftitle={$title$},pdfauthor={Cao Văn Hà; Hà Mạnh Thế; Trần Duy Hưng},pdflang={vi-VN}}
+\urlstyle{tt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\linespread{1.08}
+\setlist{nosep,leftmargin=*,topsep=4pt}
+\setcounter{secnumdepth}{0}
+\titleformat{\section}{\large\bfseries}{\thesection}{0pt}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0pt}{}
+\titlespacing*{\section}{0pt}{12pt}{5pt}
+\titlespacing*{\subsection}{0pt}{9pt}{4pt}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.16}
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{6pt}
+\setlength{\emergencystretch}{2em}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Đề tài 9 — Hồ sơ tuần 1}
+\fancyhead[R]{\small Bản nháp}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\begin{document}
+{\LARGE\bfseries $title$\par}
+\vspace{4pt}
+{\large Kiến trúc Transformer và tinh chỉnh mô hình ngôn ngữ\par}
+\vspace{4pt}
+\textbf{Ứng dụng:} Hỏi đáp thủ tục hộ tịch–chứng thực tại Hà Nội.\\
+\textbf{Nhóm:} Cao Văn Hà (trưởng nhóm), Hà Mạnh Thế, Trần Duy Hưng.\\
+\textbf{Phiên bản:} Bản nháp tuần 1 — chưa có dữ liệu/huấn luyện đã kiểm chứng.
+\vspace{5pt}\hrule\vspace{8pt}
+$body$
+\end{document}

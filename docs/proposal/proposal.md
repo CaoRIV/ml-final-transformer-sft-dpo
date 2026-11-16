@@ -1,6 +1,6 @@
 # Đề cương bản nháp — Đề tài 9: Transformer, SFT và DPO cho trợ lý hỏi đáp thủ tục hành chính công
 
-> **Trạng thái:** bản nháp tuần 1 để chốt phạm vi, dữ liệu và phân công. Những nội dung ghi “đề xuất” chưa phải dữ liệu đã thu thập, thí nghiệm đã chạy hay quyết định cuối cùng. Mục tiêu dàn trang nội bộ là khoảng 5–7 trang cho đề cương này và 3–5 trang cho `data-plan.md`; tài liệu Markdown hiện chưa được dàn trang nên không tuyên bố đã đạt độ dài đó.
+> **Trạng thái:** bản nháp tuần 1, đã thống nhất phạm vi dữ liệu và phương án khảo sát/chấm. Những nội dung còn ghi “đề xuất” chưa phải dữ liệu đã thu thập, thí nghiệm đã chạy hay quyết định cuối cùng. Mục tiêu độ dài nội bộ ban đầu là khoảng 5–7 trang đề cương và 3–5 trang kế hoạch dữ liệu; không phải yêu cầu của giảng viên. Bản PDF giữ đầy đủ nội dung Markdown, kể cả bảng và schema, nên có thể dài hơn mục tiêu này.
 >
 > **Căn cứ đề bài:** Đề tài 9 yêu cầu cài đặt Transformer, LoRA và hàm mất mát DPO; huấn luyện mô hình ký tự nhỏ; sau đó xây dựng trợ lý hỏi đáp thủ tục hành chính với tối thiểu 2.000 cặp chỉ dẫn có trích dẫn, ít nhất 500 cặp ưu tiên và đánh giá mô hình gốc/SFT/SFT+DPO. Phần D có tỷ trọng 30/100; đề bài cũng yêu cầu kết quả trung bình ± độ lệch chuẩn trên ít nhất 5 lần chạy hoặc 5 phần gập, và quản lý phiên bản nguồn thủ tục.
 
@@ -24,7 +24,7 @@ Mục tiêu đánh giá nội bộ có thể hướng tới mức 85–90/100, n
 
 ### 1.2. Phạm vi có chủ ý hẹp
 
-Phạm vi địa phương, nhóm thủ tục và tập văn bản chính thức **chưa chốt**. Trước khi thu thập, nhóm sẽ chọn một địa phương/cơ quan và một số nhóm thủ tục mà nhóm có thể truy vết văn bản công khai, phiên bản và ngày hiệu lực. Thiết kế ban đầu có thể dùng mẫu **5–10 thủ tục và 20–50 câu hỏi–đáp** để thử quy trình, nhưng đây chỉ là đề xuất thăm dò, chưa phải dữ liệu tồn tại hay một phạm vi đã được phê duyệt.
+Người dùng đã đồng ý chọn **Hà Nội**, tập trung **hộ tịch–chứng thực**, hướng tới sinh viên, người trẻ và gia đình. Danh mục thủ tục và các phiên bản văn bản cụ thể vẫn cần kiểm kê, đối chiếu hiệu lực và quyền sử dụng trước thu thập. Mẫu **5–10 thủ tục và 20–50 câu hỏi–đáp** là mục tiêu thăm dò nội bộ, chưa phải dữ liệu tồn tại hay ngưỡng bắt buộc của giảng viên.
 
 Trong phạm vi đã chọn, sản phẩm tập trung vào hỏi đáp một lượt có trích dẫn, dựa trên mô tả thủ tục và văn bản/cổng công khai được phép sử dụng. Sản phẩm không thay thế tư vấn pháp lý, không đưa ra quyết định hành chính, không xử lý hồ sơ thật và không yêu cầu người dùng cung cấp dữ liệu cá nhân.
 
@@ -54,7 +54,7 @@ Cần kiểm chứng từng hạng mục có thể quan sát được: causal ma
 
 Nhánh ứng dụng bắt đầu từ dữ liệu chỉ dẫn có trích dẫn và một mô hình nền mã nguồn mở hỗ trợ tiếng Việt. Quy trình dự kiến: khóa phiên bản nguồn và chia dữ liệu; SFT; sinh hai ứng viên trả lời từ checkpoint SFT cho mỗi prompt; hai người đánh giá độc lập chọn câu trả lời tốt hơn theo rubric; phân xử bất đồng; sau đó DPO với checkpoint SFT đóng băng làm mô hình tham chiếu.
 
-**Qwen2.5-1.5B-Instruct** là một ứng viên, không phải lựa chọn cuối cùng. Lựa chọn mô hình sẽ phụ thuộc giấy phép dùng cho nghiên cứu, khả năng tiếng Việt, tokenizer, khả năng nạp với QLoRA và kết quả pilot. Thông tin từ phiên Colab trước do người dùng báo là T4 15.360 MiB, `torch 2.14.1+cu130`, CUDA 13 hoạt động; nhóm chưa tự đo các thông số này. Vì vậy không coi đó là bảo đảm đủ VRAM: cần pilot SFT và pilot DPO riêng, với tham chiếu DPO được nạp/điều phối theo cách tương thích bộ nhớ. Checkpoint, manifest và trạng thái resume có thể lưu Drive nếu quyền/lưu lượng cho phép; điều này là thiết kế cần kiểm tra, không phải cam kết không gián đoạn.
+**Qwen2.5-1.5B-Instruct** là một ứng viên, không phải lựa chọn cuối cùng. Lựa chọn mô hình sẽ phụ thuộc giấy phép dùng cho nghiên cứu, khả năng tiếng Việt, tokenizer, khả năng nạp với QLoRA và kết quả pilot. Người dùng đã cung cấp kết quả tự kiểm tra trong một phiên Colab trước: T4 15.360 MiB, `torch 2.14.1+cu130`, CUDA của PyTorch `13.0` và nhân ma trận CUDA thành công; agent chưa thực hiện phép đo GPU này và phiên mới có thể khác. Không coi đó là bảo đảm đủ VRAM: cần pilot SFT và pilot DPO riêng, với cách quản lý mô hình tham chiếu tương thích bộ nhớ. Checkpoint, manifest và trạng thái resume dự kiến lưu Drive nếu có quyền và đủ dung lượng; cần kiểm tra resume thực tế, không cam kết không gián đoạn.
 
 SFT pilot phải xuất hiện sớm cuối tuần 1 hoặc đầu tuần 2 để có checkpoint tạo ứng viên cho dữ liệu DPO. Không được giả định đã có 500 cặp ưu tiên trước khi hai người chấm hoàn tất quy trình. Mục tiêu bảo thủ để khóa kế hoạch là đủ **2.000 QA train** và **500 preference pairs train**, cộng validation riêng; con số thực chỉ được báo sau khi thu thập, kiểm tra và phân chia.
 
@@ -108,13 +108,15 @@ Không có số liệu nào trong đề cương này là kết quả. Chỉ sau 
 
 ## 5. Phân công tạm thời cho 3 người
 
-Tên thành viên chưa được cung cấp; dưới đây là vai trò tạm, phải thay bằng tên và người chịu trách nhiệm cụ thể trước khi nộp.
+Nhóm gồm ba sinh viên tại một trường đại học ở Hà Nội: **Cao Văn Hà, Hà Mạnh Thế, Trần Duy Hưng**. **Cao Văn Hà là trưởng nhóm, phụ trách tổng hợp và nộp bài**. Tên trường/lớp chưa được cung cấp nên chưa đưa vào bản nháp. Phân công chuyên môn dưới đây tiếp tục là đề xuất để nhóm bố trí theo thời gian và thế mạnh thực tế.
 
-| Vai trò tạm | Trách nhiệm chính | Điểm giao nhận |
+| Thành viên | Vai trò đã xác nhận | Phân công chuyên môn đề xuất |
 |---|---|---|
-| Thành viên 1 — phương pháp | A: Transformer ký tự, LoRA, DPO custom; kiểm chứng C; đối chiếu loss/gradient minibatch thật với thư viện | API/kiểm thử đơn vị, notebook kiểm chứng, bảng sai khác log-prob/loss/gradient |
-| Thành viên 2 — dữ liệu | sổ nguồn, ingest/phiên bản/span, QA SFT, split và khử gần trùng; điều phối consent/ẩn danh và hai nhãn preference | manifest dữ liệu, datasheet, mẫu citation đã kiểm, split khóa, nhãn thô + phân xử |
-| Thành viên 3 — lý thuyết, báo cáo & đánh giá | B.1–B.6 và tích hợp báo cáo; pilot SFT/DPO, manifest run, chấm mù, thống kê và model card | bản chứng minh có giả thiết, báo cáo tích hợp, checkpoint/seed record, bảng baseline/SFT/DPO |
+| Cao Văn Hà | Trưởng nhóm; tổng hợp và nộp bài | Điều phối tiến độ, tích hợp báo cáo, pilot SFT/DPO và tổng hợp đánh giá |
+| Hà Mạnh Thế | Thành viên | Cài đặt A, bài tập C và kiểm chứng số học; phụ trách bản nháp B.1–B.3 |
+| Trần Duy Hưng | Thành viên | Nguồn dữ liệu, QA, khảo sát và datasheet; phụ trách bản nháp B.4–B.6 |
+
+Ba người cùng rà soát chứng minh, kiểm nguồn và đánh giá. Phương án Thế và Hưng chấm ưu tiên độc lập, Hà phân xử sau khi khóa nhãn đã được người dùng đồng ý; cần bố trí lịch và tập huấn trước khi chấm chính thức. Chấp thuận kế hoạch không có nghĩa đã có dữ liệu chấm hoặc kết quả đồng thuận.
 
 Mọi thành viên phải hiểu phần mình bảo vệ và có thể bị vấn đáp về **bất kỳ** đoạn mã hoặc chứng minh nào, không chỉ phần được phân công. Hai người chấm preference có thể là thành viên trong nhóm hoặc người đủ điều kiện khác, nhưng danh tính/vai trò, tính độc lập khi chấm và xung đột lợi ích phải được chốt trước. Không mặc định “hai người” đã sẵn có.
 
@@ -142,7 +144,7 @@ Các mốc phản ánh quy định đề bài: tuần 1 nộp đề cương và 
 | 5 run vượt ngân sách | Không đáp ứng báo cáo tái lập | Dự trù 5 seed ngay từ thiết kế; nếu không đủ, xin điều chỉnh với giảng viên và ghi rõ, không đổi âm thầm hay chỉ dựa vào đồng thuận nội bộ |
 | Rò rỉ split/gần trùng | Test quá lạc quan | Nhóm theo thủ tục/nguồn, lọc exact/near duplicate và audit citation trước khóa test |
 
-Tối thiểu cần chốt ngay: **(1)** địa phương/cơ quan và nhóm thủ tục; **(2)** khả năng tiếp cận người khảo sát với consent để tạo test thật; **(3)** hai người sẽ chấm preference độc lập. Đồng thời cần xác nhận quyền dùng nguồn cụ thể và mô hình nền sau pilot. Không chốt các điểm này, nhóm không nên tuyên bố đã có dữ liệu hành chính, phạm vi hộ gia đình hay benchmark hoàn chỉnh.
+Phạm vi Hà Nội/hộ tịch–chứng thực và phương án khảo sát/chấm đã được đồng ý. Cần giải quyết tiếp: danh mục thủ tục và nguồn cụ thể, điều khoản/hiệu lực nguồn, biểu mẫu đồng ý và quy trình ẩn danh, lịch khảo sát/chấm, ngân sách Colab và mô hình nền sau pilot. Chưa tuyên bố có dữ liệu hành chính hoặc benchmark hoàn chỉnh khi chưa có bằng chứng.
 
 ## 8. Tài nguyên và sản phẩm dự kiến
 
@@ -153,4 +155,4 @@ Sản phẩm cuối theo đề bài dự kiến gồm báo cáo LaTeX 25–40 tr
 ## 9. Tài liệu căn cứ
 
 1. TS. Phạm Văn Khánh, *Danh mục 20 bài tập lớn: Học máy cơ bản, mô hình ngôn ngữ lớn, học tăng cường và tích hợp*, ngày 12/11/2026: Phần I–II (tr. 1–2) và Đề tài 9 (tr. 18–19).
-2. Các URL/văn bản hành chính cụ thể sẽ chỉ được thêm vào sổ nguồn sau khi chốt địa phương, nhóm thủ tục và kiểm tra điều kiện sử dụng; đề cương không giả định hay dựng sẵn các nguồn này.
+2. Các đầu mối nguồn hành chính quốc gia/Hà Nội và Truyện Kiều được ghi trong [kế hoạch dữ liệu](data-plan.md). Chúng chưa thay thế sổ nguồn đã kiểm quyền/hiệu lực; chưa có bộ mẫu được nhập kho và kiểm định.
