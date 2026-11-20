@@ -9,6 +9,7 @@
 - [Bối cảnh, quyết định, tiến độ](docs/progress/project-context.md).
 - Đề cương tuần 1: [Markdown](docs/proposal/proposal.md), [PDF](docs/proposal/proposal.pdf), [LaTeX](docs/proposal/proposal.tex).
 - Kế hoạch dữ liệu: [Markdown](docs/proposal/data-plan.md), [PDF](docs/proposal/data-plan.pdf), [LaTeX](docs/proposal/data-plan.tex).
+- Phần B — sáu chứng minh: [LaTeX](docs/theory/part-b.tex), [PDF](docs/theory/part-b.pdf). Bản nháp để nhóm rà soát; biên dịch từ thư mục gốc với `tectonic --outdir docs/theory docs/theory/part-b.tex`, hoặc dùng XeLaTeX hai lượt từ `docs/theory/`. Tệp `.tex` là nguồn chỉnh sửa trực tiếp.
 - [Nhật ký hỗ trợ AI](docs/progress/ai-use.md).
 - [Gói kiểm chứng dữ liệu tuần 1](docs/data/README.md): sổ nguồn, pilot QA, audit Truyện Kiều, biểu mẫu khảo sát và hướng dẫn chấm.
 

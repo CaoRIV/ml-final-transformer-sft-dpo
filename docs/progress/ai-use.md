@@ -27,3 +27,8 @@ Khi lập báo cáo cuối, chuyển nhật ký này thành phụ lục khai bá
 - AI xác minh revision Truyện Kiều, chạy audit kỹ thuật trên nguồn rendered được robots cho phép, tạo corpus/split/vocabulary/windows trong cache với nhãn research-only. API metadata đã được đọc trong bước nghiên cứu trước khi xác định robots chặn `/w/`; sau đó không lặp API/raw, chỉ dùng route `/wiki/` được cho phép. Không che giấu giới hạn này.
 - Đã phát hiện, tái hiện và sửa việc theo redirect trước kiểm URL đích trong script corpus; có kiểm thử hồi quy. Không dùng kết quả kiểm kỹ thuật làm xác nhận quyền hoặc thành tích huấn luyện.
 - Cập nhật hồ sơ và biên dịch PDF từ Markdown; mọi review quyền, review thủ công, consent và nhãn con người vẫn cần sự kiện thật và audit riêng.
+
+## Phiên soạn Phần B — Chứng minh lý thuyết
+
+- AI đối chiếu sáu yêu cầu với đề gốc tr. 18 và đọc các phần liên quan của Attention, LoRA và DPO. AI soạn toàn bộ bản nháp LaTeX B.1–B.6, gồm phát biểu, giả thiết, các bước chứng minh, diễn giải và ví dụ minh họa; biên dịch và kiểm PDF.
+- Không dùng ví dụ minh họa thay đầu vào chính thức của Phần C. Không có kết quả huấn luyện hoặc thẩm định của giảng viên. Nhóm chưa xác nhận duyệt nội dung; từng thành viên cần tự rà soát và giải thích được cả sáu chứng minh. Chưa xác minh loại tài khoản AI.

@@ -80,3 +80,9 @@ Hồ sơ nháp, bảng đối chiếu, hướng dẫn repo và notebook môi tr�
 - Đã soạn `consent-and-survey.md`, `privacy-workflow.md`, `annotation-guide.md`: bản người tham gia đọc/điền, quy trình ẩn danh/lưu/rút, QA review và hai nhãn độc lập/đo đồng thuận trước phân xử. Chưa mở khảo sát, không có dữ liệu người hoặc DPO giả.
 - Các phần cần con người còn nguyên: xác nhận vận hành/consent theo quy định áp dụng, review nguồn/quyền/QA, tổ chức khảo sát/chấm, thông tin trường/lớp, lịch, ngân sách và Colab. Không commit/push trong gói này.
 - Đã biên dịch lại hai PDF sau cập nhật audit bằng công cụ portable hiện có; kiểm hash Markdown–LaTeX, tên tiếng Việt, nội dung audit/mục cuối, font nhúng và hình học đạt; không có overfull/thiếu glyph/thay font trong log. Đã xem tổng quan mọi trang và mục bằng chứng mới ở trang cuối data-plan. Chưa kiểm trên Overleaf/máy khác; chẩn đoán Fontconfig thiếu cấu hình mặc định của Tectonic vẫn còn như lần trước.
+
+## Bản nháp Phần B — Chứng minh lý thuyết
+
+- [Nguồn LaTeX độc lập](../theory/part-b.tex) và [PDF 7 trang](../theory/part-b.pdf) trình bày đủ B.1–B.6 theo đề gốc tr. 18. Có phản ví dụ cho causal mask cố định, điều kiện hỗ trợ/chuẩn hóa của DPO và phân biệt trung bình theo token của PPL với tổng log-xác suất chuỗi trong DPO.
+- Đã biên dịch bằng Tectonic portable 0.17.0, xem dàn trang toàn bộ 7 trang, kiểm mục lục, phông nhúng, liên kết nguồn và biên trang. Log LaTeX không có overfull, thiếu ký tự, thay phông hay tham chiếu chưa phân giải. Tectonic có chẩn đoán cấu hình Fontconfig như lần biên dịch tuần 1, nhưng đã tạo PDF thành công. Chưa kiểm Overleaf.
+- Bản nháp có hỗ trợ AI, chưa được nhóm rà soát hoặc nộp. Không phải báo cáo cuối kỳ hay bằng chứng hoàn thành các phần A, C, D.
