@@ -32,3 +32,11 @@ Khi lập báo cáo cuối, chuyển nhật ký này thành phụ lục khai bá
 
 - AI đối chiếu sáu yêu cầu với đề gốc tr. 18 và đọc các phần liên quan của Attention, LoRA và DPO. AI soạn toàn bộ bản nháp LaTeX B.1–B.6, gồm phát biểu, giả thiết, các bước chứng minh, diễn giải và ví dụ minh họa; biên dịch và kiểm PDF.
 - Không dùng ví dụ minh họa thay đầu vào chính thức của Phần C. Không có kết quả huấn luyện hoặc thẩm định của giảng viên. Nhóm chưa xác nhận duyệt nội dung; từng thành viên cần tự rà soát và giải thích được cả sáu chứng minh. Chưa xác minh loại tài khoản AI.
+
+## Phiên soạn kế hoạch phối hợp nhóm
+
+- AI đọc lại phần I–II và Đề tài 9, đối chiếu với đề cương, kế hoạch dữ liệu và bằng chứng trong repo; soạn kế hoạch nội bộ về quy trình, đầu ra, nghiệm thu và phụ thuộc A–D. Không thay nhóm xác nhận phân công, kiểm thủ công, thu dữ liệu hoặc huấn luyện.
+
+## Phiên chuẩn bị vấn đáp 03/12
+
+- AI soạn bản giới thiệu phổ thông và lịch chuẩn bị theo ngày vấn đáp người dùng cung cấp. Phân tích tải chấm bằng ví dụ giả định, không đo tốc độ người chấm/GPU và không xác nhận thời điểm nộp hoặc kết quả mới.

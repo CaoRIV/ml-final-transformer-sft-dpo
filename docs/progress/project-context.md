@@ -86,3 +86,13 @@ Hồ sơ nháp, bảng đối chiếu, hướng dẫn repo và notebook môi tr�
 - [Nguồn LaTeX độc lập](../theory/part-b.tex) và [PDF 7 trang](../theory/part-b.pdf) trình bày đủ B.1–B.6 theo đề gốc tr. 18. Có phản ví dụ cho causal mask cố định, điều kiện hỗ trợ/chuẩn hóa của DPO và phân biệt trung bình theo token của PPL với tổng log-xác suất chuỗi trong DPO.
 - Đã biên dịch bằng Tectonic portable 0.17.0, xem dàn trang toàn bộ 7 trang, kiểm mục lục, phông nhúng, liên kết nguồn và biên trang. Log LaTeX không có overfull, thiếu ký tự, thay phông hay tham chiếu chưa phân giải. Tectonic có chẩn đoán cấu hình Fontconfig như lần biên dịch tuần 1, nhưng đã tạo PDF thành công. Chưa kiểm Overleaf.
 - Bản nháp có hỗ trợ AI, chưa được nhóm rà soát hoặc nộp. Không phải báo cáo cuối kỳ hay bằng chứng hoàn thành các phần A, C, D.
+
+## Kế hoạch phối hợp ba thành viên
+
+- [Kế hoạch thực hiện và bàn giao](team-execution-plan.md) diễn giải mục I–II và Đề tài 9 thành đầu vào, đầu ra, quy trình và điều kiện nghiệm thu A–D; tách các mốc bắt buộc khỏi mục tiêu nội bộ.
+- Giữ vai trò trưởng nhóm của Cao Văn Hà và phương án Thế/Hưng chấm độc lập, Hà phân xử; phân công chuyên môn vẫn là đề xuất. Tài liệu không xác nhận thêm nguồn, nhãn, dữ liệu, GPU hoặc kết quả thực nghiệm.
+
+## Mốc vấn đáp 03/12/2026
+
+- Người dùng báo ngày vấn đáp **03/12/2026**. Chưa có xác nhận đây cũng là hạn nộp cuối, giờ nộp hay yêu cầu cụ thể tại buổi đó; Hà hỏi giảng viên. Không suy ra rằng các yêu cầu ở đề được giảm.
+- [Giới thiệu bài tập lớn](../project-overview.md) dành cho người ngoài nhóm. [Lịch chuẩn bị vấn đáp](defense-plan-2026-12-03.md) phân việc song song và đặt cổng quyết định cuối 26/11 dựa trên nguồn hợp lệ, năng lực kiểm/chấm và số đo GPU. Các mốc trước buổi vấn đáp là đề xuất nội bộ, không phải kết quả đã đạt.

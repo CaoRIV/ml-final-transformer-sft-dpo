@@ -4,6 +4,9 @@
 
 ## Đọc hồ sơ
 
+- [Giới thiệu bài tập lớn cho người mới](docs/project-overview.md): bài toán, cách nhóm dạy mô hình và cách kiểm tra kết quả qua ví dụ.
+- [Kế hoạch tới buổi vấn đáp 03/12](docs/progress/defense-plan-2026-12-03.md): lịch bàn giao, điều kiện mở rộng phần D và phương án nếu không kịp.
+- [Kế hoạch phối hợp của Hà, Hưng và Thế](docs/progress/team-execution-plan.md): đầu vào, đầu ra, cách làm, nghiệm thu và bàn giao A–D.
 - [Kiểm kê và tài liệu gốc](references/README.md).
 - [Bảng đối chiếu yêu cầu](docs/progress/requirements-matrix.md).
 - [Bối cảnh, quyết định, tiến độ](docs/progress/project-context.md).
@@ -13,7 +16,7 @@
 - [Nhật ký hỗ trợ AI](docs/progress/ai-use.md).
 - [Gói kiểm chứng dữ liệu tuần 1](docs/data/README.md): sổ nguồn, pilot QA, audit Truyện Kiều, biểu mẫu khảo sát và hướng dẫn chấm.
 
-Đề gốc ngày 12/11/2026: phần II trang 2; Đề tài 9 trang 18–19. Yêu cầu giảng viên ưu tiên hơn đề xuất nội bộ. Mốc tuần 3 ở phần II mâu thuẫn thời lượng 2 tuần ở phần I; cần hỏi giảng viên, tạm lập kế hoạch theo phần II, chưa đặt ngày nộp.
+Đề gốc ngày 12/11/2026: phần II trang 2; Đề tài 9 trang 18–19. Mốc tuần 3 ở phần II mâu thuẫn thời lượng 2 tuần ở phần I. Người dùng báo vấn đáp ngày 03/12/2026; vẫn cần xác nhận đây có đồng thời là hạn nộp cuối và giảng viên yêu cầu bàn giao gì tại buổi đó.
 
 Hai PDF là bản nháp giữ đầy đủ nội dung Markdown, có kết quả audit nghiên cứu nhưng chưa xác nhận dữ liệu đủ điều kiện huấn luyện hoặc đã nộp. [Hướng dẫn biên dịch lại](docs/proposal/README.md) bằng `python scripts/build_week1_pdfs.py` (cần Pandoc và Tectonic). Markdown là nguồn nội dung; không sửa tay hai tệp LaTeX sinh tự động.
 
