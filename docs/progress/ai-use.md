@@ -40,3 +40,11 @@ Khi lập báo cáo cuối, chuyển nhật ký này thành phụ lục khai bá
 ## Phiên chuẩn bị vấn đáp 03/12
 
 - AI soạn bản giới thiệu phổ thông và lịch chuẩn bị theo ngày vấn đáp người dùng cung cấp. Phân tích tải chấm bằng ví dụ giả định, không đo tốc độ người chấm/GPU và không xác nhận thời điểm nộp hoặc kết quả mới.
+
+## Phiên chỉnh văn phong kế hoạch nhóm
+
+- AI viết lại kế hoạch A–D bằng tiếng Việt dễ đọc, làm rõ phần dẫn xuất bắt buộc ở A, phân biệt yêu cầu của đề với lựa chọn của nhóm và tách mốc vấn đáp khỏi hạn nộp chưa xác nhận. Không thay đổi phân công đã chốt hoặc tuyên bố kết quả thực nghiệm mới.
+
+## Phiên tổ chức lại README
+
+- AI sắp xếp README thành lộ trình đọc chung, liên kết theo vai trò, hồ sơ và hướng dẫn chạy kiểm tra. Không sửa yêu cầu, lịch hay trạng thái thực nghiệm.
