@@ -108,19 +108,13 @@ Các run SFT/DPO độc lập dùng 5 seed ghép như trên; đơn vị tổng h
 
 Không có số liệu nào trong đề cương này là kết quả. Chỉ sau khi test được khóa, chấm mù và lưu biểu mẫu mới được báo cáo chỉ số/CI.
 
-## 5. Phân công tạm thời cho 3 người
+## 5. Cách ba thành viên phối hợp
 
-Nhóm gồm ba sinh viên tại một trường đại học ở Hà Nội: **Cao Văn Hà, Hà Mạnh Thế, Trần Duy Hưng**. **Cao Văn Hà là trưởng nhóm, phụ trách tổng hợp và nộp bài**. Tên trường/lớp chưa được cung cấp nên chưa đưa vào bản nháp. Phân công chuyên môn dưới đây tiếp tục là đề xuất để nhóm bố trí theo thời gian và thế mạnh thực tế.
+Nhóm gồm **Cao Văn Hà, Hà Mạnh Thế và Trần Duy Hưng**. Hà là trưởng nhóm, thực hiện chính xuyên suốt A–D, tổng hợp và nộp bài. Không giao cố định từng phần cho từng thành viên.
 
-| Thành viên | Vai trò đã xác nhận | Phân công chuyên môn đề xuất |
-|---|---|---|
-| Cao Văn Hà | Trưởng nhóm; tổng hợp và nộp bài | Điều phối tiến độ, tích hợp báo cáo, pilot SFT/DPO và tổng hợp đánh giá |
-| Hà Mạnh Thế | Thành viên | Cài đặt A, bài tập C và kiểm chứng số học; phụ trách bản nháp B.1–B.3 |
-| Trần Duy Hưng | Thành viên | Nguồn dữ liệu, QA, khảo sát và datasheet; phụ trách bản nháp B.4–B.6 |
+Hà gửi từng kết quả nhỏ kèm cách kiểm. Thế và Hưng luân phiên rà trước, đối chiếu chéo các kết quả quan trọng và góp ý để Hà sửa hoặc tích hợp. Cả ba cùng tham gia rà mã, chứng minh, bài tập và dữ liệu; mỗi thành viên phải giải thích được bất kỳ đoạn mã hoặc chứng minh nào khi vấn đáp.
 
-Ba người cùng rà soát chứng minh, kiểm nguồn và đánh giá. Phương án Thế và Hưng chấm ưu tiên độc lập, Hà phân xử sau khi khóa nhãn đã được người dùng đồng ý; cần bố trí lịch và tập huấn trước khi chấm chính thức. Chấp thuận kế hoạch không có nghĩa đã có dữ liệu chấm hoặc kết quả đồng thuận.
-
-Mọi thành viên phải hiểu phần mình bảo vệ và có thể bị vấn đáp về **bất kỳ** đoạn mã hoặc chứng minh nào, không chỉ phần được phân công. Hai người chấm preference có thể là thành viên trong nhóm hoặc người đủ điều kiện khác, nhưng danh tính/vai trò, tính độc lập khi chấm và xung đột lợi ích phải được chốt trước. Không mặc định “hai người” đã sẵn có.
+Riêng tạo nhãn DPO, Thế và Hưng đều chấm từng cặp độc lập, không chia lượt; Hà phân xử sau khi khóa nhãn và đo đồng thuận. Nhóm cần bố trí lịch và tập huấn trước khi chấm chính thức. Đây là cách tổ chức dự kiến, chưa phải bằng chứng đã có nhãn hoặc kết quả đồng thuận.
 
 ## 6. Tiến độ và mốc bàn giao
 

@@ -20,7 +20,7 @@
 |G10|Đề tài 9 cần GPU, khuyến nghị từ 16 GB bộ nhớ; có thể dùng Colab/Kaggle.|Đề bài tr. 2, mục II|Ghi nhận môi trường khi thực hiện.|Xác minh bằng môi trường chạy thực tế, không dùng báo cáo môi trường cũ như phép đo hiện tại.|Chưa thực hiện.|
 |G11|Khai báo phạm vi dùng AI tạo sinh trong phụ lục; từng thành viên có thể bị vấn đáp; không dùng bản AI miễn phí.|Đề bài tr. 2, mục II|Phụ lục khai báo và tài liệu giải thích mã/chứng minh.|Khai báo đầy đủ trước nộp; mọi thành viên hiểu phần được giao.|Chưa thực hiện.|
 |G12|Đề tài 9 được tổng hợp là “Transformer, LoRA, tối ưu hóa theo ưu tiên”; ứng dụng là trợ lý thủ tục hành chính; hình thức D là dữ liệu chỉ dẫn/ưu tiên, SFT và DPO.|Đề bài tr. 3, bảng khối LLM|Phạm vi dự án nhất quán với Đề tài 9.|Không mở rộng sang PPO hoặc RAG như một hạng mục triển khai khi đề không yêu cầu.|Chưa thực hiện.|
-|G13|Tuần 1 nộp đề cương và kế hoạch dữ liệu; tuần 2 hoàn thành A, B và bộ dữ liệu D; tuần 3 nộp sản phẩm và bảo vệ.|Đề bài tr. 2, mục II|Hai hồ sơ tuần 1, báo cáo tiến độ tuần 2 và sản phẩm cuối.|Đối chiếu các mốc; hỏi giảng viên về mâu thuẫn thời lượng ở tr. 1, chưa tự đặt ngày.|Đã có bản nháp tuần 1; chưa nộp, các mốc sau chưa thực hiện.|
+|G13|Tuần 1 nộp đề cương và kế hoạch dữ liệu; tuần 2 hoàn thành A, B và bộ dữ liệu D; tuần 3 nộp sản phẩm và bảo vệ.|Đề bài tr. 2, mục II|Hai hồ sơ tuần 1, báo cáo tiến độ tuần 2 và sản phẩm cuối.|Đối chiếu các mốc của đề và [lịch riêng của nhóm](defense-plan-2026-12-03.md): hoàn thành 23h59 ngày 01/12/2026, vấn đáp 03/12/2026 theo thông tin Hà cung cấp.|Đã có bản nháp tuần 1; chưa có xác nhận đã nộp hoặc đã hoàn thành các mốc sau.|
 
 ## Phần A — 8 thành phần truy vết
 

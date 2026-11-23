@@ -2,7 +2,7 @@
 
 ## Phạm vi phiên làm việc
 
-Hồ sơ tuần 1 của Đề tài 9 — Kiến trúc Transformer và tinh chỉnh mô hình ngôn ngữ; trợ lý hỏi đáp thủ tục hành chính công. Không khởi động lại chọn đề tài. Mục tiêu 85–90/100 là định hướng, không bảo đảm. Nhóm gồm ba sinh viên tại một trường đại học ở Hà Nội: Cao Văn Hà, Hà Mạnh Thế, Trần Duy Hưng. Cao Văn Hà là trưởng nhóm, phụ trách tổng hợp và nộp bài theo xác nhận của người dùng; tên trường và phân công chuyên môn chưa chốt.
+Hồ sơ tuần 1 của Đề tài 9 — Kiến trúc Transformer và tinh chỉnh mô hình ngôn ngữ; trợ lý hỏi đáp thủ tục hành chính công. Không khởi động lại chọn đề tài. Mục tiêu 85–90/100 là định hướng, không bảo đảm. Nhóm gồm ba sinh viên tại một trường đại học ở Hà Nội: Cao Văn Hà, Hà Mạnh Thế, Trần Duy Hưng. Cao Văn Hà là trưởng nhóm, thực hiện chính, tổng hợp và nộp bài; tên trường/lớp chưa chốt.
 
 ## Kiểm kê ban đầu và nguồn quyết định
 
@@ -18,24 +18,24 @@ Git ban đầu sạch trên nhánh `main`, có upstream `origin/main`; remote c�
 - Giữ code/tài liệu/cấu hình trong một repo; dữ liệu riêng và trọng số nặng không vào Git. Chỉ push sau yêu cầu rõ.
 - Theo yêu cầu gốc: A20/B25/C15/D30, báo cáo/tái lập/bảo vệ10; báo cáo cuối LaTeX25–40 trang. Các ngưỡng dữ liệu, kiểm định và yêu cầu đánh giá nằm trong bảng đối chiếu, không được ngầm giảm.
 - Người dùng đã đồng ý phương án dữ liệu: Hà Nội, hộ tịch–chứng thực; Truyện Kiều cho mô hình ký tự; khảo sát sinh viên/người thân và hai người chấm độc lập là Hà Mạnh Thế, Trần Duy Hưng, với Cao Văn Hà phân xử sau khi khóa nhãn. Chấp thuận phương án không xác nhận đã có dữ liệu, sự đồng ý của người khảo sát hoặc quyền dùng nguồn; các số lượng khảo sát/sinh cặp là mục tiêu vận hành, chưa đo.
+- Cả nhóm cùng tham gia A–D, không giao cố định theo phần. Thế và Hưng luân phiên rà soát các đầu việc do Hà thực hiện chính. Việc luân phiên không áp dụng cho hai nhãn DPO độc lập.
 
 ## Đề xuất kỹ thuật, chưa phải phê duyệt của người dùng
 
 - Qwen2.5-1.5B-Instruct là ứng viên, chưa chốt license/revision/tokenizer/config. Ưu tiên pilot QLoRA, không hứa vừa VRAM hay thời gian.
 - Dùng DPO loss tự cài đặt ở A để so sánh loss/gradient trên logprob minibatch thật của D; không chỉ so sánh số giả rồi coi đã tích hợp.
 - Đề cương khoảng5–7 trang, kế hoạch dữ liệu3–5 trang sau dàn trang; chưa đo số trang Markdown. Mẫu5–10 thủ tục và20–50 QA được kiểm nguồn là mốc nội bộ, chưa thu thập.
-- Thiết kế cụ thể và phân công tạm trong hai bản nháp; không thay thế xác nhận của nhóm.
 
 ## Vấn đề còn mở
 
 | Vấn đề | Cần làm | Ảnh hưởng |
 |---|---|---|
-| Phần I nói 2 tuần, phần II có tuần 3 | Hỏi giảng viên; tạm theo phần II, chưa đặt ngày | Lịch nộp |
+| Phần I nói 2 tuần, phần II có tuần 3 | Theo hạn hoàn thành 01/12 Hà cung cấp; hỏi giảng viên cách nộp và yêu cầu tại buổi vấn đáp | Lịch bàn giao và nộp |
 | Nguồn hiện hành và quyền dùng | Đã kiểm 9 nguồn/5 họ thủ tục, robots/terms và lưu hash; còn khác biệt thời hạn trích lục, quyết định/biểu phí hoặc nguồn xác nhận thiếu | Chưa được phát hành/huấn luyện từ pilot |
 | Vận hành khảo sát và chấm | Đã soạn consent/survey/privacy/rubric; cần xác nhận hình thức đồng ý, kho riêng, kênh liên hệ, mốc rút và lịch trước mở | Chưa có người tham gia/consent/nhãn thật |
 | Model nền, quyền bản văn ký tự | Model nền còn mở; đã audit Truyện Kiều revision206607 research-only, review quyền bản số hóa chưa hoàn tất | Chưa huấn luyện A/D |
 | Ngân sách Colab/Drive | Xác nhận khả năng dùng, đường dẫn lưu bền vững | 5 lần chạy và resume |
-| Phân công chuyên môn | Trưởng nhóm và phương án Thế/Hưng chấm độc lập, Hà phân xử đã được đồng ý; còn bố trí lịch và xác nhận phân công chuyên môn | Nộp hồ sơ và tổ chức thực hiện |
+| Lịch rà và chấm | Chốt thời gian rà luân phiên theo đầu việc và thời gian chấm DPO độc lập của cả hai người | Tiến độ trước hạn hoàn thành |
 | Q,K,V bài C.1 | Xin dữ liệu chính thức giảng viên | Không tự tạo đáp án chính thức |
 | Logprob C.4 | Xác nhận bộ số giảng viên yêu cầu nếu có | Không gắn số minh họa thành đề gốc |
 | Quyền PDF và remote | Kiểm tra quyền chia sẻ, xác nhận remote trước push | Không công khai ngoài ý muốn |
@@ -90,9 +90,9 @@ Hồ sơ nháp, bảng đối chiếu, hướng dẫn repo và notebook môi tr�
 ## Kế hoạch phối hợp ba thành viên
 
 - [Kế hoạch thực hiện và bàn giao](team-execution-plan.md) diễn giải mục I–II và Đề tài 9 thành đầu vào, đầu ra, quy trình và điều kiện nghiệm thu A–D; tách các mốc bắt buộc khỏi mục tiêu nội bộ.
-- Giữ vai trò trưởng nhóm của Cao Văn Hà và phương án Thế/Hưng chấm độc lập, Hà phân xử; phân công chuyên môn vẫn là đề xuất. Tài liệu không xác nhận thêm nguồn, nhãn, dữ liệu, GPU hoặc kết quả thực nghiệm.
+- Hà thực hiện chính xuyên suốt và tổng hợp; Thế và Hưng luân phiên rà từng đầu việc trong A–D. Phương án Thế/Hưng cùng chấm độc lập từng cặp DPO, Hà phân xử, không đổi.
 
-## Mốc vấn đáp 03/12/2026
+## Hạn hoàn thành 01/12 và vấn đáp 03/12/2026
 
-- Người dùng báo ngày vấn đáp **03/12/2026**. Chưa có xác nhận đây cũng là hạn nộp cuối, giờ nộp hay yêu cầu cụ thể tại buổi đó; Hà hỏi giảng viên. Không suy ra rằng các yêu cầu ở đề được giảm.
-- [Giới thiệu bài tập lớn](../project-overview.md) dành cho người ngoài nhóm. [Lịch chuẩn bị vấn đáp](defense-plan-2026-12-03.md) phân việc song song và đặt cổng quyết định cuối 26/11 dựa trên nguồn hợp lệ, năng lực kiểm/chấm và số đo GPU. Các mốc trước buổi vấn đáp là đề xuất nội bộ, không phải kết quả đã đạt.
+- Người dùng chốt **23h59 ngày 01/12/2026** là hạn hoàn thành toàn dự án; **03/12/2026** là ngày vấn đáp. Hà xác nhận cách nộp và hiện vật cần mang; không coi ngày 02/12 là thời gian để hoàn thiện sản phẩm.
+- [Giới thiệu bài tập lớn](../project-overview.md) dành cho người ngoài nhóm. [Lịch bàn giao và vấn đáp](defense-plan-2026-12-03.md) đặt mốc rà khả năng hoàn tất D tối 26/11, bàn giao minh chứng tối 30/11 và khóa nội bộ lúc 20h00 ngày 01/12. Đây là kế hoạch, không phải bằng chứng đã hoàn thành hoặc được giảm yêu cầu.

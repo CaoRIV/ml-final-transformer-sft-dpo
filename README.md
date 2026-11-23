@@ -4,25 +4,26 @@ Nhóm xây dựng **trợ lý hỏi đáp thủ tục hộ tịch–chứng th�
 
 **Nhóm:** Cao Văn Hà (trưởng nhóm, tổng hợp và nộp bài), Hà Mạnh Thế, Trần Duy Hưng.
 
-[Đọc theo vai trò](#đọc-theo-vai-trò) · [Hồ sơ và đề gốc](#hồ-sơ-và-đề-gốc) · [Chạy kiểm tra](#chạy-kiểm-tra)
+[Cách nhóm làm việc](#cách-nhóm-làm-việc) · [Hồ sơ và đề gốc](#hồ-sơ-và-đề-gốc) · [Chạy kiểm tra](#chạy-kiểm-tra)
 
 ## Bắt đầu ở đây
 
 1. [Giới thiệu bài tập lớn](docs/project-overview.md) — đọc trước để hiểu nhóm xây gì và sẽ đánh giá ra sao; không cần biết trước về Transformer, SFT hay DPO.
-2. [Ai làm gì trước?](docs/progress/team-execution-plan.md#2-ai-làm-gì-trước) — tìm tên mình, xem việc cần bắt đầu và kết quả cần giao. [Kế hoạch A–D đầy đủ](docs/progress/team-execution-plan.md) giải thích cách làm và cách kiểm từng mục.
-3. [Lịch chuẩn bị vấn đáp 03/12](docs/progress/defense-plan-2026-12-03.md#2-lịch-bàn-giao-nội-bộ) — xem mốc bàn giao và việc mỗi người cần làm. **03/12/2026 là ngày vấn đáp được thông báo cho nhóm; chưa xác nhận đây cũng là hạn nộp cuối.**
+2. [Cách phối hợp và rà soát](docs/progress/team-execution-plan.md#2-nhóm-phối-hợp-thế-nào) — xem cách Hà làm bản đầu, Thế và Hưng luân phiên rà, rồi cả nhóm chốt kết quả. [Kế hoạch A–D](docs/progress/team-execution-plan.md) ghi cách làm và đầu ra của từng phần.
+3. [Lịch hoàn thành và vấn đáp](docs/progress/defense-plan-2026-12-03.md#2-lịch-bàn-giao-nội-bộ) — **hoàn thành toàn dự án muộn nhất 23h59 ngày 01/12/2026**. Ngày 02/12 diễn tập trên bản đã khóa; ngày 03/12 vấn đáp.
 
-## Đọc theo vai trò
+## Cách nhóm làm việc
 
-Phân công chuyên môn dưới đây là đề xuất; vai trò trưởng nhóm và cách chấm độc lập DPO đã thống nhất.
+**Không chia cứng A–D cho từng người.** Hà thực hiện chính, tổng hợp và nộp bài. Thế và Hưng luân phiên rà soát, chạy lại phép kiểm hoặc đối chiếu nguồn; cả ba cùng tham gia và hiểu toàn bộ dự án.
 
-| Ai | Mở những mục nào? | Việc bắt đầu |
-|---|---|---|
-| **Thế — cài đặt và bài tập** | [Phần A: cài đặt, dẫn xuất và kiểm chứng](docs/progress/team-execution-plan.md#a--tự-cài-đặt-và-kiểm-chứng-20-điểm-tr-1-và-18) · [Phần C: bốn bài tập](docs/progress/team-execution-plan.md#c--bốn-bài-tính-và-phân-tích-15-điểm-tr-19) · [Bản nháp B](docs/theory/part-b.pdf) | Bắt đầu attention, mặt nạ nhân quả và hàm mất mát DPO bằng ví dụ có kết quả tham chiếu. Bàn giao cả mã, kết quả đối chiếu và ghi chú dẫn xuất; rà B.1–B.3. |
-| **Hưng — nguồn, QA và khảo sát** | [Những điểm còn vướng ở nguồn](docs/data/source-audit.md) · [Cách mở và kiểm 20 câu hỏi–đáp nháp](docs/data/admin-pilot.md) · [Phiếu khảo sát và đồng ý](docs/data/consent-and-survey.md) · [Quy trình ẩn danh](docs/data/privacy-workflow.md) | Dẫn cả nhóm kiểm một QA với trang nguồn, ghi câu nào cần sửa hoặc chưa đủ căn cứ. Chốt điều kiện khảo sát trước khi thu và rà B.4–B.6. |
-| **Hà — tích hợp, huấn luyện và nộp bài** | [Phần D: dữ liệu đến đánh giá](docs/progress/team-execution-plan.md#d--dữ-liệu-tinh-chỉnh-và-đánh-giá-trợ-lý-30-điểm-tr-19) · [Notebook Colab](notebooks/00_environment_check.ipynb) · [Hồ sơ cần nộp](docs/progress/team-execution-plan.md#5-khi-nào-bàn-giao-và-nộp-gì) | Xác nhận hạn và sản phẩm cần nộp với giảng viên; xin Q/K/V cho C.1 và hỏi cách lấy số C.4. Kiểm môi trường GPU trước khi lên lịch huấn luyện. |
+| Cần làm gì? | Mở ở đây |
+|---|---|
+| **A — Cài đặt và kiểm chứng** | [Mã cần viết, ghi chú dẫn xuất và phép đối chiếu](docs/progress/team-execution-plan.md#a--tự-cài-đặt-và-kiểm-chứng-20-điểm-tr-1-và-18). |
+| **B — Chứng minh** | [Sáu chứng minh bản nháp](docs/theory/part-b.pdf) để cả nhóm rà và hỏi chéo. |
+| **C — Bài tập** | [Bốn bài và đầu vào cần có](docs/progress/team-execution-plan.md#c--bốn-bài-tính-và-phân-tích-15-điểm-tr-19). |
+| **D — Dữ liệu và mô hình** | [Quy trình từ nguồn tới đánh giá](docs/progress/team-execution-plan.md#d--dữ-liệu-tinh-chỉnh-và-đánh-giá-trợ-lý-30-điểm-tr-19) · [Kiểm QA mẫu](docs/data/admin-pilot.md) · [Khảo sát và đồng ý](docs/data/consent-and-survey.md) · [Notebook Colab](notebooks/00_environment_check.ipynb). |
 
-**Cả nhóm:** dùng [bản nháp sáu chứng minh](docs/theory/part-b.pdf) để hỏi chéo, không chỉ đọc phần mình phụ trách. Sau khi có đầu ra SFT thật, Thế và Hưng **đều chấm từng cặp, không xem nhãn của nhau**; Hà phân xử sau khi khóa nhãn và đo đồng thuận. Xem [hướng dẫn chấm](docs/data/annotation-guide.md).
+**Riêng chấm cặp DPO:** Thế và Hưng **đều chấm từng cặp độc lập**, không luân phiên chia cặp. Hà phân xử sau khi khóa nhãn và đo đồng thuận. Xem [hướng dẫn chấm](docs/data/annotation-guide.md).
 
 ## Hồ sơ và đề gốc
 

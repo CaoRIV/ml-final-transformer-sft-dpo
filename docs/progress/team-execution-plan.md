@@ -2,7 +2,7 @@
 
 **Nhóm:** Cao Văn Hà (trưởng nhóm, tổng hợp và nộp bài), Hà Mạnh Thế và Trần Duy Hưng. Đây là kế hoạch làm việc nội bộ, không thay hai tài liệu nộp tuần 1: [đề cương](../proposal/proposal.pdf) và [kế hoạch dữ liệu](../proposal/data-plan.pdf).
 
-**Đọc nhanh:** đọc mục 1 để hiểu bài toán, mục 2 để biết việc mình cần làm trước, rồi đọc mục A–D mình phụ trách. [Bản giới thiệu cho người mới](../project-overview.md) giải thích bài toán qua ví dụ; [lịch tới 03/12](defense-plan-2026-12-03.md) ghi việc cần bàn giao theo ngày.
+**Đọc nhanh:** mục 1 giới thiệu bài toán, mục 2 nêu cách cả nhóm làm việc và mục 4 giải thích cách làm từng phần A–D. [Bản giới thiệu cho người mới](../project-overview.md) giải thích bài toán qua ví dụ. [Lịch bàn giao](defense-plan-2026-12-03.md) đi ngược từ hạn hoàn thành **23h59 ngày 01/12/2026**; vấn đáp **03/12/2026**.
 
 ## 1. Nhóm đang làm gì?
 
@@ -13,17 +13,17 @@ Người dùng hỏi, ví dụ: **“Tôi muốn chứng thực bản sao ở H�
 - **A–C: Tự xây để hiểu.** Nhóm tự viết Transformer nhỏ học đoán ký tự kế tiếp trên văn bản tiếng Việt. Nhóm chứng minh các công thức và làm bài tính tay để hiểu và kiểm tra mã. Mô hình ký tự **không** dùng để trả lời thủ tục.
 - **D: Tinh chỉnh để thử ứng dụng.** Nhóm dùng một mô hình tiếng Việt có sẵn. Trước hết, mô hình học từ câu hỏi và đáp án mẫu có nguồn: đó là **SFT** (tinh chỉnh có giám sát). Sau đó, mô hình học từ những cặp đáp án đã được người chấm so sánh: đó là **DPO** (tối ưu hóa theo ưu tiên trực tiếp). Cuối cùng, nhóm đo xem mô hình gốc, SFT và SFT + DPO khác nhau thế nào. DPO không mặc định tốt hơn.
 
-## 2. Ai làm gì trước?
+## 2. Nhóm phối hợp thế nào?
 
-Vai trò trưởng nhóm và cách chấm DPO đã chốt. **Phân công chuyên môn là đề xuất**, để ba người xác nhận theo thời gian và thế mạnh của mình.
+**Hà là người thực hiện chính xuyên suốt A–D.** Không có phần nào giao riêng cố định cho một thành viên. Thế và Hưng luân phiên rà soát các đầu việc nhỏ để cả hai đều tham gia vào mã, chứng minh, bài tập và dữ liệu/thí nghiệm.
 
-| Người | Việc bắt đầu | Kết quả đầu tiên cần giao |
-|---|---|---|
-| **Hà** | Hỏi giảng viên 03/12 có phải hạn nộp cuối không, cần mang gì và xin Q/K/V cho C.1; hỏi cách lấy bộ số C.4. Chạy [notebook kiểm tra Colab](../../notebooks/00_environment_check.ipynb) trong phiên mới. | Gửi cả nhóm thông tin giảng viên xác nhận và log Colab. Sau khi chọn mô hình nền, gửi Thế cấu hình để làm C.3. Hà chủ trì SFT/DPO, đánh giá và tổng hợp bài nộp. |
-| **Hưng** | Mở [báo cáo kiểm nguồn](../data/source-audit.md), dẫn cả nhóm kiểm thử một cặp câu hỏi–đáp (QA). Rà quyền dùng nguồn, chuẩn bị khảo sát và xác minh quyền dùng bản số hóa *Truyện Kiều*. | Gửi Hà danh sách nguồn/câu còn vướng và căn cứ; gửi Thế bản văn, quyền dùng và thông tin chia tập khi đã đủ điều kiện. Hưng chủ trì dữ liệu D, thẻ dữ liệu và rà B.4–B.6. |
-| **Thế** | Bắt đầu attention, mặt nạ nhân quả và hàm mất mát DPO bằng đầu vào nhỏ có kết quả tham chiếu. Đọc B.1–B.3 để thống nhất cách giải thích. | Gửi Hà lệnh chạy, kết quả đối chiếu và ghi chú dẫn xuất của A. Thế chủ trì mã A, bài tập C và rà B.1–B.3. |
+1. **Hà làm và gửi bản đầu.** Với mỗi đầu việc, gửi đường dẫn và phiên bản, cách kiểm, kết quả đã có và chỗ cần xem. Không chờ xong cả phần mới gửi.
+2. **Thế và Hưng thay phiên rà trước.** Ở mỗi đầu việc, một bạn rà chi tiết, bạn kia đối chiếu kết quả chính hoặc chạy lại phép kiểm quan trọng. Đổi lượt ở đầu việc tiếp theo; không chia theo chữ A, B, C hay D. Ví dụ: chạy lại một phép kiểm mã, tự giải lại một bước chứng minh/tính toán, hoặc đối chiếu một QA với URL và đúng mục nguồn.
+3. **Hà sửa và tổng hợp.** Ghi lại góp ý, kết quả sau sửa và phần còn vướng. Cả ba có thể giải thích cách làm trước khi chốt; trao đổi hiện vật theo quyền truy cập, không chia sẻ tập test để chọn cấu hình.
 
-**Cả nhóm:** cùng kiểm nguồn và QA để chia tải. Khi chấm cặp DPO, **Thế và Hưng đều chấm từng cặp độc lập**; Hà chỉ phân xử sau khi khóa nhãn và đo đồng thuận. Khi bàn giao một việc, ghi **việc gì – phiên bản/tệp nào – kiểm được gì – ai nhận – còn vướng gì**.
+**Bắt đầu:** Hà chuẩn bị bản chạy A.1/A.4, kiểm Colab và xác nhận cách nộp/đầu vào C với giảng viên. Cả nhóm chọn một chứng minh và một QA mẫu để thử cách rà soát ngay, song song với kiểm nguồn và điều kiện khảo sát.
+
+**Riêng chấm cặp DPO:** Thế và Hưng vẫn **đều chấm từng cặp độc lập**, không chia lượt; Hà phân xử sau khi khóa nhãn và đo đồng thuận. Đó là quy trình tạo nhãn, khác với việc luân phiên rà soát.
 
 ## 3. Đề bắt buộc gì, nhóm tự chọn gì?
 
@@ -52,7 +52,7 @@ Vai trò trưởng nhóm và cách chấm DPO đã chốt. **Phân công chuyên
 | **A.3 — LoRA** | Bọc một lớp tuyến tính bằng hai ma trận nhỏ thay vì huấn luyện lại toàn bộ trọng số. Kiểm số tham số học đúng $r(d+k)$. Sau khi LoRA có cập nhật khác 0, gộp cập nhật vào trọng số gốc và kiểm đầu ra trước/sau gần bằng nhau trong sai số số học. |
 | **A.4 — Hàm mất mát DPO** | Nhận log-xác suất của hai đáp án dưới mô hình đang học và mô hình tham chiếu cố định. Tính loss (mất mát) và kiểm gradient (đạo hàm dùng để cập nhật mô hình) so với cách tính chuẩn. Giữ hàm này dùng được độc lập để đưa vào D. |
 
-**Dẫn xuất là phần bắt buộc, không phải việc thêm.** Thế bàn giao một ghi chú giải thích cách đi **từ mô hình xác suất hoặc bài toán tối ưu tới công thức được cài**. Ví dụ: xác suất dự đoán ký tự kế tiếp dẫn tới mất mát huấn luyện thế nào; mô hình ưu tiên và kết quả B.5 dẫn tới hàm mất mát DPO ra sao. Có thể dẫn lại chứng minh ở B, nhưng phải chỉ rõ công thức tương ứng nằm ở đoạn mã nào. Chỉ có mã chạy và kiểm thử đạt chưa đủ cho A.
+**Dẫn xuất là phần bắt buộc, không phải việc thêm.** Bàn giao ghi chú giải thích cách đi **từ mô hình xác suất hoặc bài toán tối ưu tới công thức được cài**. Ví dụ: xác suất dự đoán ký tự kế tiếp dẫn tới mất mát huấn luyện thế nào; mô hình ưu tiên và kết quả B.5 dẫn tới hàm mất mát DPO ra sao. Có thể dẫn lại chứng minh ở B, nhưng phải chỉ rõ công thức tương ứng nằm ở đoạn mã nào. Chỉ có mã chạy và kiểm thử đạt chưa đủ cho A.
 
 ### B — Rà và hiểu sáu chứng minh (25 điểm, tr. 18)
 
@@ -65,7 +65,7 @@ Vai trò trưởng nhóm và cách chấm DPO đã chốt. **Phân công chuyên
 5. **B.5:** Vì sao bài toán thưởng có phạt KL có nghiệm duy nhất, và mô hình Bradley–Terry dẫn tới DPO thế nào? Nêu $\beta>0$, miền hỗ trợ của phân phối và điều kiện chuẩn hóa hữu hạn.
 6. **B.6:** Vì sao tối thiểu hóa cross-entropy cũng tối thiểu hóa KL, và PPL liên quan thế nào đến trung bình theo token?
 
-Thế và Hưng rà hai nửa rồi đổi phần để hỏi chéo; Hà kiểm ký hiệu có khớp code, bài tập và thí nghiệm không. Mỗi người có thể bị hỏi về **bất kỳ** chứng minh hoặc đoạn mã nào.
+Rà theo từng chứng minh và đổi người rà trước giữa các lượt. Cả nhóm hỏi chéo và kiểm ký hiệu có khớp mã, bài tập và thí nghiệm không. Mỗi người có thể bị hỏi về **bất kỳ** chứng minh hoặc đoạn mã nào.
 
 ### C — Bốn bài tính và phân tích (15 điểm, tr. 19)
 
@@ -102,7 +102,7 @@ flowchart TD
 
 **Kiểm 20 QA nháp như thế nào?** Mở `data/review/admin-pilot-v1/review-sheet.md`, đọc câu hỏi và đáp án, rồi mở đúng URL và mục/trang ghi trong phiếu. Kiểm lần lượt nội dung, điều kiện, địa bàn, thời điểm và nguồn có thật sự nói điều đó không. Ghi riêng ID/phiên bản, người kiểm, thời điểm và quyết định giữ/sửa/loại hoặc chưa chắc. Nhóm đặt mục tiêu rà **cả 20 câu nháp** để học quy trình, không dùng chúng để thay tập 2.000 QA hoặc gọi là khảo sát thật. File nháp không nằm trong Git; xem [hướng dẫn nhận và review](../data/admin-pilot.md).
 
-**Cầu nối A–D sẽ bàn giao gì?** Hà và Thế lấy một lô nhỏ gồm các cặp thật đã kiểm định ở D. Giữ cùng mô hình, câu hỏi, cách tách token và phần đáp án được tính điểm. So hàm DPO tự viết với cách tính chuẩn, ghi sai khác **loss và gradient**. Với DPO, cộng log-xác suất các token **trong đáp án**, bỏ prompt và phần đệm; PPL thì dùng trung bình theo token. Một ví dụ tự đặt của C.4 không thay được phép kiểm này.
+**Cầu nối A–D sẽ bàn giao gì?** Lấy một lô nhỏ gồm các cặp thật đã kiểm định ở D. Giữ cùng mô hình, câu hỏi, cách tách token và phần đáp án được tính điểm. So hàm DPO tự viết với cách tính chuẩn, ghi sai khác **loss và gradient**. Với DPO, cộng log-xác suất các token **trong đáp án**, bỏ prompt và phần đệm; PPL thì dùng trung bình theo token. Một ví dụ tự đặt của C.4 không thay được phép kiểm này.
 
 ## 5. Khi nào bàn giao và nộp gì?
 
@@ -119,7 +119,7 @@ flowchart TD
 - **Dữ liệu hoặc script thu thập kèm datasheet**, tức thẻ mô tả nguồn, quyền dùng, việc lọc/chấm và cách chia tập. Không đưa dữ liệu cá nhân, phiếu đồng ý, test khóa, nguồn hạn chế hay trọng số nặng lên Git.
 - **Model card** cho mô hình D, mô tả mô hình, dữ liệu, đánh giá, giới hạn và cách dùng phù hợp.
 
-**Lịch thực tế:** Hà báo nhóm vấn đáp ngày **03/12/2026**; chưa xác nhận đó cũng là hạn nộp cuối. Phần I ghi “2 tuần”, phần II có mốc tuần 3, nên Hà cần hỏi giảng viên cách áp dụng và hiện vật phải mang. Theo [lịch vấn đáp](defense-plan-2026-12-03.md), nhóm kiểm lại khả năng hoàn tất D vào **26/11**, khóa gói trình bày **01/12** và tập hỏi chéo **02/12**. Đây là mốc nội bộ; nếu nguồn, thời gian chấm hoặc GPU không đủ, báo sớm bằng chứng đã có và yêu cầu còn thiếu, không tự giảm chuẩn.
+**Hạn hoàn thành toàn dự án: 23h59 ngày 01/12/2026.** Theo [lịch bàn giao](defense-plan-2026-12-03.md), nhóm kiểm lại khả năng hoàn tất D tối **26/11**, bàn giao minh chứng tối **30/11** và dự kiến khóa gói nội bộ lúc **20h00 ngày 01/12** để còn thời gian kiểm trước hạn. **02/12** chỉ diễn tập trên bản đã khóa; **03/12** vấn đáp. Hà xác nhận cách nộp và hiện vật cần mang. Phần I ghi “2 tuần”, phần II mô tả mốc đến tuần 3; giữ nguyên yêu cầu của đề, không tự suy ra được giảm phạm vi khi nguồn, giờ chấm hoặc GPU không đủ.
 
 ## 6. Hiện có gì, còn thiếu gì?
 
@@ -129,4 +129,4 @@ flowchart TD
 | [Báo cáo pilot](../data/admin-pilot-report.json): 9 nguồn, 20 QA nháp và 21 đoạn dẫn đã kiểm cấu trúc. | Báo cáo ghi **0 QA được người duyệt, 0 QA đủ điều kiện huấn luyện**. Còn phải kiểm hiệu lực, quyền dùng và nội dung. |
 | [Kiểm kỹ thuật bản Truyện Kiều](../data/char-corpus-audit-report.json) revision `206607`; có biểu mẫu khảo sát và notebook kiểm môi trường. | Chưa duyệt quyền bản số hóa hoặc đo PPL. Chưa có khảo sát thật, cặp DPO, kết quả SFT/DPO hay đánh giá ba mô hình. |
 
-Chỉ cập nhật [tiến độ](project-context.md) khi có hiện vật hoặc log kiểm chứng. Việc đã phân công hay đã mô tả trong tài liệu **không phải** việc đã hoàn thành.
+Chỉ cập nhật [tiến độ](project-context.md) khi có hiện vật hoặc log kiểm chứng. Việc đã ghi trong kế hoạch **không phải** việc đã hoàn thành.

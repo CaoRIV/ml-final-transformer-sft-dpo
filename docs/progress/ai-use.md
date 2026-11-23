@@ -48,3 +48,11 @@ Khi lập báo cáo cuối, chuyển nhật ký này thành phụ lục khai bá
 ## Phiên tổ chức lại README
 
 - AI sắp xếp README thành lộ trình đọc chung, liên kết theo vai trò, hồ sơ và hướng dẫn chạy kiểm tra. Không sửa yêu cầu, lịch hay trạng thái thực nghiệm.
+
+## Phiên cập nhật hạn hoàn thành
+
+- AI cập nhật lịch ngược theo hạn 23h59 ngày 01/12/2026 do người dùng cung cấp, tách ngày diễn tập và vấn đáp khỏi thời gian hoàn thiện sản phẩm. Không xác nhận thêm kết quả hoặc thay đổi yêu cầu học phần.
+
+## Phiên cập nhật cách phối hợp nhóm
+
+- AI cập nhật README, kế hoạch, lịch bàn giao và đề cương theo quyết định của người dùng: Hà thực hiện chính, Thế và Hưng rà luân phiên, không giao cố định A–D theo người. Không đổi hạn, quy trình chấm DPO hoặc trạng thái thực nghiệm.

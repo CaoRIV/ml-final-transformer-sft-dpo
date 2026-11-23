@@ -60,5 +60,5 @@ Hoặc dùng XeLaTeX/Overleaf, chọn XeLaTeX và biên dịch mỗi tệp hai l
 1. Xử lý khác biệt thời hạn/phiên bản, quyết định/biểu phí hoặc nguồn đối chiếu còn thiếu trong [sổ kiểm chứng](../data/source-audit.md); hoàn tất review quyền bản số hóa Truyện Kiều trước huấn luyện.
 2. Nhóm kiểm thủ công 20 QA nháp nội bộ; mẫu hiện có chưa được phê duyệt hoặc đủ điều kiện train. Xem [báo cáo pilot](../data/admin-pilot.md).
 3. Nhận bàn giao [bộ biểu mẫu](../data/README.md); xác nhận hình thức consent, kho riêng, kênh liên hệ, mốc rút và lịch trước mời người thật. Đã có bản soạn, chưa có khảo sát/consent.
-4. Bổ sung thông tin trường/lớp và phân công chuyên môn, ngân sách, nơi lưu bền vững; hỏi giảng viên lịch 2 tuần/tuần 3 và hình thức nộp.
+4. Bổ sung thông tin trường/lớp, ngân sách, nơi lưu bền vững; xác nhận cách nộp với giảng viên và đối chiếu [lịch bàn giao của nhóm](../progress/defense-plan-2026-12-03.md).
 5. Nhóm đọc, hiểu và rà soát hai tài liệu trước nộp; ghi phạm vi AI vào nhật ký/phụ lục theo yêu cầu. PDF biên dịch được không đồng nghĩa các công việc nghiên cứu trên đã hoàn tất.
