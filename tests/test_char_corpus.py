@@ -3,7 +3,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import threading
 import unittest
-from unittest.mock import patch
 
 from scripts import prepare_char_corpus as corpus
 
@@ -37,11 +36,8 @@ class RedirectBoundaryTest(unittest.TestCase):
         worker.start()
         base = f"http://127.0.0.1:{server.server_port}"
         try:
-            with patch.object(corpus, "ROBOTS_URL", base + "/robots.txt"), patch.object(
-                corpus, "AUDIT_RENDERED_URL", base + "/allowed"
-            ):
-                with self.assertRaisesRegex(corpus.PreparationError, "Refusing redirect"):
-                    corpus.fetch_rendered_audit_html()
+            with self.assertRaisesRegex(corpus.PreparationError, "Refusing redirect"):
+                corpus.fetch_snapshot(base + "/allowed", "text/html")
         finally:
             server.shutdown()
             server.server_close()

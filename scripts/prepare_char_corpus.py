@@ -1,59 +1,51 @@
-"""Prepare an auditable Truyện Kiều character corpus from a pinned revision.
+"""Chuẩn bị corpus A.2 từ bản Quốc ngữ Trương Vĩnh Ký 1911.
 
-``--audit-rendered`` checks robots and fetches exactly one permitted rendered
-``/wiki/`` revision into ``.cache`` with a research-only manifest. It never
-approves training or distribution. ``--source-wikitext`` is offline and needs
-the exact raw revision plus a human rights attestation before local preparation.
-Both modes validate boundaries, then produce NFC splits, train-only vocabulary,
-windows, and an actual manifest.
+Đọc snapshot và scan đã lưu, hoặc lấy đúng hai URL nguồn sau khi kiểm robots.
+Manifest v2 mô tả dữ liệu; không thể hiện phê duyệt huấn luyện của nhóm.
 """
 
 from __future__ import annotations
 
 import argparse
 import hashlib
-from html.parser import HTMLParser
 import json
 import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-import re
 import shutil
 import tempfile
 from typing import Any
 import unicodedata
 from urllib import robotparser
 from urllib.parse import urlsplit
+from urllib.error import HTTPError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
+from .kieu_1911 import EXTRACTION_METHOD, NORMALIZATION, SOURCE_PAGE_ID, SOURCE_REVISION, SOURCE_URL, extract_verse_lines
 
-SCHEMA_VERSION = "char-corpus-manifest/v1"
-SOURCE_TITLE = "Truyện Kiều"
-SOURCE_AUTHOR = "Nguyễn Du"
-SOURCE_PAGE_ID = 7350
-SOURCE_REVISION = 206607
-SOURCE_REVISION_TIMESTAMP = "2026-11-07T14:26:11Z"
-SOURCE_PERMALINK = (
-    "https://vi.wikisource.org/w/index.php?title=Truy%E1%BB%87n_Ki%E1%BB%81u&oldid=206607"
-)
-SOURCE_RAW_URL = SOURCE_PERMALINK + "&action=raw"
-SOURCE_API_URL = (
-    "https://vi.wikisource.org/w/api.php?action=query&prop=revisions"
-    "&titles=Truy%E1%BB%87n_Ki%E1%BB%81u&rvstartid=206607&rvendid=206607"
-    "&rvprop=ids%7Ctimestamp%7Csha1&format=json&formatversion=2"
-)
-# The immutable MediaWiki revision fingerprint reported by the source API.
-EXPECTED_WIKITEXT_SHA1 = "9910643b961054303306d3ace187dcd8dbbd4f3b"
-EXPECTED_FIRST_LINE = "Trăm năm trong cõi người ta,"
-EXPECTED_LAST_LINE = "Mua vui cũng được một vài trống canh."
-EXPECTED_VERSE_LINES = 3254
+
+SCHEMA_VERSION = "char-corpus-manifest/v2"
+SCAN_URL = "https://upload.wikimedia.org/wikipedia/commons/c/c0/Kim_Van_Kieu_truyen_Truong_Vinh_Ky.pdf"
+SCAN_RECORD_URL = "https://commons.wikimedia.org/wiki/File:Kim_Van_Kieu_truyen_Truong_Vinh_Ky.pdf"
+SCAN_SHA256 = "d60d1b9620300aa0e31dfdf12a3499e3eb72f2236191dd5a9f70cc696711e5d8"
+# Khóa phần thơ đã đối chiếu mẫu; oldid không khóa nội dung các trang con được nhúng.
+CORPUS_SHA256 = "eddbb40a3f4ad421d8b089f95ad139a372b20c4ec8621a929ba6aa6f9c63abcb"
+SOURCE = {
+    "kind": "wikisource_rendered_1911",
+    "title": "Kim, Vân, Kiều truyện",
+    "author": "Nguyễn Du",
+    "transcriber": "Trương Vĩnh Ký",
+    "edition": "F.-H. Schneider, Sài Gòn, ấn bản thứ ba, 1911",
+    "page_id": SOURCE_PAGE_ID,
+    "revision": SOURCE_REVISION,
+    "rendered_url": SOURCE_URL,
+    "scan_url": SCAN_URL,
+    "scan_record_url": SCAN_RECORD_URL,
+    "scan_sha256": SCAN_SHA256,
+}
 UNK_TOKEN = "<UNK>"
 
-ROOT = Path(__file__).resolve().parents[1]
-RESEARCH_CACHE = ROOT / ".cache" / "char-corpus"
-USER_AGENT = "ml-final-transformer-sft-dpo-char-corpus/1.0 (research-only; repository maintainer)"
-ROBOTS_URL = "https://vi.wikisource.org/robots.txt"
-AUDIT_RENDERED_URL = "https://vi.wikisource.org/wiki/Truy%E1%BB%87n_Ki%E1%BB%81u?oldid=206607"
+USER_AGENT = "ml-final-transformer-sft-dpo-char-corpus/1.1 (university coursework; one edition snapshot)"
 
 
 class PreparationError(RuntimeError):
@@ -69,10 +61,6 @@ class RejectRedirects(HTTPRedirectHandler):
 
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
-
-
-def sha1_bytes(data: bytes) -> str:
-    return hashlib.sha1(data).hexdigest()
 
 
 def canonical_json(data: Any) -> bytes:
@@ -95,208 +83,36 @@ def parse_utc(value: Any, field_name: str) -> str:
     return value
 
 
-def load_rights_attestation(path: Path) -> dict[str, Any]:
-    try:
-        parsed = json.loads(path.read_text(encoding="utf-8"))
-    except FileNotFoundError as error:
-        raise PreparationError(f"Rights attestation does not exist: {path}") from error
-    except json.JSONDecodeError as error:
-        raise PreparationError(f"Rights attestation is not valid JSON: {path}: {error}") from error
-
-    if not isinstance(parsed, dict):
-        raise PreparationError("Rights attestation must be a JSON object.")
-    required_equal = {
-        "status": "approved",
-        "source_title": SOURCE_TITLE,
-        "source_revision": SOURCE_REVISION,
-        "source_wikitext_sha1": EXPECTED_WIKITEXT_SHA1,
-    }
-    for key, expected in required_equal.items():
-        if parsed.get(key) != expected:
-            raise PreparationError(
-                f"Rights attestation field {key!r} must equal {expected!r}; got {parsed.get(key)!r}."
-            )
-    if not isinstance(parsed.get("reviewer_id"), str) or not parsed["reviewer_id"].strip():
-        raise PreparationError("Rights attestation must contain a non-empty reviewer_id, not a personal name.")
-    parse_utc(parsed.get("reviewed_at_utc"), "reviewed_at_utc")
-    parse_utc(parsed.get("retrieved_at_utc"), "retrieved_at_utc")
-    if not isinstance(parsed.get("digitization_provenance"), str) or not parsed["digitization_provenance"].strip():
-        raise PreparationError("Rights attestation must record digitization_provenance; a bare public-domain claim is insufficient.")
-    basis_urls = parsed.get("basis_urls")
-    if not isinstance(basis_urls, list) or not basis_urls or not all(isinstance(url, str) and url.startswith("https://") for url in basis_urls):
-        raise PreparationError("Rights attestation must contain one or more HTTPS basis_urls.")
-    return parsed
-
-
-def remove_templates(text: str) -> str:
-    """Remove balanced MediaWiki templates, including nested templates.
-
-    The pinned poem uses templates for line numbers. Keeping arbitrary template
-    output would make a raw-wikitext extraction depend on MediaWiki expansion,
-    so any template is excluded rather than guessed at.
-    """
-
-    output: list[str] = []
-    depth = 0
-    index = 0
-    while index < len(text):
-        pair = text[index : index + 2]
-        if pair == "{{":
-            depth += 1
-            index += 2
-            continue
-        if pair == "}}":
-            if depth == 0:
-                raise PreparationError("Encountered an unmatched closing template delimiter in the poem body.")
-            depth -= 1
-            index += 2
-            continue
-        if depth == 0:
-            output.append(text[index])
-        index += 1
-    if depth:
-        raise PreparationError("Encountered an unmatched opening template delimiter in the poem body.")
-    return "".join(output)
-
-class RenderedPoemParser(HTMLParser):
-    """Extract verse lines from the rendered MediaWiki ``div.poem`` element."""
-
-    def __init__(self) -> None:
-        super().__init__(convert_charrefs=True)
-        self.poem_depth = 0
-        self.skip_depth = 0
-        self.poem_blocks = 0
-        self.current: list[str] = []
-        self.lines: list[str] = []
-
-    def flush_line(self) -> None:
-        line = unicodedata.normalize("NFC", " ".join("".join(self.current).strip().split()))
-        self.current.clear()
-        if line:
-            self.lines.append(line)
-
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        attributes = dict(attrs)
-        classes = set((attributes.get("class") or "").split())
-        if tag == "div" and self.poem_depth == 0 and "poem" in classes:
-            self.poem_blocks += 1
-            self.poem_depth = 1
-            return
-        if not self.poem_depth:
-            return
-        if self.skip_depth:
-            self.skip_depth += 1
-            return
-        if tag == "span" and "OptionText" in classes:
-            self.skip_depth = 1
-        elif tag == "br":
-            self.flush_line()
-        elif tag == "div":
-            self.poem_depth += 1
-
-    def handle_endtag(self, tag: str) -> None:
-        if not self.poem_depth:
-            return
-        if self.skip_depth:
-            self.skip_depth -= 1
-            return
-        if tag == "div":
-            self.poem_depth -= 1
-            if self.poem_depth == 0:
-                self.flush_line()
-
-    def handle_data(self, data: str) -> None:
-        if self.poem_depth and not self.skip_depth:
-            self.current.append(data)
-
-
-def validate_poem_lines(lines: list[str]) -> list[str]:
-    if not lines:
-        raise PreparationError("The poem extraction produced no non-empty verse lines.")
-    if lines[0] != EXPECTED_FIRST_LINE:
-        raise PreparationError(f"First poem line mismatch: {lines[0]!r}")
-    if lines[-1] != EXPECTED_LAST_LINE:
-        raise PreparationError(f"Last poem line mismatch: {lines[-1]!r}")
-    if len(lines) != EXPECTED_VERSE_LINES:
-        raise PreparationError(f"Verse-line count mismatch: expected {EXPECTED_VERSE_LINES}, got {len(lines)}.")
-    return lines
-
-
-def extract_rendered_poem_lines(html: str) -> list[str]:
-    parser = RenderedPoemParser()
-    parser.feed(html)
-    parser.close()
-    if parser.poem_blocks != 1 or parser.poem_depth:
-        raise PreparationError(f"Expected exactly one closed rendered div.poem, found {parser.poem_blocks}.")
-    return validate_poem_lines(parser.lines)
-
-
-def fetch_rendered_audit_html() -> bytes:
-    """Fetch only the robots-permitted, immutable rendered revision for research."""
-
+def fetch_snapshot(url: str, expected_content_type: str) -> bytes:
+    """Kiểm robots của từng host, không gọi API hoặc tự theo redirect."""
+    location = urlsplit(url)
+    robots_url = f"{location.scheme}://{location.netloc}/robots.txt"
     opener = build_opener(RejectRedirects())
-    robots_request = Request(ROBOTS_URL, headers={"User-Agent": USER_AGENT, "Accept": "text/plain"})
-    with opener.open(robots_request, timeout=30) as response:
-        robots_text = response.read().decode("utf-8")
+    headers = {"User-Agent": USER_AGENT}
     rules = robotparser.RobotFileParser()
-    rules.parse(robots_text.splitlines())
-    if not rules.can_fetch(USER_AGENT, AUDIT_RENDERED_URL):
-        raise PreparationError(f"robots.txt disallows the sole audit URL: {AUDIT_RENDERED_URL}")
-
-    request = Request(AUDIT_RENDERED_URL, headers={"User-Agent": USER_AGENT, "Accept": "text/html"})
-    with opener.open(request, timeout=30) as response:
-        final_url = response.geturl()
-        content_type = response.headers.get_content_type()
-        payload = response.read()
-    expected = urlsplit(AUDIT_RENDERED_URL)
-    actual = urlsplit(final_url)
-    if (actual.scheme, actual.netloc, actual.path, actual.query) != (
-        expected.scheme,
-        expected.netloc,
-        expected.path,
-        expected.query,
-    ):
-        raise PreparationError(f"Audit fetch redirected away from the pinned rendered revision: {final_url}")
-    if content_type != "text/html":
-        raise PreparationError(f"Audit fetch returned {content_type!r}, not rendered HTML.")
     try:
-        html = payload.decode("utf-8")
-    except UnicodeDecodeError as error:
-        raise PreparationError("Rendered audit response is not UTF-8.") from error
-    if not re.search(r'"wgRevisionId"\s*:\s*206607\b', html) or not re.search(r'"wgArticleId"\s*:\s*7350\b', html):
-        raise PreparationError("Rendered audit response does not identify the pinned revision/page ID.")
-    return payload
+        with opener.open(Request(robots_url, headers=headers), timeout=30) as response:
+            rules.parse(response.read().decode("utf-8").splitlines())
+    except HTTPError as error:
+        if error.code not in (404, 410):
+            raise
+        rules.allow_all = True
+    if not rules.can_fetch(USER_AGENT, url):
+        raise PreparationError(f"robots.txt chặn URL: {url}")
+    with opener.open(Request(url, headers=headers), timeout=30) as response:
+        if response.headers.get_content_type() != expected_content_type:
+            raise PreparationError(f"Kiểu nội dung không khớp tại {url}")
+        return response.read()
 
 
-def extract_poem_lines(wikitext: str) -> list[str]:
-    """Extract exactly the sole ``<poem>`` body, excluding UI and line numbers."""
-
-    poem_blocks = re.findall(r"<poem(?:\s[^>]*)?>(.*?)</poem\s*>", wikitext, flags=re.IGNORECASE | re.DOTALL)
-    if len(poem_blocks) != 1:
-        raise PreparationError(f"Expected exactly one <poem> block, found {len(poem_blocks)}.")
-
-    poem = re.sub(r"<!--.*?-->", "", poem_blocks[0], flags=re.DOTALL)
-    poem = remove_templates(poem)
-    if "{{" in poem or "}}" in poem or "[[" in poem or "]]" in poem:
-        raise PreparationError("Unexpected MediaWiki markup remains inside the poem body; extraction is intentionally fail-closed.")
-    if re.search(r"</?[A-Za-z][^>]*>", poem):
-        raise PreparationError("Unexpected HTML markup remains inside the poem body; extraction is intentionally fail-closed.")
-
-    lines: list[str] = []
-    for raw_line in poem.replace("\r\n", "\n").replace("\r", "\n").split("\n"):
-        line = unicodedata.normalize("NFC", " ".join(raw_line.strip().split()))
-        if line:
-            lines.append(line)
-
-    if not lines:
-        raise PreparationError("The <poem> block produced no non-empty verse lines.")
-    if lines[0] != EXPECTED_FIRST_LINE:
-        raise PreparationError(f"First poem line mismatch: {lines[0]!r}")
-    if lines[-1] != EXPECTED_LAST_LINE:
-        raise PreparationError(f"Last poem line mismatch: {lines[-1]!r}")
-    if len(lines) != EXPECTED_VERSE_LINES:
-        raise PreparationError(f"Verse-line count mismatch: expected {EXPECTED_VERSE_LINES}, got {len(lines)}.")
-    return lines
+def source_bytes(path: Path, *, fetch: bool, url: str, content_type: str) -> bytes:
+    if path.exists() or not fetch:
+        return path.read_bytes()
+    data = fetch_snapshot(url, content_type)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("xb") as handle:
+        handle.write(data)
+    return data
 
 
 def make_vocab(train_text: str) -> dict[str, Any]:
@@ -352,68 +168,22 @@ def artifact_metadata(path: Path, root: Path) -> dict[str, Any]:
     }
 
 
-def ensure_research_cache(path: Path, label: str) -> None:
-    try:
-        path.relative_to(RESEARCH_CACHE)
-    except ValueError as error:
-        raise PreparationError(f"Research-only {label} must remain below {RESEARCH_CACHE}: {path}") from error
-
-
 def prepare(args: argparse.Namespace) -> dict[str, Any]:
-    source_snapshot: tuple[str, bytes] | None = None
-    if args.audit_rendered:
-        rendered_html = fetch_rendered_audit_html()
-        lines = extract_rendered_poem_lines(rendered_html.decode("utf-8"))
-        source = {
-            "kind": "rendered_html_research_audit",
-            "title": SOURCE_TITLE,
-            "author": SOURCE_AUTHOR,
-            "page_id": SOURCE_PAGE_ID,
-            "revision": SOURCE_REVISION,
-            "revision_timestamp_utc": SOURCE_REVISION_TIMESTAMP,
-            "rendered_url": AUDIT_RENDERED_URL,
-            "robots_url": ROBOTS_URL,
-            "html_sha256": sha256_bytes(rendered_html),
-        }
-        status = "research_only_not_approved_for_training_or_distribution"
-        rights_attestation = None
-        source_snapshot = ("source-rendered-206607.html", rendered_html)
-    else:
-        source_path = args.source_wikitext.resolve()
-        raw_bytes = source_path.read_bytes()
-        if raw_bytes.startswith(b"\xef\xbb\xbf"):
-            raise PreparationError("Source wikitext has a UTF-8 BOM; save exact UTF-8 bytes from the pinned raw revision.")
-        actual_sha1 = sha1_bytes(raw_bytes)
-        if actual_sha1 != EXPECTED_WIKITEXT_SHA1:
-            raise PreparationError(
-                "Pinned-source SHA-1 mismatch: expected "
-                f"{EXPECTED_WIKITEXT_SHA1}, got {actual_sha1}. Do not continue with a changed or re-saved source."
-            )
-        try:
-            wikitext = raw_bytes.decode("utf-8")
-        except UnicodeDecodeError as error:
-            raise PreparationError("Source wikitext is not UTF-8.") from error
-        if args.rights_attestation is None:
-            raise PreparationError("--rights-attestation is required for local preparation from raw wikitext.")
-        lines = extract_poem_lines(wikitext)
-        source = {
-            "kind": "pinned_raw_wikitext",
-            "title": SOURCE_TITLE,
-            "author": SOURCE_AUTHOR,
-            "page_id": SOURCE_PAGE_ID,
-            "revision": SOURCE_REVISION,
-            "revision_timestamp_utc": SOURCE_REVISION_TIMESTAMP,
-            "permalink": SOURCE_PERMALINK,
-            "raw_url": SOURCE_RAW_URL,
-            "revision_api_url": SOURCE_API_URL,
-            "wikitext_sha1": actual_sha1,
-            "wikitext_sha256": sha256_bytes(raw_bytes),
-            "local_source_path": str(source_path),
-        }
-        status = "approved_for_local_preparation"
-        rights_attestation = load_rights_attestation(args.rights_attestation.resolve())
+    output_dir = args.output_dir.resolve()
+    manifest_path = args.manifest.resolve()
+    if output_dir.exists() or manifest_path.exists():
+        raise PreparationError("Thư mục hiện vật và manifest phải là đường dẫn mới.")
+
+    scan = source_bytes(args.scan_pdf, fetch=args.fetch, url=SCAN_URL, content_type="application/pdf")
+    if sha256_bytes(scan) != SCAN_SHA256:
+        raise PreparationError("SHA-256 bản quét không khớp ấn bản Commons đã đối chiếu.")
+    html = source_bytes(args.source_html, fetch=args.fetch, url=SOURCE_URL, content_type="text/html")
+    lines = extract_verse_lines(html.decode("utf-8"))
 
     corpus_text = "\n".join(lines) + "\n"
+    content_sha256 = sha256_bytes(corpus_text.encode("utf-8"))
+    if content_sha256 != CORPUS_SHA256:
+        raise PreparationError(f"Phần thơ không khớp SHA-256 đã khóa: {content_sha256}. Kiểm lại thay đổi từ trang nhúng.")
     if unicodedata.normalize("NFC", corpus_text) != corpus_text:
         raise PreparationError("Internal error: corpus is not NFC after normalization.")
 
@@ -435,15 +205,6 @@ def prepare(args: argparse.Namespace) -> dict[str, Any]:
     if not train_window_count or not validation_window_count:
         raise PreparationError("At least one window is required in both splits.")
 
-    output_dir = args.output_dir.resolve()
-    manifest_path = args.manifest.resolve()
-    if args.audit_rendered:
-        ensure_research_cache(output_dir, "output directory")
-        ensure_research_cache(manifest_path, "manifest")
-    if output_dir.exists():
-        raise PreparationError(f"Refusing to overwrite existing output directory: {output_dir}")
-    if manifest_path.exists():
-        raise PreparationError(f"Refusing to overwrite existing manifest: {manifest_path}")
     output_dir.parent.mkdir(parents=True, exist_ok=True)
 
     staging = Path(tempfile.mkdtemp(prefix=f".{output_dir.name}.tmp-", dir=output_dir.parent))
@@ -468,30 +229,17 @@ def prepare(args: argparse.Namespace) -> dict[str, Any]:
         write_bytes(vocab_path, canonical_json(vocab))
         write_bytes(train_windows_path, train_windows)
         write_bytes(validation_windows_path, validation_windows)
-        if source_snapshot is not None:
-            snapshot_path = staging / source_snapshot[0]
-            write_bytes(snapshot_path, source_snapshot[1])
-            paths["rendered_html"] = snapshot_path
-
         artifacts = {name: artifact_metadata(path, staging) for name, path in paths.items()}
         manifest = {
             "schema_version": SCHEMA_VERSION,
             "created_at_utc": utc_now(),
-            "status": status,
-            "source": source,
-            "rights_attestation": rights_attestation,
+            "status": "prepared_pending_training_review",
+            "source": {**SOURCE, "rendered_sha256": sha256_bytes(html)},
             "extraction": {
-                "method": (
-                    "rendered div.poem from the pinned page; OptionText line-number spans and surrounding page chrome excluded"
-                    if args.audit_rendered
-                    else "sole <poem> block from pinned raw wikitext; balanced templates, comments, blank lines, indentation, and surrounding page markup excluded"
-                ),
-                "normalization": "Unicode NFC; CRLF/CR converted to LF; whitespace collapsed within each verse line; exactly one LF after every retained verse line",
-                "expected_first_line": EXPECTED_FIRST_LINE,
-                "expected_last_line": EXPECTED_LAST_LINE,
-                "expected_verse_lines": EXPECTED_VERSE_LINES,
+                "method": EXTRACTION_METHOD,
+                "normalization": NORMALIZATION,
                 "actual_verse_lines": len(lines),
-                "content_sha256": sha256_bytes(corpus_text.encode("utf-8")),
+                "content_sha256": content_sha256,
                 "content_codepoints": len(corpus_text),
             },
             "split": {
@@ -531,21 +279,14 @@ def prepare(args: argparse.Namespace) -> dict[str, Any]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    source_mode = parser.add_mutually_exclusive_group(required=True)
-    source_mode.add_argument("--source-wikitext", type=Path, help="Exact UTF-8 raw wikitext saved from the pinned revision.")
-    source_mode.add_argument(
-        "--audit-rendered",
-        action="store_true",
-        help="Fetch only the robots-permitted pinned /wiki rendered page into .cache for research; never approves training or release.",
-    )
-    parser.add_argument("--rights-attestation", type=Path, help="Human-reviewed JSON approval, required only with --source-wikitext.")
+    parser.add_argument("--source-html", type=Path, required=True, help="Snapshot HTML của trang thơ revision 206466.")
+    parser.add_argument("--scan-pdf", type=Path, required=True, help="Bản scan Commons đã khóa SHA-256.")
+    parser.add_argument("--fetch", action="store_true", help="Chỉ tải file nguồn còn thiếu, sau khi kiểm robots; không ghi đè.")
     parser.add_argument("--output-dir", type=Path, required=True, help="New directory for corpus artifacts; it must not already exist.")
     parser.add_argument("--manifest", type=Path, required=True, help="New path for the actual run manifest; it must not already exist.")
     parser.add_argument("--train-fraction", type=float, default=0.9, help="Contiguous prefix fraction for train (default: 0.9).")
     parser.add_argument("--sequence-length", type=int, default=128, help="Stride-length next-character window length (default: 128).")
     args = parser.parse_args()
-    if args.audit_rendered and args.rights_attestation is not None:
-        parser.error("--rights-attestation only applies to --source-wikitext; research audit has no approval bypass.")
     if not 0.0 < args.train_fraction < 1.0:
         parser.error("--train-fraction must be strictly between 0 and 1.")
     if args.sequence_length < 1:
@@ -556,7 +297,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     try:
         manifest = prepare(parse_args())
-    except (OSError, PreparationError) as error:
+    except (OSError, ValueError, PreparationError) as error:
         raise SystemExit(f"prepare_char_corpus: {error}") from error
     print(
         f"{manifest['status']}: revision {manifest['source']['revision']} "

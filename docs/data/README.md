@@ -17,7 +17,7 @@
 |---|---|---|
 | Nguồn thủ tục | 9 nguồn nghiên cứu, 5 họ thủ tục ứng viên, URL/thời điểm/hash và kiểm robots/terms | Quyền dùng/phân phối, hiệu lực; khác biệt thời hạn trích lục; nguồn Hà Nội/mã quốc gia hoặc biểu phí còn thiếu |
 | QA | 20 QA do AI biên soạn, 21 trích đoạn; script kiểm cấu trúc | 0 human approval, 0 QA sẵn sàng train; không phải test khảo sát |
-| Corpus ký tự | Audit revision206607, 3.254 dòng; split/vocab/windows có kiểm chứng | Review quyền bản số hóa; mọi artifact còn research-only ngoài Git |
+| Corpus ký tự | [Trương Vĩnh Ký 1911](char-corpus.md), 3.254 dòng từ revision `206466`; đã kiểm dữ liệu và xác nhận riêng khớp manifest | Chờ chạy Colab GPU; hiện vật ngoài Git |
 | Khảo sát/chấm | Văn bản thông tin/đồng ý, phiếu hỏi, quy trình riêng tư và rubric | Chưa có phê duyệt vận hành, người tham gia, consent, checkpoint SFT hoặc nhãn DPO |
 
 ## Chạy lại kiểm tra
@@ -35,7 +35,7 @@ python -m unittest discover -s tests -p "test_char_corpus.py" -v
 - Kiểm thử hồi quy dùng HTTP loopback cục bộ để bảo đảm không theo redirect đến một đích chưa được robots kiểm; không truy cập mạng Internet.
 - Khi clone repo mới, `data/review/admin-pilot-v1/` và `.cache/admin-source-audit/` không có vì đã ignored. Cần nhận bundle riêng đã được kiểm quyền từ người phụ trách trước khi kiểm lại; không tự tạo snapshot hoặc nhãn thay thế để làm lệnh đạt. Hash giúp đối chiếu đúng phiên bản, không thay quyền chia sẻ.
 
-Để audit kỹ thuật Truyện Kiều qua một URL `/wiki/` đã pin, xem lệnh trong [char-corpus.md](char-corpus.md). Output phải là thư mục mới dưới `.cache/char-corpus/`; script từ chối ghi đè. Chỉ trạng thái research-only được tạo ở chế độ audit.
+Để chuẩn bị hoặc kiểm tra lại corpus Truyện Kiều 1911, xem [lệnh và hồ sơ nguồn](char-corpus.md#4-chuẩn-bị-cục-bộ-và-xác-nhận-quyền). Giữ file nguồn và hiện vật dưới `.cache/char-corpus/` hoặc kho riêng; khi chuẩn bị lại, chọn đường dẫn đích mới. Không dùng snapshot audit `206607` để train.
 
 ## Việc nhóm thực hiện tiếp
 

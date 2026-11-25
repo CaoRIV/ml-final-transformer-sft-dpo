@@ -48,6 +48,8 @@ python scripts/validate_admin_pilot.py --require-training-ready
 
 ## 4. Bàn giao cho nhóm
 
+**Khi chưa bố trí được người kiểm:** chạy `python scripts/validate_admin_pilot.py --output data/review/admin-pilot-v1/auto-check-report.json` để lưu kết quả kỹ thuật của vòng hiện tại ở thư mục nội bộ. Giữ nguyên phiếu người kiểm; không chuyển nhận xét AI hay kết quả script thành nhãn của thành viên. Chỉ thực hiện các bước rà thủ công bên dưới khi có người trực tiếp đối chiếu.
+
 1. Mở QA nội bộ cùng đúng snapshot/URL/locator. Đọc [kết quả kiểm nguồn](source-audit.md) trước, đặc biệt khác biệt thời hạn trích lục và thiếu biểu lệ phí Hà Nội.
 2. Rà soát nghiên cứu có thể ghi `uncertain`/lỗi khi nguồn chưa đủ; không phê duyệt dữ liệu dùng cho huấn luyện trước khi giải quyết quyền và phiên bản.
 3. Dùng [phiếu kiểm QA](annotation-guide.md) cho từng QA của pilot. Mục tiêu nội bộ kiểm thủ công toàn bộ pilot, không tính kết quả agent thay cho người review.

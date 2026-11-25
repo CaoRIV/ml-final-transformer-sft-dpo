@@ -56,3 +56,38 @@ Khi lập báo cáo cuối, chuyển nhật ký này thành phụ lục khai bá
 ## Phiên cập nhật cách phối hợp nhóm
 
 - AI cập nhật README, kế hoạch, lịch bàn giao và đề cương theo quyết định của người dùng: Hà thực hiện chính, Thế và Hưng rà luân phiên, không giao cố định A–D theo người. Không đổi hạn, quy trình chấm DPO hoặc trạng thái thực nghiệm.
+
+## Rà sơ bộ pilot QA trước vòng kiểm của Hà — 24/11/2026
+
+- AI đối chiếu 20 QA bản 1 với 21 đoạn dẫn, kiểm ngữ cảnh bản lưu và mở lại bốn trang thủ tục quốc gia; phân biệt câu hỏi mơ hồ, đáp án mất điều kiện, trích dẫn thiếu và giới hạn phiên bản. Đề xuất sửa từng câu trong `data/review/admin-pilot-v1/ai-review-v1.md` (nội bộ, ngoài Git).
+- Không thay dữ liệu gốc, không điền phiếu của Hà, không xác minh hiệu lực pháp lý hoặc cấp quyền dùng nguồn. Nhận xét AI không được tính vào số QA đã kiểm thủ công.
+- AI tạo một phiếu nội bộ để Hà kiểm lần lượt 20 QA: chép câu hỏi, đáp án và đoạn dẫn của đúng phiên bản, để trống toàn bộ kết luận và thông tin lượt kiểm. Không tính việc tạo phiếu là kiểm định của con người.
+- Theo yêu cầu của Hà, AI điền cột minh họa riêng cho `PILOT-001` (phân biệt vai trò trong câu hỏi với độ đúng của đáp án); cột kết luận của người kiểm vẫn trống.
+- AI bổ sung cột mẫu cho `PILOT-002` đến `PILOT-020` dựa trên vòng rà sơ bộ trước đó; không thay câu hỏi, đáp án, trích dẫn hay ghi kết quả vào cột của Hà.
+- Khi nhóm chưa có thời gian kiểm thủ công, AI chạy validator ngoại tuyến và lưu báo cáo riêng `auto-check-report.json`: 20 QA qua kiểm cấu trúc, 21 trích đoạn khớp bản lưu, 0 QA được người duyệt, 0 QA đủ điều kiện huấn luyện. Không điền phiếu thủ công.
+- AI bổ sung hướng dẫn dùng metadata điền sẵn để giảm thao tác và ghi riêng tiến độ 1/20 do Hà báo. Không gán lượt kiểm cho một ID, sao chép kết luận hay thay đổi nhãn của người kiểm.
+- AI rút gọn giao diện ghi nhận ở đầu phiếu thành một dòng cho mỗi QA, giữ nguyên phần kiểm chi tiết. Không điền dữ liệu của người kiểm hoặc đổi trạng thái phê duyệt.
+- AI thêm một dòng minh họa riêng cho `PILOT-001` trong bảng rút gọn; giờ ghi rõ là ví dụ, không điền vào dòng người kiểm.
+- Sau khi Hà thông báo đã kiểm, AI đọc và tổng hợp các kết luận có trong bảng nhanh, chỉ ra các dòng cần đối chiếu lại. Không sửa phiếu của Hà hoặc phê duyệt dữ liệu.
+- Ở lượt rà lại, AI tổng hợp số đếm mới và phân biệt phần giải thích đã bổ sung với trích dẫn trong QA gốc; không sửa quyết định của Hà.
+- AI ghi năm và múi giờ theo xác nhận của Hà, đối chiếu ghi chú đã sửa ở 002 và 004; giữ nguyên các kết luận thủ công.
+
+## Cài đặt và kiểm A.1
+
+- AI viết `src/attention.py`, notebook dẫn xuất và bộ kiểm; dùng SDPA/MultiheadAttention của PyTorch chỉ ở phía đối chiếu. AI chạy trên CPU cục bộ, không chạy GPU hoặc Colab thay nhóm. Thành viên cần tự chạy lại và giải thích phép che, tách/ghép head và hai nhánh residual. Không có lượt huấn luyện nào ở bước này.
+
+## Cài đặt và kiểm A.4
+
+- AI triển khai hàm DPO, soạn notebook dẫn xuất và bộ kiểm CPU bằng số minh họa. AI đối chiếu loss và gradient theo log-xác suất policy; không tạo nhãn người, dùng checkpoint hoặc xác nhận kết quả phần D. Nhóm cần tự chạy lại và giải thích vai trò reference, beta và dấu gradient.
+
+## Cài đặt và kiểm A.3
+
+- AI triển khai lớp LoRA bọc `nn.Linear`, notebook dẫn xuất và bộ kiểm CPU; chạy đối chiếu số tham số, cập nhật hai ma trận và gộp sau cập nhật khác 0. Thành viên cần tự chạy lại và giải thích vì sao B khởi tạo bằng 0 không chặn việc học ở bước đầu, cũng như vì sao lớp gộp chỉ cần một phép tuyến tính.
+
+## Cài đặt A.2 — mô hình ngôn ngữ ký tự
+
+- AI viết LM dùng decoder A.1, mã đọc dữ liệu có kiểm quyền, vòng huấn luyện, tính PPL, lưu/khôi phục checkpoint, notebook và bộ kiểm. Ví dụ `abc → bcd` và các chuỗi ngắn do AI tạo chỉ dùng kiểm mã, không thay corpus tiếng Việt hoặc số liệu thực nghiệm. AI không phê duyệt quyền cho bản số hóa, không chạy Colab thay nhóm.
+- Thành viên cần tự giải thích cách dịch target một vị trí, vì sao tách văn bản trước khi tạo cửa sổ, và vì sao lấy tổng NLL chia tổng số target trước khi tính hàm mũ. Khi nhóm chạy trên corpus đã duyệt, ghi riêng ai thực hiện, revision, cấu hình và kết quả từng seed.
+- AI tra Luật Sở hữu trí tuệ, điều khoản nền tảng, nhãn quyền và nguồn phiên âm của revision `206607`; đối chiếu một khác biệt giữa hai revision và tìm scan Trương Vĩnh Ký 1911 làm phương án thay thế. [Rà soát](../data/char-corpus.md#22-rà-soát-quyền-revision-206607--chưa-đủ-căn-cứ) không phải attestation, không ký thay người có thẩm quyền, không đổi corpus hoặc tải dữ liệu lên Colab.
+- Theo yêu cầu đổi nguồn, AI tải hai snapshot có kiểm robots, kiểm checksum scan, đối chiếu mẫu trang thơ và viết bộ trích, chuẩn bị, xác minh dữ liệu bản Trương Vĩnh Ký 1911. AI chuyển lệnh và notebook sang manifest mới, không thực hiện kiểm từng dòng, không ký xác nhận thay thành viên và không huấn luyện bộ thật.
+- AI lưu xác nhận từ mã người duyệt, thời điểm và phạm vi do người dùng cung cấp, đóng gói mã/dữ liệu và tạo notebook Colab. AI kiểm bước giải nén, hash và xác nhận cục bộ; không duyệt thay người dùng, tải lên Drive hay chạy Colab.

@@ -127,6 +127,6 @@ flowchart TD
 |---|---|
 | Hai PDF tuần 1 và bản nháp đủ sáu chứng minh B. | Chưa có xác nhận đã duyệt/nộp; chưa có kết quả A hoặc lời giải C trong repo. |
 | [Báo cáo pilot](../data/admin-pilot-report.json): 9 nguồn, 20 QA nháp và 21 đoạn dẫn đã kiểm cấu trúc. | Báo cáo ghi **0 QA được người duyệt, 0 QA đủ điều kiện huấn luyện**. Còn phải kiểm hiệu lực, quyền dùng và nội dung. |
-| [Kiểm kỹ thuật bản Truyện Kiều](../data/char-corpus-audit-report.json) revision `206607`; có biểu mẫu khảo sát và notebook kiểm môi trường. | Chưa duyệt quyền bản số hóa hoặc đo PPL. Chưa có khảo sát thật, cặp DPO, kết quả SFT/DPO hay đánh giá ba mô hình. |
+| [Corpus Truyện Kiều 1911](../data/char-corpus.md) đã chuẩn bị và kiểm cục bộ; có biểu mẫu khảo sát và notebook kiểm môi trường. | Chưa xác nhận manifest để chạy Colab hoặc đo PPL. Chưa có khảo sát thật, cặp DPO, kết quả SFT/DPO hay đánh giá ba mô hình. |
 
 Chỉ cập nhật [tiến độ](project-context.md) khi có hiện vật hoặc log kiểm chứng. Việc đã ghi trong kế hoạch **không phải** việc đã hoàn thành.

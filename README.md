@@ -18,7 +18,7 @@ Nhóm xây dựng **trợ lý hỏi đáp thủ tục hộ tịch–chứng th�
 
 | Cần làm gì? | Mở ở đây |
 |---|---|
-| **A — Cài đặt và kiểm chứng** | [Mã cần viết, ghi chú dẫn xuất và phép đối chiếu](docs/progress/team-execution-plan.md#a--tự-cài-đặt-và-kiểm-chứng-20-điểm-tr-1-và-18). |
+| **A — Cài đặt và kiểm chứng** | [A.1: mã PyTorch](src/attention.py) · [Notebook dẫn xuất và kiểm decoder trên CPU](notebooks/01_attention_decoder.ipynb) · [Kế hoạch phần A](docs/progress/team-execution-plan.md#a--tự-cài-đặt-và-kiểm-chứng-20-điểm-tr-1-và-18). |
 | **B — Chứng minh** | [Sáu chứng minh bản nháp](docs/theory/part-b.pdf) để cả nhóm rà và hỏi chéo. |
 | **C — Bài tập** | [Bốn bài và đầu vào cần có](docs/progress/team-execution-plan.md#c--bốn-bài-tính-và-phân-tích-15-điểm-tr-19). |
 | **D — Dữ liệu và mô hình** | [Quy trình từ nguồn tới đánh giá](docs/progress/team-execution-plan.md#d--dữ-liệu-tinh-chỉnh-và-đánh-giá-trợ-lý-30-điểm-tr-19) · [Kiểm QA mẫu](docs/data/admin-pilot.md) · [Khảo sát và đồng ý](docs/data/consent-and-survey.md) · [Notebook Colab](notebooks/00_environment_check.ipynb). |
@@ -40,6 +40,30 @@ Nhóm xây dựng **trợ lý hỏi đáp thủ tục hộ tịch–chứng th�
 **Trạng thái trong repo:** hai hồ sơ tuần 1 và sáu chứng minh là bản nháp. [Báo cáo kiểm mẫu](docs/data/admin-pilot-report.json) ghi **20 QA nháp, 0 QA đủ điều kiện huấn luyện**. Chưa có khảo sát thật, checkpoint SFT/DPO hay kết quả đánh giá. Hai PDF tuần 1 không thay báo cáo cuối LaTeX 25–40 trang.
 
 ## Chạy kiểm tra
+
+### A.1 — chạy trên CPU
+
+Từ thư mục gốc, trong môi trường có PyTorch: `python -m unittest discover -s tests -p "test_attention.py" -v`. Để xem dẫn xuất và ví dụ tính tay, chạy tuần tự [notebook A.1](notebooks/01_attention_decoder.ipynb). Trên Colab, dùng CPU, đưa thư mục `src/` và `tests/` của bản repo vào thư mục làm việc; không cần Drive, GPU, dữ liệu QA hoặc cài lại PyTorch.
+
+### A.2 — LM ký tự và perplexity validation
+
+Chạy [notebook A.2](notebooks/04_char_lm.ipynb) trên CPU để kiểm `abc → bcd`, gradient qua decoder A.1, PPL và checkpoint trên dữ liệu minh họa. Lệnh kiểm riêng: `python -m unittest discover -s tests -p "test_char_lm*.py" -v`.
+
+Corpus A.2 dùng **bản Quốc ngữ Trương Vĩnh Ký 1911**, không dùng bản audit `206607`. Xem [dữ liệu và bước xác nhận của nhóm](docs/data/char-corpus.md#4-chuẩn-bị-cục-bộ-và-xác-nhận-quyền) trước khi chạy ô cuối notebook trên Colab GPU. Lệnh tương đương từ gốc repo (đổi `--output` thành đường dẫn bền vững và riêng trên Colab):
+
+```sh
+python -m scripts.train_char_lm --manifest .cache/char-corpus/manifest-1911.json --artifact-dir .cache/char-corpus/prepared-1911 --rights-attestation .cache/char-corpus/rights-1911.json --output runs/a2-kieu-1911 --device cuda
+```
+
+Giữ cùng cấu hình, hiện vật và thư mục đích; thêm `--resume` sau khi ngắt. `summary.json` tổng hợp PPL validation từng seed 41–45 và trung bình ± SD mẫu. Lệnh không huấn luyện nếu thiếu xác nhận khớp manifest.
+
+### A.3 — kiểm LoRA và gộp trọng số trên CPU
+
+Từ thư mục gốc, dùng môi trường A.1: `python -m unittest discover -s tests -p "test_lora.py" -v`. [Notebook A.3](notebooks/03_lora_linear.ipynb) dẫn xuất cập nhật hạng thấp, thực hiện hai bước SGD minh họa và đo sai khác trước/sau gộp. [LoRALinear](src/lora.py) bọc trực tiếp `nn.Linear`; `merged = layer.merge()` trả lớp tuyến tính độc lập để suy luận. Không cần GPU, PEFT hoặc mô hình nền tải ngoài.
+
+### A.4 — kiểm loss DPO trên CPU
+
+Chạy `python -m unittest discover -s tests -p "test_dpo.py" -v` từ thư mục gốc, dùng lại môi trường A.1. [Hàm `dpo_loss`](src/dpo.py) nhận bốn tổng log-xác suất đáp án; [notebook A.4](notebooks/02_dpo_loss.ipynb) dẫn xuất từ Bradley–Terry và kiểm dấu gradient. Các số là minh họa, không cần GPU/cặp ưu tiên thật và không thay phép đối chiếu minibatch ở D.
 
 ### Colab
 
