@@ -4,7 +4,7 @@
 
 Thư mục này hiện có **6 PDF**: năm bài báo nền tảng cho Đề tài 9 và một bản đề bài. Bản đề là *Danh mục 20 bài tập lớn: Học máy cơ bản, mô hình ngôn ngữ lớn, học tăng cường và tích hợp*, ngày **12/11/2026**, ghi **46 trang** (trang 1/46 trong PDF), trong đó Đề tài 9 nằm ở trang 18–19.
 
-**Tài liệu còn thiếu:** không thiếu tệp nào trong danh sách sáu tài liệu người dùng yêu cầu. Chưa có ma trận Q/K/V chính thức cho C.1, bộ số log-probability để tính C.4, nguồn hành chính đã chốt/kiểm quyền hoặc bản văn tiếng Việt đã chọn cho mô hình ký tự. Đây là đầu vào công việc tiếp theo, không phải các PDF bị thiếu.
+**Đầu vào còn mở:** chưa có ma trận Q/K/V giảng viên cấp cho C.1 hay bộ số quy định cho C.4; nguồn hành chính chưa đủ bằng chứng hiệu lực/quyền dùng. Corpus A.2 đã chọn [Truyện Kiều bản Trương Vĩnh Ký 1911](../docs/data/char-corpus.md) với phạm vi dùng nội bộ. Không thiếu tệp nào trong danh sách sáu PDF tham khảo.
 
 Các PDF là tư liệu nguồn của kho. Không tự xóa, đổi tên hoặc chỉnh sửa chúng; nếu chúng đang được Git theo dõi thì phải giữ nguyên trạng thái đó. Tình trạng quyền phân phối/lưu trữ lại của từng PDF **chưa được kiểm chứng**. Vì vậy, trước khi chia sẻ kho công khai hoặc phân phối lại các tệp, cần kiểm tra giấy phép/điều khoản tại nguồn chính thức; việc có tệp trong kho không tự nó xác nhận quyền phân phối.
 

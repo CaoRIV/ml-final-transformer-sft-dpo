@@ -20,7 +20,7 @@ Nhóm xây dựng **trợ lý hỏi đáp thủ tục hộ tịch–chứng th�
 |---|---|
 | **A — Cài đặt và kiểm chứng** | [A.1: mã PyTorch](src/attention.py) · [Notebook dẫn xuất và kiểm decoder trên CPU](notebooks/01_attention_decoder.ipynb) · [Kế hoạch phần A](docs/progress/team-execution-plan.md#a--tự-cài-đặt-và-kiểm-chứng-20-điểm-tr-1-và-18). |
 | **B — Chứng minh** | [Sáu chứng minh bản nháp](docs/theory/part-b.pdf) để cả nhóm rà và hỏi chéo. |
-| **C — Bài tập** | [Bốn bài và đầu vào cần có](docs/progress/team-execution-plan.md#c--bốn-bài-tính-và-phân-tích-15-điểm-tr-19). |
+| **C — Bài tập** | [C.1: tính tay causal attention trên bộ Q/K/V minh họa](notebooks/08_causal_attention_example.ipynb) · [C.2: chi phí Transformer block](notebooks/05_transformer_block_cost.ipynb) · [C.3: LoRA Q/V và bộ nhớ QLoRA](notebooks/06_lora_qlora_cost.ipynb) · [C.4: loss, gradient DPO và ảnh hưởng của β](notebooks/07_dpo_loss_gradient.ipynb). |
 | **D — Dữ liệu và mô hình** | [Quy trình từ nguồn tới đánh giá](docs/progress/team-execution-plan.md#d--dữ-liệu-tinh-chỉnh-và-đánh-giá-trợ-lý-30-điểm-tr-19) · [Kiểm QA mẫu](docs/data/admin-pilot.md) · [Khảo sát và đồng ý](docs/data/consent-and-survey.md) · [Notebook Colab](notebooks/00_environment_check.ipynb). |
 
 **Riêng chấm cặp DPO:** Thế và Hưng **đều chấm từng cặp độc lập**, không luân phiên chia cặp. Hà phân xử sau khi khóa nhãn và đo đồng thuận. Xem [hướng dẫn chấm](docs/data/annotation-guide.md).
@@ -37,7 +37,7 @@ Nhóm xây dựng **trợ lý hỏi đáp thủ tục hộ tịch–chứng th�
 | **Sổ nguồn, mẫu QA, Truyện Kiều và biểu mẫu** | [Mục lục tài liệu dữ liệu](docs/data/README.md), có hướng dẫn mở bộ mẫu và chạy kiểm tra. |
 | **Những gì đã làm và chưa làm** | [Bối cảnh và tiến độ](docs/progress/project-context.md) · [Nhật ký hỗ trợ AI](docs/progress/ai-use.md). |
 
-**Trạng thái trong repo:** hai hồ sơ tuần 1 và sáu chứng minh là bản nháp. [Báo cáo kiểm mẫu](docs/data/admin-pilot-report.json) ghi **20 QA nháp, 0 QA đủ điều kiện huấn luyện**. Chưa có khảo sát thật, checkpoint SFT/DPO hay kết quả đánh giá. Hai PDF tuần 1 không thay báo cáo cuối LaTeX 25–40 trang.
+**Trạng thái trong repo:** A.1–A.4 có mã và kiểm số học; [A.2 có PPL validation trên Kaggle](docs/data/char-corpus.md) và C.2 có lời giải đã kiểm trên CPU. Hai hồ sơ tuần 1 và sáu chứng minh B vẫn là bản nháp. [Pilot](docs/data/admin-pilot.md) đã có 20/20 kết luận rà nội dung nhưng 0 QA đủ điều kiện train; chưa có tập SFT chính, test khảo sát, SFT/DPO hay đánh giá ba mô hình. Hai PDF tuần 1 không thay báo cáo cuối LaTeX 25–40 trang.
 
 ## Chạy kiểm tra
 
@@ -57,6 +57,8 @@ python -m scripts.train_char_lm --manifest .cache/char-corpus/manifest-1911.json
 
 Giữ cùng cấu hình, hiện vật và thư mục đích; thêm `--resume` sau khi ngắt. `summary.json` tổng hợp PPL validation từng seed 41–45 và trung bình ± SD mẫu. Lệnh không huấn luyện nếu thiếu xác nhận khớp manifest.
 
+Nếu dùng Kaggle, xem [các bước chạy riêng tư và lưu output](docs/data/char-corpus.md#6-chạy-a2-trên-kaggle). Dùng `--platform kaggle` với xác nhận có phạm vi `a2-local-and-kaggle`; xác nhận và gói Colab không đổi.
+
 ### A.3 — kiểm LoRA và gộp trọng số trên CPU
 
 Từ thư mục gốc, dùng môi trường A.1: `python -m unittest discover -s tests -p "test_lora.py" -v`. [Notebook A.3](notebooks/03_lora_linear.ipynb) dẫn xuất cập nhật hạng thấp, thực hiện hai bước SGD minh họa và đo sai khác trước/sau gộp. [LoRALinear](src/lora.py) bọc trực tiếp `nn.Linear`; `merged = layer.merge()` trả lớp tuyến tính độc lập để suy luận. Không cần GPU, PEFT hoặc mô hình nền tải ngoài.
@@ -64,6 +66,33 @@ Từ thư mục gốc, dùng môi trường A.1: `python -m unittest discover -s
 ### A.4 — kiểm loss DPO trên CPU
 
 Chạy `python -m unittest discover -s tests -p "test_dpo.py" -v` từ thư mục gốc, dùng lại môi trường A.1. [Hàm `dpo_loss`](src/dpo.py) nhận bốn tổng log-xác suất đáp án; [notebook A.4](notebooks/02_dpo_loss.ipynb) dẫn xuất từ Bradley–Terry và kiểm dấu gradient. Các số là minh họa, không cần GPU/cặp ưu tiên thật và không thay phép đối chiếu minibatch ở D.
+
+### C.2 — đếm tham số và phép tính của một Transformer block
+
+Chạy [notebook C.2](notebooks/05_transformer_block_cost.ipynb) trên CPU để đối chiếu công thức với `DecoderBlock` A.1: `numel()` đếm tham số học, PyTorch Profiler đối chiếu FLOP của các tích ma trận forward. Không cần corpus, checkpoint, GPU hoặc huấn luyện lại A.2.
+
+### C.3 — LoRA Q/V và bộ nhớ QLoRA
+
+Chạy tuần tự [notebook C.3](notebooks/06_lora_qlora_cost.ipynb) bằng môi trường PyTorch A.1. Cấu hình Qwen được ghi theo revision cố định; các ô chạy offline, không tải mô hình. Bảng kết quả tách số tham số học, bộ nhớ thường trú và phần phụ thuộc microbatch/độ dài chuỗi. Không dùng các tổng này thay phép đo peak GPU cho D.3.
+
+### D.3 — chuẩn bị SFT trên Kaggle
+
+[Notebook Kaggle](notebooks/09_d3_sft_kaggle.ipynb) và `python scripts/package_d3_kaggle.py` dùng được **trong khi nhóm còn kiểm 24 QA**. Lệnh chỉ tạo ZIP mã trong `.cache/d3-kaggle/`; không đọc phiếu, không upload, không tải trọng số. Import notebook vào Kaggle Private, gắn ZIP mã bằng **Add Input**, điền `CODE_INPUT`; để các công tắc mặc định và dùng CPU. Có thể dừng ở đây.
+
+**Mô hình cho pilot, chưa phải kết luận cho tập chính.** `Qwen/Qwen2.5-1.5B-Instruct`, revision `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`. [Model card đúng revision](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/blob/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/README.md) nêu 1,54B tham số và hỗ trợ tiếng Việt ở phần mô tả đa ngôn ngữ; không phải bằng chứng mô hình trả lời đúng thủ tục Hà Nội. [Apache-2.0 §2, §4](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/blob/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/LICENSE) cho phép dùng/sửa phục vụ nghiên cứu, có nghĩa vụ nếu phân phối lại; không cấp quyền đối với QA hay khảo sát của nhóm. Dùng [QLoRA NF4](https://github.com/huggingface/transformers/blob/v4.57.6/docs/source/en/quantization/bitsandbytes.md) và [adapter PEFT](https://github.com/huggingface/peft/blob/v0.18.0/docs/source/developer_guides/quantization.md) trên Q/V để đối chiếu thiết kế với C.3.
+
+**Sau kiểm định:**
+
+1. Theo [cổng D.2](docs/data/README.md#2-kiểm-thủ-công-và-phát-hành-bản-sft-nội-bộ): xử lý `rework`/`rejected`, rà nguồn, quyền và trùng nghĩa, lập biên bản thật, chạy `check` với `--review`, `--audit` và `--output`. Chỉ `pilot_sft_ready` mở pilot; `main_sft_ready` mới mở thí nghiệm tập chính. Không đổi nhãn/manifest bằng tay.
+2. Kiểm tại máy nhóm: `python scripts/train_d3_sft.py --release <thu-muc-release> --output .cache/d3-check --check-only`. Lấy SHA-256 của **manifest đã phát hành** bằng `Get-FileHash -Algorithm SHA256 <duong-dan-manifest.json>` (PowerShell; dùng chuỗi hex chữ thường). Xác nhận quyền đưa đúng bản lên Kaggle Private, **khác** với quyền huấn luyện nội bộ. Chưa có quyền nền tảng thì giữ dữ liệu trên máy nhóm.
+3. Khi có quyền, chạy `python scripts/package_d3_kaggle.py --release <thu-muc-release> --allow-private-kaggle <sha256-chu-thuong>`. Gắn riêng ZIP này vào **Notebook Private**; chỉ có `manifest.json`, `train.jsonl`, `validation.jsonl`. Không gắn cả repo, snapshot, phiếu, audit hay `USER_TEST`. Điền `RELEASE_INPUT` và `MANIFEST_SHA256`; SHA-256 bắt nhầm/sửa file, không xác thực ai đã duyệt.
+4. Sau khi cổng đạt, chọn **GPU**, chạy pilot 2 epoch, seed 41. Lưu **Save Version** riêng tư, giữ toàn bộ output. Mở phiên sạch để nối lại từ checkpoint epoch 1 cùng cấu hình; đối chiếu tiến độ và validation với lần chạy liên tục. Ghi tên version Kaggle, release/hash, cấu hình, peak VRAM và chênh lệch quan sát được. Nếu OOM hoặc vượt `MAX_LENGTH`, không cắt mất câu trả lời/căn cứ; điều chỉnh cấu hình và chạy lại với định danh mới. Không dùng kết quả A.2 thay phép đo này.
+
+Trong tab **Output** của version đã lưu, giữ `run_manifest.json` (mã, dữ liệu và môi trường), `metrics.jsonl` (chỉ số từng epoch), `summary.json`, `best_adapter/` và cả thư mục `checkpoints/`. Khi resume, gắn version có toàn bộ checkpoint, không chỉ tải mỗi file trọng số. Nhóm dùng các tệp này để lập model card; giữ riêng tư, không đưa checkpoint vào Git.
+
+**Kế hoạch chọn cấu hình trên tập chính (đề xuất, chưa có kết quả).** Giữ nguyên release, prompt, max length và seed 41. Chạy bốn cấu hình `(r, α, LR)` lần lượt `(8,16,1e-4)`, `(4,16,1e-4)`, `(8,8,1e-4)`, `(8,16,2e-4)`; mỗi cấu hình chấm validation ở cuối epoch 1 và 2. Chọn tổ hợp và epoch có NLL trung bình **theo token đáp án** nhỏ nhất trên cùng validation; nếu bằng nhau ưu tiên ít epoch, rank nhỏ rồi thứ tự trên. Đây là tìm kiếm giới hạn ngân sách, không khẳng định tối ưu toàn cục. Ghi cả các cấu hình thua/OOM; không xem `USER_TEST`. Sáu QA validation của pilot chỉ để thử đường chạy, không chốt siêu tham số từ sáu câu đó.
+
+Với cấu hình và số epoch đã khóa, dùng checkpoint **đúng epoch đã chọn** cho từng seed 41–45; không chọn lại epoch theo từng seed. Báo cả năm lần huấn luyện (có thể tái sử dụng đúng checkpoint seed 41 nếu cấu hình và lịch học khớp), trung bình và SD mẫu. Chỉ chuyển sang sinh cặp D.4 từ adapter SFT thật đã định danh; NLL/PPL không thay đánh giá đúng nội dung, trích dẫn và ảo giác ở D.5.
 
 ### Colab
 

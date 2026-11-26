@@ -12,7 +12,7 @@ Nhóm chỉ tập trung vào **hộ tịch và chứng thực tại Hà Nội**,
 
 ## Nhóm sẽ làm những gì?
 
-**1. Tự xây một mô hình nhỏ để hiểu máy tạo văn bản ra sao.** Nhóm tự viết các bộ phận chính của Transformer bằng Python/PyTorch. Có thể hình dung Transformer vừa đọc một đoạn văn vừa xác định phần nào trong đoạn có ích để đoán phần tiếp theo. Mô hình nhỏ tập đoán **ký tự kế tiếp** trên văn bản tiếng Việt được phép dùng, dự kiến là *Truyện Kiều*. Đây là bài tập để hiểu công nghệ và kiểm tra phép tính, **không phải** mô hình trả lời thủ tục. Nhóm còn phải chứng minh các công thức và làm bài tính tay để kiểm tra lại mã.
+**1. Tự xây một mô hình nhỏ để hiểu máy tạo văn bản ra sao.** Nhóm tự viết các bộ phận chính của Transformer bằng Python/PyTorch. Có thể hình dung Transformer vừa đọc một đoạn văn vừa xác định phần nào trong đoạn có ích để đoán phần tiếp theo. Mô hình nhỏ tập đoán **ký tự kế tiếp** trên *Truyện Kiều* bản Trương Vĩnh Ký 1911, được nhóm xác nhận phạm vi dùng nội bộ cho A.2. Đây là bài tập để hiểu công nghệ và kiểm tra phép tính, **không phải** mô hình trả lời thủ tục. Nhóm còn phải chứng minh các công thức và làm bài tính tay để kiểm tra lại mã.
 
 **2. Dạy một mô hình tiếng Việt có sẵn cách trả lời thủ tục.** Nhóm dùng mô tả trên cổng dịch vụ công quốc gia và cổng Hà Nội để soạn ít nhất **2.000 cặp câu hỏi–đáp có nguồn**, kiểm thủ công ít nhất **20%**. Mô hình học từ những đáp án mẫu này; bước đó gọi là **SFT** (học từ ví dụ có đáp án). Để giảm bộ nhớ, nhóm dự kiến dùng **LoRA/QLoRA**: chủ yếu huấn luyện các phần bổ sung nhỏ, không cập nhật toàn bộ mô hình.
 
@@ -26,6 +26,6 @@ Nhóm sẽ đặt **cùng bộ câu hỏi** cho ba phiên bản: mô hình gốc
 
 ## Nhóm đã tới đâu?
 
-Đã có bản nháp đề cương, kế hoạch dữ liệu, sáu chứng minh và **20 câu hỏi–đáp nháp để thử quy trình kiểm nguồn**. Theo báo cáo hiện có, mẫu này mới qua kiểm tra cấu trúc, chưa được con người duyệt và chưa đủ điều kiện huấn luyện. Chưa có kết quả khảo sát hoặc kết quả chứng minh trợ lý trả lời tốt hơn.
+Đã có mã A.1–A.4, [kết quả mô hình ký tự A.2 trên Kaggle](data/char-corpus.md), lời giải C.2 và bản nháp sáu chứng minh. [Pilot 20 câu hỏi–đáp](data/admin-pilot.md) đã có kết luận rà nội dung cho từng câu nhưng chưa có câu nào được phát hành để huấn luyện. Chưa có khảo sát thật hoặc kết quả cho biết trợ lý sau DPO có trả lời tốt hơn không.
 
 Muốn xem cách ba thành viên phối hợp, đọc [kế hoạch thực hiện A–D](progress/team-execution-plan.md). Muốn xem yêu cầu của giảng viên và bằng chứng cần nộp, đọc [bảng đối chiếu yêu cầu](progress/requirements-matrix.md).

@@ -1,5 +1,5 @@
 {
-  "audit_version": "week1-research-1",
+  "audit_version": "d1-review-2026-11-25",
   "audited_by": "AI_assistant",
   "training_release_status": "blocked_pending_rights_version_and_human_review",
   "sources": [
@@ -19,7 +19,7 @@
       "training_allowed": false,
       "redistribution_allowed": false,
       "review_status": "research_only_pending_rights_and_version_review",
-      "notes": "Mã 2.000635; trường trình tự trống; địa chỉ cấp Bộ không được dùng làm địa chỉ tiếp nhận tại Hà Nội. Thời hạn khác phụ lục HN-ANNEX. Chưa xác minh toàn bộ văn bản sửa đổi, không phê duyệt thời hạn/lệ phí hiện hành.",
+      "notes": "Snapshot cổng ghi 163/QĐ-BTP. Thời hạn khớp phụ lục 2163/QĐ-BTP, khác mức dự kiến của phương án Hà Nội 1818. Không dùng địa chỉ cấp Bộ làm địa chỉ tiếp nhận của Hà Nội; chưa chốt triển khai theo kênh địa phương.",
       "policy_refs": [
         "ROBOTS-VPCP",
         "TERMS-NAT"
@@ -41,7 +41,7 @@
       "training_allowed": false,
       "redistribution_allowed": false,
       "review_status": "research_only_pending_rights_and_version_review",
-      "notes": "Mã 2.000815; hiển thị hình thức trực tiếp và nhắc Phòng Tư pháp/thị trấn; cần đối chiếu phân cấp/phiên bản. HN-COPY là hướng dẫn nộp trực tuyến, không chứng minh bỏ yêu cầu đối chiếu bản chính.",
+      "notes": "Snapshot ghi 858/QĐ-BTP, nhưng danh mục phụ lục 858 đối chiếu không có mã 2.000815; Phụ lục I của 3152/QĐ-BTP có mã này. Dùng Điều 20 NĐ 23/2015 đã sửa đổi và kiểm từng kênh tại Hà Nội.",
       "policy_refs": [
         "ROBOTS-VPCP",
         "TERMS-NAT"
@@ -63,7 +63,7 @@
       "training_allowed": false,
       "redistribution_allowed": false,
       "review_status": "research_only_pending_rights_and_version_review",
-      "notes": "Mã 2.000884; đọc hồ sơ/phí/thời hạn; chưa có nguồn áp dụng Hà Nội đủ để xác nhận bản hiện hành tại địa phương.",
+      "notes": "Mã 2.000884 có trong phụ lục 858/QĐ-BTP, Phần I.A.2 và II.A.2. Căn cứ chung: NĐ 23/2015 đã sửa đổi, Điều 24 và TT 226/2016/TT-BTC; chưa chốt điểm tiếp nhận/kênh cụ thể của Hà Nội.",
       "policy_refs": [
         "ROBOTS-VPCP",
         "TERMS-NAT"
@@ -85,7 +85,7 @@
       "training_allowed": false,
       "redistribution_allowed": false,
       "review_status": "research_only_pending_rights_and_version_review",
-      "notes": "Mã 1.004859; lệ phí do HĐND tỉnh/thành phố quyết định; không suy ra con số Hà Nội. Trình tự ở trang chi tiết trống, chưa thẩm định đầy đủ tình trạng hiệu lực văn bản dẫn chiếu.",
+      "notes": "Mã 1.004859 khớp phụ lục 163/QĐ-BTP, mục A.25 cấp xã. Biểu lệ phí Hà Nội đã đối chiếu theo Nghị quyết 98/2026/NQ-HĐND; snapshot quốc gia này không xác lập số tiền phải nộp ở Hà Nội.",
       "policy_refs": [
         "ROBOTS-VPCP",
         "TERMS-NAT"
@@ -107,7 +107,7 @@
       "training_allowed": false,
       "redistribution_allowed": false,
       "review_status": "research_only_pending_rights_and_version_review",
-      "notes": "Bài công bố 05/01/2026, nhắc QĐ1818 ngày24/12/2025 và hiệu lực01/01/2026. Footer yêu cầu ghi rõ nguồn khi phát hành lại thông tin, không coi là giấy phép huấn luyện/phân phối dữ liệu không giới hạn.",
+      "notes": "Bài tin là nguồn dẫn đường. Đã tìm quyết định 1818 và phụ lục chính thức tại hồ sơ văn bản Hà Nội; căn cứ cho phần chính văn không mở quyền train/phân phối bài tin.",
       "policy_refs": [
         "ROBOTS-HN"
       ]
@@ -128,7 +128,7 @@
       "training_allowed": false,
       "redistribution_allowed": false,
       "review_status": "research_only_pending_rights_and_version_review",
-      "notes": "Tệp đính kèm từ HN-EXTRACT gồm7trang phương án/phụ lục; không phải toàn văn quyết định có số/ngày ký đầy đủ. Số/ngày ở đầu trống trong text; thời gian B.4 ghi dự kiến03ngày, tối đa10khi xác minh, khácNAT. Bảng chi phí tuân thủ không phải biểu lệ phí hiện hành.",
+      "notes": "Bản CDN của pilot giữ nguyên. Phụ lục chính thức trong hồ sơ 1818 đã lấy riêng: B.4 nêu 3 ngày làm việc dự kiến, tối đa 10 khi xác minh; không dùng làm mặc định hiện hành cho toàn Hà Nội. Chi phí tuân thủ không phải phí/lệ phí.",
       "policy_refs": [
         "ROBOTS-CDN"
       ]
@@ -149,7 +149,7 @@
       "training_allowed": false,
       "redistribution_allowed": false,
       "review_status": "research_only_pending_rights_and_version_review",
-      "notes": "Bài18/09/2025 phườngÔChợDừa: đã đọc phần hướng dẫn đầy đủ bằng trình duyệt, không còn chỉmetadata; chưa kiểm lại UI hiện tại/hiệu lực văn bản.",
+      "notes": "Bài hướng dẫn Ô Chợ Dừa ngày 18/09/2025 dùng để đối chiếu cách nộp. Không dùng làm văn bản công bố hoặc kết luận UI/cách đối chiếu bản chính hiện hành.",
       "policy_refs": [
         "ROBOTS-OCD"
       ]
@@ -170,7 +170,7 @@
       "training_allowed": false,
       "redistribution_allowed": false,
       "review_status": "research_only_pending_rights_and_version_review",
-      "notes": "Bài25/09/2025: đã đọc văn bản hướng dẫn đầy đủ; chưa xác minh mãquốcgia/quyếtđịnh và phiên bản UI hiện tại. Không tự gán mã2.002516 từ địa phương khác.",
+      "notes": "Bản hướng dẫn ngày 25/09/2025, không gán hiệu lực mới cho snapshot. Đã xác minh riêng mã 2.002516 từ phụ lục 1852 và hồ sơ quốc gia id 314163; không dùng video làm căn cứ huấn luyện.",
       "policy_refs": [
         "ROBOTS-HN"
       ]
@@ -191,7 +191,7 @@
       "training_allowed": false,
       "redistribution_allowed": false,
       "review_status": "research_only_video_not_transcribed",
-      "notes": "Bài08/08/2025 chủ yếu video: chỉ đọc tiêu đề/mô tả, không phiên âm/kiểm video; không đủ làm căn cứ chi tiết hồ sơ, thời hạn, lệ phí.",
+      "notes": "Chỉ đọc tiêu đề/mô tả video, không phiên âm. Bài tin Hà Nội sau đó dẫn 1848/QĐ-TTPVHCC; dùng phụ lục 163/QĐ-BTP và Nghị quyết 98/2026/NQ-HĐND làm nguồn đối chiếu.",
       "policy_refs": [
         "ROBOTS-HN"
       ]
@@ -254,6 +254,135 @@
     "terms_national": "Reuse must comply with law; no explicit dataset redistribution/training license verified",
     "hanoi_footer": "Attribution requested on republication; not unconditional dataset/training approval"
   },
+  "d1_review": {
+    "as_of": "2026-11-25",
+    "timezone": "Asia/Ho_Chi_Minh",
+    "notes_path": "docs/data/source-audit.md",
+    "rights_basis": [
+      {
+        "citation": "Luật Sở hữu trí tuệ, VBHN 160/2026/VBHN-LQ-VPQH, khoản 2 Điều 15 và khoản 5 Điều 7",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/10/160-vbhn-vpqh.signed.pdf"
+      },
+      {
+        "citation": "VBHN 6154/2026/VBHN-NĐ-BVHTTDL, khoản 2 Điều 8 và Điều 37a–37c",
+        "url": "https://itpc.hochiminhcity.gov.vn/documents/20182/39424/6154-vbhn-bvhttdl.signed.pdf/b86e1405-e8dc-4e47-9920-a307657f9279"
+      }
+    ],
+    "usage_decision": "Soạn QA mới từ phần chính văn công khai có phiên bản và phạm vi đã kiểm; không đưa nguyên trạng bản lưu web, bài tin hoặc video pilot vào train/phân phối. Đây không phải release dữ liệu.",
+    "evidence": [
+      {
+        "evidence_id": "HN-QD-1818",
+        "document_number": "1818/QĐ-TTPVHCC",
+        "issued_on": "2025-12-24",
+        "effective_from": "2026-01-01",
+        "locator": "Điều 1 và Điều 3, tr. 2",
+        "url": "https://datafiles.hanoi.gov.vn/gov-hni/6847/VanBan/2025/12/28/Q%C4%90-TTPVHCC-1818-2025.pdf",
+        "retrieved_at_utc": "2026-11-25T16:09:31.843Z",
+        "snapshot_path": ".cache/admin-source-audit/d1/HN-QD-1818.pdf",
+        "snapshot_sha256": "feb6729b3234948c943d0a252a827f2f2bb0cdb54bf3c9490e2b15eee3f8d5aa"
+      },
+      {
+        "evidence_id": "HN-PL-1818",
+        "document_number": "1818/QĐ-TTPVHCC",
+        "locator": "Phụ lục B.2–B.5, tr. 2–3",
+        "url": "https://datafiles.hanoi.gov.vn/gov-hni/6847/VanBan/2025/12/28/Q%C4%90-TTPVHCC-1818-2025-PL.pdf",
+        "retrieved_at_utc": "2026-11-25T16:09:36.993Z",
+        "snapshot_path": ".cache/admin-source-audit/d1/HN-PL-1818.pdf",
+        "snapshot_sha256": "0fe822c02eccbd0a3c39256ec92960458ce0e1ec2b7b1d5084f7c7a051af0c82"
+      },
+      {
+        "evidence_id": "HN-QD-1852",
+        "document_number": "1852/QĐ-TTPVHCC",
+        "issued_on": "2025-12-25",
+        "effective_from": "2026-01-01",
+        "locator": "Điều 1 và Điều 3, tr. 2",
+        "url": "https://datafiles.hanoi.gov.vn/gov-hni/6847/VanBan/2026/1/2/qd%201852.pdf",
+        "retrieved_at_utc": "2026-11-25T16:09:42.157Z",
+        "snapshot_path": ".cache/admin-source-audit/d1/HN-QD-1852.pdf",
+        "snapshot_sha256": "0958fc67dfa35b62233d8b1a6af2e4f4d6a4edf41a6bdca2aedae542664c390d"
+      },
+      {
+        "evidence_id": "HN-PL-1852",
+        "document_number": "1852/QĐ-TTPVHCC",
+        "locator": "Phụ lục B.1–B.5, tr. 2–3",
+        "url": "https://datafiles.hanoi.gov.vn/gov-hni/6847/VanBan/2026/1/2/qd%201852PL.pdf",
+        "retrieved_at_utc": "2026-11-25T16:09:47.312Z",
+        "snapshot_path": ".cache/admin-source-audit/d1/HN-PL-1852.pdf",
+        "snapshot_sha256": "c67434f21f3e398e717dc9189d38a74ac877aebf280a1e41ee4ad81f0ba74235"
+      },
+      {
+        "evidence_id": "HN-NQ-98",
+        "document_number": "98/2026/NQ-HĐND",
+        "issued_on": "2026-10-28",
+        "effective_from": "2026-10-28",
+        "locator": "Bản sao y: Điều 2, 4, 6 và Phụ lục I.5–7, tr. 2–4",
+        "url": "https://datafiles.hanoi.gov.vn/gov-hni/6249/VanBan/2026/11/9/NQPQ-98-2026.pdf",
+        "retrieved_at_utc": "2026-11-25T16:14:19.361Z",
+        "snapshot_path": ".cache/admin-source-audit/d1/HN-NQ-98-1.pdf",
+        "snapshot_sha256": "23e73d0428f9a9da04da81cfe3fd472475563edcbe49895527f28fd51720c599"
+      },
+      {
+        "evidence_id": "BTP-163",
+        "document_number": "163/QĐ-BTP",
+        "issued_on": "2026-01-16",
+        "effective_from": "2026-01-15",
+        "locator": "Điều 1 và Điều 2",
+        "url": "https://cdn.haiphong.gov.vn/gov-hpg/6801/tintuc/2026/11/163_2026_qd_btp639216127990101471639304268812266630.pdf",
+        "retrieved_at_utc": "2026-11-25T16:11:52.747Z",
+        "snapshot_path": ".cache/admin-source-audit/d1/BTP-163.pdf",
+        "snapshot_sha256": "ad1d50887489f3462f3557378ce32f44fb0615c2e28929adfd7f46664f941abd"
+      },
+      {
+        "evidence_id": "BTP-PL-163",
+        "document_number": "163/QĐ-BTP",
+        "locator": "Danh mục A.25 (tr. 6), B.1–B.2 (tr. 9); ngày ở bìa phụ lục khác ngày trên quyết định",
+        "url": "https://cdn.haiphong.gov.vn/gov-hpg/6798/tintuc/2026/11/pl_163_2026_qd_btp639216128050027079639305904769826517.pdf",
+        "retrieved_at_utc": "2026-11-25T16:12:00.840Z",
+        "snapshot_path": ".cache/admin-source-audit/d1/BTP-PL-163.pdf",
+        "snapshot_sha256": "56972ff9d635f4e4f584448082a931eea9f97f65053e5a88886a0eee6efe1d03"
+      },
+      {
+        "evidence_id": "BTP-VBHN-753",
+        "document_number": "753/VBHN-BTP",
+        "locator": "NĐ 23/2015/NĐ-CP đã sửa đổi, Điều 20–25",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/01/753-vbhn-btp.pdf",
+        "retrieved_at_utc": "2026-11-25T16:51:30.126Z",
+        "snapshot_path": ".cache/admin-source-audit/d1/BTP-VBHN-753.pdf",
+        "snapshot_sha256": "f90527020016496908f56ac8d763757adcdc16aae0c7f352be1f21fca012c26d"
+      },
+      {
+        "evidence_id": "BTP-PL-858",
+        "document_number": "858/QĐ-BTP",
+        "issued_on": "2026-03-27",
+        "locator": "Phần I.A.2 và Phần II.A.2, chứng thực chữ ký",
+        "url": "https://cdn.haiphong.gov.vn/gov-hpg/6846/tintuc/2026/8/plkemtheo858-btp639216124471907347.pdf",
+        "retrieved_at_utc": "2026-11-25T16:12:06.127Z",
+        "snapshot_path": ".cache/admin-source-audit/d1/BTP-PL-858.pdf",
+        "snapshot_sha256": "86fad7241dd43e93682d1664d7d88b48297912f00fbc37169fecd464e9ae21c7"
+      },
+      {
+        "evidence_id": "BTP-2163",
+        "document_number": "2163/QĐ-BTP",
+        "issued_on": "2026-09-30",
+        "effective_from": "2026-09-30",
+        "locator": "Điều 2; phụ lục phương án mã 2.000635, B.3",
+        "url": "https://dongthap.gov.vn/documents/d/stpdt/quyet-inh-so-2163-q-btp-rar",
+        "retrieved_at_utc": "2026-11-25T16:16:07.495Z",
+        "snapshot_path": ".cache/admin-source-audit/d1/BTP-2163.rar",
+        "snapshot_sha256": "b8ac8c7ebcc5547509df56f8b130c040a80f5ec49a49992497736fb11134fe2e",
+        "decision": {
+          "member": "Quyết định số 2163 QĐ-BTP/QĐ 361 2026 NCN.pdf",
+          "snapshot_path": ".cache/admin-source-audit/d1/QĐ 361 2026 NCN.pdf",
+          "snapshot_sha256": "5c204bc774db916d315b4cb3f99881a983f39366c55f97bd76e60097070d79eb"
+        },
+        "appendix": {
+          "member": "Quyết định số 2163 QĐ-BTP/TT_Cap_ban_sao_trich_luc_ho_tich,_ban_sao GKS.docx",
+          "snapshot_path": ".cache/admin-source-audit/d1/TT_Cap_ban_sao_trich_luc_ho_tich,_ban_sao GKS.docx",
+          "snapshot_sha256": "2b775456febc3f8fd86f00c1a5822c9d69d0256ecda46f107b83315a3e9e48b5"
+        }
+      }
+    ]
+  },
   "procedure_families": [
     {
       "id": "trich-luc",
@@ -263,7 +392,8 @@
         "HN-EXTRACT",
         "HN-ANNEX"
       ],
-      "status": "hold_version_conflict"
+      "d1_evidence_ids": ["HN-QD-1818", "HN-PL-1818", "BTP-163", "BTP-PL-163", "BTP-2163"],
+      "status": "official_versions_found_hanoi_rollout_not_confirmed"
     },
     {
       "id": "chung-thuc-ban-sao",
@@ -272,7 +402,8 @@
         "NAT-COPY",
         "HN-COPY"
       ],
-      "status": "hold_local_version_review"
+      "d1_evidence_ids": ["BTP-VBHN-753"],
+      "status": "national_basis_found_hanoi_procedure_version_pending"
     },
     {
       "id": "chung-thuc-chu-ky",
@@ -280,7 +411,8 @@
       "sources": [
         "NAT-SIGN"
       ],
-      "status": "hold_missing_local_confirmation"
+      "d1_evidence_ids": ["BTP-VBHN-753", "BTP-PL-858"],
+      "status": "national_basis_found_hanoi_procedure_version_pending"
     },
     {
       "id": "cai-chinh-ho-tich",
@@ -289,15 +421,18 @@
         "NAT-CORRECT",
         "HN-CORRECT"
       ],
-      "status": "hold_local_video_and_fee_review"
+      "d1_evidence_ids": ["BTP-163", "BTP-PL-163", "HN-NQ-98"],
+      "status": "national_procedure_and_hanoi_fee_found_local_workflow_pending"
     },
     {
       "id": "xac-nhan-thong-tin-ho-tich",
-      "code": null,
+      "code": "2.002516",
       "sources": [
         "HN-CONFIRM"
       ],
-      "status": "hold_missing_national_confirmation"
+      "d1_evidence_ids": ["HN-QD-1852", "HN-PL-1852", "BTP-163", "BTP-PL-163"],
+      "national_portal_url": "https://vpcp.dichvucong.gov.vn/p/home/dvc-tthc-thu-tuc-hanh-chinh-chi-tiet.html?ma_thu_tuc=314163",
+      "status": "national_code_and_hanoi_plan_confirmed"
     }
   ]
 }

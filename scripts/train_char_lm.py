@@ -23,9 +23,11 @@ def main() -> None:
     p.add_argument('--manifest', required=True, type=Path)
     p.add_argument('--artifact-dir', required=True, type=Path, help='Thư mục output của prepare_char_corpus')
     p.add_argument('--rights-attestation', required=True, type=Path, help='Xác nhận nội bộ khớp SHA-256 của manifest 1911')
-    p.add_argument('--output', required=True, type=Path, help='Thư mục mới; dùng kho riêng bền vững trên Colab')
+    p.add_argument('--output', required=True, type=Path, help='Thư mục mới cho kết quả và checkpoint')
     p.add_argument('--resume', action='store_true', help='Nối lại cùng thí nghiệm, không tạo seed trùng')
     p.add_argument('--device', choices=('cpu', 'cuda'), default='cpu')
+    p.add_argument('--platform', choices=('colab', 'kaggle'), default='colab',
+                   help='Phạm vi bắt buộc trong xác nhận quyền')
     p.add_argument('--epochs', type=int, default=5)
     p.add_argument('--batch-size', type=int, default=16)
     p.add_argument('--lr', type=float, default=0.001)
@@ -38,10 +40,12 @@ def main() -> None:
     if not all(math.isfinite(v) and v > 0 for v in config.values()) or args.d_model % args.n_heads:
         p.error('Cấu hình phải hữu hạn, dương và d_model chia hết cho n_heads.')
     if args.device == 'cuda' and not torch.cuda.is_available():
-        p.error('Không có CUDA trong phiên hiện tại. Chọn GPU trên Colab hoặc dùng --device cpu.')
+        p.error('Không có CUDA trong phiên hiện tại. Bật GPU hoặc dùng --device cpu.')
     # Kiểm quyền và dữ liệu trước cả việc tạo output hay khởi tạo model.
     try:
-        train, val, vocab, data_id = load_prepared_corpus(args.manifest, args.artifact_dir, args.rights_attestation)
+        train, val, vocab, data_id = load_prepared_corpus(
+            args.manifest, args.artifact_dir, args.rights_attestation, platform=args.platform,
+        )
     except CorpusLoadError as error:
         p.error(str(error))
     run_experiment(train, val, vocab, data_id, config, args.output, torch.device(args.device), args.resume)

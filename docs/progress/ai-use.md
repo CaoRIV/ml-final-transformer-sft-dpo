@@ -91,3 +91,44 @@ Khi lập báo cáo cuối, chuyển nhật ký này thành phụ lục khai bá
 - AI tra Luật Sở hữu trí tuệ, điều khoản nền tảng, nhãn quyền và nguồn phiên âm của revision `206607`; đối chiếu một khác biệt giữa hai revision và tìm scan Trương Vĩnh Ký 1911 làm phương án thay thế. [Rà soát](../data/char-corpus.md#22-rà-soát-quyền-revision-206607--chưa-đủ-căn-cứ) không phải attestation, không ký thay người có thẩm quyền, không đổi corpus hoặc tải dữ liệu lên Colab.
 - Theo yêu cầu đổi nguồn, AI tải hai snapshot có kiểm robots, kiểm checksum scan, đối chiếu mẫu trang thơ và viết bộ trích, chuẩn bị, xác minh dữ liệu bản Trương Vĩnh Ký 1911. AI chuyển lệnh và notebook sang manifest mới, không thực hiện kiểm từng dòng, không ký xác nhận thay thành viên và không huấn luyện bộ thật.
 - AI lưu xác nhận từ mã người duyệt, thời điểm và phạm vi do người dùng cung cấp, đóng gói mã/dữ liệu và tạo notebook Colab. AI kiểm bước giải nén, hash và xác nhận cục bộ; không duyệt thay người dùng, tải lên Drive hay chạy Colab.
+- AI lưu xác nhận Kaggle do người dùng cung cấp, thêm kiểm phạm vi nền tảng cho CLI, đóng gói notebook và đo kết quả bước kiểm dữ liệu trên CPU. Không tạo dataset/notebook trên tài khoản Kaggle hoặc chạy huấn luyện thay người dùng.
+- AI đối chiếu `summary.json` do người dùng cung cấp, tính lại NLL→PPL từng seed và thống kê tổng hợp, rồi ghi bảng vào hồ sơ corpus. Không chạy lại huấn luyện hoặc xác nhận phần cứng Kaggle từ JSON.
+
+## C.2 — đếm tham số và phép tính
+
+- AI dẫn xuất số tham số và MAC theo kích thước tensor của `DecoderBlock` A.1, rồi chạy notebook CPU để đối chiếu `numel()` và FLOP matmul do profiler ước lượng. Nhóm cần giải thích được tại sao $h(d/h)=d$ và vì sao causal mask A.1 không chia đôi MAC.
+
+## Đối chiếu lại tiến độ với đề gốc
+
+- AI đối chiếu đề (tr. 1–2, 18–19), hồ sơ tuần 1, bảng nhanh QA hiện tại và metadata Kaggle; sửa trạng thái, tách test khỏi schema cặp DPO, đưa điều kiện SFT pilot và thảo luận RAG vào điểm rà. Không sửa phiếu người kiểm, bản ghi QA, quyền dữ liệu hay kết quả huấn luyện.
+- AI soạn bản sửa `PILOT-001` (làm rõ vai trò ủy quyền) và `PILOT-004` (giữ đủ điều kiện và tách hai mốc nguồn) để nhóm kiểm lại trên phiếu v2. Không điền kết luận người kiểm hoặc đổi dữ liệu pilot v1.
+- Sau khi Hà báo kết quả, AI chép lại hai kết luận do Hà cung cấp vào phiếu v2. Không tự chấm, điền chi tiết người kiểm chưa cung cấp hoặc đổi trạng thái release.
+
+## D.1 — kiểm nguồn thủ tục
+
+- AI truy tìm văn bản công khai, đối chiếu số hiệu, ngày, phạm vi, phụ lục và căn cứ quyền tác giả; lưu URL, thời điểm và SHA-256. AI kiểm chữ ký CMS về toàn vẹn nội dung trên bốn PDF Hà Nội, không thẩm định chuỗi tin cậy. Không đăng nhập, lấy hồ sơ công dân, tự phê duyệt nguồn hoặc đổi kết luận kiểm thủ công của nhóm.
+
+## D.2 — tạo QA ứng viên và kiểm cổng dữ liệu
+
+- AI soạn recipe từ chính văn, kiểm SHA-256 và đoạn trích, sửa nhầm dẫn chứng chữ ký người dịch trong bản nháp, triển khai CLI chọn mẫu phân tầng và cổng xuất SFT. Chạy trên CPU với 24 QA ứng viên; gói chỉ ghi `draft` và phiếu v2 để trống. Không điền nhãn hoặc chuyển kết quả kiểm của 20 QA cũ.
+- AI cài công cụ kiểm tách `USER_TEST` và kiểm nhánh chặn đường dẫn/dữ liệu thiếu, trùng họ, trùng câu. Việc thử phần so khớp chỉ dùng prompt QA chính văn trong bộ nhớ, không tạo record khảo sát. Không tuyển người, xem phiếu thật, làm consent, gán nhãn người kiểm hay phát hành dữ liệu huấn luyện.
+- AI rút gọn phiếu nhập tay cho 24 QA pilot từ 27 xuống 8 cột, giữ nguyên câu hỏi, đáp án, trích đoạn, mẫu kiểm và phiếu gốc. Đã thử cổng với phiếu trống và bản sao tạm để kiểm định dạng; không điền kết quả kiểm định thật và không giảm số QA phải được người kiểm.
+
+## C.3 — LoRA và QLoRA trên một cấu hình Qwen
+
+- AI đối chiếu đề tr. 19, cấu hình Qwen khóa revision, mã Qwen2 và giả định double quantization của bài QLoRA; viết notebook và chạy các ô tuần tự trên CPU để kiểm số tham số bằng lớp A.3. Phần bộ nhớ là ước lượng theo các tensor được nêu, không có phép đo GPU, tải checkpoint hay kết quả huấn luyện. Nhóm cần giải thích vì sao V nhỏ hơn Q và vì sao bộ nhớ tĩnh không phải peak khi huấn luyện.
+
+## C.4 — tính loss, gradient DPO và xét β
+
+- AI đối chiếu đề tr. 19, B.5 và Eq. (7) của bài DPO; tự đặt bốn log-xác suất minh họa, trình bày phép thế số và kiểm loss/gradient với A.4 và autograd trên CPU. Các ca so sánh tác động của β là phép tính xác định, không phải nhãn ưu tiên thật hay kết quả D.4. Nhóm cần giải thích vì sao policy có thể ưu tiên chosen nhưng margin DPO vẫn âm.
+
+## C.1 — chọn đầu vào minh họa
+
+- Theo yêu cầu của Hà, AI sinh ma trận Q/K/V với seed `577893521`, lưu đầu vào tái lập và kiểm kết quả attention nhân quả bằng mã A.1 trên CPU. Việc giảng viên không cung cấp ma trận là thông tin do Hà báo; không ghi bộ tự sinh là dữ liệu chính thức.
+- AI soạn phép tính tay C.1 cho từng token trên đúng bộ ma trận đã chọn, chạy notebook CPU để so khớp softmax và đầu ra với hàm attention A.1. Không thay đổi ma trận hay nguồn gốc của ví dụ.
+
+## D.3 — chuẩn bị pilot SFT trong lúc nhóm kiểm D.2
+
+- AI đối chiếu D.3 tr. 19 với model card và Apache-2.0 đúng revision Qwen; chuẩn bị bộ nạp release D.2, mã QLoRA, notebook Kaggle, đóng gói tối thiểu và phương án so `r`, `alpha`, LR, epoch trên validation. Không đọc/sửa phiếu đang điền, không cấp quyền nền tảng, không tạo biên bản thay người kiểm.
+- CPU: 7 test bộ nạp/mask qua; thêm một câu minh họa độc lập với tokenizer Qwen đúng revision: 71 token prompt bị che, giải mã 19 token đích khớp nguyên đáp án có dấu, trích dẫn và đúng một EOS. Đã chạy forward trên Qwen thu nhỏ, trọng số khởi tạo, adapter Q/V; không dùng QA thật. Đây là kiểm phần mềm, không tính vào quota QA hay số lần huấn luyện. Chưa có kết quả SFT, số đo VRAM Kaggle, resume GPU hoặc checkpoint đủ làm đầu vào D.4.
+- Đã chạy các ô notebook cục bộ với ZIP chỉ chứa mã: không có release thì không train; sai hash thì dừng; CLI từ chối manifest `candidate_only` của lô 24. Với mô hình thu nhỏ và token số tự đặt, checkpoint khôi phục đúng trọng số adapter, trạng thái AdamW, RNG CPU và thứ tự trộn. Không suy rộng phép kiểm này thành resume QLoRA trên Kaggle.

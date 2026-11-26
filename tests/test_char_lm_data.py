@@ -48,13 +48,15 @@ class CharLMDataTest(unittest.TestCase):
         args.synthetic_corpus_sha256 = corpus_sha256
         return args
 
-    def _write_synthetic_attestation(self, manifest_path: Path, path: Path, manifest_sha256: str | None = None) -> None:
+    def _write_synthetic_attestation(
+        self, manifest_path: Path, path: Path, manifest_sha256: str | None = None, *, platform: str = "colab",
+    ) -> None:
         # Đây là object test tạm thời, không phải phê duyệt của cá nhân hay tổ chức.
         path.write_bytes(
             prepared.canonical_json(
                 {
                     "status": "approved",
-                    "evaluated_for": "a2-local-and-colab",
+                    "evaluated_for": f"a2-local-and-{platform}",
                     "training_allowed": True,
                     "manifest_sha256": manifest_sha256 or sha256(manifest_path.read_bytes()).hexdigest(),
                     "reviewer_id": "synthetic-test-fixture",
@@ -108,6 +110,23 @@ class CharLMDataTest(unittest.TestCase):
             self._write_synthetic_attestation(args.manifest, mismatched, "0" * 64)
             with self.assertRaisesRegex(CorpusLoadError, "manifest_sha256"):
                 load_prepared_corpus(args.manifest, root / "no-artifacts", mismatched)
+
+    def test_attestation_must_match_cloud_platform(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            args = self._prepare_fixture(root)
+            attestation = root / "synthetic-test-attestation.json"
+            self._write_synthetic_attestation(args.manifest, attestation)
+            with self.assertRaisesRegex(CorpusLoadError, "evaluated_for"):
+                load_prepared_corpus(args.manifest, args.output_dir, attestation, platform="kaggle")
+            self._write_synthetic_attestation(args.manifest, attestation, platform="kaggle")
+            with self.assertRaisesRegex(CorpusLoadError, "evaluated_for"):
+                load_prepared_corpus(args.manifest, args.output_dir, attestation)
+            with patch.object(prepared, "CORPUS_SHA256", args.synthetic_corpus_sha256):
+                _, validation, _, _ = load_prepared_corpus(
+                    args.manifest, args.output_dir, attestation, platform="kaggle",
+                )
+            self.assertEqual(validation.size(0), 2)
 
 
 if __name__ == "__main__":

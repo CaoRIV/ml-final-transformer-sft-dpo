@@ -1,0 +1,365 @@
+{
+  "dataset_version": "d2-official-seed-v2",
+  "seed": 42,
+  "author_type": "AI_assistant",
+  "family_splits": {
+    "trich-luc": "train",
+    "chung-thuc-ban-sao": "holdout",
+    "chung-thuc-chu-ky": "train",
+    "cai-chinh-ho-tich": "train",
+    "xac-nhan-thong-tin-ho-tich": "validation"
+  },
+  "items": [
+    {
+      "key": "trich-luc-1818-hanoi-scope",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo Quyết định 1818/QĐ-TTPVHCC, phương án trực tuyến về cấp bản sao trích lục hộ tịch, bản sao giấy khai sinh áp dụng cho cơ quan nào và ở địa bàn nào?",
+      "claims": [
+        {
+          "text": "Theo Quyết định 1818/QĐ-TTPVHCC, phương án này dành cho thủ tục thuộc thẩm quyền giải quyết của UBND cấp xã trong phạm vi quản lý của UBND thành phố Hà Nội.",
+          "evidence_id": "HN-QD-1818",
+          "locator": "Điều 1, tr. 2",
+          "page": 2,
+          "anchor": "Điều 1. Phê duyệt kèm theo Quyết định này phương án tái cấu trúc thủ tục hành chính “Cấp bản sao trích lục hộ tịch, bản sao giấy khai sinh thuộc thẩm quyền giải quyết của UBND cấp xã ” thuộc phạm vi quản lý của UBND thành phố Hà Nội để thực hiện dịch vụ công trực tuyến toàn trình – liền mạch – thực chất."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-incomplete-application",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án cấp bản sao trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, hồ sơ trực tuyến chưa đủ hoặc không hợp lệ được hướng dẫn bổ sung bằng phiếu gì?",
+      "claims": [
+        {
+          "text": "Hồ sơ chưa đầy đủ hoặc không hợp lệ được hướng dẫn bổ sung, hoàn thiện trong Phiếu yêu cầu bổ sung, hoàn thiện hồ sơ gửi cho cá nhân hoặc tổ chức.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 2: Tiếp nhận và chuyển hồ sơ về cơ quan giải quyết",
+          "anchor": "Trường hợp hồ sơ chưa đầy đủ hoặc không hợp lệ: hướng dẫn, bổ sung hoàn thiện hồ sơ vào Phiếu yêu cầu bổ sung, hoàn thiện hồ sơ gửi cá nhân, tổ chức."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-out-of-jurisdiction",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án cấp bản sao trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, cơ quan làm gì nếu hồ sơ trực tuyến không thuộc thẩm quyền tiếp nhận?",
+      "claims": [
+        {
+          "text": "Nếu hồ sơ không thuộc thẩm quyền tiếp nhận, cơ quan lập Phiếu từ chối tiếp nhận hồ sơ và nêu rõ lý do theo quy định.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 2: Tiếp nhận và chuyển hồ sơ về cơ quan giải quyết",
+          "anchor": "Trường hợp không thuộc thẩm quyền tiếp nhận hồ sơ: lập Phiếu từ chối tiếp nhận hồ sơ, nêu rõ lý do theo quy định."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-online-intake",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo Phương án tái thiết kế quy trình kèm Quyết định 2163/QĐ-BTP, trích lục hộ tịch được tiếp nhận trực tuyến qua những kênh nào?",
+      "claims": [
+        {
+          "text": "Theo Phương án kèm Quyết định 2163/QĐ-BTP, thủ tục được tiếp nhận trực tuyến trên Cổng Dịch vụ công quốc gia hoặc Ứng dụng định danh quốc gia VNeID.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.2, đoạn “Hình thức tiếp nhận và trả kết quả”",
+          "anchor": "Tiếp nhận theo hình thức trực tuyến trên Cổng Dịch vụ công quốc gia/Ứng dụng định danh quốc gia (VNeID)."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-processing-time",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo Phương án tái thiết kế quy trình kèm Quyết định 2163/QĐ-BTP, thời gian giải quyết trích lục là khi nào nếu hồ sơ được nhận sau 15 giờ mà không giải quyết ngay?",
+      "claims": [
+        {
+          "text": "Theo Phương án kèm Quyết định 2163/QĐ-BTP, hồ sơ nhận sau 15 giờ mà không giải quyết ngay thì trả kết quả trong ngày làm việc tiếp theo.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.3, đoạn “Thời gian giải quyết”",
+          "anchor": "Thời gian giải quyết: Trong ngày tiếp nhận hồ sơ; trường hợp nhận hồ sơ sau 15 giờ mà không giải quyết được ngay thì trả kết quả trong ngày làm việc tiếp theo."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-electronic-result-destination",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án trực tuyến kèm Quyết định 2163/QĐ-BTP, bản điện tử của kết quả cấp bản sao trích lục hộ tịch được gửi tự động đến đâu?",
+      "claims": [
+        {
+          "text": "Theo Phương án kèm Quyết định 2163/QĐ-BTP, kết quả điện tử được tự động gửi về Kho quản lý dữ liệu điện tử của cá nhân, địa chỉ thư điện tử, thiết bị số hoặc điện thoại của người yêu cầu.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.2, đoạn “Hình thức tiếp nhận và trả kết quả”",
+          "anchor": "Bản điện tử của kết quả giải quyết TTHC sẽ được tự động gửi về Kho quản lý dữ liệu điện tử của cá nhân/địa chỉ thư điện tử/thiết bị số/điện thoại của người yêu cầu sau khi thủ tục hoàn tất, bản điện tử có giá trị như bản giấy khi được tạo lập, ký số theo quy định của pháp luật; nội dung của bản điện tử phải đầy đủ, chính xác và không bị thay đổi trong quá trình lưu trữ, truyền gửi."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-paper-result-choice",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án kèm Quyết định 2163/QĐ-BTP, ai lựa chọn hình thức nhận kết quả bản giấy khi xin cấp bản sao trích lục hộ tịch trực tuyến?",
+      "claims": [
+        {
+          "text": "Theo Phương án kèm Quyết định 2163/QĐ-BTP, kết quả bản giấy được trả theo hình thức do công dân lựa chọn.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.2, đoạn “Hình thức tiếp nhận và trả kết quả”",
+          "anchor": "Bản giấy được trả theo hình thức do công dân lựa chọn."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-identity-document-exception",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo biểu mẫu trực tuyến xin cấp bản sao trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, khi nào người yêu cầu phải khai thông tin và đính kèm bản chụp giấy tờ tùy thân?",
+      "claims": [
+        {
+          "text": "Theo biểu mẫu trong Phương án kèm Quyết định 2163/QĐ-BTP, chỉ phải khai thông tin và đính kèm bản chụp giấy tờ khi không có Số định danh cá nhân tại Mục (3).",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.4, biểu mẫu điện tử tương tác, phần I",
+          "anchor": "Chỉ khai thông tin và đính kèm bản chụp giấy tờ trong trường hợp không có Số định danh cá nhân tại Mục (3);"
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-authorization-attachment",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo mục B.5 của phương án cấp bản sao trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, ai phải đính kèm giấy ủy quyền khi nộp hồ sơ trực tuyến?",
+      "claims": [
+        {
+          "text": "Theo mục B.5, người nộp hồ sơ thay người yêu cầu với tư cách người được ủy quyền phải đính kèm giấy ủy quyền theo quy định.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.5, đoạn “Đánh giá thành phần hồ sơ trực tuyến”",
+          "anchor": "Thủ tục này không yêu cầu đính kèm thành phần hồ sơ, trừ trường hợp người thực hiện yêu cầu là người được ủy quyền thì phải đính kèm giấy ủy quyền theo quy định."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-complete-application-receipt",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án cấp bản sao trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, ở bước tiếp nhận, cơ quan làm gì khi hồ sơ trực tuyến đã đủ điều kiện giải quyết?",
+      "claims": [
+        {
+          "text": "Khi hồ sơ đủ điều kiện giải quyết, bước tiếp nhận lập Giấy tiếp nhận hồ sơ, thông báo và hướng dẫn thanh toán phí, lệ phí trực tuyến, rồi chuyển hồ sơ điện tử đến cơ quan chuyên môn để giải quyết.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 2: Tiếp nhận và chuyển hồ sơ về cơ quan giải quyết",
+          "anchor": "Trường hợp hồ sơ đủ điều kiện giải quyết: lập Giấy tiếp nhận hồ sơ, thông báo và hướng dẫn thanh toán phí, lệ phí trực tuyến, chuyển hồ sơ điện tử đến cơ quan chuyên môn để giải quyết theo quy định."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-same-day-time",
+      "record_version": "2",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo phụ lục Quyết định 858/QĐ-BTP, nếu cơ quan tiếp nhận yêu cầu chứng thực chữ ký sau 15 giờ thì thời hạn thông thường là khi nào?",
+      "claims": [
+        {
+          "text": "Nếu tiếp nhận sau 15 giờ, yêu cầu được giải quyết trong ngày làm việc tiếp theo theo thời hạn thông thường ghi tại phụ lục.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, thời hạn thực hiện, tr. 7",
+          "page": 7,
+          "anchor": "Thời hạn thực hiện yêu cầu chứng thực là ngay trong ngày cơ quan, tổ chức tiếp nhận yêu cầu hoặc trong ngày làm việc tiếp theo nếu tiếp nhận yêu cầu sau 15 giờ."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-appointment-slip",
+      "record_version": "2",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo phụ lục Quyết định 858/QĐ-BTP, khi kết quả chứng thực chữ ký được trả vào ngày làm việc tiếp theo hoặc chậm hơn theo thỏa thuận, người tiếp nhận phải làm gì?",
+      "claims": [
+        {
+          "text": "Người tiếp nhận hồ sơ phải có phiếu hẹn ghi rõ giờ và ngày trả kết quả.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, thời hạn thực hiện, tr. 7",
+          "page": 7,
+          "anchor": "Trường hợp trả kết quả trong ngày làm việc tiếp theo hoặc phải kéo dài thời gian theo thỏa thuận thì người tiếp nhận hồ sơ phải có phiếu hẹn ghi rõ thời gian (giờ, ngày) trả kết quả cho người yêu cầu chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-interpreter",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo Phụ lục kèm Quyết định 858/QĐ-BTP, người không thông thạo tiếng Việt cần người phiên dịch như thế nào khi yêu cầu chứng thực chữ ký?",
+      "claims": [
+        {
+          "text": "Người không thông thạo tiếng Việt phải có người phiên dịch có đầy đủ năng lực hành vi dân sự, thông thạo tiếng Việt và ngôn ngữ người yêu cầu sử dụng; người yêu cầu có thể mời người phiên dịch hoặc cơ quan chỉ định, và người yêu cầu trả thù lao phiên dịch.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, tr. 6",
+          "page": 6,
+          "anchor": "Trong trường hợp người yêu cầu chứng thực không thông thạo tiếng Việt thì phải có người phiên dịch. Người phiên dịch phải là người có năng lực hành vi dân sự đầy đủ theo quy định của pháp luật, thông thạo tiếng Việt và ngôn ngữ mà người yêu cầu chứng thực sử dụng. Người phiên dịch do người yêu cầu chứng thực mời hoặc do cơ quan thực hiện chứng thực chỉ định. Thù lao phiên dịch do người yêu cầu chứng thực trả."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-identity-documents",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo Phụ lục kèm Quyết định 858/QĐ-BTP, người yêu cầu có thể dùng những loại giấy tờ nhận dạng nào khi chứng thực chữ ký?",
+      "claims": [
+        {
+          "text": "Người yêu cầu có thể dùng Căn cước điện tử, hoặc bản chính/bản sao của thẻ căn cước công dân, thẻ căn cước, giấy chứng nhận căn cước, hộ chiếu, giấy tờ xuất nhập cảnh hoặc giấy tờ có giá trị đi lại quốc tế còn giá trị sử dụng.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, tr. 7",
+          "page": 7,
+          "anchor": "Một trong các giấy tờ sau: Căn cước điện tử; bản chính hoặc bản sao của Thẻ căn cước công dân hoặc Thẻ căn cước hoặc Giấy chứng nhận căn cước hoặc Hộ chiếu hoặc giấy tờ xuất nhập cảnh hoặc giấy tờ có giá trị đi lại quốc tế còn giá trị sử dụng"
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-document-for-signature",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Ngoài giấy tờ nhận dạng, theo Phụ lục kèm Quyết định 858/QĐ-BTP người yêu cầu chứng thực chữ ký phải có giấy tờ nào?",
+      "claims": [
+        {
+          "text": "Người yêu cầu phải có giấy tờ hoặc văn bản mà mình sẽ yêu cầu chứng thực chữ ký.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, tr. 7",
+          "page": 7,
+          "anchor": "Giấy tờ, văn bản mà mình sẽ yêu cầu chứng thực chữ ký."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-effective-date",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Quyết định 163/QĐ-BTP công bố thủ tục hộ tịch sửa đổi, bổ sung có hiệu lực từ ngày nào?",
+      "claims": [
+        {
+          "text": "Quyết định 163/QĐ-BTP có hiệu lực kể từ ngày 15 tháng 01 năm 2026.",
+          "evidence_id": "BTP-163",
+          "locator": "Điều 2, tr. 1",
+          "page": 1,
+          "anchor": "Điều 2. Quyết định này có hiệu lực thi hành kể từ ngày 15 tháng 01 năm 2026."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-fee-xa",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo phụ lục Quyết định 858/QĐ-BTP, mức phí niêm yết khi chứng thực chữ ký tại UBND cấp xã là bao nhiêu và tính theo đơn vị nào?",
+      "claims": [
+        {
+          "text": "Phụ lục ghi mức phí 10.000 đồng/trường hợp; một trường hợp có thể gồm một hoặc nhiều chữ ký trong cùng một giấy tờ hoặc văn bản.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, mục Phí, tr. 7",
+          "page": 7,
+          "anchor": "Tại Ủy ban nhân dân cấp xã, Tổ chức hành nghề công chứng: 10.000 đồng/trường hợp (trường hợp được tính là một hoặc nhiều chữ ký trong một giấy tờ, văn bản)."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-declaration-form-title",
+      "record_version": "2",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Khi đề nghị cải chính hộ tịch theo Phụ lục Quyết định 163/QĐ-BTP, cần tìm mẫu tờ khai có tiêu đề gì?",
+      "claims": [
+        {
+          "text": "Mẫu này là Tờ khai đăng ký việc thay đổi, cải chính, bổ sung thông tin hộ tịch, xác định lại dân tộc.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mẫu tờ khai, tr. 293",
+          "page": 293,
+          "anchor": "TỜ KHAI ĐĂNG KÝ VIỆC THAY ĐỔI, CẢI CHÍNH, BỔ SUNG THÔNG TIN HỘ TỊCH, XÁC ĐỊNH LẠI DÂN TỘC"
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-hanoi-scope",
+      "record_version": "1",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Theo Quyết định 1852/QĐ-TTPVHCC, phương án trực tuyến về xác nhận thông tin hộ tịch có phạm vi cơ quan và địa bàn nào?",
+      "claims": [
+        {
+          "text": "Theo Quyết định 1852/QĐ-TTPVHCC, phương án áp dụng cho xác nhận thông tin hộ tịch thuộc thẩm quyền UBND cấp xã trong phạm vi quản lý của UBND thành phố Hà Nội.",
+          "evidence_id": "HN-QD-1852",
+          "locator": "Điều 1, tr. 2",
+          "page": 2,
+          "anchor": "Điều 1. Phê duyệt kèm theo Quyết định này phương án tái cấu trúc thủ tục hành chính “Xác nhận thông tin hộ tịch của UBND cấp xã ” thuộc phạm vi quản lý của UBND thành phố Hà Nội để thực hiện dịch vụ công trực tuyến toàn trình – liền mạch – thực chất."
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-code-and-authority",
+      "record_version": "2",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Trong phương án trực tuyến kèm Quyết định 1852/QĐ-TTPVHCC của Hà Nội, mã thủ tục xác nhận thông tin hộ tịch là gì?",
+      "claims": [
+        {
+          "text": "Mã thủ tục xác nhận thông tin hộ tịch là 2.002516.",
+          "evidence_id": "HN-PL-1852",
+          "locator": "Mục A.1, tr. 1",
+          "page": 1,
+          "anchor": "Thủ tục Xác nhận thông tin hộ tịch thuộc thẩm quyền giải quyết của UBND cấp xã (Mã TTHC: 2.002516)."
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-projected-time",
+      "record_version": "2",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Theo phương án kèm Quyết định 1852/QĐ-TTPVHCC, thời gian dự kiến xử lý yêu cầu xác nhận thông tin hộ tịch trực tuyến tại Hà Nội khi không cần xác minh là bao lâu?",
+      "claims": [
+        {
+          "text": "Trong phương án kèm Quyết định 1852/QĐ-TTPVHCC, thời gian giải quyết dự kiến là 03 ngày làm việc.",
+          "evidence_id": "HN-PL-1852",
+          "locator": "Mục B.4, tr. 3",
+          "page": 3,
+          "anchor": "Thời gian giải quyết dự kiến là 03 ngày làm việc; trường hợp cần kiểm tra, xác minh, thời hạn có thể kéo dài nhưng không quá 10 ngày làm việc."
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-verification-limit",
+      "record_version": "2",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Theo phương án xác nhận thông tin hộ tịch trực tuyến của Hà Nội kèm Quyết định 1852/QĐ-TTPVHCC, nếu cần kiểm tra hoặc xác minh thì thời hạn dự kiến có thể kéo dài tối đa bao lâu?",
+      "claims": [
+        {
+          "text": "Theo phương án kèm Quyết định 1852/QĐ-TTPVHCC, khi cần kiểm tra hoặc xác minh, thời hạn dự kiến có thể kéo dài nhưng không quá 10 ngày làm việc.",
+          "evidence_id": "HN-PL-1852",
+          "locator": "Mục B.4, tr. 3",
+          "page": 3,
+          "anchor": "Thời gian giải quyết dự kiến là 03 ngày làm việc; trường hợp cần kiểm tra, xác minh, thời hạn có thể kéo dài nhưng không quá 10 ngày làm việc."
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-vneid-no-signature",
+      "record_version": "2",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Theo phương án trực tuyến về xác nhận thông tin hộ tịch của Hà Nội kèm Quyết định 1852/QĐ-TTPVHCC, đăng nhập Cổng Dịch vụ công quốc gia bằng VNeID có phải ký số mẫu điện tử tương tác không?",
+      "claims": [
+        {
+          "text": "Không; người đăng nhập Cổng Dịch vụ công quốc gia bằng VNeID để đề nghị giải quyết thủ tục không phải ký số mẫu điện tử tương tác.",
+          "evidence_id": "HN-PL-1852",
+          "locator": "Mục B.5, thành phần hồ sơ, tr. 4",
+          "page": 4,
+          "anchor": "Công dân đăng nhập Cổng dịch vụ công quốc gia bằng Ứng dụng định danh quốc gia (VNeID) đề nghị giải quyết thủ tục hành chính thì không phải thực hiện ký số biểu mẫu điện tử tương tác."
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-paper-delivery",
+      "record_version": "2",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Theo phương án xác nhận thông tin hộ tịch trực tuyến của Hà Nội kèm Quyết định 1852/QĐ-TTPVHCC, khi nào kết quả bản giấy được chuyển phát và chuyển bằng cách nào?",
+      "claims": [
+        {
+          "text": "Nếu pháp luật chuyên ngành bắt buộc hoặc công dân có yêu cầu, kết quả bản giấy được chuyển phát miễn phí qua dịch vụ bưu chính đến địa chỉ đăng ký của công dân.",
+          "evidence_id": "HN-PL-1852",
+          "locator": "Mô tả chi tiết, Bước 4, tr. 7",
+          "page": 7,
+          "anchor": "Trường hợp pháp luật chuyên ngành quy định bắt buộc hoặc Công dân có yêu cầu, kết quả giải quyết bản giấy sẽ được chuyển phát miễn phí về địa chỉ đăng ký của Công dân thông qua dịch vụ bưu chính."
+        }
+      ]
+    }
+  ]
+}

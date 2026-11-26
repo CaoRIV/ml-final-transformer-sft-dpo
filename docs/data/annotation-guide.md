@@ -1,6 +1,6 @@
 # Hướng dẫn kiểm QA, gán nhãn preference DPO và đánh giá mù
 
-> **Trạng thái:** protocol trước vận hành con người. Đã có 20 QA nháp do agent biên soạn và kiểm cấu trúc ở kho nghiên cứu riêng, nhưng **chưa có QA được con người phê duyệt**, candidate SFT, nhãn người chấm, agreement, cặp DPO hay kết quả đánh giá. Schema/quy tắc không phải record gán nhãn thật.
+> **Trạng thái:** [pilot 20 QA nháp](admin-pilot.md) đã có kết luận rà nội dung, nhưng chưa có bản ghi QA được duyệt phát hành. Chưa có ứng viên do SFT sinh, nhãn DPO, số đo đồng thuận, cặp DPO hay kết quả đánh giá. Schema/quy tắc không phải record gán nhãn thật.
 
 ## 1. Phạm vi, vai trò và điều kiện mở việc
 
@@ -21,7 +21,7 @@ Chỉ phê duyệt QA cho huấn luyện khi source provenance/quyền dùng/phi
 - giao diện/phiếu chấm đảm bảo mỗi rater có ánh xạ A/B riêng, không thấy model/checkpoint identity, canonical candidate ID, nhãn hay lý do của người kia.
 
 `USER_TEST` luôn bị tách: không được dùng làm QA authoring, prompt DPO, calibration, tập nhãn DPO hoặc chọn tiêu chí. Việc không có `USER_TEST` hợp lệ không cho phép tạo câu hỏi giả và gọi đó là khảo sát.
-Split được khóa trước authoring/generation: mọi QA/DPO thuộc cùng `procedure_family_id` (và các paraphrase/span liên quan theo audit) phải ở một split nhất quán; không random từng câu để làm rò quy trình. Mọi câu của một `respondent_cluster_id` ở `USER_TEST` cùng nằm trong tập heldout, không được rải sang train/validation hoặc dùng làm prompt DPO. Bất kỳ xung đột nào phát hiện sau audit tạo dataset/split version mới trước huấn luyện, không được nới rule sau khi xem metric.
+Khóa phân bổ nhóm trước authoring/generation: mọi QA/DPO thuộc cùng `procedure_family_id` (và các paraphrase/span liên quan theo audit) phải ở một split nhất quán; không random từng câu. Mọi câu của một `respondent_cluster_id` ở `USER_TEST` cùng nằm trong tập heldout, không được rải sang train/validation hoặc dùng làm prompt DPO. Chỉ khóa hiện vật sau audit; phát hiện xung đột thì tạo dataset/split version mới trước huấn luyện, không nới quy tắc sau khi xem metric.
 
 
 ## 2. Quy tắc chung về record và dữ liệu cấm

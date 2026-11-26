@@ -7,7 +7,7 @@
 | Đề cương | [proposal.md](proposal.md) | [proposal.tex](proposal.tex) | [proposal.pdf](proposal.pdf) |
 | Kế hoạch dữ liệu | [data-plan.md](data-plan.md) | [data-plan.tex](data-plan.tex) | [data-plan.pdf](data-plan.pdf) |
 
-**Cả hai là bản nháp tuần 1, chưa phải xác nhận đã nộp hoặc đã hoàn thành dữ liệu/thí nghiệm.** Phạm vi Hà Nội/hộ tịch–chứng thực, Truyện Kiều và phương án khảo sát/chấm đã được người dùng đồng ý. Tên trường/lớp, hạn/định dạng nộp, lịch thực hiện, ngân sách Colab và mô hình nền cuối chưa có xác nhận đầy đủ. Không điền giả các thông tin đó vào bìa.
+**Cả hai là bản nháp tuần 1, chưa phải xác nhận đã nộp hoặc đã hoàn thành dữ liệu/thí nghiệm.** Phạm vi Hà Nội/hộ tịch–chứng thực, Truyện Kiều và phương án khảo sát/chấm đã được người dùng đồng ý. Xem [lịch bàn giao](../progress/defense-plan-2026-12-03.md) để biết mốc Hà cung cấp. Tên trường/lớp, cách nộp, chi phí/nơi lưu và mô hình nền phần D chưa có xác nhận đầy đủ; không tự điền vào bìa.
 
 PDF giữ toàn bộ nội dung của Markdown, bao gồm bảng và schema chi tiết, không phải bản tóm tắt cắt bớt. Mục tiêu 5–7/3–5 trang từng trao đổi là đề xuất nội bộ, không phải giới hạn của đề gốc. Không thu nhỏ chữ đến mức khó đọc chỉ để đạt số trang. Báo cáo LaTeX 25–40 trang là sản phẩm cuối kỳ khác với hai hồ sơ này.
 
@@ -48,17 +48,15 @@ Hoặc dùng XeLaTeX/Overleaf, chọn XeLaTeX và biên dịch mỗi tệp hai l
 
 ## Bằng chứng bản biên dịch hiện tại
 
-- Đề cương: **7 trang**; kế hoạch dữ liệu cập nhật sau audit: **12 trang**, gồm bảng schema và mục bằng chứng/giới hạn mới.
-- Đã chạy script biên dịch bằng Pandoc 3.14/Tectonic 0.17.0; đã xem ảnh tổng quan toàn bộ trang và kiểm tra chi tiết trang đầu, công thức DPO, bảng schema.
-- Hash Markdown khớp comment trong LaTeX; trích xuất được đầy đủ ba tên thành viên và mục cuối; không có trang trắng. Mọi font trong hai PDF đều được nhúng.
-- Log LaTeX cuối không có `Overfull`, thiếu ký tự, font shape không xác định hoặc cảnh báo thay font; kiểm tra hình học không thấy text nằm ngoài khổ trang.
+- Hồ sơ đồng bộ hiện tại: đề cương **7 trang**, kế hoạch dữ liệu **12 trang**. Đã sinh lại bằng Pandoc 3.14/Tectonic 0.17.0 và kiểm SHA-256 Markdown khớp comment trong LaTeX. Kiểm trích xuất PDF xác nhận ranh giới D.5/RAG và tình trạng A.2/QA đã cập nhật.
+- Lần kiểm bố cục trước đã xem ảnh tổng quan, trang đầu, công thức DPO và bảng schema; font nhúng đầy đủ. Với bản đồng bộ mới, log LaTeX không báo `Overfull` hoặc `Missing character`. Chưa kiểm trên Overleaf hoặc máy khác.
 - Tectonic trên máy này vẫn in chẩn đoán Fontconfig thiếu cấu hình mặc định. Biên dịch thoát mã 0; nguồn đã chỉ định tệp font từ bundle, và các kiểm tra font nhúng/ký tự ở trên đạt. Chưa kiểm chứng trên Overleaf hoặc máy khác.
 
 
 ## Các việc còn thiếu để chốt bản nộp
 
-1. Xử lý khác biệt thời hạn/phiên bản, quyết định/biểu phí hoặc nguồn đối chiếu còn thiếu trong [sổ kiểm chứng](../data/source-audit.md); hoàn tất review quyền bản số hóa Truyện Kiều trước huấn luyện.
-2. Nhóm kiểm thủ công 20 QA nháp nội bộ; mẫu hiện có chưa được phê duyệt hoặc đủ điều kiện train. Xem [báo cáo pilot](../data/admin-pilot.md).
+1. Xử lý khác biệt thời hạn/phiên bản, quyết định/biểu phí hoặc nguồn đối chiếu còn thiếu trong [sổ kiểm chứng](../data/source-audit.md); xác nhận quyền dùng cho D. Phạm vi xác nhận dùng bản Trương Vĩnh Ký 1911 cho A.2 không áp dụng cho dữ liệu D.
+2. [Phiếu pilot](../data/admin-pilot.md) có 20/20 kết luận vòng đầu. Hà xác nhận 001/004 v2 đều chấp nhận nội dung, không cần sửa thêm. Pilot chưa có bản ghi đủ điều kiện train.
 3. Nhận bàn giao [bộ biểu mẫu](../data/README.md); xác nhận hình thức consent, kho riêng, kênh liên hệ, mốc rút và lịch trước mời người thật. Đã có bản soạn, chưa có khảo sát/consent.
 4. Bổ sung thông tin trường/lớp, ngân sách, nơi lưu bền vững; xác nhận cách nộp với giảng viên và đối chiếu [lịch bàn giao của nhóm](../progress/defense-plan-2026-12-03.md).
 5. Nhóm đọc, hiểu và rà soát hai tài liệu trước nộp; ghi phạm vi AI vào nhật ký/phụ lục theo yêu cầu. PDF biên dịch được không đồng nghĩa các công việc nghiên cứu trên đã hoàn tất.

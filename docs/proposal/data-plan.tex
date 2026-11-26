@@ -1,5 +1,5 @@
 % Generated from data-plan.md; edit the Markdown, then rebuild.
-% Markdown SHA256: cc342dbdbd4a374a9cc1583155fc27edd62d6368557109f58aa2ffa0663b23cb
+% Markdown SHA256: 8d8a3549bcd178ef4ed4baa5cadd8774194c55d086dc61d4b5f6716f3fbde328
 % Shared template for Pandoc -> XeLaTeX/Tectonic. Content lives in the .md files.
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=22mm,headheight=14pt]{geometry}
@@ -52,12 +52,11 @@
 \textbf{Phiên bản:} Bản nháp tuần 1 — có audit nghiên cứu, chưa có dữ liệu huấn luyện được phê duyệt.
 \vspace{5pt}\hrule\vspace{8pt}
 \begin{quote}
-\textbf{Trạng thái:} kế hoạch tuần 1, đã có sổ kiểm nguồn, 20 QA nháp
-nghiên cứu, audit kỹ thuật Truyện Kiều và bộ biểu mẫu vận hành.
-\textbf{Chưa có QA được con người phê duyệt, khảo sát thật hoặc dữ liệu
-DPO.} Những số đo audit và kiểm tra cấu trúc không chứng minh quyền dùng
-nguồn hay mức sẵn sàng huấn luyện; đây chưa phải datasheet của một
-release đã được chấp nhận.
+\textbf{Trạng thái:} bản nháp kế hoạch tuần 1 có sổ nguồn, pilot QA, hồ
+sơ corpus A.2 và biểu mẫu vận hành. Pilot có 20/20 kết luận rà nội dung
+nhưng chưa có QA được phát hành để huấn luyện; chưa có khảo sát thật
+hoặc dữ liệu DPO. Đây không phải datasheet của một release đã được chấp
+nhận.
 \end{quote}
 
 \section{1. Mục đích, ranh giới và quyết định tiền điều
@@ -80,10 +79,12 @@ Bộ dữ liệu phục vụ ba mục tiêu tách biệt:
   nếu có consent.
 \end{enumerate}
 
-Đề tài không dùng PPO hay RAG. Không coi mô hình là nguồn pháp lý, không
-thu hồ sơ cá nhân, không thu thông tin định danh để ``cá nhân hóa'' câu
-trả lời. Dataset chỉ nhằm kiểm chứng nghiên cứu trong phạm vi thủ tục đã
-công bố, không thay thế cổng/cơ quan có thẩm quyền.
+Đề tài không triển khai PPO hay RAG; báo cáo D.5 thảo luận giới hạn của
+tinh chỉnh với tri thức thay đổi nhanh và RAG như hướng mở rộng. Không
+coi mô hình là nguồn pháp lý, không thu hồ sơ cá nhân, không thu thông
+tin định danh để ``cá nhân hóa'' câu trả lời. Dataset chỉ nhằm kiểm
+chứng nghiên cứu trong phạm vi thủ tục đã công bố, không thay thế
+cổng/cơ quan có thẩm quyền.
 
 Trước bất kỳ thu thập tự động hoặc khảo sát nào, nhóm phải kiểm tra ba
 điều kiện vận hành:
@@ -108,10 +109,10 @@ Người dùng đã đồng ý phương án Hà Nội/hộ tịch--chứng thự
 cho mô hình ký tự, khảo sát sinh viên/người thân và bố trí Hà Mạnh
 Thế--Trần Duy Hưng chấm độc lập, Cao Văn Hà phân xử. Đây là chấp thuận
 kế hoạch, không phải bằng chứng đã có người tham gia, nhãn hay quyền thu
-thập. Nhóm gồm Cao Văn Hà (trưởng nhóm, tổng hợp và nộp bài), Hà Mạnh
-Thế, Trần Duy Hưng. Tài khoản/Drive, ngân sách, ngày nộp và mô hình nền
-cuối vẫn mở; cần cụ thể hóa lịch chấm và quy trình đồng ý trước khảo
-sát.
+thập D. Nhóm gồm Cao Văn Hà (trưởng nhóm, tổng hợp và nộp bài), Hà Mạnh
+Thế, Trần Duy Hưng. Theo lịch Hà cung cấp, hạn hoàn thành là 23h59 ngày
+01/12/2026, vấn đáp ngày 03/12/2026; cách nộp cần xác nhận với giảng
+viên. Mô hình, GPU và nơi lưu phần D chưa chốt.
 
 \subsection{1.1. Phương án dữ liệu đã được đồng
 ý}\label{phux1b0ux1a1ng-uxe1n-dux1eef-liux1ec7u-ux111uxe3-ux111ux1b0ux1ee3c-ux111ux1ed3ng-uxfd}
@@ -161,18 +162,14 @@ QA; nếu nguồn không đủ tình huống độc lập thì đề xuất mở
 tịch--chứng thực, không nhân bản hàng trăm cách diễn đạt của cùng câu
 hỏi. Chưa hứa số lượng thủ tục cần thiết trước kiểm kê.
 
-\textbf{Corpus ký tự đã chọn về phương án:} Truyện Kiều trên Wikisource,
-revision \nolinkurl{206607}. Đã audit đường \nolinkurl{/wiki/} được
-robots cho phép, trích riêng thân tác phẩm và kiểm hash/NFC: 3.254 dòng,
-104.204 Unicode code point; chia 93.783 train và 10.421 validation trước
-tạo cửa sổ, từ vựng train-only 133 token gồm \nolinkurl{<UNK>}. Với độ
-dài 128 đã kiểm 732/81 cửa sổ train/validation, không vượt ranh giới.
-Xem \href{../data/char-corpus.md}{provenance và giới hạn quyền},
-\href{../data/char-corpus-audit-report.json}{báo cáo số đo thực}. Mọi
-hiện vật ở \nolinkurl{.cache}, trạng thái research-only; chưa dùng để
-huấn luyện/phân phối vì review quyền bản số hóa chưa hoàn tất. Corpus
-thơ nhỏ không đại diện văn xuôi hành chính và không đưa vào SFT hành
-chính.
+\textbf{Corpus ký tự đã chọn:} \emph{Truyện Kiều}, bản Quốc ngữ Trương
+Vĩnh Ký 1911, từ phần thơ Wikisource revision \nolinkurl{206466} có bản
+quét đối chiếu. \href{../data/char-corpus.md}{Hồ sơ corpus} ghi nguồn,
+căn cứ chọn, tách train/validation, hiện vật và bước xác nhận trước huấn
+luyện. Revision \nolinkurl{206607} chỉ là
+\href{../data/char-corpus-audit-report.json}{audit nghiên cứu lịch sử};
+không dùng hiện vật, hash hay số đo của nó cho bản 1911. Corpus thơ
+không đại diện văn xuôi hành chính và không đưa vào SFT.
 
 \textbf{Khảo sát test đề xuất:} mời người từ 18 tuổi trở lên trong lớp,
 câu lạc bộ và mạng lưới người thân có nhu cầu tìm hiểu thủ tục. Mục tiêu
@@ -498,9 +495,10 @@ Kiểu/gợi ý
 \endlastfoot
 \nolinkurl{pair_id} & UUID & Khóa cặp ưu tiên \\
 \nolinkurl{pair_version} & string & Phiên bản cặp/rubric \\
-\nolinkurl{split} & \nolinkurl{train}, \nolinkurl{validation},
-\nolinkurl{test} & Tách validation DPO khỏi train; test chỉ khi thiết kế
-cho phép \\
+\nolinkurl{split} & \nolinkurl{train}, \nolinkurl{validation} & Chỉ chia
+cặp ưu tiên DPO thành train/validation theo nhóm; chấm mù cuối trên
+\nolinkurl{USER_TEST} là luồng riêng, không tạo \nolinkurl{DPO_PAIR} từ
+test \\
 \nolinkurl{qa_id} / \nolinkurl{prompt_id} & FK & Cùng một prompt cho hai
 ứng viên \\
 \nolinkurl{prompt_text} & text/hash & Prompt chính xác đã sinh; có thể
@@ -635,17 +633,17 @@ QA}\label{ingest-nguux1ed3n-span-qa}
   Lập \nolinkurl{source_span}; người kiểm xác nhận span có thể trả lời
   claim nào.
 \item
-  Sinh/soạn QA theo template nhưng không vượt phạm vi span. Mỗi mệnh đề
-  chính của đáp án phải liên kết span; nếu nguồn không đủ, đáp án phải
-  giới hạn/từ chối thay vì suy luận.
+  Phân bổ họ thủ tục vào split trước khi soạn hoặc sinh QA. Soạn QA theo
+  template nhưng không vượt phạm vi span. Mỗi mệnh đề chính phải liên
+  kết span; nếu nguồn không đủ, giới hạn đáp án hoặc từ chối.
 \item
   Kiểm citation thủ công với khối lượng \(\lceil0{,}20N_{split}\rceil\)
   cho từng split SFT dùng cho train/validation; riêng 2.000 QA train tối
   thiểu là 400 record. Lưu kết quả review và sửa theo batch khi phát
   hiện lỗi chung.
 \item
-  Khóa split, tạo manifest số lượng/hashes; chỉ sau đó chuẩn bị dữ liệu
-  huấn luyện.
+  Sau rà chất lượng và audit rò rỉ, khóa split hiện vật, tạo manifest số
+  lượng/hashes rồi chuẩn bị dữ liệu huấn luyện.
 \end{enumerate}
 
 Nhóm không nên chờ đủ toàn bộ 2.000 QA mới thử pipeline. Cuối tuần 1
@@ -935,20 +933,23 @@ Chưa được suy ra
 Sổ nguồn, robots/terms và bản đọc có hash & 9 nguồn, 5 họ thủ tục; ghi
 rõ thiếu nguồn/khác biệt phiên bản & Không có nghĩa tất cả nguồn còn
 hiệu lực, được phép train/phân phối \\
-Pilot QA & 20 QA agent-authored, 21 trích đoạn; kiểm cấu trúc và cổng
-chặn phát hành & Không phải 20 QA được con người kiểm định, không phải
-khảo sát thật \\
-Truyện Kiều & Chạy audit thực, chia tập/từ vựng/cửa sổ có kiểm chứng &
-Không phải huấn luyện, chưa có validation PPL hoặc quyền phát hành \\
+Pilot QA & 20 QA agent-authored, 21 trích đoạn; kiểm cấu trúc; phiếu
+người rà ghi 18 ``Chấp nhận'', 2 ``Sửa câu hỏi'' & Không thay kiểm thủ
+công tập chính, không phải khảo sát; 0 bản ghi \nolinkurl{approved}, 0
+QA đủ điều kiện train \\
+Truyện Kiều, bản Trương Vĩnh Ký 1911 & Nhóm chạy A.2 trên Kaggle riêng
+tư; \nolinkurl{summary.json} có PPL validation 10,1948 ± 0,0628 (SD mẫu,
+5 seed) & Không phải số đo VRAM phần D, chưa đối chiếu log/checkpoint
+Kaggle và không suy ra quyền phân phối lại \\
 Consent/khảo sát/chấm & Có văn bản mẫu, quy trình ẩn danh và
 phiếu/rubric & Chưa có xác nhận vận hành, consent, người tham gia hoặc
 nhãn thật \\
 \end{longtable}
 }
 
-Ưu tiên bàn giao cho nhóm: rà soát nguồn và khác biệt thời hạn, bổ sung
-quyết định/biểu phí còn thiếu, review quyền và QA; xác nhận hình thức
-consent, lịch, lưu trữ, thông tin trường/lớp và mốc giảng viên. Chỉ sau
-những gate phù hợp mới tăng dữ liệu và pilot SFT; không đánh dấu A--D
-hoặc bộ dữ liệu tuần 2 hoàn thành vì đã có kế hoạch và script.
+Ưu tiên trước mắt: giải quyết hiệu lực/quyền nguồn D, khác biệt thời hạn
+và biểu phí; sửa và kiểm lại hai QA bị gắn cờ; chốt hình thức consent,
+lịch và kho riêng. SFT pilot trước mốc dữ liệu tuần 2 đang thiếu đầu
+vào; chỉ chạy khi QA đủ điều kiện và báo rủi ro nếu không kịp, không
+đánh dấu hoàn thành dựa trên kế hoạch.
 \end{document}

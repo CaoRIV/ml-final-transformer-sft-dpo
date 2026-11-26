@@ -72,18 +72,18 @@ Khi nguồn chưa có, thêm `--fetch` để lấy đúng URL HTML và PDF sau k
 
 Thư mục `prepared-1911/` chứa `corpus.txt`, `train.txt`, `validation.txt`, `vocab.json`, `train_windows.jsonl`, `validation_windows.jsonl`. Cắt prefix train 90% và suffix validation 10% theo code point **trước khi** học từ vựng và tạo cửa sổ. Context mặc định 128, stride 128; phần đuôi không đủ cửa sổ bị loại. Vocab chỉ từ train; ký tự validation chưa gặp mang ID `<UNK>` 0. Manifest ghi hash, kích thước và thông số của từng hiện vật.
 
-**Trước khi chạy A.2 trên Colab:** người duyệt thật của nhóm đối chiếu nguồn, phạm vi chỉ phần thơ, ghi công và quyền đưa dữ liệu sang Colab. Chỉ khi đồng ý, lưu JSON riêng ở `.cache/char-corpus/rights-1911.json` (UTF-8, không BOM):
+**Trước khi chạy A.2 trên nền tảng đám mây:** người duyệt của nhóm đối chiếu nguồn, phạm vi chỉ phần thơ, ghi công và quyền xử lý trên đúng nền tảng. Chỉ khi đồng ý, lưu JSON riêng (UTF-8, không BOM) ở `.cache/char-corpus/rights-1911.json` cho Colab hoặc `.cache/char-corpus/rights-1911-kaggle.json` cho Kaggle:
 
 | Trường | Giá trị khi người duyệt chấp thuận |
 |---|---|
 | `status` | Chuỗi `approved` |
-| `evaluated_for` | Chuỗi `a2-local-and-colab` (huấn luyện nội bộ và xử lý trên Colab, không phải phê duyệt phát hành) |
+| `evaluated_for` | `a2-local-and-colab` cho Colab hoặc `a2-local-and-kaggle` cho Kaggle. Cả hai chỉ dành cho huấn luyện nội bộ, không phê duyệt phát hành. |
 | `training_allowed` | Boolean `true`, không phải chuỗi |
 | `manifest_sha256` | SHA-256 chữ thường của đúng `manifest-1911.json` |
 | `reviewer_id` | Mã nội bộ của thành viên thực sự duyệt |
 | `reviewed_at_utc` | Thời điểm duyệt thực, ISO 8601 UTC, hậu tố `Z` hoặc `+00:00` |
 
-Lấy hash trên PowerShell: `(Get-FileHash .cache/char-corpus/manifest-1911.json -Algorithm SHA256).Hash.ToLowerInvariant()`. **Không sửa manifest để tự phê duyệt.** Khi có xác nhận, chuyển `prepared-1911/`, manifest và tệp xác nhận vào kho riêng được nhóm phép dùng; không cần đưa scan/HTML lên Colab chỉ để train. Làm theo ô cuối [notebook A.2](../../notebooks/04_char_lm.ipynb). Giữ nguồn, corpus, cửa sổ, hồ sơ duyệt và checkpoint ngoài Git.
+Lấy hash trên PowerShell: `(Get-FileHash .cache/char-corpus/manifest-1911.json -Algorithm SHA256).Hash.ToLowerInvariant()`. **Không sửa manifest để tự phê duyệt.** Dùng cùng `prepared-1911/` và manifest, nhưng chọn xác nhận đúng nền tảng. Không cần đưa scan/HTML lên chỉ để huấn luyện. Giữ nguồn, corpus, cửa sổ, hồ sơ duyệt và checkpoint ngoài Git.
 
 ## 5. Kết quả chuẩn bị đã kiểm
 
@@ -97,4 +97,30 @@ Lấy hash trên PowerShell: `(Get-FileHash .cache/char-corpus/manifest-1911.jso
 | Từ vựng học từ train (gồm UNK) | 127 |
 | Target được chấm ở validation / số target UNK | 10.368 / 1 |
 
-Đã kiểm SHA-256 của 6 hiện vật, ghép lại đúng văn bản sau NFC, tái dựng ID và cửa sổ độc lập trên từng split. SHA-256 của manifest thực tại `.cache/char-corpus/manifest-1911.json`: `b8024b1edee0528c5d50dae4bc9f1b353564e6d42aaa40a6c14ce2d30a381990`. CLI từ chối khi thiếu xác nhận, không tạo thư mục huấn luyện. Không có PPL chính thức.
+Đã kiểm SHA-256 của 6 hiện vật, ghép lại đúng văn bản sau NFC, tái dựng ID và cửa sổ độc lập trên từng split. SHA-256 của manifest thực tại `.cache/char-corpus/manifest-1911.json`: `b8024b1edee0528c5d50dae4bc9f1b353564e6d42aaa40a6c14ce2d30a381990`. CLI từ chối khi thiếu xác nhận, không tạo thư mục huấn luyện.
+
+## 6. Chạy A.2 trên Kaggle
+
+1. Đưa `A2-kieu-1911-kaggle.zip` trong `.cache/a2-kaggle/` lên **Dataset Private**. Mở `Chay-A2-Kaggle.ipynb` từ cùng thư mục trong **Notebook Private**, chọn **Add Input** và gắn dataset. Gói này có xác nhận đúng phạm vi, không dùng ZIP Colab. Notebook chấp nhận ZIP nguyên hoặc nội dung Kaggle đã giải nén.
+2. Chọn **Session options → Accelerator → GPU**, giữ Internet tắt nếu không cần. Chọn **Save Version → Save & Run All** để có bản chạy kèm output. Xem [tài liệu Kaggle về notebook và phiên bản](https://www.kaggle.com/docs/notebooks#notebook-versions-and-containers). Hàng đợi và quyền bật GPU phụ thuộc tài khoản.
+3. Lấy `a2-kieu-1911-run-01/summary.json` từ tab **Output** của version đã hoàn tất. Checkpoint nằm dưới cùng thư mục. `/kaggle/working` không phải Drive: phiên mới chỉ resume được nếu checkpoint đã được lưu hoặc tải ra. Với output Kaggle đã lưu, gắn qua **Add Input** và trỏ `RESUME_INPUT` tới thư mục lần chạy trong `/kaggle/input`, giữ cùng gói và môi trường. Không dùng checkpoint dở của Colab.
+
+Khi dùng CLI trong Kaggle, truyền `--platform kaggle --device cuda` và chọn `--output` dưới `/kaggle/working`. Đừng công khai dataset, notebook, checkpoint hoặc tệp xác nhận.
+
+## 7. Kết quả validation A.2 trên Kaggle
+
+Nguồn kết quả: `summary.json` do người dùng gửi từ Kaggle, lưu nguyên byte ngoài Git tại `.cache/a2-kaggle/received-summary.json` (SHA-256 `ffa310617ab27c48d3b1f38d4716ab9c3ff2ecbd80ffb4ca3c9271e922d81ecd`). `data_id` khớp SHA-256 manifest ở mục 5.
+
+Mỗi seed huấn luyện riêng 5 epoch với 2 decoder block, `d_model=64`, 4 attention head, `d_ff=128`, batch size 16, AdamW với learning rate 0,001. Các seed dùng cùng một split train/validation; mỗi lượt chấm 10.368 ký tự đích (81 cửa sổ × 128 ký tự), gồm một đích `<UNK>`.
+
+| Seed | NLL validation (nat/ký tự) | PPL validation |
+|---:|---:|---:|
+| 41 | 2,326985 | 10,2470 |
+| 42 | 2,328789 | 10,2655 |
+| 43 | 2,321075 | 10,1866 |
+| 44 | 2,318854 | 10,1640 |
+| 45 | 2,313612 | 10,1109 |
+
+PPL validation **10,1948 ± 0,0628**, trung bình ± độ lệch chuẩn mẫu của 5 seed (mẫu số 4). Đây là độ biến thiên giữa các lần huấn luyện trên cùng split, không phải khoảng tin cậy hay đánh giá trên tập test độc lập. Đã tính lại `exp(NLL)` từng seed, trung bình và SD từ JSON, không chạy lại huấn luyện.
+
+Ảnh người dùng cung cấp xác nhận `Chay-A2-Kaggle` **Version #1 — Successful** với cấu hình phiên `GPU T4 x2`. Đây là cấu hình Kaggle hiển thị, không phải xác nhận mô hình đã dùng cả hai GPU. `summary.json` không chứa phiên bản PyTorch/CUDA hoặc checkpoint; lưu log và output của version trong kho riêng để tái lập.

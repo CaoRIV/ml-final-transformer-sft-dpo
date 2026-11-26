@@ -8,7 +8,7 @@ Hiện vật cục bộ, đã bị Git bỏ qua:
 
 - `data/review/admin-pilot-v1/qa.jsonl`: câu hỏi, đáp án, citation, nguồn gốc AI, trạng thái review và cờ rủi ro.
 - `data/review/admin-pilot-v1/source-spans.json`: trích đoạn nguyên văn đã chuẩn hóa NFC/khoảng trắng, locator, hash và liên kết phiên bản nguồn.
-- `data/review/admin-pilot-v1/review-sheet.md`: bản đọc dễ rà soát cho thành viên, đủ 20 câu/đáp án, trích đoạn, URL/locator/hash và cờ rủi ro; chưa có phiếu/nhãn con người. Dùng bản này cùng hướng dẫn chấm, không coi nội dung agent viết là review thủ công.
+- `data/review/admin-pilot-v1/manual-review-20-qa-v1.md`: phiếu rà nội dung của nhóm; xem kết luận ở bảng nhanh và đối chiếu ngày, mã người kiểm, phiên bản, tiêu chí ở mục chi tiết. `review-sheet.md` là bản đọc ban đầu, không phải một lượt kiểm khác.
 - `.cache/admin-source-audit/`: bản đọc nguồn và chính sách dùng để đối chiếu hash/trích đoạn.
 
 Sổ metadata được theo dõi trong repo: [source-ledger.json](source-ledger.json). Báo cáo không chứa nội dung QA hoặc trích đoạn: [admin-pilot-report.json](admin-pilot-report.json). Lý do giữ nguồn/candidate ngoài Git là chưa xác nhận quyền dùng/phân phối phần nội dung cụ thể; không chuyển chúng vào `data/samples/` khi gate chưa được giải quyết. Nếu nhận bản clone chỉ có repo mà không có các hiện vật riêng, script phải báo thiếu input, không tạo QA/snapshot thay thế.
@@ -20,7 +20,9 @@ Sổ metadata được theo dõi trong repo: [source-ledger.json](source-ledger.
 | QA biên soạn nghiên cứu | 20, mỗi họ thủ tục 4 QA |
 | Trích đoạn có vị trí trong snapshot | 21 |
 | Nguồn trong sổ kiểm chứng | 9, không đồng nghĩa 9 nguồn đã được duyệt |
-| QA được con người phê duyệt | **0** |
+| QA có kết luận rà nội dung vòng đầu | **20/20**: 18 “Chấp nhận”, 2 “Sửa câu hỏi” (001 và 004) |
+| Kết luận kiểm lại v2 | Hà xác nhận **2/2 chấp nhận nội dung, không cần sửa thêm**; không phải hai QA mới |
+| QA có trạng thái `human_review.status = approved` trong JSONL | **0**; kết luận nội dung không phải trạng thái phát hành |
 | QA đủ điều kiện huấn luyện | **0** |
 | Câu hỏi khảo sát / cặp DPO / nhãn ưu tiên | **Chưa có** |
 
@@ -52,8 +54,8 @@ python scripts/validate_admin_pilot.py --require-training-ready
 
 1. Mở QA nội bộ cùng đúng snapshot/URL/locator. Đọc [kết quả kiểm nguồn](source-audit.md) trước, đặc biệt khác biệt thời hạn trích lục và thiếu biểu lệ phí Hà Nội.
 2. Rà soát nghiên cứu có thể ghi `uncertain`/lỗi khi nguồn chưa đủ; không phê duyệt dữ liệu dùng cho huấn luyện trước khi giải quyết quyền và phiên bản.
-3. Dùng [phiếu kiểm QA](annotation-guide.md) cho từng QA của pilot. Mục tiêu nội bộ kiểm thủ công toàn bộ pilot, không tính kết quả agent thay cho người review.
-4. Ghi reviewer, thời điểm, phiên bản, kết quả từng tiêu chí và lý do. Không đánh dấu `approved` chỉ vì script đạt hoặc citation tồn tại.
+3. Dùng phiếu `manual-review-20-qa-v1.md` và [quy tắc kiểm](annotation-guide.md). Bảng nhanh ghi kết luận nội dung; dùng mục chi tiết để bổ sung các tiêu chí còn thiếu cho cùng lượt kiểm. Không sao chép nhận xét agent hoặc kết quả kiểm tự động vào kết luận của thành viên.
+4. Hà xác nhận cả 001 và 004 v2 được chấp nhận về nội dung. Kết luận đã lưu riêng tại `data/review/admin-pilot-v1/manual-review-PILOT-001-004-v2.md`; không sửa thêm hoặc kiểm lại cả 20 câu. Đây không phải phê duyệt phát hành.
 5. Nếu đổi đáp án, nguồn hay trích đoạn, tạo phiên bản mới và chạy lại kiểm. Không sửa nguồn để làm trích đoạn cũ khớp.
 6. Chỉ sau các gate nguồn/quyền, review và split mới xem xét phát hành; không tự chuyển 20 QA này thành `USER_TEST`. Chưa dùng chúng sinh cặp DPO khi chưa có checkpoint SFT thật.
 

@@ -14,15 +14,16 @@ Git ban đầu sạch trên nhánh `main`, có upstream `origin/main`; remote c�
 
 - Đề tài, ứng dụng, ưu tiên tuần 1; không triển khai PPO hoặc RAG ở giai đoạn này.
 - Hai nhánh: Transformer ký tự tự cài đặt và tinh chỉnh mô hình tiền huấn luyện tiếng Việt 0,5–3B.
-- Laptop không có GPU đủ mạnh; huấn luyện dự kiến ở Colab T4. Kết quả T4 do người dùng báo, không phải agent đo.
+- Laptop không có GPU đủ mạnh. A.2 đã chạy trên Kaggle sau khi Colab không chạy được theo thông tin người dùng; chưa chốt môi trường cho phần D.
 - Giữ code/tài liệu/cấu hình trong một repo; dữ liệu riêng và trọng số nặng không vào Git. Chỉ push sau yêu cầu rõ.
 - Theo yêu cầu gốc: A20/B25/C15/D30, báo cáo/tái lập/bảo vệ10; báo cáo cuối LaTeX25–40 trang. Các ngưỡng dữ liệu, kiểm định và yêu cầu đánh giá nằm trong bảng đối chiếu, không được ngầm giảm.
+- Trong mọi phase, đối chiếu từng đầu việc và tiêu chí hoàn thành với PDF đề gốc (mục I–II, Đề tài 9 tr. 18–19). Kế hoạch, tài liệu tham khảo và ví dụ minh họa không thay yêu cầu hoặc đầu vào chính thức; ghi riêng giả định và các yêu cầu chưa có bằng chứng.
 - Người dùng đã đồng ý phương án dữ liệu: Hà Nội, hộ tịch–chứng thực; Truyện Kiều cho mô hình ký tự; khảo sát sinh viên/người thân và hai người chấm độc lập là Hà Mạnh Thế, Trần Duy Hưng, với Cao Văn Hà phân xử sau khi khóa nhãn. Chấp thuận phương án không xác nhận đã có dữ liệu, sự đồng ý của người khảo sát hoặc quyền dùng nguồn; các số lượng khảo sát/sinh cặp là mục tiêu vận hành, chưa đo.
 - Cả nhóm cùng tham gia A–D, không giao cố định theo phần. Thế và Hưng luân phiên rà soát các đầu việc do Hà thực hiện chính. Việc luân phiên không áp dụng cho hai nhãn DPO độc lập.
 
 ## Đề xuất kỹ thuật, chưa phải phê duyệt của người dùng
 
-- Qwen2.5-1.5B-Instruct là ứng viên, chưa chốt license/revision/tokenizer/config. Ưu tiên pilot QLoRA, không hứa vừa VRAM hay thời gian.
+- [D.3](../../README.md#d3--chuẩn-bị-sft-trên-kaggle) cố định Qwen2.5-1.5B-Instruct và revision của C.3 làm cấu hình **thử pilot**, chưa phải lựa chọn cuối cho tập chính. Dùng QLoRA trên Q/V; chưa chạy GPU hay đo VRAM.
 - Dùng DPO loss tự cài đặt ở A để so sánh loss/gradient trên logprob minibatch thật của D; không chỉ so sánh số giả rồi coi đã tích hợp.
 - Đề cương khoảng5–7 trang, kế hoạch dữ liệu3–5 trang sau dàn trang; chưa đo số trang Markdown. Mẫu5–10 thủ tục và20–50 QA được kiểm nguồn là mốc nội bộ, chưa thu thập.
 
@@ -31,13 +32,13 @@ Git ban đầu sạch trên nhánh `main`, có upstream `origin/main`; remote c�
 | Vấn đề | Cần làm | Ảnh hưởng |
 |---|---|---|
 | Phần I nói 2 tuần, phần II có tuần 3 | Theo hạn hoàn thành 01/12 Hà cung cấp; hỏi giảng viên cách nộp và yêu cầu tại buổi vấn đáp | Lịch bàn giao và nộp |
-| Nguồn hiện hành và quyền dùng | Đã kiểm 9 nguồn/5 họ thủ tục, robots/terms và lưu hash; còn khác biệt thời hạn trích lục, quyết định/biểu phí hoặc nguồn xác nhận thiếu | Chưa được phát hành/huấn luyện từ pilot |
+| Nguồn hiện hành và quyền dùng | [Rà D.1](../data/source-audit.md): có bản 1818/1852, 2163, biểu lệ phí 98 và căn cứ sử dụng chính văn theo Điều 15 Luật SHTT; còn kiểm phạm vi triển khai Hà Nội theo kênh | Có thể soạn QA từ đoạn chính văn đã xác minh; 9 snapshot pilot chưa dùng để train/phân phối |
 | Vận hành khảo sát và chấm | Đã soạn consent/survey/privacy/rubric; cần xác nhận hình thức đồng ý, kho riêng, kênh liên hệ, mốc rút và lịch trước mở | Chưa có người tham gia/consent/nhãn thật |
-| Model nền, quyền bản văn ký tự | Model nền còn mở; corpus Trương Vĩnh Ký 1911 đã chuẩn bị, người duyệt nhóm đã xác nhận dùng nội bộ A.2 và xử lý trên Colab | Chờ người dùng chạy trên Colab GPU |
-| Ngân sách Colab/Drive | Xác nhận khả năng dùng, đường dẫn lưu bền vững | 5 lần chạy và resume |
+| Mô hình và GPU phần D | Đã đối chiếu model card (1,54B, có tiếng Việt) và Apache-2.0 của revision pilot; còn chạy QLoRA trên release D.2, đo bộ nhớ, lưu bền vững và kiểm resume phiên mới | Chưa chốt cấu hình cuối hoặc kiểm chất lượng tiếng Việt trên tác vụ. PPL A.2 không thay phép đo D.3/D.4 |
+| Lưu trữ A.2 | Giữ Version #1 riêng tư; lưu log môi trường và đối chiếu checkpoint với cấu hình và metadata của lần chạy | Có PPL validation từ `summary.json`; chưa đối chiếu độc lập các checkpoint và log Kaggle |
 | Lịch rà và chấm | Chốt thời gian rà luân phiên theo đầu việc và thời gian chấm DPO độc lập của cả hai người | Tiến độ trước hạn hoàn thành |
-| Q,K,V bài C.1 | Xin dữ liệu chính thức giảng viên | Không tự tạo đáp án chính thức |
-| Logprob C.4 | Xác nhận bộ số giảng viên yêu cầu nếu có | Không gắn số minh họa thành đề gốc |
+| Q/K/V bài C.1 | Theo Hà, giảng viên không cung cấp ma trận. Đã chọn [bộ số minh họa](#c1--bộ-ma-trận-minh-họa) theo yêu cầu của Hà. | Ghi rõ nguồn tự sinh trong bài làm; không coi đây là bộ số chính thức. |
+| Logprob C.4 | Đã có lời giải tổng quát và ví dụ minh họa; thay đầu vào nếu giảng viên yêu cầu bộ số riêng | Không gắn số minh họa thành số đề gốc hoặc số đo trên checkpoint |
 | Quyền PDF và remote | Kiểm tra quyền chia sẻ, xác nhận remote trước push | Không công khai ngoài ý muốn |
 | Quy định AI | Giữ nguyên “Không dùng bản AI miễn phí”; nhóm xác nhận loại công cụ đang dùng | Liêm chính; không suy ra cấm Colab miễn phí |
 
@@ -51,15 +52,13 @@ Git ban đầu sạch trên nhánh `main`, có upstream `origin/main`; remote c�
 - Kiểm tra cấu trúc JSON notebook, cell ID duy nhất và output sạch: đạt. Chưa kiểm bằng schema `nbformat` vì thư viện này không có trong interpreter hiện tại.
 - Kiểm tra liên kết Markdown cục bộ trong 8 tài liệu: 7 liên kết, không có liên kết trỏ tới file thiếu tại thời điểm kiểm tra.
 
-## Tiến độ và bước tiếp nối
+## Thứ tự tiếp theo sau đối chiếu đề gốc và kế hoạch tuần 1
 
-Hồ sơ nháp, bảng đối chiếu, hướng dẫn repo và notebook môi trường là sản phẩm của phiên này; không phải bằng chứng đã hoàn thành A–D. Chưa có datasheet/model card/LaTeX cuối kỳ vì chưa tới giai đoạn và chưa có dữ liệu/mô hình.
+**Điểm lệch tiến độ:** kế hoạch đặt SFT pilot cuối tuần 1/đầu tuần 2 để tạo cặp DPO sớm. Hiện chưa có QA được phép dùng cho pilot SFT và chưa có checkpoint SFT, nên chưa thể mở chấm preference. C.3 có thể làm song song, không được chờ xong C mới xử lý đường găng dữ liệu D.
 
-1. Giải quyết khác biệt phiên bản/thời hạn nguồn, bổ sung quyết định/biểu phí và nguồn đối chiếu còn thiếu; nhóm review quyền và QA nháp trước khi mở rộng.
-2. Nhận bàn giao bộ biểu mẫu, chốt hình thức consent, kho riêng, kênh liên hệ, mốc rút và lịch; không phát hành khảo sát khi gate chưa đạt.
-3. Rà soát hồ sơ tuần 1 có kết quả audit; bổ sung trường/lớp và xác nhận mốc/định dạng nộp với giảng viên.
-4. Chạy notebook Colab, lưu báo cáo bền vững; chốt API/package theo tài liệu chính thức rồi pilot SFT và DPO riêng.
-5. SFT sơ bộ cần đủ sớm để sinh và chấm dữ liệu DPO trước mốc tuần2; nếu không đạt phải báo rủi ro và xin điều chỉnh, không giả dữ liệu hay âm thầm giảm yêu cầu.
+1. Làm **D.1 → D.2** trước: gỡ tắc hiệu lực/quyền nguồn trong đúng phạm vi Hà Nội–hộ tịch/chứng thực và lập split theo họ thủ tục. Song song chuẩn bị điều kiện khảo sát; chỉ thu dữ liệu người thật khi đủ consent và quy trình ẩn danh.
+2. Chỉ chạy **SFT pilot** khi có QA pilot hợp lệ. Khóa checkpoint, template và cấu hình sinh để Thế/Hưng chấm độc lập, khóa nhãn, đo đồng thuận rồi Hà mới phân xử. Tiếp tục mở rộng dữ liệu chính; giữ ≥2.000 QA có dẫn nguồn, ≥20% kiểm thủ công, ≥500 cặp từ SFT có hai nhãn độc lập và test khảo sát tách biệt. Báo rủi ro theo [lịch bàn giao](defense-plan-2026-12-03.md); không tự giảm ngưỡng hay đổi hạn.
+3. Song song: nhóm rà A.1–A.4 và sáu chứng minh B, lưu log/checkpoint A.2; dùng bộ số minh họa đã ghi nguồn cho C.1 và C.4. Giữ [ma trận yêu cầu](requirements-matrix.md) làm tiêu chí nghiệm thu, bao gồm cầu nối A–D trên minibatch thật, so ba hệ trên test khóa và thảo luận RAG trong D.5 — không triển khai RAG/PPO.
 
 ## Bàn giao bản LaTeX/PDF tuần 1
 
@@ -109,6 +108,8 @@ Hồ sơ nháp, bảng đối chiếu, hướng dẫn repo và notebook môi tr�
 - Sau lượt Hà rà lại, vẫn là **20 QA riêng biệt**: 18 “Chấp nhận”, 2 “Sửa câu hỏi” (001, 004), không còn “Chưa rõ”. 006 đã đổi kết luận; 003 đã ghi phạm vi phụ lục B.2; 019 đã giải thích cả hai nhánh nhưng khi sửa QA cần mở rộng trích đoạn tương ứng. Còn lệch căn cứ ở 002 (ghi cư trú thay vì nhân thân), 004 (chưa đối chiếu SPAN-021 để kết luận về thời hạn ở Hà Nội). Thông tin lượt kiểm ở đầu phiếu vẫn trống; không đổi trạng thái huấn luyện.
 - Bản phiếu tiếp theo đã ghi mã người kiểm và ngày/tháng trong từng mục chi tiết: RV01 kiểm 8 câu, RV02 kiểm 6, RV03 kiểm 6 (22–24/11); cả 20 dòng bảng nhanh có giờ, kết luận và lý do. Không cần chép lại mã/ngày lên đầu cho từng người. Chưa thấy năm và múi giờ của các lượt kiểm được ghi ở phần thông tin chung. 002 đã bổ sung điều kiện về nhân thân nhưng còn câu về cư trú; 004 đã dẫn cả hai span nhưng kết luận “chắc chắn” chưa phù hợp với nguồn Hà Nội ghi thời hạn dự kiến. Không thay đổi kết luận của thành viên.
 - Hà xác nhận tất cả lượt kiểm thuộc năm 2026, múi giờ UTC+07:00; đã ghi chung ở đầu phiếu. Lý do của 002 nay chỉ nói về thông tin nhân thân được tự điền; 004 đã phân biệt thời hạn nguồn quốc gia với thời gian dự kiến ở Hà Nội, không còn hẹn chắc. Đây là cập nhật phiếu rà nội dung, không phải duyệt phiên bản QA sửa đổi hoặc phát hành dữ liệu.
+- Đối chiếu bản phiếu hiện tại: **20/20** có kết luận nội dung (**18 “Chấp nhận”, 2 “Sửa câu hỏi”**: 001 và 004), năm 2026, UTC+07:00. Cả 20 record JSONL vẫn `pending`/`unassigned`, không bật `training_allowed`; hash của JSONL và spans vẫn khớp báo cáo kiểm cấu trúc. Không quy đổi “Chấp nhận” nội dung thành `approved` hay quota kiểm thủ công của tập SFT chính.
+- Hà xác nhận `PILOT-001` và `PILOT-004` v2 đều được chấp nhận về nội dung, không cần sửa thêm. Đã lưu hai kết luận do Hà cung cấp vào phiếu v2; chưa điền mã, ngày/giờ và chi tiết đối chiếu của lượt v2. Tổng vẫn là 20 QA khác nhau. Không đổi trạng thái huấn luyện.
 
 ## A.1 — bằng chứng triển khai trên CPU
 
@@ -127,7 +128,7 @@ Hồ sơ nháp, bảng đối chiếu, hướng dẫn repo và notebook môi tr�
 - [Lớp LoRALinear](../../src/lora.py), [notebook dẫn xuất](../../notebooks/03_lora_linear.ipynb) và [bộ kiểm](../../tests/test_lora.py). AI chạy các ô code tuần tự trong tiến trình sạch của môi trường A.1: Python 3.12.0, PyTorch 2.15.0+cpu, float64, seed 42. Không cài thêm gói. Có cảnh báo thiếu NumPy; các phép tính chỉ dùng tensor PyTorch.
 - Với k=12, d=8, r=2, alpha=6: 40 tham số học, 96 trọng số nền và 8 phần tử bias đóng băng. Sau hai bước SGD trên tensor minh họa, cập nhật có hạng 2; đầu ra khác lớp nền tối đa 0,334292. Sai khác lớn nhất trước/sau gộp là 4,44 × 10⁻¹⁶. Cả 3 kiểm thử đạt, gồm lớp có/không có bias, nhiều rank, gradient và đối chiếu `linear` với trọng số gộp tường minh. Không phải kết quả tinh chỉnh phần D hoặc đo tốc độ/VRAM.
 
-## A.2 — đường huấn luyện đã kiểm, chưa có PPL trên Truyện Kiều
+## A.2 — đã có PPL validation do nhóm chạy
 
 - [Notebook A.2](../../notebooks/04_char_lm.ipynb) dùng [LM ký tự](../../src/char_lm.py) với decoder A.1; [lệnh huấn luyện](../../scripts/train_char_lm.py) chạy độc lập seed 41–45, tổng hợp PPL trung bình và SD mẫu. Mỗi seed lưu cấu hình, danh tính dữ liệu, trạng thái model/optimizer/RNG và kết quả validation vào checkpoint cuối từng epoch.
 - AI đã chạy tuần tự các ô notebook từ tiến trình sạch: Python 3.12.0, PyTorch 2.15.0+cpu, CUDA không khả dụng. `abc → bcd`: NLL tính từ logits và cross-entropy đều là 1,967676. Trên **chuỗi minh họa tự tạo**, 2 epoch, 9 target validation mỗi seed: PPL trung bình 3,7951 ± 0,5770 (SD mẫu, 5 seed). Không phải kết quả của văn bản tiếng Việt được chọn.
@@ -140,3 +141,46 @@ Hồ sơ nháp, bảng đối chiếu, hướng dẫn repo và notebook môi tr�
 - Loader đã kiểm hash, split, vocab và cửa sổ của bộ thật; từ chối manifest audit `206607` và ngăn CLI huấn luyện khi chưa có `rights-1911.json` khớp manifest. Không huấn luyện thật, tạo xác nhận thay nhóm hay tải dữ liệu lên Colab. Xem [hướng dẫn bàn giao](../data/char-corpus.md#4-chuẩn-bị-cục-bộ-và-xác-nhận-quyền).
 - Đã chạy các ô notebook theo thứ tự trên CPU và **11 kiểm thử đạt** (7 LM, 3 trích xuất, 1 redirect). Bài chạy 5 seed trong notebook vẫn chỉ là minh họa.
 - Người dùng đã xác nhận phạm vi huấn luyện nội bộ và xử lý Colab. AI chỉ ghi thông tin người dùng cung cấp vào xác nhận riêng gắn SHA-256 của manifest, đóng gói bản chạy tại `.cache/a2-colab/`; đã chạy ô xác minh để giải nén và kiểm dữ liệu/quyền trên CPU. Notebook dừng đúng khi không có CUDA; chưa tải lên Drive, chạy GPU hay có PPL chính thức.
+- Người dùng báo Colab không chạy được và đã xác nhận riêng phạm vi Kaggle. Gói cục bộ `.cache/a2-kaggle/` dùng cùng manifest và cấu hình 5 seed; không mang checkpoint Colab. AI đã kiểm nạp gói dạng ZIP và đã giải nén trên CPU (732/81 cửa sổ); CLI Kaggle từ chối xác nhận chỉ dành cho Colab.
+- Người dùng gửi `summary.json` từ Kaggle. AI đối chiếu manifest, cấu hình, 5 seed độc lập, 10.368 ký tự đích validation mỗi seed và tính lại toàn bộ chỉ số. [Kết quả A.2](../data/char-corpus.md#7-kết-quả-validation-a2-trên-kaggle): PPL **10,1948 ± 0,0628** (SD mẫu). Chưa đối chiếu log môi trường hoặc checkpoint Kaggle.
+- Người dùng xác nhận output Kaggle đầy đủ. Ảnh đầu hiển thị `summary.json`, các thư mục `seed-41` đến `seed-45` và checkpoint epoch 1–5 của `seed-41`; bốn thư mục còn lại đang thu gọn. Ảnh tiếp theo hiển thị notebook `Chay-A2-Kaggle`, **Version #1 — Successful**, với cấu hình phiên `GPU T4 x2`. Chưa đối chiếu log PyTorch/CUDA, số GPU thực dùng hoặc nội dung checkpoint của version. Không cần chạy lại để lấy PPL.
+
+## C.1 — Bộ ma trận minh họa
+
+Theo Hà, giảng viên không cung cấp Q/K/V. Bộ sau được sinh ngẫu nhiên để nhóm tính tay, **không phải dữ liệu giảng viên cấp** (đề gốc tr. 19). Dùng 3 token, một head, $d_k=d_v=2$. Khởi tạo `rng = random.Random(577893521)` một lần trong Python; lấy `rng.randint(-2, 2)` theo hàng, lần lượt cho Q, K, V:
+
+| Token | Q | K | V |
+|---|---|---|---|
+| 1 | (−2, 0) | (−1, −1) | (−1, 0) |
+| 2 | (−1, −2) | (2, 1) | (−1, 1) |
+| 3 | (1, −2) | (0, 2) | (0, −1) |
+
+Mốc đối chiếu: $QK^\top$ có ba hàng `(2, −4, 0)`, `(3, −4, −4)`, `(1, 0, −4)`. Sau khi chia cho $\sqrt{2}$, che các cột $j>i$ trước softmax theo hàng rồi nhân V, đầu ra làm tròn 6 chữ số là `(−1, 0)`, `(−1, 0.007035)`, `(−0.980855, 0.304771)`. Đã đối chiếu phép tính vô hướng với A.1 trên CPU, float64.
+
+[Lời giải C.1 từng token](../../notebooks/08_causal_attention_example.ipynb) trình bày ma trận điểm sau scale/mask, cách chuẩn hóa từng hàng và tổng có trọng số trên V. Đã chạy notebook trên CPU, xác nhận đúng bộ số theo seed và đối chiếu cả trọng số attention lẫn đầu ra với A.1. Sai khác tuyệt đối lớn nhất của đầu ra so với biểu thức tính tay: $1,30\times10^{-17}$.
+
+## C.2 — số tham số và phép tính một block
+
+- [Lời giải và kiểm CPU](../../notebooks/05_transformer_block_cost.ipynb), theo đề tr. 19, dùng đúng `DecoderBlock` A.1. Một khối có $4d^2+2df+9d+f$ tham số; một forward dense trên một chuỗi dùng $4nd^2+2ndf+2n^2d$ MAC ở các tích ma trận, với $d=d_{model}$, $f=d_{ff}$. Mask không giảm kích thước tích dense.
+- AI chạy hai ô code tuần tự với Python 3.12.0, PyTorch 2.15.0+cpu. `numel()` khớp từng lớp và tổng; `aten::addmm` và `aten::bmm` khớp công thức ở $n=64,128,256$ và khi đổi 4 sang 8 head mà giữ $d$ cố định. Ở cấu hình A.2 ($d=64$, $f=128$, $h=4$, $n=128$): **33.472 tham số, 6.291.456 MAC = 12.582.912 FLOP matmul**. Không phải FLOP toàn mô hình, chi phí backward hay đo thời gian thực tế.
+
+## C.3 — tham số LoRA Q/V và bộ nhớ 4 bit
+
+- [Notebook C.3](../../notebooks/06_lora_qlora_cost.ipynb) dùng Qwen2.5-1.5B-Instruct revision `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`. Do GQA, V chỉ có 256 chiều ra, Q có 1.536. Tổng tham số học cả 28 khối là `136192 × r`; `numel()` của `LoRALinear` A.3 trên tensor meta khớp cho cả ba rank. Tổng tham số nền trước lượng tử hóa khớp metadata safetensors: 1.543.714.304.
+- Đã chạy tuần tự bằng Python 3.12.0, PyTorch 2.15.0+cpu. Kịch bản không offload, NF4 + double quantization, phần nền còn lại 16 bit, adapter/grad/hai moment FP32: tổng thường trú lần lượt 1,0726 / 1,0807 / 1,0969 GiB. Với microbatch 1, chuỗi 512, cộng các đầu vào khối được checkpoint và hai tensor FP32 cỡ logits: 1,6932 / 1,7013 / 1,7175 GiB. Không phải peak thực đo hoặc bằng chứng T4 chạy vừa; không huấn luyện hay chọn mô hình D.3.
+
+## C.4 — loss và gradient của một cặp DPO
+
+- [Notebook C.4](../../notebooks/07_dpo_loss_gradient.ipynb) dẫn từ logit B.5 đến hai gradient theo log-xác suất policy và công thức gradient theo tham số mô hình. Với **số minh họa**, tỷ số xác suất chosen/rejected là 2 ở policy và 4 ở reference. Tại β = 1: margin = −ln 2, loss = ln 3 và gradient theo hai log-xác suất policy là (−2/3, +2/3). PDF tr. 19 không kèm bộ số.
+- Đã chạy toàn bộ ô bằng Python 3.12.0, PyTorch 2.15.0+cpu, float64. So công thức vô hướng với A.4/autograd cho margin âm, bằng 0 và dương ở β = 0,1; 1; 2; 8. Reference không nhận gradient. Đây là bài tính, không huấn luyện hay chọn β cho D.4.
+
+## D.1 — đối chiếu nguồn ngày 25/11/2026
+
+- Đã xác minh quyết định và phụ lục 1818/1852 của Hà Nội, mã xác nhận thông tin hộ tịch `2.002516`, biểu lệ phí 98/2026 và phụ lục trích lục theo 2163/QĐ-BTP. B.3 của 2163 khớp thời hạn nguồn quốc gia; chưa xác nhận văn bản triển khai tại Hà Nội hoặc việc thay thế 1818. [Bảng theo từng thủ tục](../data/source-audit.md) ghi các mức đã xác minh và giới hạn.
+- Điều 15 khoản 2 Luật SHTT cho căn cứ dùng phần văn bản hành chính/quy phạm chính thức để soạn QA; không suy quyền từ việc trang web công khai. Giữ dữ liệu/pilot ngoài Git, không đổi nhãn hoặc bật quyền train/phân phối của 9 nguồn cũ. Bước D.2 bắt đầu bằng gắn từng mệnh đề với đoạn của văn bản đã kiểm, không chuyển nguyên trạng pilot vào train.
+
+## D.2 — pilot chính văn và cổng phát hành
+
+- Đã tạo `d2-official-seed-v2`: 24 QA ứng viên, gồm 18 train (ba họ) và 6 validation (xác nhận hộ tịch); chứng thực bản sao là `holdout`, không có QA. Python CPU đối chiếu 24/24 mệnh đề với 23 đoạn từ 7 chứng cứ chính văn theo SHA-256; 0 cảnh báo gần trùng từ vựng. Đây là kiểm tự động, không phải 24 lượt kiểm thủ công. Giữ kết quả rà 20/20 của `admin-pilot-v1` nguyên trạng.
+- Cổng phát hành pilot chặn đúng ở 0/18 phiếu train, 0/6 validation được duyệt và thiếu biên bản nhóm. Chạy `--stage main` trên cùng nguồn lấy mẫu 7 train + 2 validation theo tầng và chặn tại 18/2.000 train. Không có train/validation dùng huấn luyện, `USER_TEST` hoặc kết quả D.3. Đường dẫn phiếu, quy trình thao tác và hồ sơ giới hạn: [D.2](../data/README.md#triển-khai-d2).
+- Công cụ evaluator chặn đầu vào khảo sát trong repo, dữ liệu thiếu, câu trùng sau chuẩn hóa và họ thủ tục lẫn SFT. Chỉ nhóm có thể xác nhận G-01–G-06, tổ chức khảo sát có đồng ý bằng văn bản, kiểm ẩn danh và khóa test riêng. Tập chính phải mở rộng nguồn hợp lệ và soạn QA khác nghĩa, sau đó đủ ≥2.000 train và ≥20% review từng split; không suy từ QA đã đếm ở pilot ra chỉ tiêu đã đạt.

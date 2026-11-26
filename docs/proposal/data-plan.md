@@ -1,6 +1,6 @@
 # Kế hoạch dữ liệu bản nháp — Trợ lý hỏi đáp thủ tục hành chính công
 
-> **Trạng thái:** kế hoạch tuần 1, đã có sổ kiểm nguồn, 20 QA nháp nghiên cứu, audit kỹ thuật Truyện Kiều và bộ biểu mẫu vận hành. **Chưa có QA được con người phê duyệt, khảo sát thật hoặc dữ liệu DPO.** Những số đo audit và kiểm tra cấu trúc không chứng minh quyền dùng nguồn hay mức sẵn sàng huấn luyện; đây chưa phải datasheet của một release đã được chấp nhận.
+> **Trạng thái:** bản nháp kế hoạch tuần 1 có sổ nguồn, pilot QA, hồ sơ corpus A.2 và biểu mẫu vận hành. Pilot có 20/20 kết luận rà nội dung nhưng chưa có QA được phát hành để huấn luyện; chưa có khảo sát thật hoặc dữ liệu DPO. Đây không phải datasheet của một release đã được chấp nhận.
 
 ## 1. Mục đích, ranh giới và quyết định tiền điều kiện
 
@@ -10,7 +10,7 @@ Bộ dữ liệu phục vụ ba mục tiêu tách biệt:
 2. SFT trợ lý hỏi đáp thủ tục bằng câu hỏi–đáp có citation tới đoạn nguồn;
 3. DPO từ cặp câu trả lời SFT cho cùng prompt, do tối thiểu hai người chấm độc lập đánh giá; và test tách biệt bằng câu hỏi người dùng thật nếu có consent.
 
-Đề tài không dùng PPO hay RAG. Không coi mô hình là nguồn pháp lý, không thu hồ sơ cá nhân, không thu thông tin định danh để “cá nhân hóa” câu trả lời. Dataset chỉ nhằm kiểm chứng nghiên cứu trong phạm vi thủ tục đã công bố, không thay thế cổng/cơ quan có thẩm quyền.
+Đề tài không triển khai PPO hay RAG; báo cáo D.5 thảo luận giới hạn của tinh chỉnh với tri thức thay đổi nhanh và RAG như hướng mở rộng. Không coi mô hình là nguồn pháp lý, không thu hồ sơ cá nhân, không thu thông tin định danh để “cá nhân hóa” câu trả lời. Dataset chỉ nhằm kiểm chứng nghiên cứu trong phạm vi thủ tục đã công bố, không thay thế cổng/cơ quan có thẩm quyền.
 
 Trước bất kỳ thu thập tự động hoặc khảo sát nào, nhóm phải kiểm tra ba điều kiện vận hành:
 
@@ -18,7 +18,7 @@ Trước bất kỳ thu thập tự động hoặc khảo sát nào, nhóm phả
 2. **Có thể tiếp cận người khảo sát với đồng ý bằng văn bản hay không?** Kế hoạch khảo sát đã được chấp thuận, nhưng chỉ gọi là test người dùng thật khi thực sự thu thập hợp lệ.
 3. **Lịch chấm độc lập và phân xử thế nào?** Phương án Thế/Hưng chấm độc lập, Hà phân xử đã được đồng ý; cần hướng dẫn chấm và bố trí thời gian.
 
-Người dùng đã đồng ý phương án Hà Nội/hộ tịch–chứng thực, Truyện Kiều cho mô hình ký tự, khảo sát sinh viên/người thân và bố trí Hà Mạnh Thế–Trần Duy Hưng chấm độc lập, Cao Văn Hà phân xử. Đây là chấp thuận kế hoạch, không phải bằng chứng đã có người tham gia, nhãn hay quyền thu thập. Nhóm gồm Cao Văn Hà (trưởng nhóm, tổng hợp và nộp bài), Hà Mạnh Thế, Trần Duy Hưng. Tài khoản/Drive, ngân sách, ngày nộp và mô hình nền cuối vẫn mở; cần cụ thể hóa lịch chấm và quy trình đồng ý trước khảo sát.
+Người dùng đã đồng ý phương án Hà Nội/hộ tịch–chứng thực, Truyện Kiều cho mô hình ký tự, khảo sát sinh viên/người thân và bố trí Hà Mạnh Thế–Trần Duy Hưng chấm độc lập, Cao Văn Hà phân xử. Đây là chấp thuận kế hoạch, không phải bằng chứng đã có người tham gia, nhãn hay quyền thu thập D. Nhóm gồm Cao Văn Hà (trưởng nhóm, tổng hợp và nộp bài), Hà Mạnh Thế, Trần Duy Hưng. Theo lịch Hà cung cấp, hạn hoàn thành là 23h59 ngày 01/12/2026, vấn đáp ngày 03/12/2026; cách nộp cần xác nhận với giảng viên. Mô hình, GPU và nơi lưu phần D chưa chốt.
 
 ### 1.1. Phương án dữ liệu đã được đồng ý
 
@@ -138,7 +138,7 @@ QA sinh bán tự động chỉ được chấp nhận sau review theo citation.
 |---|---|---|
 | `pair_id` | UUID | Khóa cặp ưu tiên |
 | `pair_version` | string | Phiên bản cặp/rubric |
-| `split` | `train`, `validation`, `test` | Tách validation DPO khỏi train; test chỉ khi thiết kế cho phép |
+| `split` | `train`, `validation` | Chỉ chia cặp ưu tiên DPO thành train/validation theo nhóm; chấm mù cuối trên `USER_TEST` là luồng riêng, không tạo `DPO_PAIR` từ test |
 | `qa_id` / `prompt_id` | FK | Cùng một prompt cho hai ứng viên |
 | `prompt_text` | text/hash | Prompt chính xác đã sinh; có thể tham chiếu nếu lặp |
 | `sft_checkpoint_id` | string/hash | Checkpoint sinh ứng viên |
@@ -185,9 +185,9 @@ Văn bản consent, thông tin liên hệ (nếu cần để vận hành khảo 
 1. Chốt domain/cơ quan/nhóm thủ tục; kiểm điều khoản, robots.txt, tần suất và phạm vi truy cập trước ingest.
 2. Lưu metadata `source_document`, bản/manifest hoặc hash; không sửa im lặng. Phân đoạn theo đề mục, Điều–Khoản, trang hoặc offset có thể tái xác định.
 3. Lập `source_span`; người kiểm xác nhận span có thể trả lời claim nào.
-4. Sinh/soạn QA theo template nhưng không vượt phạm vi span. Mỗi mệnh đề chính của đáp án phải liên kết span; nếu nguồn không đủ, đáp án phải giới hạn/từ chối thay vì suy luận.
+4. Phân bổ họ thủ tục vào split trước khi soạn hoặc sinh QA. Soạn QA theo template nhưng không vượt phạm vi span. Mỗi mệnh đề chính phải liên kết span; nếu nguồn không đủ, giới hạn đáp án hoặc từ chối.
 5. Kiểm citation thủ công với khối lượng $\lceil0{,}20N_{split}\rceil$ cho từng split SFT dùng cho train/validation; riêng 2.000 QA train tối thiểu là 400 record. Lưu kết quả review và sửa theo batch khi phát hiện lỗi chung.
-6. Khóa split, tạo manifest số lượng/hashes; chỉ sau đó chuẩn bị dữ liệu huấn luyện.
+6. Sau rà chất lượng và audit rò rỉ, khóa split hiện vật, tạo manifest số lượng/hashes rồi chuẩn bị dữ liệu huấn luyện.
 
 Nhóm không nên chờ đủ toàn bộ 2.000 QA mới thử pipeline. Cuối tuần 1 hoặc đầu tuần 2, sau khi có pilot đúng quyền và citation, chạy **SFT pilot sớm** để phát hiện lỗi tokenizer/template/citation/VRAM và để checkpoint SFT tạo ứng viên DPO. Pilot không được biến thành tuyên bố rằng 500 cặp DPO đã tồn tại.
 
@@ -278,8 +278,8 @@ Không có mục nào trong tài liệu này tuyên bố rằng 2.000 QA, 500 c�
 | Hiện vật | Đã thực hiện | Chưa được suy ra |
 |---|---|---|
 | Sổ nguồn, robots/terms và bản đọc có hash | 9 nguồn, 5 họ thủ tục; ghi rõ thiếu nguồn/khác biệt phiên bản | Không có nghĩa tất cả nguồn còn hiệu lực, được phép train/phân phối |
-| Pilot QA | 20 QA agent-authored, 21 trích đoạn; kiểm cấu trúc và cổng chặn phát hành | Không phải 20 QA được con người kiểm định, không phải khảo sát thật |
-| Truyện Kiều | Chạy audit thực, chia tập/từ vựng/cửa sổ có kiểm chứng | Không phải huấn luyện, chưa có validation PPL hoặc quyền phát hành |
+| Pilot QA | 20 QA agent-authored, 21 trích đoạn; kiểm cấu trúc; phiếu người rà ghi 18 “Chấp nhận”, 2 “Sửa câu hỏi” | Không thay kiểm thủ công tập chính, không phải khảo sát; 0 bản ghi `approved`, 0 QA đủ điều kiện train |
+| Truyện Kiều, bản Trương Vĩnh Ký 1911 | Nhóm chạy A.2 trên Kaggle riêng tư; `summary.json` có PPL validation 10,1948 ± 0,0628 (SD mẫu, 5 seed) | Không phải số đo VRAM phần D, chưa đối chiếu log/checkpoint Kaggle và không suy ra quyền phân phối lại |
 | Consent/khảo sát/chấm | Có văn bản mẫu, quy trình ẩn danh và phiếu/rubric | Chưa có xác nhận vận hành, consent, người tham gia hoặc nhãn thật |
 
-Ưu tiên bàn giao cho nhóm: rà soát nguồn và khác biệt thời hạn, bổ sung quyết định/biểu phí còn thiếu, review quyền và QA; xác nhận hình thức consent, lịch, lưu trữ, thông tin trường/lớp và mốc giảng viên. Chỉ sau những gate phù hợp mới tăng dữ liệu và pilot SFT; không đánh dấu A–D hoặc bộ dữ liệu tuần 2 hoàn thành vì đã có kế hoạch và script.
+Ưu tiên trước mắt: giải quyết hiệu lực/quyền nguồn D, khác biệt thời hạn và biểu phí; sửa và kiểm lại hai QA bị gắn cờ; chốt hình thức consent, lịch và kho riêng. SFT pilot trước mốc dữ liệu tuần 2 đang thiếu đầu vào; chỉ chạy khi QA đủ điều kiện và báo rủi ro nếu không kịp, không đánh dấu hoàn thành dựa trên kế hoạch.

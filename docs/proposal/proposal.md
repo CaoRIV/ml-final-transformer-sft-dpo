@@ -24,13 +24,13 @@ Mục tiêu đánh giá nội bộ có thể hướng tới mức 85–90/100, n
 
 ### 1.2. Phạm vi có chủ ý hẹp
 
-Người dùng đã đồng ý chọn **Hà Nội**, tập trung **hộ tịch–chứng thực**, hướng tới sinh viên, người trẻ và gia đình. Vòng nghiên cứu đầu đã kiểm 9 nguồn cho 5 họ thủ tục ứng viên và chuẩn bị 20 QA nháp có dẫn đoạn nguồn. Chưa QA nào được con người phê duyệt hoặc đủ điều kiện huấn luyện; chi tiết nằm trong sổ kiểm nguồn và báo cáo pilot. Mục tiêu 5–10 thủ tục/20–50 QA là mốc thăm dò nội bộ, không phải ngưỡng bắt buộc của giảng viên.
+Người dùng đã đồng ý chọn **Hà Nội**, tập trung **hộ tịch–chứng thực**, hướng tới sinh viên, người trẻ và gia đình. Vòng nghiên cứu đầu đã kiểm 9 nguồn cho 5 họ thủ tục ứng viên. Cả 20 QA nháp đã có kết luận rà nội dung, nhưng chưa có bản ghi được duyệt phát hành để huấn luyện. Mục tiêu 5–10 thủ tục/20–50 QA là mốc thăm dò nội bộ, không phải ngưỡng bắt buộc của giảng viên.
 
 Trong phạm vi đã chọn, sản phẩm tập trung vào hỏi đáp một lượt có trích dẫn, dựa trên mô tả thủ tục và văn bản/cổng công khai được phép sử dụng. Sản phẩm không thay thế tư vấn pháp lý, không đưa ra quyết định hành chính, không xử lý hồ sơ thật và không yêu cầu người dùng cung cấp dữ liệu cá nhân.
 
 Ngoài phạm vi của đề cương này:
 
-- Không triển khai RAG; RAG chỉ được nhắc như hướng mở rộng mà đề bài đã gợi ý cho Đề tài 11.
+- Không triển khai RAG. Báo cáo D.5 phải thảo luận giới hạn của tinh chỉnh đối với thủ tục thay đổi nhanh và RAG như hướng mở rộng (đề tr. 19).
 - Không triển khai PPO hoặc bất kỳ vòng học tăng cường trực tuyến nào; nhánh ưu tiên dùng DPO ngoại tuyến theo đề bài.
 - Không khẳng định cập nhật tri thức thời gian thực. Mỗi câu trả lời phải mang theo căn cứ/phiên bản nguồn đã biết; thủ tục thay đổi cần thu thập lại và gán phiên bản mới.
 
@@ -48,15 +48,15 @@ Nhánh này phục vụ yêu cầu “từ đầu”, không dùng mô-đun atte
 
 Mô hình ký tự nhỏ chỉ dùng văn bản tiếng Việt thuộc phạm vi công cộng hoặc giấy phép mở đã được kiểm tra. Nhóm sẽ tách train/validation riêng và báo cáo PPL validation. Đây là bài kiểm chứng kiến trúc/phương pháp, không phải mô hình trợ lý Phần D và không được dùng văn bản hành chính chưa có quyền sử dụng.
 
-Đã audit kỹ thuật bản Truyện Kiều Wikisource revision `206607` trong kho cục bộ riêng: trích 3.254 dòng, chia tập liên tục, học từ vựng từ train và kiểm cửa sổ không vượt ranh giới. Đây là kiểm tra dữ liệu nghiên cứu, **không phải huấn luyện hoặc phê duyệt quyền dùng**. Trước huấn luyện phải hoàn tất review quyền của bản số hóa; không đưa corpus vào Git khi chưa được phép.
+Nhóm dùng *Truyện Kiều* bản Trương Vĩnh Ký 1911 (Wikisource revision `206466`, đối chiếu bản quét) và xác nhận phạm vi chạy nội bộ A.2 trên Kaggle. Kết quả validation: 10,1948 ± 0,0628 PPL (SD mẫu, 5 seed). Revision `206607` chỉ là audit lịch sử, không được dùng để huấn luyện. Không suy ra quyền phân phối lại corpus hoặc dùng dữ liệu này cho D.
 
 Cần kiểm chứng từng hạng mục có thể quan sát được: causal mask không lộ token tương lai; shape/head của attention đúng; tham số LoRA trainable bằng $r(d+k)$; hợp nhất LoRA bảo toàn đầu ra trong sai số số học; hàm DPO có dấu và gradient nhất quán với công thức. Các bài C.1–C.4, gồm C.4 về giá trị–gradient DPO và ảnh hưởng của $\beta$, sẽ được giải và dùng làm phép kiểm tra độc lập, không thay cho đánh giá ứng dụng.
 
 ### 2.2. Nhánh 2 — ứng dụng SFT rồi DPO cho Phần D
 
-Nhánh ứng dụng bắt đầu từ dữ liệu chỉ dẫn có trích dẫn và một mô hình nền mã nguồn mở hỗ trợ tiếng Việt. Quy trình dự kiến: khóa phiên bản nguồn và chia dữ liệu; SFT; sinh hai ứng viên trả lời từ checkpoint SFT cho mỗi prompt; hai người đánh giá độc lập chọn câu trả lời tốt hơn theo rubric; phân xử bất đồng; sau đó DPO với checkpoint SFT đóng băng làm mô hình tham chiếu.
+Nhánh ứng dụng bắt đầu từ dữ liệu chỉ dẫn có trích dẫn và một mô hình nền mã nguồn mở hỗ trợ tiếng Việt. Quy trình dự kiến: khóa bản nguồn và split; SFT; sinh hai ứng viên từ checkpoint SFT cho mỗi prompt; hai người chấm độc lập theo rubric; khóa nhãn và đo đồng thuận trước khi phân xử; sau đó DPO với checkpoint SFT đóng băng làm reference.
 
-**Qwen2.5-1.5B-Instruct** là một ứng viên, không phải lựa chọn cuối cùng. Lựa chọn mô hình sẽ phụ thuộc giấy phép dùng cho nghiên cứu, khả năng tiếng Việt, tokenizer, khả năng nạp với QLoRA và kết quả pilot. Người dùng đã cung cấp kết quả tự kiểm tra trong một phiên Colab trước: T4 15.360 MiB, `torch 2.14.1+cu130`, CUDA của PyTorch `13.0` và nhân ma trận CUDA thành công; agent chưa thực hiện phép đo GPU này và phiên mới có thể khác. Không coi đó là bảo đảm đủ VRAM: cần pilot SFT và pilot DPO riêng, với cách quản lý mô hình tham chiếu tương thích bộ nhớ. Checkpoint, manifest và trạng thái resume dự kiến lưu Drive nếu có quyền và đủ dung lượng; cần kiểm tra resume thực tế, không cam kết không gián đoạn.
+**Qwen2.5-1.5B-Instruct** là một ứng viên, không phải lựa chọn cuối cùng. Xác minh giấy phép nghiên cứu, hỗ trợ tiếng Việt, revision và khả năng nạp QLoRA trước khi chọn bằng validation. Cấu hình Colab từng được nhóm báo và Kaggle Version #1 của A.2 không phải phép đo bộ nhớ cho D. Kiểm GPU trong phiên mới, đo riêng SFT và DPO vì DPO có reference, lưu checkpoint/manifest bền vững và kiểm resume thực tế.
 
 SFT pilot phải xuất hiện sớm cuối tuần 1 hoặc đầu tuần 2 để có checkpoint tạo ứng viên cho dữ liệu DPO. Không được giả định đã có 500 cặp ưu tiên trước khi hai người chấm hoàn tất quy trình. Mục tiêu bảo thủ để khóa kế hoạch là đủ **2.000 QA train** và **500 preference pairs train**, cộng validation riêng; con số thực chỉ được báo sau khi thu thập, kiểm tra và phân chia.
 
@@ -140,7 +140,7 @@ Các mốc phản ánh quy định đề bài: tuần 1 nộp đề cương và 
 | 5 run vượt ngân sách | Không đáp ứng báo cáo tái lập | Dự trù 5 seed ngay từ thiết kế; nếu không đủ, xin điều chỉnh với giảng viên và ghi rõ, không đổi âm thầm hay chỉ dựa vào đồng thuận nội bộ |
 | Rò rỉ split/gần trùng | Test quá lạc quan | Nhóm theo thủ tục/nguồn, lọc exact/near duplicate và audit citation trước khóa test |
 
-Phạm vi Hà Nội/hộ tịch–chứng thực và phương án khảo sát/chấm đã được đồng ý. Đã có danh mục nguồn sơ bộ, 20 QA nháp nghiên cứu và bộ biểu mẫu/protocol. Cần giải quyết tiếp: khác biệt thời hạn/phiên bản nguồn, nguồn địa phương/biểu phí còn thiếu, quyền dùng nội dung, review QA bởi thành viên, xác nhận vận hành khảo sát, lịch, ngân sách Colab và mô hình nền sau pilot. Chưa có khảo sát, dữ liệu DPO hoặc benchmark hoàn chỉnh.
+Phạm vi Hà Nội/hộ tịch–chứng thực và phương án khảo sát/chấm đã được đồng ý. Nhóm đã rà nội dung 20 QA nháp, nhưng chưa có bản ghi được phát hành để huấn luyện. Cần gỡ vướng hiệu lực/quyền nguồn, xử lý khác biệt thời hạn và biểu phí, hoàn tất điều kiện khảo sát, chốt mô hình và môi trường GPU cho D. Chưa có khảo sát thật, dữ liệu DPO hay kết quả đánh giá ba mô hình.
 
 ## 8. Tài nguyên và sản phẩm dự kiến
 

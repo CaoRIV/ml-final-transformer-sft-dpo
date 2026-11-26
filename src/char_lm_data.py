@@ -87,7 +87,7 @@ def _read_manifest(manifest_path: Path) -> tuple[dict[str, Any], str]:
     return manifest, sha256(payload).hexdigest()
 
 
-def _verify_attestation(path: Path, manifest_sha256: str) -> None:
+def _verify_attestation(path: Path, manifest_sha256: str, platform: str) -> None:
     try:
         attestation = _json_object(path.read_bytes(), "rights_attestation")
     except OSError as error:
@@ -98,7 +98,7 @@ def _verify_attestation(path: Path, manifest_sha256: str) -> None:
         "rights_attestation",
     )
     _expect_equal(attestation, "status", "approved", "rights_attestation")
-    _expect_equal(attestation, "evaluated_for", "a2-local-and-colab", "rights_attestation")
+    _expect_equal(attestation, "evaluated_for", f"a2-local-and-{platform}", "rights_attestation")
     _expect_equal(attestation, "training_allowed", True, "rights_attestation")
     _expect_equal(attestation, "manifest_sha256", manifest_sha256, "rights_attestation")
     reviewer = attestation["reviewer_id"]
@@ -317,10 +317,12 @@ def validate_prepared_corpus(manifest_path: Path, artifact_dir: Path) -> tuple[T
 
 
 def load_prepared_corpus(
-    manifest_path: Path, artifact_dir: Path, rights_attestation: Path
+    manifest_path: Path, artifact_dir: Path, rights_attestation: Path, *, platform: str = "colab",
 ) -> tuple[Tensor, Tensor, dict[str, int], str]:
-    """Nạp corpus v2 chỉ sau khi quyền tách rời đã phê duyệt manifest chính xác."""
+    """Nạp corpus khi xác nhận khớp manifest và nền tảng chạy đã chọn."""
+    if platform not in ("colab", "kaggle"):
+        raise CorpusLoadError(f"Nền tảng A.2 không được hỗ trợ: {platform}")
 
     manifest, manifest_sha256 = _read_manifest(manifest_path)
-    _verify_attestation(rights_attestation, manifest_sha256)
+    _verify_attestation(rights_attestation, manifest_sha256, platform)
     return _validate_manifest(manifest, artifact_dir, manifest_sha256)
