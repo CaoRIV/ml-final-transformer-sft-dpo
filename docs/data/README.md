@@ -52,10 +52,46 @@ python -m unittest discover -s tests -p "test_char_corpus.py" -v
 | Xác nhận thông tin hộ tịch | `validation` | 6 |
 | Chứng thực bản sao | `holdout` | 0 |
 
-- **Thành phần và mục đích:** 24 QA tiếng Việt do AI soạn từ chính văn, 24 mệnh đề gắn 23 đoạn trích của 7 chứng cứ D.1; dùng thử luồng thu thập và kiểm QA, chưa dùng huấn luyện. Bản v2 làm rõ thủ tục/kênh khi hỏi và sửa hai dẫn chứng bị lấy nhầm từ phần chữ ký người dịch trong bản nháp v1. Không dùng nội dung hay kết luận kiểm của 20 QA pilot cũ.
+- **Thành phần và mục đích:** 24 QA tiếng Việt do AI soạn từ chính văn, 24 mệnh đề gắn 23 đoạn trích của 7 chứng cứ D.1. Bản v2 làm rõ thủ tục/kênh khi hỏi và sửa hai dẫn chứng bị lấy nhầm từ phần chữ ký người dịch trong bản nháp v1. Không dùng nội dung hay kết luận kiểm của 20 QA pilot cũ.
 - **Căn cứ và quyền:** các câu về thời hạn kèm Quyết định 2163 chỉ nói theo phương án Bộ Tư pháp, không khẳng định Hà Nội đã triển khai; thời gian theo 1852 là **dự kiến**. Câu phí 858 chỉ về biểu phí chứng thực chữ ký tại UBND cấp xã; chưa đưa biểu lệ phí hộ tịch Hà Nội 98/2026 vào pilot (bản kiểm không có lớp chữ đủ để định vị bằng trình trích hiện tại). Chỉ làm việc với chính văn công khai theo [rà quyền D.1](source-audit.md#53-quyền-dùng-phân-loại-nội-dung-trước-khi-đưa-vào-dữ-liệu); không tự động mở huấn luyện hay công khai dữ liệu.
-- **Chất lượng đã kiểm:** khớp 24/24 mệnh đề với đoạn tồn tại trên snapshot đúng hash, không có cảnh báo Jaccard ≥0,85 trong tập này. Việc khớp chữ không chứng minh đáp án đúng ngữ nghĩa, hiệu lực hiện tại hay không trùng ý. Cổng mở huấn luyện trả `blocked` với **0/18 train và 0/6 validation** được duyệt trên phiếu v2; chưa có biên bản nhóm. Mẫu này không đại diện cho độ phủ cả phạm vi thủ tục và không có dữ liệu người.
+- **Trạng thái:** kiểm tự động định vị 24/24 mệnh đề trên snapshot đúng hash; bộ lọc từ vựng không báo cặp Jaccard ≥0,85. Sau đó nhóm duyệt 24/24 QA, chốt biên bản và phát hành `d2-official-seed-v2-release-01` để chạy [pilot SFT nội bộ](../progress/project-context.md#d3--kết-quả-pilot-do-nhóm-chạy-trên-kaggle). Việc phát hành chỉ áp dụng cho đúng bản đó; không suy ra chất lượng của tập chính hoặc quyền đưa lô mới lên Kaggle.
 - **Lưu trữ:** giữ kết quả trong `data/review/d2/d2-official-seed-v2/`, snapshot dưới `.cache/admin-source-audit/d1/`. Chia sẻ mã/metadata theo quyền dự án, không đẩy các thư mục này hoặc hồ sơ khảo sát lên Git. Khi đổi chính văn/câu/đáp, tăng phiên bản liên quan và chạy lại cả kiểm citation và khóa split.
+
+### Tập chính D.2 — lô ứng viên b01
+
+Recipe `scripts/d2_main_b01_recipes.json` là phiên bản tích lũy: giữ nguyên nội dung và split của 24 QA v2, thêm **57 QA train** (26 chứng thực chữ ký, 17 cấp bản sao trích lục, 14 cải chính hộ tịch). Tổng **75 train, 6 validation**. Có tình huống đủ căn cứ để trả lời, thiếu căn cứ để nêu chi phí/giờ làm việc cụ thể, và ngoài phạm vi như giấy phép lao động. Không lấy câu hỏi thị thực trong demo, họ xác nhận thông tin hộ tịch, họ holdout hay khảo sát làm ví dụ train.
+
+Trên máy nhóm, mở `data/review/d2/d2-official-main-b01/manual-review.csv`. Phiếu có 20 dòng (18 train, 2 validation), lấy ≥20% từng tầng rồi làm tròn lên, seed 42. Trong đó 14 dòng mới và 6 dòng kế thừa; không chép nhãn pilot sang phiếu của version này. Kiểm câu hỏi, từng mệnh đề và nguồn tại trang/đoạn tương ứng theo [rubric](annotation-guide.md#32-phiếu-kiểm-qa--trường-bắt-buộc). Đặc biệt, `BTP-PL-163` tr. 285–288 có lớp chữ trích bị mất ký tự: mở **trang PDF hiển thị** chứ không dùng riêng văn bản tách tự động để duyệt. Không đủ căn cứ thì ghi `rework` và nêu điểm cần sửa.
+
+Lệnh tái tạo trên CPU vào **thư mục mới** (không tạo đè lên phiếu đang kiểm), và lệnh kiểm bản đang dùng:
+
+```sh
+python scripts/prepare_d2_qa.py prepare --stage main --recipes scripts/d2_main_b01_recipes.json --output data/review/d2/d2-official-main-b01-rebuild
+python scripts/prepare_d2_qa.py check --recipes scripts/d2_main_b01_recipes.json --candidate data/review/d2/d2-official-main-b01 --review data/review/d2/d2-official-main-b01/manual-review.csv
+```
+
+**Chưa phát hành:** kiểm tự động định vị được 84 mệnh đề trên 82 đoạn thuộc 9 chứng cứ; không phát hiện cặp gần trùng ở ngưỡng Jaccard 0,85. Kết quả này không chứng minh đúng nghĩa hay hiệu lực hiện hành. Còn thiếu 1.925 QA train, kiểm người và biên bản nhóm. Lô sau cần thêm điều khoản/thủ tục có nguồn đã rà quyền và hiệu lực, khóa split theo họ trước khi soạn; không đạt chỉ tiêu bằng cách đổi cách diễn đạt. Tách test khảo sát người thật; quyền Kaggle Private của `release-01` không áp dụng cho b01.
+
+### Tập chính D.2 — lô ứng viên b02
+
+Tệp `data/review/d2/d2-official-main-b02/qa-moi.csv` chỉ chứa **54 câu mới**: 27 về chứng thực chữ ký, 17 về cải chính/bổ sung hộ tịch và 10 về cấp bản sao trích lục. Bốn cột là họ thủ tục, câu hỏi, đáp án có số văn bản và vị trí trích, nguồn gốc có URL. Đây là tệp đọc QA, không phải phiếu cần điền.
+
+Lô tích lũy `qa.jsonl` ở cùng thư mục có **129 train, 6 validation**. Tái tạo bằng lệnh `prepare --stage main` như trên với recipe `scripts/d2_main_b02_recipes.json` và một thư mục đầu ra mới. Đã đối chiếu các trang hiển thị của phụ lục 163 với đoạn neo máy đọc, giữ phạm vi của từng văn bản (ví dụ mức phí *ghi trong phụ lục* không phải số tiền mọi hồ sơ phải nộp). Hai lần kiểm thủ công 20 và 24 câu giữ nguyên; không chuyển nhãn từ pilot sang 54 câu mới. Chưa phát hành b02 để huấn luyện.
+
+### Tập chính D.2 — lô ứng viên b03
+
+Mở [400 câu tích lũy](../../data/review/d2/d2-official-main-b03/qa-400.csv) hoặc [chỉ 265 câu mới](../../data/review/d2/d2-official-main-b03/qa-moi.csv). CSV dùng UTF-8, gồm họ thủ tục, split, câu hỏi, đáp án kèm vị trí dẫn và URL chính văn. Các tệp trong `data/review/` là bản làm việc nội bộ, không có trên bản clone sạch.
+
+B03 giữ 135 QA cũ và thêm 265 câu train: **394 train, 6 validation**. Câu mới dùng phụ lục 163/QĐ-BTP, phụ lục 858/QĐ-BTP và 753/VBHN-BTP; gồm khai sinh, khai tử, kết hôn, tình trạng hôn nhân, nhận cha mẹ con, giám hộ, giám sát giám hộ, chứng thực di chúc, từ chối nhận di sản và giao dịch. Quy định chung trong nước không xác nhận việc triển khai tại từng xã Hà Nội. Với phụ lục 163 có lớp chữ trích xuất lỗi, mở đúng trang PDF để đọc, không lấy đoạn chữ lỗi làm câu trả lời.
+
+Để tái tạo gói ứng viên trên CPU từ các snapshot đúng hash, chạy vào **thư mục mới**:
+
+```sh
+python scripts/prepare_d2_qa.py prepare --stage main --ledger docs/data/source-ledger-b03.json --recipes scripts/d2_main_b03_recipes.json --output data/review/d2/d2-official-main-b03
+python scripts/prepare_d2_qa.py check --ledger docs/data/source-ledger-b03.json --recipes scripts/d2_main_b03_recipes.json --candidate data/review/d2/d2-official-main-b03
+```
+
+`prepare` tạo JSONL, nguồn, manifest và mẫu phân tầng; hai CSV xem nhanh ở trên là bản xuất từ JSONL. [Sổ nguồn b03](source-ledger-b03.json) kế thừa bằng chứng của D.1, không đổi sổ đã ghim của release-01. B03 là **ứng viên**, chưa có biên bản phát hành và không nằm trong quyền đưa release-01 lên Kaggle. Hai lô đã kiểm thủ công giữ nguyên, không tự chuyển quyết định vào bản này.
 
 ### 1. Tạo và xem QA ứng viên trên CPU
 
@@ -89,6 +125,27 @@ Trên máy đã có gói v2, mở thẳng [phiếu rút gọn `manual-review-sho
 2. `sample.json` khóa mẫu trước khi chấm: pilot chọn toàn bộ; tập chính chọn ngẫu nhiên có seed `ceil(20% × số QA)` trong **từng tầng của từng split** theo phạm vi, nguồn/phiên bản và nguồn gốc câu. Tổng từng split vì thế đạt ít nhất `ceil(20% × tổng split)`. Nếu cần sửa câu, trích dẫn, split hoặc cả batch, giữ phiếu cũ và tạo phiên bản mới.
 3. Người phụ trách lập JSON audit trong kho riêng với các trường `dataset_version`, `candidate_manifest_sha256` (lấy từ `check`), `reviewer_id`, `reviewed_at`, `rights_scope`, `source_and_split_verified`, `semantic_duplicate_audit`, `distinct_near_pairs`, `notes`. Chỉ ghi `rights_scope = internal_research_training`, `source_and_split_verified = true` và `semantic_duplicate_audit = no_unresolved` sau khi chính nhóm đã xác minh nguồn/hiệu lực, phạm vi nội bộ và không còn trùng nghĩa/rò rỉ. `distinct_near_pairs` là danh sách `left`, `right`, `reason` với từng cặp cảnh báo đã đối chiếu và thực sự khác nghĩa; nếu trùng cần sửa và tái tạo gói, không đánh dấu giữ. `notes` ghi phạm vi và việc đã kiểm, không chứa dữ liệu người.
 4. Thêm `--audit` trỏ biên bản và `--output` trỏ **thư mục mới** vào lệnh `check` mới xuất được `train.jsonl`, `validation.jsonl`, `qa.jsonl`, `overlap-qa.jsonl` tối giản cho người đánh giá và manifest. Nếu `prepare` đã dùng `--recipes`/`--ledger` tùy chỉnh thì truyền đúng hai file đó cho `check`. Không gán `approved` cho QA ngoài mẫu. `pilot_sft_ready` không có nghĩa đủ 2.000, có `USER_TEST` hoặc hoàn tất D.2; `main_sft_ready` chỉ xác nhận cổng QA SFT với bằng chứng do nhóm đã nhập.
+
+**Biên bản cho lô `d2-official-seed-v2` (24 QA đã duyệt).** Trên máy nhóm, sao chép [bản nháp riêng](../../data/review/d2/d2-official-seed-v2/batch-audit.draft.json) thành `batch-audit.json` cùng thư mục. Không đổi `dataset_version` hoặc hash manifest; không cần sửa lại phiếu CSV. Người phụ trách rà ba điểm trước khi ký:
+
+| Điểm cần xác nhận | Bằng chứng cần đối chiếu | Chỉ ghi khi đạt |
+|---|---|---|
+| Quyền dùng | Đối chiếu 7 hiện vật trong `source-spans.json` với [sổ nguồn D.1](source-audit.md#5-kết-quả-xác-minh-d1-ngày-25112026), nhất là §5.3: chỉ dùng chính văn hành chính và phần phụ lục đã xác minh để soạn QA nghiên cứu nội bộ; không dùng lại snapshot cổng hoặc video của pilot cũ. | `"rights_scope": "internal_research_training"` |
+| Hiệu lực, phạm vi và chia tập | Kiểm số hiệu, phiên bản, kênh và địa bàn. Không suy 2163 đã thay 1818 tại Hà Nội; ngày hiệu lực 163 lấy từ Điều 2, không từ bìa phụ lục. Đối chiếu `qa.jsonl` với `manifest.json`: train = trích lục (10), chứng thực chữ ký (6), cải chính hộ tịch (2); validation = xác nhận thông tin hộ tịch (6); chứng thực bản sao để riêng, không có QA. | `"source_and_split_verified": true` |
+| Trùng nghĩa và rò giữa hai tập | So sánh ý hỏi, điều kiện và đáp án trong và giữa hai tập. Xem riêng hai câu validation cùng dùng B.4 của 1852: thời hạn thông thường và thời hạn khi phải xác minh. `near-duplicates.json` rỗng chỉ nói bộ lọc từ vựng không cảnh báo; không chứng minh hai câu khác nghĩa. Không mở `USER_TEST` để làm bước này. | `"semantic_duplicate_audit": "no_unresolved"`; giữ `distinct_near_pairs` là `[]` vì lô này không có cặp do bộ lọc báo. |
+
+Ghi `reviewer_id` bằng mã người thực sự rà lô, `reviewed_at` bằng thời điểm người đó kết luận (ISO 8601 có múi giờ, không chép giờ kiểm từng QA). Bổ sung vào `notes` kết luận thực tế, nhất là lý do giữ hoặc xử lý cặp dùng chung B.4. Nếu còn nghi vấn, giữ trạng thái chưa đạt, ghi điểm cần xử lý và **không phát hành**. Nếu phải sửa QA hoặc split, tạo phiên bản mới; không dùng biên bản gắn hash cũ.
+
+**Chỉ sau khi đã ký**, chạy từ gốc repo bằng PowerShell (đường dẫn `$release` phải chưa tồn tại):
+
+```powershell
+$lot = 'data/review/d2/d2-official-seed-v2'
+$release = 'data/review/d2/d2-official-seed-v2-release-01'
+python scripts/prepare_d2_qa.py check --candidate $lot --review "$lot/manual-review-short.csv" --audit "$lot/batch-audit.json" --output $release
+if ($LASTEXITCODE -eq 0) { python scripts/train_d3_sft.py --release $release --output .cache/d3-check --check-only }
+```
+
+`pilot_sft_ready` cho phép kiểm đầu vào D.3 trên máy nhóm; việc đưa đúng bản phát hành lên Kaggle Private cần [xác nhận riêng](../../README.md#d3--chuẩn-bị-sft-trên-kaggle). Không tải biên bản, phiếu kiểm hay snapshot nguồn lên Kaggle.
 
 ### 3. Thu và khóa `USER_TEST` độc lập
 

@@ -1,0 +1,2071 @@
+{
+  "dataset_version": "d2-official-main-b02",
+  "seed": 42,
+  "author_type": "AI_assistant",
+  "family_splits": {
+    "trich-luc": "train",
+    "chung-thuc-ban-sao": "holdout",
+    "chung-thuc-chu-ky": "train",
+    "cai-chinh-ho-tich": "train",
+    "xac-nhan-thong-tin-ho-tich": "validation"
+  },
+  "items": [
+    {
+      "key": "trich-luc-1818-hanoi-scope",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo Quyết định 1818/QĐ-TTPVHCC, phương án trực tuyến về cấp bản sao trích lục hộ tịch, bản sao giấy khai sinh áp dụng cho cơ quan nào và ở địa bàn nào?",
+      "claims": [
+        {
+          "text": "Theo Quyết định 1818/QĐ-TTPVHCC, phương án này dành cho thủ tục thuộc thẩm quyền giải quyết của UBND cấp xã trong phạm vi quản lý của UBND thành phố Hà Nội.",
+          "evidence_id": "HN-QD-1818",
+          "locator": "Điều 1, tr. 2",
+          "page": 2,
+          "anchor": "Điều 1. Phê duyệt kèm theo Quyết định này phương án tái cấu trúc thủ tục hành chính “Cấp bản sao trích lục hộ tịch, bản sao giấy khai sinh thuộc thẩm quyền giải quyết của UBND cấp xã ” thuộc phạm vi quản lý của UBND thành phố Hà Nội để thực hiện dịch vụ công trực tuyến toàn trình – liền mạch – thực chất."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-incomplete-application",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án cấp bản sao trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, hồ sơ trực tuyến chưa đủ hoặc không hợp lệ được hướng dẫn bổ sung bằng phiếu gì?",
+      "claims": [
+        {
+          "text": "Hồ sơ chưa đầy đủ hoặc không hợp lệ được hướng dẫn bổ sung, hoàn thiện trong Phiếu yêu cầu bổ sung, hoàn thiện hồ sơ gửi cho cá nhân hoặc tổ chức.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 2: Tiếp nhận và chuyển hồ sơ về cơ quan giải quyết",
+          "anchor": "Trường hợp hồ sơ chưa đầy đủ hoặc không hợp lệ: hướng dẫn, bổ sung hoàn thiện hồ sơ vào Phiếu yêu cầu bổ sung, hoàn thiện hồ sơ gửi cá nhân, tổ chức."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-out-of-jurisdiction",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án cấp bản sao trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, cơ quan làm gì nếu hồ sơ trực tuyến không thuộc thẩm quyền tiếp nhận?",
+      "claims": [
+        {
+          "text": "Nếu hồ sơ không thuộc thẩm quyền tiếp nhận, cơ quan lập Phiếu từ chối tiếp nhận hồ sơ và nêu rõ lý do theo quy định.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 2: Tiếp nhận và chuyển hồ sơ về cơ quan giải quyết",
+          "anchor": "Trường hợp không thuộc thẩm quyền tiếp nhận hồ sơ: lập Phiếu từ chối tiếp nhận hồ sơ, nêu rõ lý do theo quy định."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-online-intake",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo Phương án tái thiết kế quy trình kèm Quyết định 2163/QĐ-BTP, trích lục hộ tịch được tiếp nhận trực tuyến qua những kênh nào?",
+      "claims": [
+        {
+          "text": "Theo Phương án kèm Quyết định 2163/QĐ-BTP, thủ tục được tiếp nhận trực tuyến trên Cổng Dịch vụ công quốc gia hoặc Ứng dụng định danh quốc gia VNeID.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.2, đoạn “Hình thức tiếp nhận và trả kết quả”",
+          "anchor": "Tiếp nhận theo hình thức trực tuyến trên Cổng Dịch vụ công quốc gia/Ứng dụng định danh quốc gia (VNeID)."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-processing-time",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo Phương án tái thiết kế quy trình kèm Quyết định 2163/QĐ-BTP, thời gian giải quyết trích lục là khi nào nếu hồ sơ được nhận sau 15 giờ mà không giải quyết ngay?",
+      "claims": [
+        {
+          "text": "Theo Phương án kèm Quyết định 2163/QĐ-BTP, hồ sơ nhận sau 15 giờ mà không giải quyết ngay thì trả kết quả trong ngày làm việc tiếp theo.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.3, đoạn “Thời gian giải quyết”",
+          "anchor": "Thời gian giải quyết: Trong ngày tiếp nhận hồ sơ; trường hợp nhận hồ sơ sau 15 giờ mà không giải quyết được ngay thì trả kết quả trong ngày làm việc tiếp theo."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-electronic-result-destination",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án trực tuyến kèm Quyết định 2163/QĐ-BTP, bản điện tử của kết quả cấp bản sao trích lục hộ tịch được gửi tự động đến đâu?",
+      "claims": [
+        {
+          "text": "Theo Phương án kèm Quyết định 2163/QĐ-BTP, kết quả điện tử được tự động gửi về Kho quản lý dữ liệu điện tử của cá nhân, địa chỉ thư điện tử, thiết bị số hoặc điện thoại của người yêu cầu.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.2, đoạn “Hình thức tiếp nhận và trả kết quả”",
+          "anchor": "Bản điện tử của kết quả giải quyết TTHC sẽ được tự động gửi về Kho quản lý dữ liệu điện tử của cá nhân/địa chỉ thư điện tử/thiết bị số/điện thoại của người yêu cầu sau khi thủ tục hoàn tất, bản điện tử có giá trị như bản giấy khi được tạo lập, ký số theo quy định của pháp luật; nội dung của bản điện tử phải đầy đủ, chính xác và không bị thay đổi trong quá trình lưu trữ, truyền gửi."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-paper-result-choice",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án kèm Quyết định 2163/QĐ-BTP, ai lựa chọn hình thức nhận kết quả bản giấy khi xin cấp bản sao trích lục hộ tịch trực tuyến?",
+      "claims": [
+        {
+          "text": "Theo Phương án kèm Quyết định 2163/QĐ-BTP, kết quả bản giấy được trả theo hình thức do công dân lựa chọn.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.2, đoạn “Hình thức tiếp nhận và trả kết quả”",
+          "anchor": "Bản giấy được trả theo hình thức do công dân lựa chọn."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-identity-document-exception",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo biểu mẫu trực tuyến xin cấp bản sao trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, khi nào người yêu cầu phải khai thông tin và đính kèm bản chụp giấy tờ tùy thân?",
+      "claims": [
+        {
+          "text": "Theo biểu mẫu trong Phương án kèm Quyết định 2163/QĐ-BTP, chỉ phải khai thông tin và đính kèm bản chụp giấy tờ khi không có Số định danh cá nhân tại Mục (3).",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.4, biểu mẫu điện tử tương tác, phần I",
+          "anchor": "Chỉ khai thông tin và đính kèm bản chụp giấy tờ trong trường hợp không có Số định danh cá nhân tại Mục (3);"
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-authorization-attachment",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo mục B.5 của phương án cấp bản sao trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, ai phải đính kèm giấy ủy quyền khi nộp hồ sơ trực tuyến?",
+      "claims": [
+        {
+          "text": "Theo mục B.5, người nộp hồ sơ thay người yêu cầu với tư cách người được ủy quyền phải đính kèm giấy ủy quyền theo quy định.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.5, đoạn “Đánh giá thành phần hồ sơ trực tuyến”",
+          "anchor": "Thủ tục này không yêu cầu đính kèm thành phần hồ sơ, trừ trường hợp người thực hiện yêu cầu là người được ủy quyền thì phải đính kèm giấy ủy quyền theo quy định."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-complete-application-receipt",
+      "record_version": "2",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án cấp bản sao trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, ở bước tiếp nhận, cơ quan làm gì khi hồ sơ trực tuyến đã đủ điều kiện giải quyết?",
+      "claims": [
+        {
+          "text": "Khi hồ sơ đủ điều kiện giải quyết, bước tiếp nhận lập Giấy tiếp nhận hồ sơ, thông báo và hướng dẫn thanh toán phí, lệ phí trực tuyến, rồi chuyển hồ sơ điện tử đến cơ quan chuyên môn để giải quyết.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 2: Tiếp nhận và chuyển hồ sơ về cơ quan giải quyết",
+          "anchor": "Trường hợp hồ sơ đủ điều kiện giải quyết: lập Giấy tiếp nhận hồ sơ, thông báo và hướng dẫn thanh toán phí, lệ phí trực tuyến, chuyển hồ sơ điện tử đến cơ quan chuyên môn để giải quyết theo quy định."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-same-day-time",
+      "record_version": "2",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo phụ lục Quyết định 858/QĐ-BTP, nếu cơ quan tiếp nhận yêu cầu chứng thực chữ ký sau 15 giờ thì thời hạn thông thường là khi nào?",
+      "claims": [
+        {
+          "text": "Nếu tiếp nhận sau 15 giờ, yêu cầu được giải quyết trong ngày làm việc tiếp theo theo thời hạn thông thường ghi tại phụ lục.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, thời hạn thực hiện, tr. 7",
+          "page": 7,
+          "anchor": "Thời hạn thực hiện yêu cầu chứng thực là ngay trong ngày cơ quan, tổ chức tiếp nhận yêu cầu hoặc trong ngày làm việc tiếp theo nếu tiếp nhận yêu cầu sau 15 giờ."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-appointment-slip",
+      "record_version": "2",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo phụ lục Quyết định 858/QĐ-BTP, khi kết quả chứng thực chữ ký được trả vào ngày làm việc tiếp theo hoặc chậm hơn theo thỏa thuận, người tiếp nhận phải làm gì?",
+      "claims": [
+        {
+          "text": "Người tiếp nhận hồ sơ phải có phiếu hẹn ghi rõ giờ và ngày trả kết quả.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, thời hạn thực hiện, tr. 7",
+          "page": 7,
+          "anchor": "Trường hợp trả kết quả trong ngày làm việc tiếp theo hoặc phải kéo dài thời gian theo thỏa thuận thì người tiếp nhận hồ sơ phải có phiếu hẹn ghi rõ thời gian (giờ, ngày) trả kết quả cho người yêu cầu chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-interpreter",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo Phụ lục kèm Quyết định 858/QĐ-BTP, người không thông thạo tiếng Việt cần người phiên dịch như thế nào khi yêu cầu chứng thực chữ ký?",
+      "claims": [
+        {
+          "text": "Người không thông thạo tiếng Việt phải có người phiên dịch có đầy đủ năng lực hành vi dân sự, thông thạo tiếng Việt và ngôn ngữ người yêu cầu sử dụng; người yêu cầu có thể mời người phiên dịch hoặc cơ quan chỉ định, và người yêu cầu trả thù lao phiên dịch.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, tr. 6",
+          "page": 6,
+          "anchor": "Trong trường hợp người yêu cầu chứng thực không thông thạo tiếng Việt thì phải có người phiên dịch. Người phiên dịch phải là người có năng lực hành vi dân sự đầy đủ theo quy định của pháp luật, thông thạo tiếng Việt và ngôn ngữ mà người yêu cầu chứng thực sử dụng. Người phiên dịch do người yêu cầu chứng thực mời hoặc do cơ quan thực hiện chứng thực chỉ định. Thù lao phiên dịch do người yêu cầu chứng thực trả."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-identity-documents",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo Phụ lục kèm Quyết định 858/QĐ-BTP, người yêu cầu có thể dùng những loại giấy tờ nhận dạng nào khi chứng thực chữ ký?",
+      "claims": [
+        {
+          "text": "Người yêu cầu có thể dùng Căn cước điện tử, hoặc bản chính/bản sao của thẻ căn cước công dân, thẻ căn cước, giấy chứng nhận căn cước, hộ chiếu, giấy tờ xuất nhập cảnh hoặc giấy tờ có giá trị đi lại quốc tế còn giá trị sử dụng.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, tr. 7",
+          "page": 7,
+          "anchor": "Một trong các giấy tờ sau: Căn cước điện tử; bản chính hoặc bản sao của Thẻ căn cước công dân hoặc Thẻ căn cước hoặc Giấy chứng nhận căn cước hoặc Hộ chiếu hoặc giấy tờ xuất nhập cảnh hoặc giấy tờ có giá trị đi lại quốc tế còn giá trị sử dụng"
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-document-for-signature",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Ngoài giấy tờ nhận dạng, theo Phụ lục kèm Quyết định 858/QĐ-BTP người yêu cầu chứng thực chữ ký phải có giấy tờ nào?",
+      "claims": [
+        {
+          "text": "Người yêu cầu phải có giấy tờ hoặc văn bản mà mình sẽ yêu cầu chứng thực chữ ký.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, tr. 7",
+          "page": 7,
+          "anchor": "Giấy tờ, văn bản mà mình sẽ yêu cầu chứng thực chữ ký."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-effective-date",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Quyết định 163/QĐ-BTP công bố thủ tục hộ tịch sửa đổi, bổ sung có hiệu lực từ ngày nào?",
+      "claims": [
+        {
+          "text": "Quyết định 163/QĐ-BTP có hiệu lực kể từ ngày 15 tháng 01 năm 2026.",
+          "evidence_id": "BTP-163",
+          "locator": "Điều 2, tr. 1",
+          "page": 1,
+          "anchor": "Điều 2. Quyết định này có hiệu lực thi hành kể từ ngày 15 tháng 01 năm 2026."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-fee-xa",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo phụ lục Quyết định 858/QĐ-BTP, mức phí niêm yết khi chứng thực chữ ký tại UBND cấp xã là bao nhiêu và tính theo đơn vị nào?",
+      "claims": [
+        {
+          "text": "Phụ lục ghi mức phí 10.000 đồng/trường hợp; một trường hợp có thể gồm một hoặc nhiều chữ ký trong cùng một giấy tờ hoặc văn bản.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, mục Phí, tr. 7",
+          "page": 7,
+          "anchor": "Tại Ủy ban nhân dân cấp xã, Tổ chức hành nghề công chứng: 10.000 đồng/trường hợp (trường hợp được tính là một hoặc nhiều chữ ký trong một giấy tờ, văn bản)."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-declaration-form-title",
+      "record_version": "2",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Khi đề nghị cải chính hộ tịch theo Phụ lục Quyết định 163/QĐ-BTP, cần tìm mẫu tờ khai có tiêu đề gì?",
+      "claims": [
+        {
+          "text": "Mẫu này là Tờ khai đăng ký việc thay đổi, cải chính, bổ sung thông tin hộ tịch, xác định lại dân tộc.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mẫu tờ khai, tr. 293",
+          "page": 293,
+          "anchor": "TỜ KHAI ĐĂNG KÝ VIỆC THAY ĐỔI, CẢI CHÍNH, BỔ SUNG THÔNG TIN HỘ TỊCH, XÁC ĐỊNH LẠI DÂN TỘC"
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-hanoi-scope",
+      "record_version": "1",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Theo Quyết định 1852/QĐ-TTPVHCC, phương án trực tuyến về xác nhận thông tin hộ tịch có phạm vi cơ quan và địa bàn nào?",
+      "claims": [
+        {
+          "text": "Theo Quyết định 1852/QĐ-TTPVHCC, phương án áp dụng cho xác nhận thông tin hộ tịch thuộc thẩm quyền UBND cấp xã trong phạm vi quản lý của UBND thành phố Hà Nội.",
+          "evidence_id": "HN-QD-1852",
+          "locator": "Điều 1, tr. 2",
+          "page": 2,
+          "anchor": "Điều 1. Phê duyệt kèm theo Quyết định này phương án tái cấu trúc thủ tục hành chính “Xác nhận thông tin hộ tịch của UBND cấp xã ” thuộc phạm vi quản lý của UBND thành phố Hà Nội để thực hiện dịch vụ công trực tuyến toàn trình – liền mạch – thực chất."
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-code-and-authority",
+      "record_version": "2",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Trong phương án trực tuyến kèm Quyết định 1852/QĐ-TTPVHCC của Hà Nội, mã thủ tục xác nhận thông tin hộ tịch là gì?",
+      "claims": [
+        {
+          "text": "Mã thủ tục xác nhận thông tin hộ tịch là 2.002516.",
+          "evidence_id": "HN-PL-1852",
+          "locator": "Mục A.1, tr. 1",
+          "page": 1,
+          "anchor": "Thủ tục Xác nhận thông tin hộ tịch thuộc thẩm quyền giải quyết của UBND cấp xã (Mã TTHC: 2.002516)."
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-projected-time",
+      "record_version": "2",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Theo phương án kèm Quyết định 1852/QĐ-TTPVHCC, thời gian dự kiến xử lý yêu cầu xác nhận thông tin hộ tịch trực tuyến tại Hà Nội khi không cần xác minh là bao lâu?",
+      "claims": [
+        {
+          "text": "Trong phương án kèm Quyết định 1852/QĐ-TTPVHCC, thời gian giải quyết dự kiến là 03 ngày làm việc.",
+          "evidence_id": "HN-PL-1852",
+          "locator": "Mục B.4, tr. 3",
+          "page": 3,
+          "anchor": "Thời gian giải quyết dự kiến là 03 ngày làm việc; trường hợp cần kiểm tra, xác minh, thời hạn có thể kéo dài nhưng không quá 10 ngày làm việc."
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-verification-limit",
+      "record_version": "2",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Theo phương án xác nhận thông tin hộ tịch trực tuyến của Hà Nội kèm Quyết định 1852/QĐ-TTPVHCC, nếu cần kiểm tra hoặc xác minh thì thời hạn dự kiến có thể kéo dài tối đa bao lâu?",
+      "claims": [
+        {
+          "text": "Theo phương án kèm Quyết định 1852/QĐ-TTPVHCC, khi cần kiểm tra hoặc xác minh, thời hạn dự kiến có thể kéo dài nhưng không quá 10 ngày làm việc.",
+          "evidence_id": "HN-PL-1852",
+          "locator": "Mục B.4, tr. 3",
+          "page": 3,
+          "anchor": "Thời gian giải quyết dự kiến là 03 ngày làm việc; trường hợp cần kiểm tra, xác minh, thời hạn có thể kéo dài nhưng không quá 10 ngày làm việc."
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-vneid-no-signature",
+      "record_version": "2",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Theo phương án trực tuyến về xác nhận thông tin hộ tịch của Hà Nội kèm Quyết định 1852/QĐ-TTPVHCC, đăng nhập Cổng Dịch vụ công quốc gia bằng VNeID có phải ký số mẫu điện tử tương tác không?",
+      "claims": [
+        {
+          "text": "Không; người đăng nhập Cổng Dịch vụ công quốc gia bằng VNeID để đề nghị giải quyết thủ tục không phải ký số mẫu điện tử tương tác.",
+          "evidence_id": "HN-PL-1852",
+          "locator": "Mục B.5, thành phần hồ sơ, tr. 4",
+          "page": 4,
+          "anchor": "Công dân đăng nhập Cổng dịch vụ công quốc gia bằng Ứng dụng định danh quốc gia (VNeID) đề nghị giải quyết thủ tục hành chính thì không phải thực hiện ký số biểu mẫu điện tử tương tác."
+        }
+      ]
+    },
+    {
+      "key": "xac-nhan-1852-paper-delivery",
+      "record_version": "2",
+      "procedure_family_id": "xac-nhan-thong-tin-ho-tich",
+      "question_text": "Theo phương án xác nhận thông tin hộ tịch trực tuyến của Hà Nội kèm Quyết định 1852/QĐ-TTPVHCC, khi nào kết quả bản giấy được chuyển phát và chuyển bằng cách nào?",
+      "claims": [
+        {
+          "text": "Nếu pháp luật chuyên ngành bắt buộc hoặc công dân có yêu cầu, kết quả bản giấy được chuyển phát miễn phí qua dịch vụ bưu chính đến địa chỉ đăng ký của công dân.",
+          "evidence_id": "HN-PL-1852",
+          "locator": "Mô tả chi tiết, Bước 4, tr. 7",
+          "page": 7,
+          "anchor": "Trường hợp pháp luật chuyên ngành quy định bắt buộc hoặc Công dân có yêu cầu, kết quả giải quyết bản giấy sẽ được chuyển phát miễn phí về địa chỉ đăng ký của Công dân thông qua dịch vụ bưu chính."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-khong-thay-khai-sinh-lan-dau",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Tôi muốn đăng ký khai sinh lần đầu cho con ở Hà Nội. Có thể lấy danh sách hồ sơ của thủ tục 2.000635 để chuẩn bị không?",
+      "claims": [
+        {
+          "text": "Không nên dùng hồ sơ của thủ tục 2.000635 cho việc này. Trong phương án kèm Quyết định 2163/QĐ-BTP, mã đó là thủ tục cấp bản sao trích lục hộ tịch, bản sao Giấy khai sinh. Đoạn này không đủ căn cứ để liệt kê hồ sơ đăng ký khai sinh lần đầu; cần tra đúng thủ tục đăng ký khai sinh.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.1, tên thủ tục hành chính",
+          "anchor": "Thủ tục Cấp bản sao Trích lục hộ tịch, bản sao Giấy khai sinh (Mã: 2.000635)."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-declaration-responsibility",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Khi gửi tờ khai điện tử xin bản sao trích lục hộ tịch theo Quyết định 2163/QĐ-BTP, tôi phải chịu trách nhiệm gì về thông tin đã khai?",
+      "claims": [
+        {
+          "text": "Tờ khai điện tử ghi người đăng ký hộ tịch cam đoan thông tin cung cấp là đúng sự thật và chịu hoàn toàn trách nhiệm trước pháp luật về nội dung cam đoan.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.4, Mẫu điện tử tương tác, ghi chú sau Mục (15)",
+          "anchor": "Người đăng ký hộ tịch cam đoan các thông tin cung cấp là đúng sự thật và chịu hoàn toàn trách nhiệm trước pháp luật về nội dung cam đoan của mình."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-eform-completion-timestamp",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Trong phương án trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, biểu mẫu ghi nhận thời điểm nào sau khi tôi đã đăng nhập và xác thực?",
+      "claims": [
+        {
+          "text": "Mẫu điện tử tương tác ghi nhận giờ, phút, giây, ngày, tháng, năm hoàn tất cung cấp thông tin; trước đó người đăng ký hộ tịch đã đăng nhập hệ thống và thực hiện xác thực điện tử theo quy định.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.4, Mẫu điện tử tương tác, ghi chú sau Mục (15)",
+          "anchor": "Mẫu điện tử tương tác ghi nhận thời gian (giờ, phút, giây, ngày, tháng, năm) hoàn tất việc cung cấp thông tin; người đăng ký hộ tịch trước đó đã đăng nhập vào hệ thống, thực hiện xác thực điện tử theo quy định."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-birth-certificate-supplement",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Nếu chưa có đầy đủ thông tin tại Mục (12), tờ khai điện tử kèm Quyết định 2163/QĐ-BTP yêu cầu bổ sung dữ liệu nào khi đề nghị bản sao Giấy khai sinh?",
+      "claims": [
+        {
+          "text": "Phần thông tin bổ sung của mẫu áp dụng khi chưa có đầy đủ thông tin tại Mục (12).",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.4, Mẫu điện tử tương tác, phần Thông tin bổ sung",
+          "anchor": "Thông tin bổ sung: (trường hợp công dân không có đầy đủ thông tin tại Mục 12):"
+        },
+        {
+          "text": "Với bản sao Giấy khai sinh, khai thêm họ tên cha và họ tên mẹ.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.4, Mẫu điện tử tương tác, phần Thông tin bổ sung",
+          "anchor": "Họ, tên Cha; Họ, tên Mẹ (trong trường hợp đề nghị cấp bản sao Giấy khai sinh)."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-marriage-extract-supplement",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Khi thiếu thông tin tại Mục (12), phương án kèm Quyết định 2163/QĐ-BTP nêu thông tin bổ sung nào cho yêu cầu cấp bản sao trích lục kết hôn?",
+      "claims": [
+        {
+          "text": "Phần thông tin bổ sung của mẫu áp dụng khi chưa có đầy đủ thông tin tại Mục (12).",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.4, Mẫu điện tử tương tác, phần Thông tin bổ sung",
+          "anchor": "Thông tin bổ sung: (trường hợp công dân không có đầy đủ thông tin tại Mục 12):"
+        },
+        {
+          "text": "Với bản sao trích lục kết hôn, khai thêm họ tên vợ hoặc họ tên chồng và ngày sinh.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.4, Mẫu điện tử tương tác, phần Thông tin bổ sung",
+          "anchor": "Họ, tên Vợ hoặc Họ, tên Chồng; ngày sinh (trong trường hợp đề nghị cấp Trích lục kết hôn bản sao)."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-postal-address",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Tôi khai trực tuyến xin bản sao trích lục hộ tịch theo phương án 2163/QĐ-BTP và muốn nhận qua bưu chính. Mục (14) yêu cầu thêm thông tin gì?",
+      "claims": [
+        {
+          "text": "Khi chọn phương thức nhận kết quả qua bưu chính, tờ khai yêu cầu cung cấp địa chỉ nơi nhận.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.4, Mẫu điện tử tương tác, Mục (14) Phương thức nhận kết quả",
+          "anchor": "Bưu chính (cung cấp địa chỉ nơi nhận)."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-unretrieved-data-declaration",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Hệ thống chưa lấy được một số dữ liệu phục vụ tra cứu khi tôi xin bản sao trích lục. Theo phương án trực tuyến 2163/QĐ-BTP, phần thông tin đó do ai kê khai?",
+      "claims": [
+        {
+          "text": "Công dân kê khai trực tuyến các thông tin chưa khai thác được và các thông tin khác phục vụ việc tra cứu theo biểu mẫu.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.5, bảng thành phần hồ sơ, dòng Mẫu điện tử tương tác",
+          "anchor": "Công dân kê khai trực tuyến đối với các thông tin chưa khai thác được và các thông tin khác phục vụ việc tra cứu thông tin theo biểu mẫu."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-fee-payment-if-any",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Bước nộp hồ sơ trích lục trong phương án trực tuyến 2163/QĐ-BTP có đủ để tính chính xác số tiền tôi phải trả không?",
+      "claims": [
+        {
+          "text": "Không. Bước nộp hồ sơ chỉ ghi công dân đóng phí, lệ phí nếu có, không cho biết mức tiền cụ thể. Không thể từ dòng này suy ra mọi hồ sơ đều miễn phí hoặc đều phải nộp cùng một số tiền.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 1: Nộp hồ sơ",
+          "anchor": "Công dân đóng phí/lệ phí (nếu có)."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-payment-success-transfer",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án trích lục hộ tịch kèm Quyết định 2163/QĐ-BTP, sau khi thanh toán thành công thì hồ sơ điện tử được chuyển tới hệ thống nào?",
+      "claims": [
+        {
+          "text": "Sau khi nhận thông tin thanh toán thành công, Cổng Dịch vụ công quốc gia hoặc VNeID bóc tách thành phần hồ sơ và chuyển hồ sơ, gồm biểu mẫu điện tử tương tác và giấy tờ đính kèm, sang Hệ thống thông tin giải quyết TTHC của Bộ Tư pháp qua Nền tảng chia sẻ và điều phối dữ liệu.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 2: Tiếp nhận và chuyển hồ sơ về cơ quan giải quyết",
+          "anchor": "Cổng Dịch vụ công quốc gia/VNeID nhận thông tin thanh toán thành công từ nền tảng thanh toán và tiến hành bóc tách thành phần hồ sơ, thực hiện chuyển hồ sơ (bao gồm biểu mẫu điện tử tương tác, các giấy tờ đính kèm) sang Hệ thống thông tin giải quyết TTHC của Bộ Tư pháp qua Nền tảng chia sẻ và điều phối dữ liệu."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-intake-notification-channels",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Tôi chờ thông báo sau bước kiểm tra thành phần hồ sơ trích lục. Phương án 2163/QĐ-BTP nêu những kênh thông báo nào?",
+      "claims": [
+        {
+          "text": "Sau khi kiểm tra tính chính xác, đầy đủ của hồ sơ, công chức tiếp nhận thông báo qua email, tin nhắn điện thoại hoặc thông báo đến tài khoản của cá nhân trên Cổng Dịch vụ công quốc gia hoặc VNeID.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 2: Tiếp nhận và chuyển hồ sơ về cơ quan giải quyết",
+          "anchor": "Công chức tiếp nhận kiểm tra tính chính xác, đầy đủ của thành phần hồ sơ. Thông báo qua email, tin nhắn điện thoại hoặc gửi thông báo đến tài khoản của cá nhân trên Cổng Dịch vụ công quốc gia/VNeID, các trường hợp sau:"
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-result-signing",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Khi thẩm định hồ sơ cấp bản sao trích lục theo phương án 2163/QĐ-BTP, lãnh đạo ký bản giấy hay ký số kết quả?",
+      "claims": [
+        {
+          "text": "Ở Bước 3, lãnh đạo cơ quan, đơn vị ký bản giấy nếu có và ký số kết quả giải quyết TTHC.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 3: Thẩm định hồ sơ",
+          "anchor": "Lãnh đạo cơ quan, đơn vị ký bản giấy (nếu có) và ký số kết quả giải quyết TTHC."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-electronic-clerical-routing",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Sau khi lãnh đạo ký số kết quả cấp bản sao trích lục theo phương án 2163/QĐ-BTP, bộ phận nào lấy số và đóng dấu điện tử?",
+      "claims": [
+        {
+          "text": "Sau khi kết quả được ký số, hệ thống tự động chuyển kết quả đến Bộ phận Văn thư điện tử để lấy số, vào sổ và đóng dấu điện tử.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 3: Thẩm định hồ sơ",
+          "anchor": "Hệ thống tự động chuyển kết quả đã ký số đến Bộ phận Văn thư điện tử để thực hiện lấy số, vào sổ và đóng dấu điện tử."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-2163-completion-status",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phương án 2163/QĐ-BTP, khi cán bộ xác nhận kết thúc quy trình cấp bản sao trích lục, hồ sơ có trạng thái gì trên hệ thống?",
+      "claims": [
+        {
+          "text": "Khi cán bộ xác nhận kết thúc quy trình giải quyết, hệ thống ở trạng thái “Đã xử lý xong”.",
+          "evidence_id": "BTP-2163",
+          "locator": "Mục B.6, Bước 3: Thẩm định hồ sơ",
+          "anchor": "Cán bộ xác nhận kết thúc quy trình giải quyết trên Hệ thống (trạng thái “Đã xử lý xong”)."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-1818-five-day-implementation",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Mốc 05 ngày ở khoản 3 Điều 2 Quyết định 1818 của Hà Nội có phải thời gian chờ bản sao trích lục của từng người dân không?",
+      "claims": [
+        {
+          "text": "Không. Đây là thời hạn hoàn thành các việc tại khoản 1 và khoản 2 Điều 2, chậm nhất 05 ngày kể từ ngày quyết định được ký ban hành; không phải thời hạn trả kết quả cho từng hồ sơ.",
+          "evidence_id": "HN-QD-1818",
+          "locator": "Điều 2 khoản 3, tr. 2",
+          "page": 2,
+          "anchor": "Hoàn thành Khoản 1 và Khoản 2 Điều này chậm nhất trong 05 ngày kể từ ngày Quyết định được ký ban hành."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-1818-effective-date",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Quyết định 1818/QĐ-TTPVHCC nêu ngày có hiệu lực là khi nào?",
+      "claims": [
+        {
+          "text": "Quyết định 1818/QĐ-TTPVHCC nêu hiệu lực kể từ ngày 01/01/2026.",
+          "evidence_id": "HN-QD-1818",
+          "locator": "Điều 3, tr. 2",
+          "page": 2,
+          "anchor": "Quyết định này có hiệu lực kể từ ngày 01/01/2026."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-1818-result-error-return",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phụ lục kèm Quyết định 1818/QĐ-TTPVHCC, nếu cán bộ Trung tâm Phục vụ hành chính công kiểm tra thấy kết quả có sai sót thì hồ sơ được xử lý thế nào?",
+      "claims": [
+        {
+          "text": "Nếu cán bộ Trung tâm Phục vụ hành chính công kiểm tra kết quả có sai sót, hồ sơ được trả lại cho đơn vị giải quyết để giải quyết lại.",
+          "evidence_id": "HN-PL-1818",
+          "locator": "Mục B.6, Bước 4: Nhận kết quả, tr. 6",
+          "page": 6,
+          "anchor": "Trường hợp cán bộ Trung tâm Phục vụ hành chính công kiểm tra kết quả có sai sót, hồ sơ sẽ được trả lại cho đơn vị giải quyết để thực hiện giải quyết lại."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-1818-system-update-after-signing",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phụ lục kèm Quyết định 1818/QĐ-TTPVHCC, Trung tâm Phục vụ hành chính công Thành phố phải cập nhật quy trình điện tử vào hệ thống khi nào?",
+      "claims": [
+        {
+          "text": "Phụ lục nêu Trung tâm Phục vụ hành chính công Thành phố cập nhật quy trình điện tử theo phương án lên Hệ thống thông tin giải quyết TTHC ngay sau khi Quyết định được ký ban hành.",
+          "evidence_id": "HN-PL-1818",
+          "locator": "Mục D.2.c, trách nhiệm Trung tâm Phục vụ hành chính công Thành phố, tr. 7",
+          "page": 7,
+          "anchor": "Cập nhập quy trình điện tử theo phương án tái cấu trúc tại quyết định này lên Hệ thống thông tin giải quyết TTHC ngay sau khi quyết định được kí ban hành."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-point-chi-khong-the-ky",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo Phần II.A.2 của phụ lục kèm Quyết định 858/QĐ-BTP, thủ tục chứng thực chữ ký trong giấy tờ, văn bản có bao gồm trường hợp điểm chỉ hoặc người yêu cầu không thể ký, không thể điểm chỉ không?",
+      "claims": [
+        {
+          "text": "Phần II.A.2 nêu thủ tục này áp dụng cả cho chứng thực điểm chỉ và trường hợp người yêu cầu chứng thực không thể ký, không thể điểm chỉ.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, tiêu đề thủ tục số 2, tr. 5",
+          "page": 5,
+          "anchor": "Thủ tục chứng thực chữ ký trong các giấy tờ, văn bản (áp dụng cho cả trường hợp chứng thực điểm chỉ và trường hợp người yêu cầu chứng thực không thể ký, không thể điểm chỉ được)"
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-ngoai-tru-so-co-dieu-kien",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi muốn yêu cầu chứng thực chữ ký tại nhà cho tiện. Theo Phần II.A.2 của phụ lục kèm Quyết định 858/QĐ-BTP, việc ngoài trụ sở chỉ được nêu cho những trường hợp nào?",
+      "claims": [
+        {
+          "text": "Phần II.A.2 chỉ nêu thực hiện ngoài trụ sở khi người yêu cầu già yếu, không thể đi lại, đang bị tạm giữ, tạm giam, thi hành án phạt tù hoặc có lý do chính đáng khác; còn cách thức thông thường là nộp trực tiếp tại các cơ quan, tổ chức được liệt kê.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, cách thức thực hiện, tr. 6",
+          "page": 6,
+          "anchor": "Nộp hồ sơ trực tiếp tại Ủy ban nhân dân cấp xã, Tổ chức hành nghề công chứng, Cơ quan đại diện hoặc ngoài trụ sở của cơ quan thực hiện chứng thực nếu người yêu cầu chứng thực thuộc diện già yếu, không thể đi lại được, đang bị tạm giữ, tạm giam, thi hành án phạt tù hoặc có lý do chính đáng khác."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-van-ban-tieng-nuoc-ngoai",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Khi xin chứng thực chữ ký trên giấy tờ bằng tiếng nước ngoài mà người thực hiện chứng thực không hiểu rõ nội dung, Phần II.A.2 cho phép yêu cầu gì và bản dịch đó có phải chứng thực chữ ký người dịch không?",
+      "claims": [
+        {
+          "text": "Nếu người thực hiện chứng thực không hiểu rõ nội dung giấy tờ, văn bản bằng tiếng nước ngoài, họ có quyền yêu cầu nộp kèm bản dịch tiếng Việt; bản dịch này không cần công chứng hoặc chứng thực chữ ký người dịch, và người yêu cầu chứng thực chịu trách nhiệm về nội dung bản dịch.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, thành phần hồ sơ, tr. 7",
+          "page": 7,
+          "anchor": "Trường hợp chứng thực chữ ký trong giấy tờ, văn bản bằng tiếng nước ngoài, nếu người thực hiện chứng thực không hiểu rõ nội dung của giấy tờ, văn bản thì có quyền yêu cầu người yêu cầu chứng thực nộp kèm theo bản dịch ra tiếng Việt nội dung của giấy tờ, văn bản đó (bản dịch không cần công chứng hoặc chứng thực chữ ký người dịch, người yêu cầu chứng thực phải chịu trách nhiệm về nội dung của bản dịch)."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-858-ket-qua-diem-chi",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Theo Phần II.A.2 của phụ lục kèm Quyết định 858/QĐ-BTP, kết quả của thủ tục chứng thực chữ ký là gì?",
+      "claims": [
+        {
+          "text": "Kết quả được ghi là giấy tờ, văn bản được chứng thực chữ ký hoặc điểm chỉ.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, kết quả thực hiện thủ tục hành chính, tr. 7",
+          "page": 7,
+          "anchor": "Kết quả thực hiện thủ tục hành chính: Giấy tờ, văn bản được chứng thực chữ ký/điểm chỉ."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-753-ky-truoc-mat",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Khi làm thủ tục chứng thực chữ ký theo khoản 2 Điều 24, tôi có thể ký sẵn ở nhà hay phải ký trước mặt người thực hiện chứng thực?",
+      "claims": [
+        {
+          "text": "Khi đủ giấy tờ, người yêu cầu minh mẫn, nhận thức và làm chủ được hành vi và không thuộc trường hợp từ chối, người thực hiện chứng thực yêu cầu người đó ký trước mặt mình; không chỉ mang giấy đã ký sẵn tới.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 24 khoản 2, tr. 15",
+          "page": 15,
+          "anchor": "Người thực hiện chứng thực kiểm tra giấy tờ yêu cầu chứng thực, nếu thấy đủ giấy tờ theo quy định tại khoản 1 Điều này, tại thời điểm chứng thực, người yêu cầu chứng thực minh mẫn, nhận thức và làm chủ được hành vi của mình và việc chứng thực không thuộc các trường hợp quy định tại Điều 25 của Nghị định này thì yêu cầu người yêu cầu chứng thực ký trước mặt"
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-753-mot-cua-chuyen-ho-so",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Ở bộ phận tiếp nhận và trả kết quả theo cơ chế một cửa, một cửa liên thông, khoản 3 Điều 24 của 753/VBHN-BTP mô tả công chức tiếp nhận xử lý thế nào khi người yêu cầu đủ điều kiện?",
+      "claims": [
+        {
+          "text": "Nếu nhận thấy người yêu cầu đủ điều kiện theo khoản 2 Điều 24, công chức tiếp nhận đề nghị người đó ký vào giấy tờ cần chứng thực và chuyển giấy tờ cho người có thẩm quyền ký chứng thực.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 24 khoản 3, tr. 15",
+          "page": 15,
+          "anchor": "Đối với trường hợp chứng thực chữ ký tại bộ phận tiếp nhận và trả kết quả theo cơ chế một cửa, một cửa liên thông thì công chức tiếp nhận hồ sơ kiểm tra các giấy tờ, nếu nhận thấy người yêu cầu chứng thực có đủ điều kiện quy định tại khoản 2 Điều này thì đề nghị người yêu cầu chứng thực ký vào giấy tờ cần chứng thực và chuyển cho người có thẩm quyền ký chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-753-nhieu-nguoi-cung-van-ban",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Nhiều người cùng ký một giấy tờ, văn bản thì có thể áp dụng thủ tục chứng thực chữ ký theo Điều 24 của 753/VBHN-BTP không?",
+      "claims": [
+        {
+          "text": "Khoản 4 Điều 24 quy định thủ tục tại các khoản 1, 2 và 3 cũng áp dụng cho chứng thực chữ ký của nhiều người trong cùng một giấy tờ, văn bản.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 24 khoản 4 điểm a, tr. 15",
+          "page": 15,
+          "anchor": "Thủ tục chứng thực chữ ký quy định tại khoản 1, 2 và 3 Điều này cũng được áp dụng đối với các trường hợp sau đây: a) Chứng thực chữ ký của nhiều người trong cùng một giấy tờ, văn bản;"
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-753-uy-quyen-khong-thu-lao",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Khoản 4 Điều 24 của 753/VBHN-BTP nêu điều kiện nào để áp dụng thủ tục chứng thực chữ ký cho Giấy ủy quyền?",
+      "claims": [
+        {
+          "text": "Thủ tục này cũng áp dụng cho Giấy ủy quyền khi việc ủy quyền không có thù lao, không có nghĩa vụ bồi thường của bên được ủy quyền và không liên quan đến chuyển quyền sở hữu tài sản, quyền sử dụng bất động sản.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 24 khoản 4 điểm d, tr. 15",
+          "page": 15,
+          "anchor": "Chứng thực chữ ký trong Giấy ủy quyền đối với trường hợp ủy quyền không có thù lao, không có nghĩa vụ bồi thường của bên được ủy quyền và không liên quan đến việc chuyển quyền sở hữu tài sản, quyền sử dụng bất động sản."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-753-tu-choi-khong-lam-chu-hanh-vi",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Nếu tại thời điểm chứng thực người yêu cầu không nhận thức và làm chủ được hành vi của mình, Điều 25 của 753/VBHN-BTP quy định thế nào?",
+      "claims": [
+        {
+          "text": "Đây là một trường hợp không được chứng thực chữ ký theo khoản 1 Điều 25.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 25 khoản 1, tr. 16",
+          "page": 16,
+          "anchor": "Tại thời điểm chứng thực, người yêu cầu chứng thực chữ ký không nhận thức và làm chủ được hành vi của mình."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-753-tu-choi-giay-to-het-han",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Nếu giấy tờ nhận dạng được xuất trình đã hết giá trị sử dụng hoặc giả mạo, Điều 25 của 753/VBHN-BTP cho phép chứng thực chữ ký không?",
+      "claims": [
+        {
+          "text": "Không. Điều 25 liệt kê trường hợp xuất trình Căn cước điện tử, giấy tờ căn cước, hộ chiếu, giấy tờ xuất nhập cảnh hoặc giấy tờ đi lại quốc tế không còn giá trị sử dụng hoặc giả mạo là trường hợp không được chứng thực chữ ký.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 25 khoản 2, tr. 16",
+          "page": 16,
+          "anchor": "Người yêu cầu chứng thực chữ ký xuất trình Căn cước điện tử hoặc Thẻ căn cước công dân hoặc Thẻ căn cước hoặc Giấy chứng nhận căn cước hoặc Hộ chiếu hoặc giấy tờ xuất nhập cảnh hoặc giấy tờ có giá trị đi lại quốc tế 33 không còn giá trị sử dụng hoặc giả mạo."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-753-tu-choi-noi-dung-cam",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Giấy tờ cần ký có nội dung trái pháp luật, đạo đức xã hội hoặc thuộc các nội dung tại khoản 4 Điều 22 thì Điều 25 của 753/VBHN-BTP xử lý thế nào?",
+      "claims": [
+        {
+          "text": "Giấy tờ, văn bản mà người yêu cầu ký có nội dung quy định tại khoản 4 Điều 22 là trường hợp không được chứng thực chữ ký theo khoản 3 Điều 25.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 25 khoản 3 và Điều 22 khoản 4, tr. 16 và 14",
+          "page": 16,
+          "anchor": "Giấy tờ, văn bản mà người yêu cầu chứng thực ký vào có nội dung quy định tại khoản 4 Điều 22 của Nghị định này."
+        },
+        {
+          "text": "Khoản 4 Điều 22 bao gồm nội dung trái pháp luật, đạo đức xã hội và các nội dung như tuyên truyền, kích động chiến tranh, xuyên tạc lịch sử, xúc phạm danh dự, nhân phẩm, uy tín hoặc vi phạm quyền công dân.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 22 khoản 4, tr. 14",
+          "page": 14,
+          "anchor": "Bản chính có nội dung trái pháp luật, đạo đức xã hội; tuyên truyền, kích động chiến tranh, chống chế độ xã hội chủ nghĩa Việt Nam; xuyên tạc lịch sử của dân tộc Việt Nam; xúc phạm danh dự, nhân phẩm, uy tín của cá nhân, tổ chức; vi phạm quyền công dân."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-chu-ky-753-hop-dong-mua-ban-nha",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi muốn dùng thủ tục chứng thực chữ ký để chứng thực chữ ký trên hợp đồng mua bán nhà. Theo Điều 25 của 753/VBHN-BTP, yêu cầu này có nằm trong thủ tục chứng thực chữ ký đang hỏi không?",
+      "claims": [
+        {
+          "text": "Điều 25 quy định giấy tờ, văn bản có nội dung là giao dịch là trường hợp không được chứng thực chữ ký, trừ Giấy ủy quyền thuộc điểm d khoản 4 Điều 24 hoặc khi pháp luật có quy định khác; vì vậy đoạn này không là căn cứ để khẳng định hợp đồng mua bán nhà được giải quyết bằng thủ tục chứng thực chữ ký.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 25 khoản 4, tr. 16",
+          "page": 16,
+          "anchor": "Giấy tờ, văn bản có nội dung là giao dịch 34, trừ các trường hợp quy định tại điểm d khoản 4 Điều 24 của Nghị định này hoặc trường hợp pháp luật có quy định khác."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-pham-vi-giay-phep-lao-dong",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Thủ tục xin cấp giấy phép lao động cho người nước ngoài ở Hà Nội cần hồ sơ gì?",
+      "claims": [
+        {
+          "text": "Tôi không có căn cứ trong phạm vi hộ tịch, chứng thực để liệt kê hồ sơ cấp giấy phép lao động. Điều 1 của văn bản này quy định về cấp bản sao và chứng thực, không phải thủ tục cấp giấy phép lao động.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 1, tr. 2",
+          "page": 2,
+          "anchor": "Nghị định này quy định về thẩm quyền, thủ tục cấp bản sao từ sổ gốc; chứng thực bản sao từ bản chính; chứng thực chữ ký; chứng thực giao dịch 3; giá trị pháp lý của bản sao được cấp từ sổ gốc, bản sao được chứng thực từ bản chính, chữ ký được chứng thực và giao dịch 4 được chứng thực; quản lý nhà nước về chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-noi-cu-tru",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi tạm trú tại Hà Nội nhưng thường trú ở tỉnh khác. Chỉ để chứng thực chữ ký thì có phải về nơi thường trú không?",
+      "claims": [
+        {
+          "text": "Không. Việc chứng thực chữ ký không phụ thuộc vào nơi cư trú của người yêu cầu; cần chọn cơ quan, tổ chức có thẩm quyền chứng thực.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 5 khoản 5 điểm a, tr. 5",
+          "page": 5,
+          "anchor": "Việc chứng thực không phụ thuộc vào nơi cư trú của người yêu cầu chứng thực thực hiện trong các trường hợp sau đây: a) Chứng thực bản sao từ bản chính, chứng thực chữ ký;"
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-quyen-khi-bi-tu-choi",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi bị từ chối chứng thực chữ ký nhưng chỉ được trả lời miệng. Tôi có thể yêu cầu giải thích bằng văn bản không?",
+      "claims": [
+        {
+          "text": "Có. Người bị từ chối chứng thực có quyền yêu cầu cơ quan, tổ chức giải thích rõ lý do bằng văn bản hoặc khiếu nại theo quy định của pháp luật.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 8 khoản 1, tr. 6",
+          "page": 6,
+          "anchor": "Trong trường hợp bị từ chối chứng thực thì có quyền yêu cầu cơ quan, tổ chức từ chối giải thích rõ lý do bằng văn bản hoặc khiếu nại theo quy định của pháp luật."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-xung-dot-loi-ich",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Người được giao chứng thực chữ ký có được chứng thực nếu việc đó liên quan đến lợi ích của chính họ không?",
+      "claims": [
+        {
+          "text": "Không. Người thực hiện chứng thực không được chứng thực chữ ký có liên quan đến tài sản hoặc lợi ích của bản thân mình.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 9 khoản 3, tr. 6",
+          "page": 6,
+          "anchor": "Không được chứng thực giao dịch 14, chứng thực chữ ký có liên quan đến tài sản, lợi ích của bản thân mình"
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-xac-minh-hop-phap",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Khi có việc cần xác minh về tính hợp pháp của giấy tờ xin chứng thực chữ ký, người chứng thực có được hỏi cơ quan liên quan không?",
+      "claims": [
+        {
+          "text": "Có. Người thực hiện chứng thực có quyền yêu cầu cơ quan, tổ chức hoặc cá nhân liên quan cung cấp thông tin cần thiết để xác minh tính hợp pháp của giấy tờ, văn bản.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 9 khoản 5, tr. 7",
+          "page": 7,
+          "anchor": "Yêu cầu cơ quan, tổ chức, cá nhân có liên quan cung cấp thông tin cần thiết để xác minh tính hợp pháp của giấy tờ, văn bản yêu cầu chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-xu-ly-giay-gia",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Nếu giấy tờ yêu cầu chứng thực chữ ký được xác định là giả mạo thì người thực hiện chứng thực xử lý giấy tờ đó thế nào?",
+      "claims": [
+        {
+          "text": "Người thực hiện chứng thực lập biên bản tạm giữ và chuyển cơ quan nhà nước có thẩm quyền xử lý theo quy định; không chỉ trả lại giấy tờ và bỏ qua.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 9 khoản 6, tr. 7",
+          "page": 7,
+          "anchor": "Lập biên bản tạm giữ, chuyển cơ quan nhà nước có thẩm quyền xử lý theo quy định của pháp luật đối với giấy tờ, văn bản yêu cầu chứng thực được cấp sai thẩm quyền, giả mạo hoặc có nội dung quy định tại khoản 4 Điều 22 của Nghị định này."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-bo-sung-hay-chuyen-noi-nop",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Với hồ sơ chứng thực chữ ký, thiếu giấy tờ và nộp sai cơ quan có được hướng dẫn giống nhau không?",
+      "claims": [
+        {
+          "text": "Không. Nếu hồ sơ chưa đầy đủ thì được hướng dẫn bổ sung; nếu nộp không đúng cơ quan có thẩm quyền thì được hướng dẫn nộp đến cơ quan có thẩm quyền chứng thực.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 9 khoản 7, tr. 7",
+          "page": 7,
+          "anchor": "Hướng dẫn người yêu cầu chứng thực bổ sung hồ sơ, nếu hồ sơ chứng thực chưa đầy đủ hoặc hướng dẫn nộp hồ sơ đến cơ quan có thẩm quyền chứng thực, nếu nộp hồ sơ không đúng cơ quan có thẩm quyền."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-du-lieu-da-cong-bo",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Thông tin của giấy tờ làm thủ tục chứng thực chữ ký đã có dữ liệu trong cơ sở dữ liệu được cơ quan chủ quản công bố. Có phải nộp hoặc xuất trình lại giấy tờ đó không?",
+      "claims": [
+        {
+          "text": "Trong điều kiện nêu trên, người thực hiện chứng thực không yêu cầu nộp hoặc xuất trình bản chính hay bản sao giấy tờ chứa thông tin đó.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 9 khoản 8, tr. 7",
+          "page": 7,
+          "anchor": "Không yêu cầu người yêu cầu chứng thực nộp, xuất trình bản chính hoặc bản sao các giấy tờ, tài liệu mà các thông tin trong các giấy tờ, tài liệu đã có dữ liệu trong các cơ sở dữ liệu được cơ quan chủ quản cơ sở dữ liệu công bố."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-du-lieu-khong-chinh-xac",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Cán bộ làm thủ tục chứng thực chữ ký tra được dữ liệu nhưng thông tin không chính xác. Ngoài việc bổ sung hồ sơ, tôi có thể được đề nghị làm gì?",
+      "claims": [
+        {
+          "text": "Cơ quan hoặc người có thẩm quyền yêu cầu bổ sung thành phần hồ sơ để giải quyết; đồng thời đề nghị cập nhật, điều chỉnh thông tin trong cơ sở dữ liệu theo quy định.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 9 khoản 9, tr. 7",
+          "page": 7,
+          "anchor": "Trường hợp không khai thác được thông tin hoặc thông tin khai thác được không đầy đủ, không chính xác thì cơ quan, người có thẩm quyền tiếp nhận, giải quyết thủ tục hành chính yêu cầu cá nhân, tổ chức bổ sung thành phần hồ sơ để giải quyết thủ tục hành chính; đồng thời đề nghị cá nhân, tổ chức thực hiện cập nhật, điều chỉnh thông tin trong các cơ sở dữ liệu theo quy định của pháp luật."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-ngoai-tru-so-ghi-gio",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Khi chứng thực chữ ký ngoài trụ sở, chỉ ghi địa điểm mà không ghi giờ, phút thì có đủ theo Điều 10 không?",
+      "claims": [
+        {
+          "text": "Chưa. Khi thực hiện chứng thực phải ghi rõ địa điểm; nếu chứng thực ngoài trụ sở thì còn phải ghi rõ thời gian đến giờ, phút.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 10 khoản 2, tr. 8",
+          "page": 8,
+          "anchor": "Khi thực hiện chứng thực phải ghi rõ địa điểm chứng thực; trường hợp chứng thực ngoài trụ sở phải ghi rõ thời gian (giờ, phút) chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-lich-lam-viec-cu-the",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Bạn cho tôi giờ tiếp nhận chứng thực chữ ký sáng thứ Bảy ở phường tôi được không? Tôi chưa cho biết phường nào.",
+      "claims": [
+        {
+          "text": "Chưa đủ căn cứ để nêu giờ cụ thể hoặc khẳng định có tiếp nhận thứ Bảy. Cơ quan chứng thực phải niêm yết công khai lịch làm việc tại trụ sở; cần xác định đúng cơ quan và kiểm tra lịch niêm yết của nơi đó.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 10 khoản 3, tr. 8",
+          "page": 8,
+          "anchor": "Cơ quan, tổ chức thực hiện chứng thực phải bố trí người tiếp nhận yêu cầu chứng thực các ngày làm việc trong tuần; phải niêm yết công khai lịch làm việc, thẩm quyền, thủ tục, thời gian giải quyết và phí18, chi phí chứng thực tại trụ sở của cơ quan, tổ chức."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-so-ghi-van-ban",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Trên giấy có chứng thực chữ ký, số chứng thực đối chiếu với sổ như thế nào?",
+      "claims": [
+        {
+          "text": "Số ghi trong văn bản chứng thực phải tương ứng với số chứng thực đã ghi trong sổ chứng thực.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 13 khoản 2, tr. 9",
+          "page": 9,
+          "anchor": "Số ghi trong văn bản chứng thực là số tương ứng với số chứng thực đã ghi trong sổ chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-thoi-han-luu",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Khi chứng thực chữ ký trên giấy tờ thông thường, cơ quan giữ mấy bản và trong bao lâu? Có áp dụng việc lưu đó cho chữ ký của người tiến hành giám định trên kết luận giám định tư pháp không?",
+      "claims": [
+        {
+          "text": "Cơ quan, tổ chức lưu một bản giấy tờ, văn bản đã chứng thực trong 02 năm. Trường hợp chứng thực chữ ký của người tiến hành giám định trong văn bản kết luận giám định tư pháp thì không lưu trữ bản đó.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 14 khoản 2, tr. 10",
+          "page": 10,
+          "anchor": "Đối với việc chứng thực chữ ký và chứng thực chữ ký người dịch, cơ quan, tổ chức thực hiện chứng thực phải lưu một bản giấy tờ, văn bản đã chứng thực; thời hạn lưu trữ là 02 (hai) năm. Trong trường hợp chứng thực chữ ký của người tiến hành giám định trong văn bản kết luận giám định tư pháp, chứng thực bản sao từ bản chính thì không lưu trữ."
+        }
+      ]
+    },
+    {
+      "key": "chu-ky-753-chi-phi-in-ho",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi nhờ cơ quan chứng thực chữ ký in, chụp thêm tài liệu tại Hà Nội. Có thể báo ngay một mức giá cố định từ Điều 15 không?",
+      "claims": [
+        {
+          "text": "Không thể xác định số tiền cụ thể chỉ từ điều này. Nếu người yêu cầu đề nghị in, chụp, đánh máy giấy tờ thì phải trả chi phí cho việc đó; ở trong nước mức trần do UBND cấp tỉnh quy định trên cơ sở thực tế địa phương.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 15 khoản 3, tr. 11",
+          "page": 11,
+          "anchor": "Trong trường hợp người yêu cầu chứng thực đề nghị cơ quan thực hiện chứng thực in, chụp, đánh máy giấy tờ, văn bản thì phải nộp chi phí để thực hiện việc đó. Ở trong nước, mức trần chi phí do Ủy ban nhân dân tỉnh, thành phố trực thuộc Trung ương (sau đây gọi chung là Ủy ban nhân dân cấp tỉnh) quy định trên cơ sở thực tế của địa phương;"
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-gioi-han-co-quan-trong-nuoc",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Tôi ở nước ngoài, muốn cải chính hộ tịch tại cơ quan đại diện Việt Nam. Có thể dựa riêng vào Quyết định 163/QĐ-BTP để biết hồ sơ phải nộp ở đó không?",
+      "claims": [
+        {
+          "text": "Không đủ căn cứ. Điều 1 công bố các thủ tục tại cơ quan đăng ký hộ tịch trong nước, nên không thể dùng riêng quyết định này để liệt kê hồ sơ cải chính tại cơ quan đại diện ở nước ngoài.",
+          "evidence_id": "BTP-163",
+          "locator": "Điều 1, tr. 1",
+          "page": 1,
+          "anchor": "Điều 1. Công bố kèm theo Quyết định này các thủ tục hành chính được sửa đổi, bổ sung trong lĩnh vực hộ tịch tại cơ quan đăng ký hộ tịch trong nước thuộc phạm vi chức năng quản lý của Bộ Tư pháp (theo Phụ lục ban hành kèm theo Quyết định này)."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-direct-submission-center",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Tôi muốn nộp trực tiếp hồ sơ cải chính hộ tịch. Theo Phụ lục Quyết định 163/QĐ-BTP, tôi nộp ở đâu?",
+      "claims": [
+        {
+          "text": "Theo mục thủ tục trong Phụ lục, nếu chọn nộp trực tiếp, bạn nộp hồ sơ tại Trung tâm Phục vụ hành chính công có thẩm quyền.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Trình tự thực hiện, tr. 285",
+          "page": 285,
+          "anchor": "- Nếu lựa chọn hình thức n p hồ s trực tiếp, ng ời yêu cầu ăng ký tha i, c i chính, b sung thông tin h tị h, x ịnh l i dân t c n p hồ s tha i, c i chính, b sung thông tin h tị h, x ịnh l i dân t c t i Trung tâm Ph c v hành chính công có thẩm quy n;"
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-online-access-channel",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Nếu làm thủ tục cải chính hộ tịch trực tuyến, theo Phụ lục Quyết định 163/QĐ-BTP tôi có thể truy cập qua những kênh nào?",
+      "claims": [
+        {
+          "text": "Theo mục thủ tục này, người chọn nộp trực tuyến truy cập Cổng dịch vụ công quốc gia hoặc Ứng dụng định danh quốc gia; việc vận hành cụ thể cần đối chiếu cổng tại thời điểm nộp.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Trình tự thực hiện, tr. 285",
+          "page": 285,
+          "anchor": "- Nếu lựa chọn hình th ức n p hồ s trực tuyến, ng ời yêu c ầu tha i, c i chính, b sung thông tin h tị h, x ịnh l i dân t c truy cập C ng dịch v công quố gia h Ứ đị h h ố ."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-online-form-attachments-payment",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Khi cải chính hộ tịch trực tuyến, tôi khai thông tin, gửi tài liệu và thanh toán lệ phí (nếu có) như thế nào?",
+      "claims": [
+        {
+          "text": "Người nộp trực tuyến cung cấp thông tin theo mẫu hộ tịch điện tử tương tác, đính kèm bản chụp hoặc bản sao điện tử giấy tờ, tài liệu theo quy định; nếu có phí, lệ phí thì thanh toán trực tuyến hoặc theo cách thức khác do pháp luật quy định.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Trình tự thực hiện, tr. 285",
+          "page": 285,
+          "anchor": "Ng ời yêu cầu ăng ký tha i, c i chính, b sung thông tin h tịch, xác ịnh l i dân t c trực tuyến cung cấp thông tin theo mẫu h tị h i n t t ng t thực hi n ăng ký tha i, c i chính, b sung thông tin h tị h, x ịnh l i dân t c , nh kè n ch p ho c b n sa i n t các giấy tờ, tài li u the u ịnh;"
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-incomplete-file-supplement",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Nếu hồ sơ cải chính hộ tịch chưa đầy đủ hoặc chưa hợp lệ, cán bộ tiếp nhận có phải chỉ rõ tôi cần bổ sung gì không?",
+      "claims": [
+        {
+          "text": "Cán bộ tiếp nhận thông báo để người yêu cầu bổ sung, hoàn thiện và phải nêu rõ loại giấy tờ, nội dung cần bổ sung; sau khi bổ sung thì thực hiện lại bước tiếp nhận hồ sơ đầy đủ, hợp lệ.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Trình tự thực hiện, tr. 285",
+          "page": 285,
+          "anchor": "(ii) r ờng hợp hồ s h a ầ , hợp l thì cán b tiếp nhận hồ s thông báo h ng ời yêu cầu b sung, hoàn thi n hồ s , nêu rõ i giấy tờ, n i dung cần b sung ng ời yêu cầu b sung, hoàn thi n."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-cannot-complete-refusal",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Tôi không thể bổ sung hồ sơ cải chính hộ tịch theo yêu cầu. Bên tiếp nhận xử lý và thông báo thế nào?",
+      "claims": [
+        {
+          "text": "Nếu người yêu cầu không bổ sung, hoàn thiện được hồ sơ, cán bộ tiếp nhận báo Lãnh đạo Trung tâm Phục vụ hành chính công để có thông báo từ chối giải quyết yêu cầu.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Trình tự thực hiện, tr. 285",
+          "page": 285,
+          "anchor": "(iii) r ờng hợp ng ời yêu cầu ăng ký tha i, c i chính, b sung thông tin h tị h, x ịnh l i dân t c không b sung, hoàn thi n ợc hồ s thì cán b tiếp nhận hồ s Lãnh o Trung tâm Ph c v hành chính công có thông báo từ chối gi i quyết yêu cầu ăng ký tha i, c i chính, b sung thông tin h tị h, x ịnh l i dân t c."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-officer-appraisal",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Sau khi tiếp nhận hồ sơ cải chính hộ tịch, công chức tư pháp–hộ tịch phải thẩm tra những gì?",
+      "claims": [
+        {
+          "text": "Công chức tư pháp–hộ tịch thẩm tra tính thống nhất, hợp lệ của thông tin trong hồ sơ, giấy tờ, tài liệu người yêu cầu nộp, xuất trình hoặc đính kèm.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Trình tự thực hiện, tr. 286",
+          "page": 286,
+          "anchor": "286 - Công chứ t h - h tịch thẩm tra hồ s (thẩm tra tính thống nhất, hợp l c a các thông tin trong hồ s , giấy tờ, tài li u do ng ời yêu cầu n p, xuất trình ho nh kè )."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-delay-apology-notice",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Hồ sơ cải chính hộ tịch của tôi cần xác minh thêm, không trả được đúng hẹn. Phiếu hẹn lại phải cho biết gì?",
+      "claims": [
+        {
+          "text": "Khi cần kiểm tra, xác minh hoặc có nguyên nhân khác không thể trả đúng hẹn, công chức lập Phiếu xin lỗi và hẹn lại; phiếu nêu lý do chậm và thời gian hẹn trả kết quả.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Trình tự thực hiện, tr. 286",
+          "page": 286,
+          "anchor": "+ r ờng hợp cần ph i ki m tra, xác minh làm rõ ho c do nguyên nhân khác mà không th tr kết qu úng thời gian ã hẹn thì công chứ t h - h tịch lập Phiếu xin lỗi và hẹn l i ngày tr kết qu , tr ng nêu rõ ý h ậm tr kết qu và th ời gian h ẹn tr kết qu , chuy n Trung tâm Ph c v hành chính công tr cho ng ời yêu cầu (nếu ng ời yêu cầu n p hồ s trực tiếp), ho c g i Phiếu xin lỗi và hẹn l i ngày tr kết qu ua th i n t ho c g i tin nh n qua i n tho i i ng cho ng ời yêu cầu (nếu ng ời yêu cầu n p hồ s trực tuyến)."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-online-preview-extract",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Tôi làm cải chính hộ tịch trực tuyến. Trước khi ghi sổ, tôi nhận biểu mẫu nào để kiểm tra thông tin và nhận qua đâu?",
+      "claims": [
+        {
+          "text": "Với hồ sơ tiếp nhận trực tuyến, công chức gửi lại biểu mẫu Trích lục điện tử có thông tin đầy đủ cho người yêu cầu qua thư điện tử hoặc thiết bị số để kiểm tra và xác nhận.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Trình tự thực hiện, tr. 286",
+          "page": 286,
+          "anchor": "r ờng hợp tiếp nhận hồ s ăng ký tha i, c i chính, b sung thông tin h tị h, x ịnh l i dân t c theo hình thức trực tuyến, công chứ t h - h tịch g i l i bi u mẫu Trích l c tha i, c i chính, b sung thông tin h tịch, xác ịnh l i dân t i n t với thông tin ầ cho ng ời yêu cầu ua th i n t ho c thiết bị số."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-online-no-response-one-day",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Nếu tôi không phản hồi sau một ngày kể từ khi nhận biểu mẫu điện tử để xác nhận nội dung cải chính hộ tịch, công chức làm gì tiếp theo?",
+      "claims": [
+        {
+          "text": "Nếu người yêu cầu xác nhận thông tin đã thống nhất, đầy đủ hoặc không phản hồi sau một ngày, công chức ghi nội dung vào sổ và cập nhật trên Phần mềm đăng ký, quản lý hộ tịch điện tử dùng chung.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Trình tự thực hiện, tr. 286",
+          "page": 286,
+          "anchor": "Nếu ng ời yêu cầu xác nhận thông tin ã th ống nhất, ầ ho c không có ph n hồi sau thời h n m t ngày thì công chứ t h - h tịch thực hi n ghi n i dung vào S ăng ký tha i, c i chính, b sung thông tin h tị h, x ịnh l i dân t c, cập nhật thông tin ăng tha i, c i chính, b sung thông tin h tịch, x ịnh l i dân t c trên Phần m ăng ký, u n lý h tị h i n t dùng chung."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-authorization-family-exception",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Tôi ủy quyền cho chị ruột làm thủ tục cải chính hộ tịch. Văn bản ủy quyền có phải chứng thực không?",
+      "claims": [
+        {
+          "text": "Văn bản ủy quyền thực hiện đăng ký phải được chứng thực theo quy định; tuy nhiên, nếu người được ủy quyền là ông, bà, cha, mẹ, con, vợ, chồng, anh, chị hoặc em ruột của người ủy quyền thì văn bản ủy quyền không phải chứng thực.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Thành phần hồ sơ, tr. 287",
+          "page": 287,
+          "anchor": "- Văn n u n ( ợ hứng thự ) the u ịnh a h uật tr ng tr ờng hợ u n thự hi n vi ăng ký tha i, i h nh, sung thông tin h tị h, x ịnh i n t . r ờng hợ ng ời ợ u n ông, , cha, ẹ, n, vợ, hồng, anh, hị, e ru t a ng ời u n thì văn n u n không h i hứng thự ."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-residence-data-no-upload",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Khi làm thủ tục cải chính hộ tịch, nếu nơi tiếp nhận đã khai thác được thông tin giấy tờ chứng minh nơi cư trú từ Cơ sở dữ liệu quốc gia về dân cư, tôi còn phải đưa bản giấy hoặc tải lên không?",
+      "claims": [
+        {
+          "text": "Nếu thông tin về giấy tờ chứng minh nơi cư trú đã được khai thác từ Cơ sở dữ liệu quốc gia về dân cư bằng phương thức quy định, người yêu cầu không phải xuất trình khi nộp trực tiếp hoặc tải lên khi nộp trực tuyến.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Thành phần hồ sơ, tr. 288",
+          "page": 288,
+          "anchor": "r ờng hợp các t hông tin v giấy tờ chứng inh n i trú ã ợc khai thác t ừ C s i u uố gia v n bằng h ng th ứ n thì ng ời yêu c ầu không ph i xuất trình (theo hình th ức trực tiếp) ho c t i lên (theo hình th ức trực tuyến)."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-residence-choice-support",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Tôi muốn cải chính hộ tịch nhưng đến UBND cấp xã không phải nơi thường trú hoặc tạm trú. Xã tiếp nhận có trách nhiệm hỗ trợ gì?",
+      "claims": [
+        {
+          "text": "Khi cá nhân làm thủ tục hộ tịch không tại UBND cấp xã nơi thường trú hoặc tạm trú, UBND cấp xã nơi tiếp nhận có trách nhiệm hỗ trợ người dân nộp hồ sơ đăng ký hộ tịch trực tuyến đến đúng cơ quan có thẩm quyền.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Lưu ý về nơi cư trú, tr. 288",
+          "page": 288,
+          "anchor": "r ờng hợp cá nhân lựa chọn thực hi n th t c hành chính v h tịch không ph i t i Ủy ban nhân dân c ấ xã n i th ờng trú ho n i t m trú thì Ủy ban nhân dân c ấ xã n i ti ếp nh ận yêu c ầu có trách nhi m hỗ trợ ng ời dân n p hồ s ăng ký h tịch trực tuyến ến úng uan có thẩm quy n the u ịnh."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-no-extra-documents",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Khi tiếp nhận hồ sơ cải chính hộ tịch, cán bộ có được yêu cầu tôi nộp thêm giấy tờ mà pháp luật hộ tịch không quy định phải nộp không?",
+      "claims": [
+        {
+          "text": "Người tiếp nhận phải tiếp nhận đúng, đủ hồ sơ theo pháp luật hộ tịch và không được yêu cầu người đăng ký nộp thêm giấy tờ mà pháp luật hộ tịch không quy định phải nộp.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Lưu ý về giấy tờ, tr. 288",
+          "page": 288,
+          "anchor": "+ Ng ời tiế nhận tr h nhi tiế nhận úng, hồ s ăng ký h tị h the u ịnh a h uật h tị h , không ợ êu ầu ng ời ăng ký h tị h n thê giấ tờ h uật h tị h không u ịnh h i n ."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-gia-tri",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi ký một bản cam kết rồi đi chứng thực chữ ký. Như vậy cơ quan chứng thực hay tôi chịu trách nhiệm về những gì đã cam kết?",
+      "claims": [
+        {
+          "text": "Bạn chịu trách nhiệm về nội dung. Chữ ký được chứng thực chứng minh rằng chính bạn đã ký; đó không phải là xác nhận mọi điều bạn viết đều đúng.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 3 khoản 3, tr. PDF 4",
+          "page": 4,
+          "anchor": "3. Chữ ký được chứng thực theo quy định tại Nghị định này có giá trị chứng minh người yêu cầu chứng thực đã ký chữ ký đó, là căn cứ để xác định trách nhiệm của người ký về nội dung của giấy tờ, văn bản."
+        },
+        {
+          "text": "Người thực hiện chứng thực chịu trách nhiệm về tính xác thực của chữ ký.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 23 khoản 2, tr. PDF 14",
+          "page": 14,
+          "anchor": "2. Người thực hiện chứng thực chịu trách nhiệm về tính xác thực về chữ ký của người yêu cầu chứng thực trong giấy tờ, văn bản."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-loi-chung",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Trên giấy xin chứng thực chữ ký chỉ có con dấu, không có lời chứng. Chỉ dấu đó đã đủ theo quy định về lời chứng chưa?",
+      "claims": [
+        {
+          "text": "Chưa. Lời chứng là nội dung bắt buộc của văn bản chứng thực; không thể lấy riêng con dấu thay cho lời chứng.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 12 khoản 1, tr. PDF 8",
+          "page": 8,
+          "anchor": "1. Lời chứng là nội dung bắt buộc của Văn bản chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-nhieu-trang",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Giấy xin chứng thực chữ ký có hai trang in trên cùng một tờ. Quy định về vị trí lời chứng và đóng giáp lai phân biệt trang với tờ thế nào?",
+      "claims": [
+        {
+          "text": "Từ hai trang trở lên thì ghi lời chứng vào trang cuối. Điều kiện phải đóng dấu giáp lai ở khoản này tính theo số tờ: từ hai tờ trở lên, không phải cứ có hai trang là có hai tờ.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 24 khoản 2 điểm b, tr. PDF 15",
+          "page": 15,
+          "anchor": "Đối với giấy tờ, văn bản có từ (02) hai trang trở lên thì ghi lời chứng vào trang cuối, nếu giấy tờ, văn bản có từ 02 (hai) tờ trở lên thì phải đóng dấu giáp lai."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-to-loi-chung",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Khi chứng thực chữ ký, tờ có chữ ký đã hết chỗ nên lời chứng nằm trên tờ kế tiếp. Hai tờ có được để rời không đóng giáp lai không?",
+      "claims": [
+        {
+          "text": "Không. Nếu lời chứng được ghi trên tờ liền sau trang có chữ ký, phải đóng dấu giáp lai giữa giấy tờ được chứng thực chữ ký và trang ghi lời chứng.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, trình tự thực hiện, tr. PDF 6",
+          "page": 6,
+          "anchor": "Trường hợp lời chứng được ghi tại tờ liền sau của trang có chữ ký thì phải đóng dấu giáp lai giữa giấy tờ, văn bản chứng thực chữ ký và trang ghi lời chứng."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-ly-lich",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi tự khai sơ yếu lý lịch và chỉ cần chứng thực chữ ký của mình. Quy định về chứng thực chữ ký có áp dụng cho người khai lý lịch không?",
+      "claims": [
+        {
+          "text": "Có. Chữ ký của người khai lý lịch cá nhân thuộc các trường hợp áp dụng thủ tục chứng thực chữ ký theo Điều 24.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 24 khoản 4 điểm b, tr. PDF 15",
+          "page": 15,
+          "anchor": "b) Chứng thực chữ ký của người khai lý lịch cá nhân;"
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-mau-don",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Đi chứng thực chữ ký trên một giấy tờ tôi mang theo, có phải điền thêm mẫu đơn yêu cầu riêng của thủ tục không?",
+      "claims": [
+        {
+          "text": "Phụ lục 858 không quy định mẫu đơn hay mẫu tờ khai riêng cho thủ tục này.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, tên mẫu đơn, mẫu tờ khai, tr. PDF 7",
+          "page": 7,
+          "anchor": "- Tên mẫu đơn, mẫu tờ khai: Không."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-kenh-nop",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi muốn gửi ảnh chữ ký qua mạng thay cho việc đến nộp. Phụ lục 858 có liệt kê cách nộp trực tuyến cho thủ tục chứng thực chữ ký thông thường không?",
+      "claims": [
+        {
+          "text": "Không. Mục cách thức thực hiện ghi nộp trực tiếp tại UBND cấp xã, tổ chức hành nghề công chứng hoặc cơ quan đại diện; ngoài trụ sở chỉ trong những trường hợp được nêu. Mục này không liệt kê cách nộp bằng ảnh chữ ký qua mạng.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, cách thức thực hiện, tr. PDF 6",
+          "page": 6,
+          "anchor": "- Cách thức thực hiện: Nộp hồ sơ trực tiếp tại Ủy ban nhân dân cấp xã, Tổ chức hành nghề công chứng, Cơ quan đại diện hoặc ngoài trụ sở của cơ quan thực hiện chứng thực nếu người yêu cầu chứng thực thuộc diện già yếu, không thể đi lại được, đang bị tạm giữ, tạm giam, thi hành án phạt tù hoặc có lý do chính đáng khác."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-mat-kha-nang-diem-chi",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi không ký được nên xin điểm chỉ. Nếu tại lúc chứng thực tôi không làm chủ được hành vi thì đổi sang điểm chỉ có bỏ qua được điều kiện này không?",
+      "claims": [
+        {
+          "text": "Không. Các trường hợp không được chứng thực chữ ký theo Điều 25 cũng áp dụng khi chứng thực điểm chỉ do người yêu cầu không ký được.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 26, tr. PDF 16",
+          "page": 16,
+          "anchor": "Việc chứng thực chữ ký quy định tại các Điều 23, 24 và trường hợp không được chứng thực chữ ký tại Điều 25 của Nghị định này cũng được áp dụng trong trường hợp chứng thực điểm chỉ khi người yêu cầu chứng thực chữ ký không ký được và trường hợp người yêu cầu chứng thực không thể ký, điểm chỉ được."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-khong-the-ky",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Người thân tôi không thể ký cũng không thể điểm chỉ. Lời chứng có được ghi là người đó đã ký không?",
+      "claims": [
+        {
+          "text": "Không. Mẫu số 07 ghi nhận đúng việc người yêu cầu không thể ký, điểm chỉ nhưng cam đoan đã hiểu và tự chịu trách nhiệm về nội dung văn bản; không ghi là đã ký.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Phụ lục, Mẫu số 07, tr. PDF 39",
+          "page": 39,
+          "anchor": "không thể ký, điểm chỉ được nhưng cam đoan đã hiểu, tự chịu trách nhiệm về nội dung của giấy tờ, văn bản này."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-nhieu-nguoi-hon-hop",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Hai người làm chung một văn bản: một người ký, người còn lại điểm chỉ. Lời chứng ghi chung là “đã ký” có đúng mẫu không?",
+      "claims": [
+        {
+          "text": "Không. Khi có cả người ký và người điểm chỉ, mẫu lời chứng cho nhiều người yêu cầu ghi là cùng “ký và điểm chỉ”.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Phụ lục, lời chứng nhiều người, ghi chú (7), tr. PDF 36",
+          "page": 36,
+          "anchor": "Trường hợp nhiều người, trong đó có người ký, có người điểm chỉ vào giấy tờ, văn bản thì ghi là cùng ”ký và điểm chỉ”."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-chu-the",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi xin chứng thực chữ ký ở văn phòng công chứng thay vì ở phường. Ai ký chứng thực và dùng con dấu nào?",
+      "claims": [
+        {
+          "text": "Công chứng viên có thẩm quyền ký chứng thực và đóng dấu của tổ chức hành nghề công chứng.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 5 khoản 4, tr. PDF 5",
+          "page": 5,
+          "anchor": "4. Công chứng viên có thẩm quyền và trách nhiệm chứng thực các việc quy định tại các điểm a, b và c khoản 1 Điều này, ký chứng thực và đóng dấu của tổ chức hành nghề công chứng."
+        },
+        {
+          "text": "Danh mục việc được dẫn chiếu có việc chứng thực chữ ký trong giấy tờ, văn bản.",
+          "evidence_id": "BTP-VBHN-753",
+          "page": 4,
+          "locator": "Điều 5 khoản 1 điểm b, tr. PDF 4",
+          "anchor": "b) Chứng thực chữ ký trong các giấy tờ, văn bản;"
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-uy-quyen-phuong",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Có phải chỉ đích thân Chủ tịch UBND cấp xã mới được thực hiện chứng thực chữ ký, không thể ủy quyền hoặc phân công?",
+      "claims": [
+        {
+          "text": "Không nên hiểu như vậy. Chủ tịch UBND cấp xã chỉ đạo, tổ chức hoạt động chứng thực; việc ủy quyền, phân công, ký và sử dụng con dấu thực hiện theo pháp luật được dẫn ở khoản 2 Điều 5. Không thể chỉ từ chức danh một cán bộ mà kết luận người đó đã được phân công.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 5 khoản 2, tr. PDF 5",
+          "page": 5,
+          "anchor": "2. Chủ tịch Ủy ban nhân dân cấp xã chỉ đạo và tổ chức thực hiện hoạt động chứng thực quy định tại khoản 1 Điều này trên địa bàn. Việc ủy quyền, phân công thực hiện các việc chứng thực quy định tại khoản 1 Điều này và việc ký, sử dụng con dấu khi thực hiện chứng thực được thực hiện theo quy định pháp luật về tổ chức chính quyền địa phương, pháp luật về tổ chức cơ quan chuyên môn thuộc Ủy ban nhân dân cấp xã và pháp luật có liên quan."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-le-phi-luu",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi đã trả phí chứng thực chữ ký. Cơ quan có được thu riêng khoản “phí lưu bản giấy chứng thực” đối với bản họ giữ theo Điều 14 không?",
+      "claims": [
+        {
+          "text": "Không. Đối với văn bản chứng thực phải lưu theo khoản 2 Điều 14, cơ quan, tổ chức thực hiện chứng thực không được thu phí hoặc chi phí khác cho bản lưu đó.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 14 khoản 4, tr. PDF 10",
+          "page": 10,
+          "anchor": "4. Cơ quan, tổ chức thực hiện chứng thực không được thu phí 25, chi phí khác đối với văn bản chứng thực lưu trữ quy định tại khoản 2 và khoản 3 Điều này; có trách nhiệm bảo quản, lưu trữ sổ chứng thực và văn bản chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-luu-so",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Bản giấy chứng thực chữ ký đã qua hai năm. Sổ ghi việc chứng thực đó có cùng thời hạn lưu như bản giấy không?",
+      "claims": [
+        {
+          "text": "Không. Sổ chứng thực là tài liệu lưu trữ của Nhà nước và được lưu vĩnh viễn tại trụ sở cơ quan, tổ chức thực hiện chứng thực.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 14 khoản 1, tr. PDF 10",
+          "page": 10,
+          "anchor": "1. Sổ chứng thực là tài liệu lưu trữ của Nhà nước, được bảo quản, lưu trữ vĩnh viễn tại trụ sở cơ quan, tổ chức thực hiện chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-so-nam-moi",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi thấy hai việc chứng thực chữ ký ở cùng cơ quan mang số thứ tự 01 nhưng thuộc hai năm. Có nhất thiết là ghi trùng sai không?",
+      "claims": [
+        {
+          "text": "Không nhất thiết. Nếu sổ được dùng tiếp sang năm sau thì việc đầu tiên của năm sau bắt đầu lại từ số 01, không nối tiếp số cuối năm trước.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 13 khoản 2, tr. PDF 9",
+          "page": 9,
+          "anchor": "Đối với sổ được sử dụng tiếp cho năm sau thì trường hợp chứng thực đầu tiên của năm sau sẽ ghi bắt đầu từ số 01, không được lấy tiếp số thứ tự cuối cùng của năm trước."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-so-van-ban",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Nhiều người cùng ký một giấy để chứng thực. Khi ghi sổ, số lượng văn bản được tính theo số người ký hay số giấy đã chứng thực?",
+      "claims": [
+        {
+          "text": "Tính theo số giấy tờ, văn bản mà người thực hiện đã ký chứng thực. Ví dụ mười người ký trên cùng một văn bản đã được chứng thực thì cột số lượng ghi một, không phải mười.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Phụ lục, Mẫu số 20, ghi chú cột (6), tr. PDF 63",
+          "page": 63,
+          "anchor": "- (6) Thống kê theo số giấy tờ, văn bản mà người thực hiện chứng thực đã ký chứng thực (Ví dụ: Một loại giấy tờ, văn bản được lập thành 10 bản, người thực hiện chứng thực ký chứng thực trong 10 giấy tờ, văn bản đó thì số lượng giấy tờ, văn bản đã được chứng thực chữ ký là 10; 05 loại giấy tờ, văn bản khác nhau, mỗi loại được lập thành 01 bản, người thực hiện chứng thực ký chứng thực trong 05 loại giấy tờ, văn bản đó thì số lượng giấy tờ, văn bản đã được chứng thực chữ ký là 05; 10 người ký trong một giấy tờ, văn bản, người thực hiện chứng thực ký chứng thực trong giấy tờ, văn bản đó thì số lượng giấy tờ, văn bản đã được chứng thực chữ ký là 01)."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-ten-giay-to",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Khi vào sổ chứng thực chữ ký, nếu cán bộ không xác định được tên bản chính bằng tiếng nước ngoài thì ghi tên giấy tờ thế nào?",
+      "claims": [
+        {
+          "text": "Riêng cột tên giấy tờ trong sổ, nếu không xác định được tên bản chính bằng tiếng nước ngoài thì ghi theo khai báo của người yêu cầu chứng thực.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Phụ lục, Mẫu số 20, ghi chú cột (4), tr. PDF 63",
+          "page": 63,
+          "anchor": "Đối với bản chính giấy tờ, văn bản bằng tiếng nước ngoài mà người thực hiện chứng thực không xác định được tên của bản chính giấy tờ, văn bản thì chỉ cần ghi theo khai báo của người yêu cầu chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-loi-can-bo",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Nếu người thực hiện chứng thực chữ ký gây thiệt hại do lỗi của họ, Điều 44 nêu hậu quả gì? Có ấn định sẵn một số tiền bồi thường không?",
+      "claims": [
+        {
+          "text": "Người thực hiện chứng thực gây thiệt hại do lỗi của mình bị xử lý kỷ luật, bồi thường theo quy định của pháp luật. Khoản này không ấn định số tiền cụ thể.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 44 khoản 2, tr. PDF 28",
+          "page": 28,
+          "anchor": "2. Trong trường hợp người thực hiện chứng thực gây thiệt hại cho cá nhân, tổ chức do lỗi của mình thì sẽ bị xử lý kỷ luật, bồi thường theo quy định của pháp luật."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-khieu-nai",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi cho rằng có hành vi vi phạm khi giải quyết yêu cầu chứng thực chữ ký. Nghị định dẫn đến quy định nào để khiếu nại, tố cáo?",
+      "claims": [
+        {
+          "text": "Điều 45 dẫn đến pháp luật về khiếu nại, tố cáo để thực hiện và giải quyết khiếu nại, tố cáo đối với hành vi vi phạm trong hoạt động chứng thực. Điều này không quy định một thời hạn xử lý riêng cho trường hợp của bạn.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 45, tr. PDF 28",
+          "page": 28,
+          "anchor": "Việc khiếu nại, giải quyết khiếu nại, việc tố cáo, giải quyết tố cáo đối với các hành vi vi phạm pháp luật trong hoạt động chứng thực được thực hiện theo quy định của pháp luật về khiếu nại, tố cáo."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-tu-lap",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi tự soạn một văn bản theo quy định của pháp luật chứ không dùng mẫu in sẵn. Chỉ vì văn bản do cá nhân tự lập mà chữ ký của tôi không thể được chứng thực, có đúng không?",
+      "claims": [
+        {
+          "text": "Không. Điểm c khoản 4 Điều 24 cho áp dụng thủ tục chứng thực chữ ký đối với giấy tờ, văn bản do cá nhân tự lập theo quy định của pháp luật; việc tự lập không tự động loại trừ thủ tục.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 24 khoản 4 điểm c, tr. PDF 15",
+          "page": 15,
+          "anchor": "c) Chứng thực chữ ký trong giấy tờ, văn bản do cá nhân tự lập theo quy định của pháp luật;"
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-chuc-danh",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Đối với mẫu lời chứng chữ ký của một người, phần giới thiệu người thực hiện chỉ ghi họ tên mà bỏ chức danh và tên cơ quan thì đã đủ chưa?",
+      "claims": [
+        {
+          "text": "Chưa. Hướng dẫn Mẫu số 2 yêu cầu ghi họ, chữ đệm và tên người thực hiện; ghi rõ chức danh kèm theo tên cơ quan hoặc tổ chức thực hiện chứng thực.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Phụ lục, Mẫu số 2, ghi chú (3)–(4), tr. PDF 34",
+          "page": 34,
+          "anchor": "(3) Ghi rõ họ, chữ đệm và tên của người thực hiện chứng thực. (4) Ghi rõ chức danh của người thực hiện chứng thực, kèm theo tên cơ quan, tổ chức thực hiện chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-nguoi-tiep-nhan",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tại Trung tâm Phục vụ hành chính công cấp xã, người tiếp nhận hồ sơ chứng thực chữ ký chỉ chuyển hồ sơ hay còn phải ký vào lời chứng?",
+      "claims": [
+        {
+          "text": "Theo trình tự nêu trong Phụ lục 858, người tiếp nhận ký dưới lời chứng theo mẫu rồi chuyển hồ sơ cho người thực hiện chứng thực. Chữ ký tiếp nhận không thay cho chữ ký chứng thực của người có thẩm quyền.",
+          "evidence_id": "BTP-PL-858",
+          "locator": "Phần II.A.2, trình tự thực hiện, tr. PDF 6",
+          "page": 6,
+          "anchor": "nếu hồ sơ tiếp nhận tại Trung tâm phục vụ hành chính công cấp xã, Cơ quan đại diện thì người tiếp nhận hồ sơ ký vào dưới lời chứng theo mẫu quy định và chuyển hồ sơ cho người thực hiện chứng thực. * Người thực hiện chứng thực ký, ghi rõ họ tên, đóng dấu của cơ quan, tổ chức thực hiện chứng thực và ghi vào sổ chứng thực."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-loai-so",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi được chứng thực chữ ký thông thường, không phải chữ ký người dịch. Phân biệt ký hiệu sổ ghi việc này với sổ chữ ký người dịch thế nào?",
+      "claims": [
+        {
+          "text": "Sổ chứng thực chữ ký hoặc điểm chỉ mang ký hiệu SCT/CK,ĐC. Sổ chứng thực chữ ký người dịch mang ký hiệu riêng là SCT/CKND.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 13 khoản 4 điểm b, c, tr. PDF 10",
+          "page": 10,
+          "anchor": "b) Sổ chứng thực chữ ký/chứng thực điểm chỉ (SCT/CK,ĐC); c) Sổ chứng thực chữ ký người dịch (SCT/CKND);"
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-thu-hoi",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Sau khi hết thời hạn lưu bản giấy đã chứng thực chữ ký, cơ quan có thể tùy ý vứt bản lưu đi không?",
+      "claims": [
+        {
+          "text": "Không. Việc tiêu hủy văn bản chứng thực hết hạn lưu phải thực hiện theo quy định của pháp luật về lưu trữ.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 14 khoản 5, tr. PDF 10",
+          "page": 10,
+          "anchor": "5. Việc tiêu hủy văn bản chứng thực khi hết thời hạn lưu trữ được thực hiện theo quy định của pháp luật về lưu trữ."
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-tra-nguoi-ky",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Tôi muốn đối chiếu người ký chứng thực của UBND cấp xã. Danh sách được công khai ở đâu và có phải cập nhật khi thay người không?",
+      "claims": [
+        {
+          "text": "Tra cứu danh sách người ký chứng thực của các UBND cấp xã trên Cổng thông tin điện tử hoặc Trang thông tin điện tử của Sở Tư pháp địa phương. Danh sách phải được cập nhật khi có thay đổi.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 43 khoản 1 điểm e, tr. PDF 27",
+          "page": 27,
+          "anchor": "e) Tổng hợp, đăng tải danh sách người ký chứng thực của các Ủy ban nhân dân cấp xã tại địa phương trên Cổng thông tin điện tử hoặc Trang thông tin điện tử của Sở Tư pháp và cập nhật danh sách này khi có thay đổi;"
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-chuyen-giao",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Ở xã tôi vừa có văn phòng công chứng. Chỉ vì có văn phòng này thì toàn bộ việc chứng thực chữ ký của xã tự động được chuyển sang đó phải không?",
+      "claims": [
+        {
+          "text": "Không tự động. UBND cấp tỉnh xem xét chuyển giao toàn bộ hoặc một phần. Quy định xét cả việc có ít nhất một tổ chức hành nghề công chứng hoạt động ổn định, hiệu quả tại thời điểm quyết định và việc phân bố hợp lý, thuận tiện cho người dân.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 43 khoản 1 điểm h, tr. PDF 27",
+          "page": 27,
+          "anchor": "h) Xem xét việc chuyển giao toàn bộ hoặc một phần việc chứng thực bản sao từ bản chính, chứng thực chữ ký cho các tổ chức hành nghề công chứng tại những địa bàn cấp xã có ít nhất 01 tổ chức hành nghề công chứng đang hoạt động ổn định, hiệu quả tại thời điểm quyết định việc chuyển giao, tổ chức hành nghề công chứng được phân bố hợp lý, thuận lợi cho cá nhân, tổ chức có nhu cầu chứng thực tại địa phương;"
+        },
+        {
+          "text": "Đây là nhiệm vụ quản lý chứng thực ở địa phương của UBND cấp tỉnh, không phải quyết định đương nhiên của văn phòng công chứng.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 43 khoản 1, tr. PDF 26",
+          "page": 26,
+          "anchor": "1. Ủy ban nhân dân cấp tỉnh thực hiện quản lý nhà nước về chứng thực tại địa phương, có nhiệm vụ, quyền hạn sau đây:"
+        }
+      ]
+    },
+    {
+      "key": "chung-thuc-b02-giay-to-dien-tu",
+      "record_version": "1",
+      "procedure_family_id": "chung-thuc-chu-ky",
+      "question_text": "Khi làm chứng thực chữ ký, nếu một giấy tờ trong hồ sơ được pháp luật quy định cấp dưới dạng điện tử, cơ quan tiếp nhận có bắt buộc tôi nộp thêm bản giấy không?",
+      "claims": [
+        {
+          "text": "Không. Đối với giấy tờ được pháp luật quy định cấp dưới dạng bản điện tử, cơ quan có trách nhiệm tiếp nhận, sử dụng bản điện tử, không được yêu cầu bản giấy hay bản sao có chứng thực. Nếu có căn cứ nghi bản điện tử giả mạo, bất hợp pháp thì xử lý theo thẩm quyền hoặc báo cơ quan có thẩm quyền. Quy định này nói về giấy tờ được cấp dưới dạng điện tử, không phải mọi ảnh tự chụp.",
+          "evidence_id": "BTP-VBHN-753",
+          "locator": "Điều 6 khoản 3, tr. PDF 6",
+          "page": 6,
+          "anchor": "3. Trường hợp pháp luật quy định giấy tờ, tài liệu được cấp dưới dạng bản điện tử thì cơ quan, tổ chức có trách nhiệm tiếp nhận, sử dụng bản điện tử đó, không được yêu cầu nộp bản giấy hoặc bản sao có chứng thực; trừ trường hợp có căn cứ cho rằng bản điện tử giả mạo, bất hợp pháp thì phải xử lý theo thẩm quyền hoặc báo cáo cơ quan có thẩm quyền giải quyết."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-bo-sung-thoi-han-sau-15-gio",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Tôi chỉ đề nghị bổ sung thông tin hộ tịch và hồ sơ được nhận sau 15 giờ. Thời hạn trả kết quả được nêu thế nào?",
+      "claims": [
+        {
+          "text": "Với việc bổ sung thông tin hộ tịch, thời hạn là trong ngày làm việc; nếu nhận hồ sơ sau 15 giờ mà không giải quyết ngay được thì trả kết quả vào ngày làm việc tiếp theo.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Thời hạn giải quyết, tr. 289",
+          "page": 289,
+          "anchor": "Trong ngày làm vi ối với vi c b sung thông tin h tị h, tr ờng hợp nhận hồ s sau 15 giờ mà không gi i quyết ợc ngay thì tr kết qu trong ngày làm vi c tiếp theo."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-thoi-han-thay-doi-cai-chinh-xac-minh",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Với yêu cầu thay đổi hoặc cải chính hộ tịch, thời hạn và phần thời gian có thể kéo dài khi xác minh là bao lâu?",
+      "claims": [
+        {
+          "text": "Thời hạn được nêu là 03 ngày làm việc đối với thay đổi, cải chính hộ tịch và xác định lại dân tộc. Nếu cần xác minh, thời hạn được kéo dài thêm không quá 03 ngày làm việc.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Thời hạn giải quyết, tr. 289",
+          "page": 289,
+          "anchor": "03 ngày làm vi c ối với vi tha i, c i chính h tị h, x ịnh l i dân t c. r ờng hợp cần ph i xác minh thì th ời h n ợc kéo dài thêm không quá 03 ngày làm vi c."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-chon-dung-mau-theo-cach-nop",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Khi yêu cầu cải chính hộ tịch, tôi dùng cùng một tờ khai giấy cho cả nộp tại quầy, gửi bưu chính và khai trực tuyến không?",
+      "claims": [
+        {
+          "text": "Nộp trực tiếp hoặc gửi hồ sơ qua hệ thống bưu chính dùng Tờ khai đăng ký việc thay đổi, cải chính, bổ sung thông tin hộ tịch, xác định lại dân tộc. Nộp trực tuyến dùng Mẫu hộ tịch điện tử tương tác thực hiện đăng ký việc đó.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Mẫu đơn, mẫu tờ khai, tr. 290",
+          "page": 290,
+          "anchor": "+ Tờ khai ăng ký tha i, c i chính, b sung thông tin h tị h, x ịnh l i dân t c (nếu n p hồ s the hình th ức trực tiếp ho c g i hồ s ua h thống u h nh); + Mẫu h tị h i n t t ng t thực hi n ăng ký tha i, c i chính, b sung thông tin h tị h, x ịnh l i dân t c (nếu n p hồ s the hình th ức trực tuyến)."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-khong-dung-cai-chinh-hop-thuc-hoa",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Giấy tờ cá nhân khác có thông tin khác với giấy tờ hộ tịch hợp lệ. Tôi có thể xin cải chính hộ tịch chỉ để làm cho các giấy tờ khớp nhau không?",
+      "claims": [
+        {
+          "text": "Không. Cải chính hộ tịch chỉ được giải quyết khi xác định có sai sót trong đăng ký hộ tịch; không cải chính nội dung trên giấy tờ hộ tịch đã được cấp hợp lệ nhằm hợp thức hóa thông tin trên hồ sơ, giấy tờ cá nhân khác.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Yêu cầu, điều kiện thực hiện, tr. 290",
+          "page": 290,
+          "anchor": "+ Vi c c i chính h tịch chỉ ợc gi i quyết sau khi x ịnh có sai sót tr ng ăng ký h tịch; không c i chính n i dung trên giấy tờ h tị h ã ợc cấp hợp l nhằm hợp thức hóa thông tin trên hồ s , giấy tờ cá nhân khác."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-bo-sung-thong-tin-can-chung-minh",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Giấy tờ hộ tịch đã được cấp hợp lệ nhưng còn thiếu thông tin. Khi nào có thể đề nghị bổ sung?",
+      "claims": [
+        {
+          "text": "Có thể bổ sung khi giấy tờ hộ tịch được cấp hợp lệ nhưng thông tin hộ tịch còn thiếu, nếu có giấy tờ hoặc tài liệu do cơ quan, tổ chức có thẩm quyền cấp hợp lệ để chứng minh.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Yêu cầu, điều kiện thực hiện, tr. 290",
+          "page": 290,
+          "anchor": "+ Giấy tờ h tị h ợc cấp hợp l mà thông tin h tịch còn thiếu thì ợc b sung, nếu có giấy tờ, tài li u uan, t chức có th ẩm quy n cấp hợp l chứng minh."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-mau-dien-tu-thong-tin-dang-ky-truoc",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Khi khai trực tuyến để cải chính hộ tịch, ở mục thông tin giấy tờ hộ tịch đã đăng ký, ngoài tên loại giấy tờ còn phải ghi gì?",
+      "claims": [
+        {
+          "text": "Mẫu yêu cầu ghi tên loại giấy tờ hộ tịch đã đăng ký, kèm số, quyển số và ngày, tháng, năm đăng ký.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Nội dung mẫu hộ tịch điện tử tương tác, mục III (14), tr. 295",
+          "page": 295,
+          "anchor": "(14) ên i iấ tờ h tị h ã ăng ký (số, u n số, ng , th ng, nă ăng ký);"
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-mau-dien-tu-phan-biet-noi-dung-ly-do",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Tôi muốn sửa phần họ tên trên giấy tờ hộ tịch. Trong mẫu cải chính trực tuyến, chỉ ghi lý do có thay được mục ghi rõ nội dung cần sửa không?",
+      "claims": [
+        {
+          "text": "Không. Mục (15) ghi nội dung đề nghị, mục (16) ghi lý do. Cần phân biệt thông tin muốn cải chính với lý do đề nghị cải chính.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Nội dung mẫu hộ tịch điện tử tương tác, mục III (15)–(16), tr. 295",
+          "page": 295,
+          "anchor": "(15) N i ung nghị tha i, i h nh h tị h, sung thông h tị h, x ịnh i n t ; (16) Lý tha i, i h nh h tị h, sung thông h tị h, x ịnh i n t ;"
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-mau-dien-tu-phuong-thuc-nhan-ket-qua",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Khi điền mẫu cải chính hộ tịch trực tuyến, tôi có thể chọn nhận kết quả qua những kênh nào và phải ghi thêm gì nếu chọn bưu chính?",
+      "claims": [
+        {
+          "text": "Mẫu liệt kê nhận trực tiếp, trực tuyến hoặc qua bưu chính. Nếu chọn trực tuyến, bản điện tử được gửi về Kho quản lý dữ liệu cá nhân, địa chỉ thư điện tử, thiết bị số hoặc điện thoại của người yêu cầu; nếu chọn bưu chính thì cung cấp địa chỉ nhận.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Nội dung mẫu hộ tịch điện tử tương tác, mục III (18), tr. 295–296",
+          "page": 296,
+          "anchor": "□ rự tiế □ rự tu ến ( n i n t sẽ ợ g i v Kh u n ý i u a nh n/ ịa hỉ th i n t /thiết ị số/ i n th i a ng ời êu ầu) □ u h nh ( ung ấ ịa hỉ n i nhận)."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-163-doi-ten-nguoi-chua-du-18-tuoi-dong-y",
+      "record_version": "1",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "question_text": "Nếu đề nghị thay đổi họ, chữ đệm hoặc tên cho người chưa đủ 18 tuổi, tờ khai cần thể hiện sự đồng ý của ai?",
+      "claims": [
+        {
+          "text": "Việc thay đổi họ, chữ đệm, tên cho người dưới 18 tuổi phải có sự đồng ý của cha, mẹ và được thể hiện rõ trong tờ khai; nếu người đó từ đủ 9 tuổi trở lên thì còn phải có sự đồng ý của chính người đó.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Mục 25, Yêu cầu, điều kiện thực hiện, tr. 290",
+          "page": 290,
+          "anchor": "+ Vi tha i họ, h , tên h ng ời ới 18 tu i h i sự ồng ý a ha, ẹ ng ời v ợ th hi n rõ tr ng ờ khai; ối với ng ời từ 9 tu i tr ên thì òn h i sự ồng ý a ng ời ."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-ho-tich-b02-tham-quyen",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "record_version": "1",
+      "question_text": "Tôi là công dân Việt Nam cư trú trong nước, muốn cải chính thông tin trên khai sinh. Tôi đã chuyển nhà, có nhất thiết phải về xã đã đăng ký hộ tịch không?",
+      "claims": [
+        {
+          "text": "Không nhất thiết. Theo mục này, UBND cấp xã nơi đã đăng ký hộ tịch trước đây hoặc UBND cấp xã nơi cư trú của người yêu cầu đều có thẩm quyền giải quyết trường hợp nêu trong câu hỏi.",
+          "evidence_id": "BTP-PL-163",
+          "page": 289,
+          "locator": "Mục 25, cơ quan thực hiện, tr. 289",
+          "anchor": "- Ủ an nh n n ấ xã n i ã ăng ký h tị h tr ớ h Ủ an nhân dân ấ xã n i trú a ng ời êu ầu thẩ u n gi i u ết vi tha i, i h nh, sung h tị h, x ịnh i n t h ông n Vi t Na trú tr ng n ớ ."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-ho-tich-b02-khai-tu",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "record_version": "1",
+      "question_text": "Gia đình cần cải chính nội dung đăng ký khai tử. Phụ lục 163 chỉ định xã nào giải quyết trường hợp này?",
+      "claims": [
+        {
+          "text": "UBND cấp xã nơi đã đăng ký khai tử trước đây thực hiện việc cải chính nội dung đăng ký khai tử.",
+          "evidence_id": "BTP-PL-163",
+          "page": 289,
+          "locator": "Mục 25, cơ quan thực hiện, tr. 289",
+          "anchor": "- Ủ an nh n n ấ xã n i ã ăng ký khai t tr ớ thự hi n vi i h nh n i ung ăng ký khai t ."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-ho-tich-b02-ket-qua-khong-trung-tam",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "record_version": "1",
+      "question_text": "Tôi làm thủ tục cải chính hộ tịch và chọn không nhận kết quả tại Trung tâm Phục vụ hành chính công. Tôi có thể đợi nhận xong mới nộp các giấy tờ thuộc thành phần hồ sơ không?",
+      "claims": [
+        {
+          "text": "Không. Theo mục 25, nếu không chọn nhận kết quả tại Trung tâm, người yêu cầu vẫn phải nộp các giấy tờ thuộc thành phần hồ sơ theo quy định trước khi nhận kết quả.",
+          "evidence_id": "BTP-PL-163",
+          "page": 289,
+          "locator": "Mục 25, lưu ý khi nhận kết quả, tr. 289",
+          "anchor": "r ờng hợp ng ời yêu cầu ăng ký h tịch không lựa chọn nhận kết qu t i Trung tâm Ph c v hành chính công thì ng ời yêu cầu ăng ký h tịch n p các giấy tờ là thành phần hồ s theo u ịnh tr ớc khi nhận kết qu ."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-ho-tich-b02-mien-le-phi",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "record_version": "1",
+      "question_text": "Theo Phụ lục 163, người khuyết tật đi cải chính hộ tịch có thuộc diện miễn lệ phí không? Quy định còn nêu những ai?",
+      "claims": [
+        {
+          "text": "Có. Mục phí, lệ phí nêu người khuyết tật, người thuộc hộ nghèo và người thuộc gia đình có công với cách mạng được miễn lệ phí. Đây là miễn lệ phí, không phải tuyên bố mọi khoản chi phí đều được miễn.",
+          "evidence_id": "BTP-PL-163",
+          "page": 290,
+          "locator": "Mục 25, phí, lệ phí, tr. 290",
+          "anchor": "- Miễn l h h ng ời thu gia ình ông v ới cách m ng; ng ời thu c h nghè ; ng ời khuyết tật."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-ho-tich-b02-muc-tien-dia-phuong",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "record_version": "1",
+      "question_text": "Chỉ đọc Mục 25 của Phụ lục 163 có biết ngay lệ phí cải chính hộ tịch cụ thể ở Hà Nội là bao nhiêu không?",
+      "claims": [
+        {
+          "text": "Không. Phụ lục giao HĐND tỉnh, thành phố trực thuộc Trung ương quyết định mức lệ phí cụ thể; để báo mức tại Hà Nội phải đối chiếu biểu lệ phí của thành phố, không suy số tiền từ phụ lục này.",
+          "evidence_id": "BTP-PL-163",
+          "page": 290,
+          "locator": "Mục 25, phí, lệ phí, tr. 290",
+          "anchor": "- Mức l phí c th do H i ồng nhân dân t ỉnh, thành ph ố trực thu c rung ng u ết ịnh."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-ho-tich-b02-quoc-tich",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "record_version": "1",
+      "question_text": "Giấy tờ hộ tịch của tôi cấp năm 2015. Quy định về ghi bổ sung quốc tịch Việt Nam ở Mục 25 Phụ lục 163 có bao gồm giấy đó không?",
+      "claims": [
+        {
+          "text": "Không. Quy định này chỉ áp dụng cho giấy tờ hộ tịch cấp kể từ 01/01/2016, sau khi đã xác định người yêu cầu đang có quốc tịch Việt Nam theo Luật Quốc tịch Việt Nam.",
+          "evidence_id": "BTP-PL-163",
+          "page": 290,
+          "locator": "Mục 25, điều kiện bổ sung quốc tịch, tr. 290",
+          "anchor": "Yêu cầu ghi b sung quốc tịch Vi t Nam chỉ thực hi n ối với giấy tờ h tịch ợc cấp k từ ng 01/01/2016, sau khi ã x ịnh ng ời yêu cầu ang quốc tịch Vi t Na the u ịnh c a Luật Quốc tịch Vi t Nam."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-ho-tich-b02-ho-so-bi-tay-xoa",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "record_version": "1",
+      "question_text": "Nếu giấy tờ dùng để cải chính hộ tịch bị phát hiện tẩy xóa hoặc làm giả, kết quả đăng ký hộ tịch có được giữ nguyên không?",
+      "claims": [
+        {
+          "text": "Không. Phụ lục nêu cơ quan đăng ký hộ tịch có thẩm quyền hủy bỏ kết quả đăng ký khi giấy tờ nộp hoặc xuất trình bị tẩy xóa, sửa chữa, làm giả, hoặc khi người yêu cầu không cung cấp được giấy tờ theo quy định.",
+          "evidence_id": "BTP-PL-163",
+          "page": 289,
+          "locator": "Mục 25, lưu ý về giấy tờ, tr. 289",
+          "anchor": "- r ờng hợ ng ời êu ầu ăng ký h tị h không ung ấ ợ giấ tờ the u ịnh h giấ tờ n , xuất trình ị tẩ x a, s a h a, gi thì uan ăng ký h tị h thẩ u n h ỏ kết u ăng ký h tị h."
+        }
+      ]
+    },
+    {
+      "key": "cai-chinh-ho-tich-b02-ban-sao-ket-qua",
+      "procedure_family_id": "cai-chinh-ho-tich",
+      "record_version": "1",
+      "question_text": "Khi khai cải chính hộ tịch trực tuyến, nếu muốn cấp thêm hai bản sao thì đánh dấu ở đâu trên mẫu?",
+      "claims": [
+        {
+          "text": "Tại mục (17) “Đề nghị cấp bản sao”, chọn “Có” và điền 2 vào phần số lượng bản sao yêu cầu. Nếu không đề nghị bản sao thì chọn “Không”.",
+          "evidence_id": "BTP-PL-163",
+          "page": 295,
+          "locator": "Mục 25, mẫu điện tử, mục (17), tr. 295",
+          "anchor": "(17) Đ nghị ấ n sa : □ Số ợng n sa êu ầu:... □ Không"
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-163-organization-written-request",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phụ lục kèm Quyết định 163/QĐ-BTP, nếu cơ quan hoặc tổ chức có thẩm quyền đề nghị cấp bản sao trích lục hộ tịch, văn bản gửi cơ quan quản lý cơ sở dữ liệu hộ tịch điện tử phải nêu gì?",
+      "claims": [
+        {
+          "text": "Cơ quan hoặc tổ chức có thẩm quyền phải gửi văn bản yêu cầu, trong đó nêu rõ lý do, đến cơ quan quản lý cơ sở dữ liệu hộ tịch điện tử.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Phần II.B.1, Trình tự thực hiện, tr. 433",
+          "page": 433,
+          "anchor": "r ờng hợ uan, t chức có th ẩm quy n nghị cấp b n sao Trích l c h tịch, b n sao Giấy khai sinh c a cá nhân thì g i văn n yêu cầu nêu rõ lý h uan u n ý s d li u h tị h i n t ."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-163-provincial-intake-routing",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Theo phụ lục kèm Quyết định 163/QĐ-BTP, hồ sơ xin bản sao trích lục hộ tịch được tiếp nhận tại Trung tâm Phục vụ hành chính công cấp tỉnh thì được chuyển đến đâu để xử lý?",
+      "claims": [
+        {
+          "text": "Cán bộ tiếp nhận chuyển hồ sơ đến Sở Tư pháp hoặc Ủy ban nhân dân cấp xã có thẩm quyền xử lý.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Phần II.B.1, Trình tự thực hiện, điểm (i), tr. 433",
+          "page": 433,
+          "anchor": "tr ờng hợp ti ếp nhận hồ s t i Trung tâm Ph c v hành chính công c ấp tỉnh, cán b tiếp nhận hồ s chuy n hồ s ến S h /Ủy ban nhân dân cấp xã có thẩm quy n x lý."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-163-electronic-form-confirmation",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Khi hồ sơ xin bản sao trích lục hộ tịch nộp trực tuyến đã đủ và hợp lệ theo phụ lục kèm Quyết định 163/QĐ-BTP, người yêu cầu có bao lâu để kiểm tra, xác nhận biểu mẫu trích lục hộ tịch điện tử?",
+      "claims": [
+        {
+          "text": "Người yêu cầu phải kiểm tra tính chính xác, đầy đủ của thông tin trên biểu mẫu trích lục hộ tịch điện tử và xác nhận trong tối đa một ngày.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Phần II.B.1, Trình tự thực hiện, tr. 434",
+          "page": 434,
+          "anchor": "Ng ời yêu c ầu có trách nhi m ki m tra tính h nh x , ầ c a các thông tin trên bi u mẫu Trích l c h tịch i n t và xác nhận (tối a t ngày)."
+        },
+        {
+          "text": "Nếu thông tin đã thống nhất, đầy đủ hoặc người yêu cầu không phản hồi sau một ngày, công chức in bản sao trích lục hộ tịch để trình Thủ trưởng cơ quan quản lý cơ sở dữ liệu hộ tịch điện tử ký.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Phần II.B.1, Trình tự thực hiện, tr. 434",
+          "page": 434,
+          "anchor": "Nếu ng ời có yêu cấp b n sao Trích l c h tịch, b n sao Gi ấy khai sinh ã thống nhất, ầ ho c không có ph n hồi sau thời h n m t ngày thì công chứ t h - h tịch/công chức làm công tác h tịch in b n sao Trích l c h tịch, trình Th tr ng uan u n ý s d li u h tị h i n t ký, chuy n tới Trung tâm Ph c v hành chính công tr kết qu cho ng ời yêu cầu."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-163-published-fee-basis",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Mục thủ tục cấp bản sao trích lục hộ tịch trong phụ lục kèm Quyết định 163/QĐ-BTP ghi mức phí bao nhiêu và tính theo đơn vị nào?",
+      "claims": [
+        {
+          "text": "Mục này ghi mức phí 8.000 đồng cho mỗi bản sao của một sự kiện hộ tịch đã đăng ký. Đây là mức ghi trong phụ lục, không đủ để kết luận mọi người đều phải trả mức đó tại thời điểm nộp.",
+          "evidence_id": "BTP-PL-163",
+          "locator": "Phần II.B.1, Phí, tr. 437",
+          "page": 437,
+          "anchor": "Phí: 8.000 ồng/b n sao/sự ki n h tị h ã ăng ký"
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-1818-hanoi-electronic-intake-result",
+      "record_version": "1",
+      "procedure_family_id": "trich-luc",
+      "question_text": "Riêng phương án của Hà Nội kèm Quyết định 1818/QĐ-TTPVHCC nêu tỷ lệ tiếp nhận và trả kết quả điện tử cho thủ tục cấp bản sao trích lục hộ tịch là bao nhiêu?",
+      "claims": [
+        {
+          "text": "Phương án nêu 100% tiếp nhận trực tuyến trên Cổng Dịch vụ công quốc gia và 100% trả kết quả bản điện tử trên Cổng Dịch vụ công quốc gia hoặc Hệ thống thông tin giải quyết thủ tục hành chính dùng chung ngành tư pháp.",
+          "evidence_id": "HN-PL-1818",
+          "locator": "Mục B.2, Hình thức tiếp nhận và trả kết quả, tr. 2",
+          "page": 2,
+          "anchor": "100% tiếp nhận theo hình thức trực tuyến trên Cổng Dịch vụ công quốc gia. - 100% trả kết quả bản điện tử trên Cổng Dịch vụ công quốc gia/ Hệ thống thông tin giải quyết thủ tục hành chính dung chung ngành tư pháp, lưu kho dữ liệu số của cá nhân."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-b02-gui-buu-chinh",
+      "procedure_family_id": "trich-luc",
+      "record_version": "1",
+      "question_text": "Tôi gửi hồ sơ xin bản sao trích lục hộ tịch qua bưu chính. Với những giấy tờ lẽ ra phải xuất trình tại quầy, Phụ lục 163 yêu cầu gửi kèm gì?",
+      "claims": [
+        {
+          "text": "Nếu gửi qua bưu chính thì gửi kèm bản sao có chứng thực của những giấy tờ phải xuất trình nêu trong thành phần hồ sơ; không hiểu yêu cầu này là gửi bản chính của tất cả giấy tờ qua đường bưu điện.",
+          "evidence_id": "BTP-PL-163",
+          "page": 435,
+          "locator": "Phần II.B.1, giấy tờ phải xuất trình, tr. 435",
+          "anchor": "- r ờng hợp g i hồ s ua h thống u h nh thì h i g i kèm theo b n sao có chứng thực các giấy tờ ph i xuất trình nêu trên."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-b02-ban-chup-doi-chieu",
+      "procedure_family_id": "trich-luc",
+      "record_version": "1",
+      "question_text": "Tôi đến quầy xin bản sao trích lục hộ tịch, mang bản chụp kèm bản chính của giấy tờ phải nộp. Cán bộ có được bắt tôi đi xin thêm bản sao có chứng thực của chính giấy đó không?",
+      "claims": [
+        {
+          "text": "Trong trường hợp nộp bản chụp kèm bản chính, người tiếp nhận phải đối chiếu, ký xác nhận và không được yêu cầu nộp bản sao của giấy tờ đó.",
+          "evidence_id": "BTP-PL-163",
+          "page": 436,
+          "locator": "Phần II.B.1, lưu ý khi nộp trực tiếp, tr. 436",
+          "anchor": "r ờng hợ ng ời êu ầu n n h kè the n h nh giấ tờ thì ng ời tiế nhận tr h nhi ki tra, ối hiếu n h với n h nh v ký x nhận, không ợ êu ầu n n sa giấ tờ ."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-b02-tra-giay-xuat-trinh",
+      "procedure_family_id": "trich-luc",
+      "record_version": "1",
+      "question_text": "Đi xin bản sao trích lục hộ tịch trực tiếp, nếu một giấy tờ chỉ phải xuất trình thì cán bộ có giữ giấy đó trong hồ sơ không?",
+      "claims": [
+        {
+          "text": "Không. Người tiếp nhận kiểm tra, đối chiếu, ghi thông tin hoặc chụp lại và ký xác nhận để lưu hồ sơ rồi trả lại giấy cho người xuất trình; không yêu cầu người dân nộp thêm bản sao hay bản chụp của giấy đó.",
+          "evidence_id": "BTP-PL-163",
+          "page": 436,
+          "locator": "Phần II.B.1, lưu ý đối với giấy tờ xuất trình, tr. 436",
+          "anchor": "Đối với giấ tờ xuất trình khi ăng ký h tị h, ng ời tiế nhận tr h nhi ki tra, ối hiếu, ghi i thông tin h h i, ký x nhận u tr ng hồ s v tr i h ng ời xuất trình, không ợ êu ầu n n sa h n h giấ tờ ."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-b02-thu-tu-noi-cu-tru",
+      "procedure_family_id": "trich-luc",
+      "record_version": "1",
+      "question_text": "Trên tờ khai xin bản sao trích lục, nếu thuộc trường hợp phải khai nơi cư trú nhưng không có đăng ký thường trú thì ghi địa chỉ nào?",
+      "claims": [
+        {
+          "text": "Ghi theo nơi đăng ký tạm trú. Nếu không có cả nơi đăng ký thường trú lẫn nơi đăng ký tạm trú thì ghi nơi ở hiện tại.",
+          "evidence_id": "BTP-PL-163",
+          "page": 440,
+          "locator": "Phần II.B.1, chú thích (2) của tờ khai, tr. 440",
+          "anchor": "r ờng hợp ph i cung cấ thông tin “N i trú” thì ghi theo n i ăng ký th ờng trú; nếu không n i ăng ký th ờng trú thì ghi theo n i ăng ký t trú; tr ờng hợp không n i ăng ký th ờng trú v n i ăng ký t m trú thì ghi theo n i hi n t i."
+        }
+      ]
+    },
+    {
+      "key": "trich-luc-b02-noi-nhan-khac-noi-cu",
+      "procedure_family_id": "trich-luc",
+      "record_version": "1",
+      "question_text": "Trên tờ khai xin bản sao trích lục hộ tịch, ô “Kính gửi” và ô ghi cơ quan đã đăng ký trước đây có cùng ý nghĩa không?",
+      "claims": [
+        {
+          "text": "Ô “Kính gửi” ghi tên cơ quan mà bạn đề nghị cấp bản sao trích lục hộ tịch hoặc bản sao Giấy khai sinh.",
+          "evidence_id": "BTP-PL-163",
+          "page": 440,
+          "locator": "Phần II.B.1, chú thích (1) của tờ khai, tr. 440",
+          "anchor": "(1) hi tên uan nghị thực hi n vi c cấ n sa r h h tị h , b n sao Giấy khai sinh."
+        },
+        {
+          "text": "Chú thích (5) yêu cầu ghi rõ tên cơ quan đã đăng ký hộ tịch trước đây.",
+          "evidence_id": "BTP-PL-163",
+          "page": 440,
+          "locator": "Phần II.B.1, chú thích (5) của tờ khai, tr. 440",
+          "anchor": "(5) hi rõ tên uan ã ăng ký h tị h tr ớ ."
+        }
+      ]
+    }
+  ]
+}

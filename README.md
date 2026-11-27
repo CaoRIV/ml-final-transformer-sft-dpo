@@ -37,7 +37,7 @@ Nhóm xây dựng **trợ lý hỏi đáp thủ tục hộ tịch–chứng th�
 | **Sổ nguồn, mẫu QA, Truyện Kiều và biểu mẫu** | [Mục lục tài liệu dữ liệu](docs/data/README.md), có hướng dẫn mở bộ mẫu và chạy kiểm tra. |
 | **Những gì đã làm và chưa làm** | [Bối cảnh và tiến độ](docs/progress/project-context.md) · [Nhật ký hỗ trợ AI](docs/progress/ai-use.md). |
 
-**Trạng thái trong repo:** A.1–A.4 có mã và kiểm số học; [A.2 có PPL validation trên Kaggle](docs/data/char-corpus.md) và C.2 có lời giải đã kiểm trên CPU. Hai hồ sơ tuần 1 và sáu chứng minh B vẫn là bản nháp. [Pilot](docs/data/admin-pilot.md) đã có 20/20 kết luận rà nội dung nhưng 0 QA đủ điều kiện train; chưa có tập SFT chính, test khảo sát, SFT/DPO hay đánh giá ba mô hình. Hai PDF tuần 1 không thay báo cáo cuối LaTeX 25–40 trang.
+**Trạng thái trong repo:** A.1–A.4 có mã và kiểm số học; [A.2 có PPL validation trên Kaggle](docs/data/char-corpus.md). C.1–C.4 đều có lời giải đã kiểm trên CPU; C.1 và C.4 ghi rõ đầu vào minh họa, còn C.3 ước lượng bộ nhớ chứ không đo peak GPU. Hai hồ sơ tuần 1 và sáu chứng minh B vẫn là bản nháp. [Pilot](docs/data/admin-pilot.md) đã có 20/20 kết luận rà nội dung nhưng 0 QA đủ điều kiện train; chưa có tập SFT chính, test khảo sát, SFT/DPO hay đánh giá ba mô hình. Hai PDF tuần 1 không thay báo cáo cuối LaTeX 25–40 trang.
 
 ## Chạy kiểm tra
 
@@ -77,7 +77,9 @@ Chạy tuần tự [notebook C.3](notebooks/06_lora_qlora_cost.ipynb) bằng mô
 
 ### D.3 — chuẩn bị SFT trên Kaggle
 
-[Notebook Kaggle](notebooks/09_d3_sft_kaggle.ipynb) và `python scripts/package_d3_kaggle.py` dùng được **trong khi nhóm còn kiểm 24 QA**. Lệnh chỉ tạo ZIP mã trong `.cache/d3-kaggle/`; không đọc phiếu, không upload, không tải trọng số. Import notebook vào Kaggle Private, gắn ZIP mã bằng **Add Input**, điền `CODE_INPUT`; để các công tắc mặc định và dùng CPU. Có thể dừng ở đây.
+**Pilot `release-01` trên máy nhóm:** nhóm đã cho phép dùng đúng bản này trên Kaggle Private. Import [notebook đã điền hash](.cache/d3-kaggle/D3-pilot-release-01.ipynb); tạo hai Dataset **Private** từ [ZIP mã](.cache/d3-kaggle/d3-code-14831bf6344b.zip) và [ZIP dữ liệu](.cache/d3-kaggle/d3-release-dd847b1219c4.zip), rồi gắn cả hai vào Notebook **Private** qua **Add Input**. Điền `CODE_INPUT` và `RELEASE_INPUT` bằng **Copy path**; dùng đường dẫn ZIP nếu còn nguyên, hoặc thư mục chứa `scripts/` hay `manifest.json` nếu Kaggle đã giải nén. Giữ `INSTALL_PACKAGES = RUN_TRAIN = False` trong lượt kiểm CPU. Đã kiểm hai ZIP thật tại máy nhóm: `release-valid`, 18 train + 6 validation; chưa chạy GPU.
+
+Các tệp `.cache/` chỉ có ở máy chuẩn bị, không nằm trong Git. Với máy khác có quyền và đúng release, tạo lại hai ZIP theo bước 3 (gói mã: chạy `python scripts/package_d3_kaggle.py` không tham số), dùng [notebook gốc](notebooks/09_d3_sft_kaggle.ipynb) và điền SHA-256 manifest từ máy nhóm.
 
 **Mô hình cho pilot, chưa phải kết luận cho tập chính.** `Qwen/Qwen2.5-1.5B-Instruct`, revision `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`. [Model card đúng revision](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/blob/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/README.md) nêu 1,54B tham số và hỗ trợ tiếng Việt ở phần mô tả đa ngôn ngữ; không phải bằng chứng mô hình trả lời đúng thủ tục Hà Nội. [Apache-2.0 §2, §4](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/blob/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/LICENSE) cho phép dùng/sửa phục vụ nghiên cứu, có nghĩa vụ nếu phân phối lại; không cấp quyền đối với QA hay khảo sát của nhóm. Dùng [QLoRA NF4](https://github.com/huggingface/transformers/blob/v4.57.6/docs/source/en/quantization/bitsandbytes.md) và [adapter PEFT](https://github.com/huggingface/peft/blob/v0.18.0/docs/source/developer_guides/quantization.md) trên Q/V để đối chiếu thiết kế với C.3.
 
@@ -93,6 +95,12 @@ Trong tab **Output** của version đã lưu, giữ `run_manifest.json` (mã, d�
 **Kế hoạch chọn cấu hình trên tập chính (đề xuất, chưa có kết quả).** Giữ nguyên release, prompt, max length và seed 41. Chạy bốn cấu hình `(r, α, LR)` lần lượt `(8,16,1e-4)`, `(4,16,1e-4)`, `(8,8,1e-4)`, `(8,16,2e-4)`; mỗi cấu hình chấm validation ở cuối epoch 1 và 2. Chọn tổ hợp và epoch có NLL trung bình **theo token đáp án** nhỏ nhất trên cùng validation; nếu bằng nhau ưu tiên ít epoch, rank nhỏ rồi thứ tự trên. Đây là tìm kiếm giới hạn ngân sách, không khẳng định tối ưu toàn cục. Ghi cả các cấu hình thua/OOM; không xem `USER_TEST`. Sáu QA validation của pilot chỉ để thử đường chạy, không chốt siêu tham số từ sáu câu đó.
 
 Với cấu hình và số epoch đã khóa, dùng checkpoint **đúng epoch đã chọn** cho từng seed 41–45; không chọn lại epoch theo từng seed. Báo cả năm lần huấn luyện (có thể tái sử dụng đúng checkpoint seed 41 nếu cấu hình và lịch học khớp), trung bình và SD mẫu. Chỉ chuyển sang sinh cặp D.4 từ adapter SFT thật đã định danh; NLL/PPL không thay đánh giá đúng nội dung, trích dẫn và ảo giác ở D.5.
+
+### Hỏi thử adapter D.3 trên Kaggle Private
+
+Import [notebook hỏi thử](notebooks/10_d3_hoi_thu_kaggle.ipynb) vào notebook **Private** mới. Gắn `D3-code` đã giải nén và output riêng của **lần train liên tục seed 41**. Không cần `D3-Release`, `USER_TEST` hay hồ sơ cá nhân. `RUN_DIR` trỏ đến thư mục có `run_manifest.json`, `summary.json`, `best_adapter/`; `CODE_DIR` trỏ đến thư mục có `src/` và `requirements-d3.txt`. Chọn T4, bật Internet cho mô hình công khai và chạy tuần tự. Notebook chỉ nạp base đã ghim revision và adapter epoch 2 để sinh văn bản, không train/resume hoặc gọi API sinh.
+
+Sau dòng `Sẵn sàng hỏi thử`, đổi chuỗi trong ô `hoi('…')` rồi chạy riêng ô đó. Hai câu minh họa kiểm cách trả lời trong/ngoài phạm vi; đối chiếu văn bản gốc trước khi dùng đáp án. Không tính các câu này là khảo sát, nhãn DPO hoặc kết quả D.5.
 
 ### Colab
 
