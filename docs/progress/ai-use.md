@@ -196,3 +196,4 @@ Khi lập báo cáo cuối, chuyển nhật ký này thành phụ lục khai bá
 ## Cập nhật README bàn giao
 
 - AI biên tập README sau khi nhóm hợp nhất mã: phân biệt các phiếu D.2/D.4, pilot và tập chính, dữ liệu nhận riêng và tệp có trong Git; dẫn tới báo cáo, datasheet, model card và hướng dẫn chạy. Không thay đổi dữ liệu, quyết định người kiểm hay kết quả thí nghiệm.
+- Theo yêu cầu của nhóm, AI viết lại README dưới dạng trang giới thiệu kho nghiên cứu: hướng dẫn chạy từ bản clone, phạm vi A–D, kết quả và giới hạn của SFT pilot. Phần phân công được dẫn về tài liệu tiến độ; không thay đổi mã hoặc số liệu.
