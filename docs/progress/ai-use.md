@@ -192,3 +192,7 @@ Khi lập báo cáo cuối, chuyển nhật ký này thành phụ lục khai bá
 - AI sửa một khẳng định sai do chính AI viết trong bản nháp báo cáo mục C.4: trước đó ghi nghiệm tối ưu "cũng thay đổi" theo β mà không nêu điều kiện. Theo bản sửa của nhóm ở notebook 07, nghiệm chỉ thay đổi nếu reward không hằng trên hỗ trợ của reference; nếu `R(x,y)=c(x)` trên hỗ trợ đó thì `π* = π_ref` với mọi `β>0`. Báo cáo nay ghi cả tỷ số tối ưu và trường hợp ngoại lệ.
 - Khi gộp `ai-use.md`, AI giữ nguyên toàn bộ mục của Hà và chỉ thêm ba mục của phiên trước vào sau; không ghi đè, không xóa dòng nào. Không commit, không push.
 - Các số đo pilot đều là nội dung do nhóm cung cấp từ Kaggle; AI không chạy GPU, không mở checkpoint và không tạo kết quả mới.
+
+## Cập nhật README bàn giao
+
+- AI biên tập README sau khi nhóm hợp nhất mã: phân biệt các phiếu D.2/D.4, pilot và tập chính, dữ liệu nhận riêng và tệp có trong Git; dẫn tới báo cáo, datasheet, model card và hướng dẫn chạy. Không thay đổi dữ liệu, quyết định người kiểm hay kết quả thí nghiệm.
