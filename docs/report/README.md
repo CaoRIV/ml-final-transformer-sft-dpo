@@ -64,7 +64,7 @@ Hai hiện vật G7 còn lại nằm ngoài thư mục này:
 ## Việc còn lại trước khi nộp
 
 - [ ] Ba thành viên đọc và xác nhận nội dung → đổi `\fancyhead[R]` ở `report.tex`
-      dòng 29 và dòng trạng thái ở trang bìa.
+      dòng 30 và dòng trạng thái ở trang bìa.
 - [ ] Phần B: Thế và Hưng tự giải lại B.1–B.6 → đổi `\fancyhead[R]` trong
       `docs/theory/part-b.tex` dòng 24 và dòng trạng thái dòng 49, rồi cập nhật sáu
       dòng B1–B6 trong [ma trận yêu cầu](../progress/requirements-matrix.md).
