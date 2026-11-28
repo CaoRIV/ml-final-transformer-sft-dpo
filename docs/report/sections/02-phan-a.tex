@@ -191,12 +191,14 @@ cho thấy căn cứ quyền đối với bản số hóa trước đó (revisio
 \textbf{Chỉ số} & \textbf{Giá trị}\\
 \midrule
 Số dòng thơ & 3.254\\
-Số code point & 104.204\\
-Tách train (prefix 90\%) & 93.783 code point\\
-Tách validation (suffix 10\%) & 10.421 code point\\
-Kích thước từ vựng & 133 (chỉ học từ train)\\
+Số code point NFC cả corpus & 104.181\\
+Tách train (prefix 90\%) & 93.762 code point\\
+Tách validation (suffix 10\%) & 10.419 code point\\
+Kích thước từ vựng & 127 (gồm UNK, chỉ học từ train)\\
 Độ dài ngữ cảnh / stride & 128 / 128\\
 Số cửa sổ train / validation & 732 / 81\\
+Code point đuôi không dùng (train / validation) & 65 / 50\\
+Target được chấm ở validation / số UNK & 10.368 / 1\\
 \bottomrule
 \end{tabular}
 \end{center}
