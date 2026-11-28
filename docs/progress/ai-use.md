@@ -164,3 +164,31 @@ Khi lập báo cáo cuối, chuyển nhật ký này thành phụ lục khai bá
 - AI chuẩn bị phiếu rà b03 cho nhóm, chỉ mục URL/hash tải văn bản để dùng offline và cách tách đúng mẫu chính thức. Mã `RV_THE` và `RV_HUNG` chỉ phân công người dự kiến rà, không xác nhận đã chấm. AI không điền quyết định hoặc thời điểm kiểm; đã đối chiếu 18 train và 6 validation giữ nguyên từ pilot, không cộng lặp lượt kiểm.
 - AI bổ sung chế độ hiệu chuẩn tùy chọn vào notebook hỏi thử Kaggle Private: chọn 10 prompt **train của release-01**, lấy mẫu hai đáp án từ adapter, xuất hai phiếu độc lập và ánh xạ A/B riêng cho điều phối viên. Không sinh đáp án thay `best_adapter/`, không ghi đã chạy GPU, không tính lô này vào 500 cặp và không chấm/thống nhất nhãn thay người.
 - AI đối chiếu phân công tiếp cận lớp/người thân với protocol `USER_TEST`. Đây chỉ là đề xuất vận hành; không mời người tham gia, xác nhận consent, thu câu hỏi hay đưa dữ liệu khảo sát vào Git/Kaggle.
+
+## Rà Phần B và vá lỗ hổng B.3 — 26/11/2026
+
+- Theo yêu cầu của Thế, AI rà lại từng bước sáu chứng minh B.1–B.6 và đối chiếu ký hiệu với `src/attention.py`, `src/lora.py`, `src/dpo.py`, `src/char_lm.py`. Kết luận: các phép toán đúng, không tìm thấy lỗi suy luận; `z_θ` của B.5 khớp `margin` trong A.4, quy tắc tổng hợp của B.6 khớp `validation_metrics`, bốn tiểu mệnh đề B.4 khớp `LoRALinear`.
+- AI tìm được một lỗ hổng thật: B.3 phát biểu cho `PE(p) ∈ R^{2m}` (số chiều chẵn), nhưng `SinusoidalPositionEncoding` nhận `d_model` lẻ và khi đó tính chất `PE(p+Δ) = M_Δ PE(p)` không còn đúng ở toạ độ `sin` lẻ cặp. AI soạn phần bổ sung `\subsection*{Phạm vi: mệnh đề cần số chiều chẵn}` trong `docs/theory/part-b.tex`, gồm bổ đề độc lập tuyến tính (lập luận Vandermonde trên các nút `e^{iω_i}`) và suy luận bác bỏ. Đây là phần **thêm vào**, không sửa phần chứng minh đã có.
+- Việc chuyển B từ "bản nháp" sang "đã duyệt" vẫn thuộc nhóm: AI không đổi `\fancyhead[R]{Bản nháp}`, không đổi dòng trạng thái ở đầu tài liệu, và không đổi sáu dòng B1–B6 trong ma trận yêu cầu. Thế và Hưng cần tự giải lại chứng minh rồi mới cập nhật trạng thái.
+
+## Soạn báo cáo cuối kỳ, datasheet và model card — 26/11/2026
+
+- Theo yêu cầu của Thế ("làm những việc bạn có thể làm"), AI soạn ba hiện vật G7 còn thiếu: `docs/report/report.tex` cùng mười tệp trong `docs/report/sections/`, `docs/data/datasheet.md`, và `docs/model/model-card.md`. AI cũng soạn phụ lục khai báo AI (G11) từ chính tệp này.
+- Nội dung lấy từ hiện vật đã có trong kho mã. AI đối chiếu lại từng con số với notebook và tài liệu nguồn trước khi ghi: PPL 10,1948 ± 0,0628 và bảng 5 seed từ `char-corpus.md`; cấu hình A.2 (2 block, d_model 64, 4 head, d_ff 128, batch 16, AdamW lr 0,001); 33.472 tham số và 6.291.456 MAC từ notebook C.2, kiểm lại bằng tay theo `4d²+2df+9d+f` và `4nd²+2ndf+2n²d`; 544.768 / 1.089.536 / 2.179.072 và `P = 136.192r` từ notebook C.3; bộ ma trận C.1 seed `577893521` với bảng trọng số/đầu ra; `L = ln 3`, gradient `(−2/3, +2/3)` từ notebook C.4; năm họ thủ tục và hai mâu thuẫn nguồn (thời hạn trích lục 1818 so với 2163; phí chứng thực 226/2016/TT-BTC so với lệ phí hộ tịch NQ 98) từ `source-audit.md`; các số pilot D.2 từ `admin-pilot-report.json` và `docs/data/README.md`.
+- AI chạy `python -m pytest -q` trên môi trường cục bộ và ghi đúng kết quả quan sát được: 30 test qua, 1 bỏ qua, 13 subtest qua, 8,38 giây; Python 3.14.3, PyTorch 2.12.1+cpu, `torch.cuda.is_available()` là `False`.
+- Mọi hạng mục trong báo cáo mang nhãn `[đã thực hiện]`, `[một phần]` hoặc `[chưa thực hiện]` theo bằng chứng file. D.4 và D.5 ghi `[chưa thực hiện]`; D.2 ghi 24/2.000 QA và 0 QA được người duyệt; D.3 ghi chưa có lượt huấn luyện nào; yêu cầu G5 ghi chưa đóng. Các ô số đo của model card để trống với dấu `— chưa đo`.
+- AI không tạo kết quả thực nghiệm mới, không đổi trạng thái hạng mục nào trong ma trận yêu cầu, không điền phiếu kiểm, không tạo nhãn ưu tiên, không chạy huấn luyện và không commit. Báo cáo mang nhãn `Bản nháp chưa nhóm duyệt` ở đầu trang cho tới khi nhóm xác nhận.
+- Chưa xác minh loại tài khoản AI của nhóm; mỗi thành viên vẫn phải tự đọc, hiểu và bảo vệ được nội dung báo cáo khi vấn đáp.
+
+## Dựng phiếu rà soát cho Thế — 26/11/2026
+
+- Theo yêu cầu của Thế, AI dựng `docs/progress/review-log-the.md`: phiếu ghi lại việc rà soát theo quy ước nhóm, chia năm phần (chạy kiểm mã, đọc 4 file `src/`, tự giải lại B.1–B.6, đối chiếu một bài C, và các việc đang bị chặn). AI ghi phần "Việc cần làm", lệnh cần chạy và kết quả mong đợi của bộ kiểm.
+- **Toàn bộ cột "Kết quả của Thế" và cột ngày để trống.** AI không điền kết quả rà soát, không ký thay, và không đổi trạng thái B1–B6 trong ma trận yêu cầu. Việc đổi trạng thái chỉ diễn ra sau khi Thế điền phiếu và báo nhóm.
+- AI nêu trong phiếu rằng trước khi chấm cặp DPO, Thế phải đọc hướng dẫn chấm và xác nhận bằng văn bản chỉ nhận dữ liệu được phân quyền, không nhận phiếu đồng ý hay khảo sát thô.
+
+## Cập nhật báo cáo theo commit 0f96676 — 28/11/2026
+
+- Sau khi nhóm pull commit `0f96676` của Hà, AI đối chiếu lại báo cáo với trạng thái mới và sửa các số đã lạc hậu: D.2 từ 24 lên 400 QA ứng viên và 24 QA đã duyệt; D.3 từ "chưa huấn luyện" sang kết quả pilot thật (seed 41, validation NLL 1,509630 → 1,242314, PPL 4,525054 → 3,463617, peak allocated 2,402 GiB, resume tái lập đúng chỉ số, bốn SHA-256 khớp). Thêm mục ghi hai lỗi quan sát được khi hỏi thử adapter pilot. Cập nhật tương ứng datasheet và model card.
+- AI sửa một khẳng định sai do chính AI viết trong bản nháp báo cáo mục C.4: trước đó ghi nghiệm tối ưu "cũng thay đổi" theo β mà không nêu điều kiện. Theo bản sửa của nhóm ở notebook 07, nghiệm chỉ thay đổi nếu reward không hằng trên hỗ trợ của reference; nếu `R(x,y)=c(x)` trên hỗ trợ đó thì `π* = π_ref` với mọi `β>0`. Báo cáo nay ghi cả tỷ số tối ưu và trường hợp ngoại lệ.
+- Khi gộp `ai-use.md`, AI giữ nguyên toàn bộ mục của Hà và chỉ thêm ba mục của phiên trước vào sau; không ghi đè, không xóa dòng nào. Không commit, không push.
+- Các số đo pilot đều là nội dung do nhóm cung cấp từ Kaggle; AI không chạy GPU, không mở checkpoint và không tạo kết quả mới.

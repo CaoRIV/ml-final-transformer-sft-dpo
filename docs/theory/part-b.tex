@@ -148,6 +148,37 @@ Hai cột của khối này có chuẩn $1$ vì $\cos^2 b+\sin^2 b=1$, và tích
 \subsection*{Ghép các cặp thành vector đầy đủ}
 Lấy $M_\Delta=\diag(M_{\Delta,0},\ldots,M_{\Delta,m-1})$. Vì các khối ngoài đường chéo bằng $0$, phép nhân lên từng cặp tọa độ chính là $u_i(p)\mapsto u_i(p+\Delta)$. Ghép các cặp theo thứ tự ban đầu được $M_\Delta\PE(p)=\PE(p+\Delta)$. Các phần tử của $M_\Delta$ chỉ chứa $\Delta$ và những tần số đã cố định, không chứa $p$. Điều này cho thấy độ dịch cố định có biểu diễn tuyến tính trên PE; không khẳng định mô hình đã học được cách khai thác độ dịch.
 
+\subsection*{Phạm vi: mệnh đề cần số chiều chẵn}
+Giả thiết ``$m$ cặp đầy đủ'' là điều kiện thực sự cần, không phải quy ước trình bày. Cài đặt \texttt{SinusoidalPositionEncoding} trong \texttt{src/attention.py} của nhóm chấp nhận $d_{\mathrm{model}}$ lẻ: với $d_{\mathrm{model}}=2m+1$, mã sinh $m+1$ tần số $\omega_0,\ldots,\omega_m$, đặt $\sin$ vào $m+1$ cột chỉ số chẵn và $\cos$ vào $m$ cột chỉ số lẻ, nên
+\[
+  \PE(p)=\bigl(\sin p\omega_0,\ \cos p\omega_0,\ \ldots,\
+                \sin p\omega_{m-1},\ \cos p\omega_{m-1},\
+                \sin p\omega_m\bigr)^\top .
+\]
+Tọa độ cuối $\sin(p\omega_m)$ không có $\cos(p\omega_m)$ đi kèm. Trong trường hợp này không tồn tại $M_\Delta$ nào thỏa mệnh đề, trừ khi $\sin(\Delta\omega_m)=0$.
+
+\textbf{Bổ đề (độc lập tuyến tính).} Cho các tần số phân biệt $\omega_0,\ldots,\omega_m\in(0,\pi)$. Nếu $L\ge 2m+2$ thì $2m+2$ hàm $p\mapsto\sin(p\omega_i)$ và $p\mapsto\cos(p\omega_i)$, $0\le i\le m$, độc lập tuyến tính trên $\R$ khi xét như hàm trên $\{0,1,\ldots,L-1\}$.
+
+\emph{Chứng minh.} Đặt $z_i=e^{\mathrm i\omega_i}$. Mỗi tổ hợp tuyến tính thực của các hàm trên viết được thành $\sum_{i=0}^{m}\bigl(\gamma_i z_i^{\,p}+\overline{\gamma_i}\,\overline{z_i}^{\,p}\bigr)$. Vì $\omega_i\in(0,\pi)$ phân biệt, $2m+2$ số $z_0,\overline{z_0},\ldots,z_m,\overline{z_m}$ đôi một khác nhau. Nếu tổng này triệt tiêu tại $p=0,\ldots,2m+1$ thì hệ Vandermonde với các nút phân biệt đó khả nghịch, buộc mọi $\gamma_i=0$.\hfill$\square$
+
+Với lựa chọn của Transformer gốc, $\omega_i=10000^{-2i/d_{\mathrm{model}}}\in(0,1]\subset(0,\pi)$ và đôi một phân biệt, nên bổ đề áp dụng được khi $\texttt{max\_len}\ge d_{\mathrm{model}}+1$.
+
+\textbf{Suy ra điều phải bác bỏ.} Giả sử có $M_\Delta\in\R^{(2m+1)\times(2m+1)}$ với $\PE(p+\Delta)=M_\Delta\PE(p)$ cho mọi $p$ trong miền vị trí. Đọc hàng cuối (chỉ số $2m$) và dùng công thức cộng góc:
+\[
+  \cos(\Delta\omega_m)\sin(p\omega_m)+\sin(\Delta\omega_m)\cos(p\omega_m)
+  =\sum_{i=0}^{m-1}\bigl(a_i\sin(p\omega_i)+b_i\cos(p\omega_i)\bigr)
+   +a_m\sin(p\omega_m),
+\]
+trong đó $a_i,b_i$ là các phần tử của hàng đó, không phụ thuộc $p$. Chuyển vế:
+\[
+  \sin(\Delta\omega_m)\cos(p\omega_m)
+  =\sum_{i=0}^{m-1}\bigl(a_i\sin(p\omega_i)+b_i\cos(p\omega_i)\bigr)
+   +\bigl(a_m-\cos(\Delta\omega_m)\bigr)\sin(p\omega_m).
+\]
+Theo bổ đề, hàm $\cos(p\omega_m)$ độc lập tuyến tính với tất cả các hàm ở vế phải, nên đẳng thức chỉ có thể đúng với mọi $p$ khi $\sin(\Delta\omega_m)=0$, tức $\Delta\omega_m\in\pi\mathbb Z$. Vì $0<\omega_m\le 1$, điều này loại mọi độ dịch nguyên $\Delta$ với $|\Delta|<\pi/\omega_m$, trong đó có $\Delta=1$. Vậy mệnh đề thất bại ở số chiều lẻ.
+
+\textbf{Hệ quả cho cài đặt.} Thí nghiệm A.2 dùng $d_{\mathrm{model}}=64$ (chẵn), nên bảng PE được dùng thực tế vẫn thỏa mệnh đề; phần kiểm thử $d_{\mathrm{model}}$ lẻ của nhóm chỉ đối chiếu giá trị bảng, không kiểm tính chất dịch vị trí. Muốn giữ tính chất cho số chiều lẻ, cần bỏ tọa độ $\sin$ lẻ cặp hoặc đệm lên số chiều chẵn; đây là lựa chọn thiết kế, không phải hệ quả của chứng minh trên.
+
 \section{Khởi tạo, hạng, số tham số và hợp nhất LoRA}
 \label{sec:lora}
 \textbf{Thiết lập.} Xét lớp tuyến tính có $W\in\R^{d\times k}$, với $d,k\ge1$, và đầu vào cột $h\in\R^k$. LoRA đóng băng $W$, học $A\in\R^{r\times k}$ và $B\in\R^{d\times r}$, với $r\ge1$ nguyên và $\alpha$ cố định. Không xét huấn luyện bias; nếu có bias cố định $b\in\R^d$, nó được cộng như nhau trong cả hai cách tính. Đặt $\Delta W=(\alpha/r)BA$ và $W'=W+\Delta W$ \cite[§4.1–4.2]{lora}.

@@ -1,0 +1,157 @@
+% Báo cáo cuối kỳ — Đề tài 9.
+% Biên dịch: tectonic docs/report/report.tex (hoặc XeLaTeX ba lượt để ổn định mục lục).
+% Nguồn nội dung: docs/report/sections/*.tex
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+% Không đặt \setmonofont để tránh phụ thuộc thêm font; \texttt dùng font mặc định.
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage[unicode,hidelinks]{hyperref}
+\usepackage{bookmark}
+
+\hypersetup{pdftitle={Đề tài 9 — Kiến trúc Transformer và tinh chỉnh mô hình ngôn ngữ},pdflang={vi-VN}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\setlength{\emergencystretch}{2em}
+\linespread{1.08}
+\raggedbottom
+\renewcommand{\contentsname}{Mục lục}
+\renewcommand{\refname}{Tài liệu tham khảo}
+\renewcommand{\headrulewidth}{0.3pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Đề tài 9 — Báo cáo cuối kỳ}
+\fancyhead[R]{\small Bản nháp chưa nhóm duyệt}
+\fancyfoot[C]{\thepage}
+
+% Ký hiệu dùng chung với docs/theory/part-b.tex
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\softmax}{softmax}
+\DeclareMathOperator{\KL}{KL}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\PE}{\mathrm{PE}}
+\newcommand{\Attn}{\operatorname{Attn}}
+\newcommand{\PPL}{\mathrm{PPL}}
+\newcommand{\pref}{\pi_{\mathrm{ref}}}
+\newcommand{\pdata}{p_{\mathrm{data}}}
+\newcommand{\dmodel}{d_{\mathrm{model}}}
+
+% Nhãn trạng thái: dùng để phân biệt việc đã làm với việc chưa làm.
+\newcommand{\dalam}{\textbf{[đã thực hiện]}}
+\newcommand{\chualam}{\textbf{[chưa thực hiện]}}
+\newcommand{\motphan}{\textbf{[một phần]}}
+
+\begin{document}
+
+%====================================================================
+\begin{titlepage}
+\centering
+\vspace*{18mm}
+
+{\large BÁO CÁO BÀI TẬP LỚN\par}
+{\large HỌC MÁY CƠ BẢN\par}
+
+\vspace{20mm}
+{\LARGE\bfseries Đề tài 9\par}
+\vspace{4mm}
+{\LARGE\bfseries Kiến trúc Transformer và tinh chỉnh\\[2mm] mô hình ngôn ngữ\par}
+
+\vspace{8mm}
+{\large\itshape Ứng dụng: trợ lý hỏi đáp thủ tục hộ tịch\\ và chứng thực tại Hà Nội\par}
+
+\vspace{24mm}
+\begin{tabular}{rl}
+\textbf{Nhóm thực hiện:} & Cao Văn Hà (trưởng nhóm)\\
+ & Hà Mạnh Thế\\
+ & Trần Duy Hưng\\[4mm]
+\textbf{Đề gốc:} & Bản ngày 12/11/2026, Đề tài 9, tr.~18--19\\[4mm]
+\textbf{Hạn hoàn thành:} & 23h59 ngày 01/12/2026\\
+\textbf{Vấn đáp:} & 03/12/2026\\
+\end{tabular}
+
+\vfill
+\begin{minipage}{0.86\textwidth}
+\small
+\textbf{Trạng thái tài liệu.} Đây là bản nháp có hỗ trợ AI, chưa được nhóm xác nhận là
+bản nộp. Mỗi mục đều ghi nhãn \dalam, \motphan{} hoặc \chualam{} theo bằng chứng
+thực tế trong kho mã. Những phần chưa có kết quả thực nghiệm không được trình bày
+như đã hoàn thành. Phạm vi hỗ trợ AI khai báo tại Phụ lục~\ref{sec:phu-luc-ai}.
+\end{minipage}
+
+\vspace{10mm}
+\end{titlepage}
+
+%====================================================================
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\input{sections/00-tom-tat}
+\clearpage
+\pagenumbering{arabic}
+
+\input{sections/01-gioi-thieu}
+\clearpage
+\input{sections/02-phan-a}
+\clearpage
+\input{sections/03-phan-b}
+\clearpage
+\input{sections/04-phan-c}
+\clearpage
+\input{sections/05-phan-d}
+\clearpage
+\input{sections/06-tai-lap}
+\clearpage
+\input{sections/07-dao-duc}
+\clearpage
+\input{sections/08-gioi-han}
+\clearpage
+\input{sections/09-phu-luc-ai}
+
+%====================================================================
+\clearpage
+\begin{thebibliography}{9}
+\bibitem{de}
+Phạm Văn Khánh. \emph{Danh mục 20 bài tập lớn: Học máy cơ bản, mô hình ngôn ngữ lớn,
+học tăng cường và tích hợp}. Bản ngày 12/11/2026, 46 trang; Đề tài 9, tr.~18--19.
+
+\bibitem{attention}
+Vaswani, A. và cộng sự. \emph{Attention Is All You Need}. NeurIPS 2017;
+bản \href{https://arxiv.org/abs/1706.03762v7}{arXiv:1706.03762v7}.
+
+\bibitem{lora}
+Hu, E. J. và cộng sự. \emph{LoRA: Low-Rank Adaptation of Large Language Models}.
+ICLR 2022; bản \href{https://arxiv.org/abs/2106.09685v2}{arXiv:2106.09685v2}.
+
+\bibitem{qlora}
+Dettmers, T. và cộng sự. \emph{QLoRA: Efficient Finetuning of Quantized LLMs}.
+NeurIPS 2023; bản \href{https://arxiv.org/abs/2305.14314v1}{arXiv:2305.14314v1}.
+
+\bibitem{rlhf}
+Ouyang, L. và cộng sự. \emph{Training language models to follow instructions with
+human feedback}. NeurIPS 2022; bản \href{https://arxiv.org/abs/2203.02155v1}{arXiv:2203.02155v1}.
+
+\bibitem{dpo}
+Rafailov, R. và cộng sự. \emph{Direct Preference Optimization: Your Language Model
+Is Secretly a Reward Model}. NeurIPS 2023;
+bản \href{https://arxiv.org/abs/2305.18290v3}{arXiv:2305.18290v3}.
+
+\bibitem{qwen}
+Qwen Team. \emph{Qwen2.5-1.5B-Instruct}. Model card trên Hugging Face, giấy phép
+Apache-2.0; revision được khóa trong \texttt{scripts/} của kho mã.
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,175 @@
+\section{Tái lập}
+\label{sec:tai-lap}
+
+Đề yêu cầu: cố định seed; báo cáo trung bình $\pm$ độ lệch chuẩn trên ít nhất 5 lần
+chạy độc lập hoặc 5 fold; siêu tham số chỉ chọn trên dữ liệu kiểm định
+\cite[tr.~2, mục II]{de}. Mục này ghi điều kiện tái lập và nêu rõ phần nào còn
+thiếu bằng chứng.
+
+\subsection{Cấu trúc kho mã}
+
+\begin{center}
+\begin{tabular}{lp{0.60\textwidth}}
+\toprule
+\textbf{Đường dẫn} & \textbf{Nội dung}\\
+\midrule
+\texttt{src/} & Mã dùng lại: \texttt{attention.py} (A.1), \texttt{char\_lm.py}
+(A.2), \texttt{lora.py} (A.3), \texttt{dpo.py} (A.4), \texttt{d3\_data.py}\\
+\texttt{notebooks/} & Notebook điều khiển và giải thích, chạy tuần tự trong phiên
+sạch\\
+\texttt{tests/} & Bộ kiểm tự động\\
+\texttt{scripts/} & Chuẩn bị dữ liệu D.2, đóng gói và huấn luyện D.3\\
+\texttt{docs/theory/} & Phần B biên dịch độc lập\\
+\texttt{docs/report/} & Báo cáo này\\
+\texttt{docs/data/} & Nhật ký nguồn, quyền, quy trình riêng tư, datasheet\\
+\texttt{docs/progress/} & Ma trận yêu cầu, bối cảnh, kế hoạch, nhật ký AI\\
+\texttt{references/} & Năm bài báo và PDF đề gốc\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Môi trường}
+
+\textbf{Môi trường CPU cục bộ} (dùng cho toàn bộ phép kiểm A.1, A.3, A.4 và C.1--C.4):
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Python & 3.14.3\\
+PyTorch & 2.12.1+cpu\\
+CUDA khả dụng & \texttt{False}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Bản PyTorch cài cục bộ là bản CPU, nên mọi con số ở các mục trên là số CPU. Máy có
+GPU rời nhưng bản PyTorch hiện tại không dùng được nó; nhóm \emph{không} cài lại
+PyTorch tùy tiện vì điều đó làm mất khả năng tái lập các kết quả đã ghi.
+
+\textbf{Môi trường GPU cho D.3} khai báo ở \texttt{requirements-d3.txt}:
+\texttt{transformers==4.57.6}, \texttt{peft==0.18.0},
+\texttt{accelerate==1.12.0}, \texttt{bitsandbytes==0.48.2}. PyTorch và CUDA lấy từ
+image Kaggle và \emph{không} thay thế, để tránh lệch giữa bản đã kiểm và bản chạy.
+
+\textbf{Môi trường A.2} là một phiên Kaggle. Phiên hiển thị cấu hình
+\texttt{GPU T4 x2} và trạng thái \emph{Version \#1 --- Successful}.
+
+\subsection{Script tái lập \dalam}
+
+Đề yêu cầu kho Git có \emph{script tái lập}. Script đó là
+\texttt{scripts/reproduce.py}; chạy từ gốc kho mã:
+
+\begin{quote}\small\ttfamily
+python scripts/reproduce.py
+\end{quote}
+
+Script tái lập \emph{những gì tái lập được trên CPU}, không cần GPU, mạng, dữ liệu
+QA hay checkpoint, và trả mã khác $0$ nếu có mục lệch. Tám bước:
+
+\begin{enumerate}[leftmargin=2em]
+\item Ghi nhận môi trường thực tế (Python, PyTorch, CUDA).
+\item Chạy bộ kiểm tự động.
+\item Tính lại tham số và MAC của C.2, đối chiếu \texttt{numel()} thực của
+\texttt{DecoderBlock} ở cả $h=4$ và $h=8$.
+\item Tính lại tham số LoRA của C.3 bằng chính \texttt{LoRALinear} trên meta
+tensor, cho $r=4,8,16$.
+\item Tính lại mất mát và gradient DPO của C.4 bằng \texttt{dpo\_loss} và
+autograd, kể cả ca $m=0$ với bốn giá trị $\beta$.
+\item Tổng hợp lại perplexity A.2 từ NLL từng seed đã ghi.
+\item Đối chiếu các con số trong báo cáo với tài liệu nguồn --- gồm một phép
+kiểm riêng rằng báo cáo \emph{không} dùng lại số của revision \texttt{206607}
+đã bị loại.
+\item Kiểm cấu trúc nguồn báo cáo: mọi \verb|\input| tồn tại, không có tham
+chiếu treo.
+\end{enumerate}
+
+Lần chạy ghi trong báo cáo này: \textbf{48 phép đối chiếu khớp, 0 lệch}.
+
+Script \emph{không} tái lập huấn luyện A.2 trên Kaggle, SFT pilot D.3, hay bất kỳ
+số đo GPU nào; những kết quả đó cần phần cứng và dữ liệu ngoài kho mã.
+
+\subsection{Bộ kiểm tự động \dalam}
+
+Chạy từ gốc kho mã:
+
+\begin{quote}\small\ttfamily
+python -m pytest -q
+\end{quote}
+
+Kết quả lần chạy ghi trong báo cáo này: \textbf{30 test qua, 1 test bỏ qua, 13
+subtest qua} trong $8{,}38$ giây trên môi trường CPU nêu trên. Test bị bỏ qua là
+test cần phụ thuộc không có trong môi trường cục bộ.
+
+\subsection{Seed và số lần chạy}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\textbf{Hạng mục} & \textbf{Seed} & \textbf{Số lần lặp}\\
+\midrule
+A.2 huấn luyện & 41, 42, 43, 44, 45 & 5 lần huấn luyện độc lập\\
+C.1 đầu vào minh họa & \texttt{577893521} & 1 (bộ xác định, không lấy mẫu lại)\\
+C.4 đầu vào minh họa & --- & 3 dấu margin $\times$ 4 giá trị $\beta$ (xác định)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Đơn vị lặp của A.2} là \emph{một lần huấn luyện hoàn chỉnh}, không phải một
+lần sinh từ cùng checkpoint. Độ lệch chuẩn báo cáo là SD mẫu (mẫu số $n-1=4$) trên
+5 giá trị PPL. Đây là độ biến thiên do khởi tạo và thứ tự trộn \emph{trên cùng một
+split}; nó không phải khoảng tin cậy và không phải đánh giá trên tập test độc lập.
+
+\subsection{Tách dữ liệu và quy tắc chọn siêu tham số}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{A.2:} tách train (prefix 90\%) và validation (suffix 10\%) theo code
+point \emph{trước} khi học từ vựng và \emph{trước} khi tạo cửa sổ. Từ vựng chỉ học
+từ train. Phần đuôi không đủ một cửa sổ bị loại.
+\item \textbf{D.2:} tách train/validation/test, kèm tách nhóm gần trùng (cùng họ
+thủ tục, cùng câu hỏi). Tập test là \texttt{USER\_TEST}, có công cụ kiểm riêng để
+chặn rò rỉ sang train.
+\item \textbf{Quy tắc chung:} không dùng tập test để chọn cấu hình. Siêu tham số
+của D.3 sẽ chọn trên validation; kế hoạch so $r$, $\alpha$, LR, epoch đã viết theo
+quy tắc đó.
+\end{itemize}
+
+\subsection{Những gì còn thiếu để tái lập đầy đủ \chualam}
+
+Nhóm liệt kê thẳng, thay vì tuyên bố đã đạt:
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Log môi trường và checkpoint của A.2.} Tệp \texttt{summary.json}
+nhận được không chứa phiên bản PyTorch/CUDA và không kèm checkpoint. Nhóm chưa đối
+chiếu được số GPU thực dùng. Việc cần làm: lưu log và output của phiên Kaggle đó.
+\item \textbf{Hiện vật pilot D.2 không có trên máy hiện tại.} Các bản lưu
+(\texttt{data/review/}, \texttt{.cache/}) nằm ngoài Git theo quy tắc riêng tư, nên
+chỉ còn báo cáo JSON đã commit. Người tái lập cần nhận bàn giao riêng.
+\item \textbf{Toàn bộ số đo của D.3--D.5} chưa tồn tại, nên chưa có gì để tái lập.
+\item \textbf{Yêu cầu 5 lần chạy chưa áp dụng cho Phần D.} Kết quả 5 seed hiện chỉ
+thuộc A.2. Không được suy ra rằng yêu cầu này đã đạt cho phần D.
+\end{enumerate}
+
+\subsection{Cách chạy lại từng phần}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Mục} & \textbf{Lệnh hoặc notebook}\\
+\midrule
+A.1 & \texttt{notebooks/01\_attention\_decoder.ipynb}\\
+A.4 & \texttt{notebooks/02\_dpo\_loss.ipynb}\\
+A.3 & \texttt{notebooks/03\_lora\_linear.ipynb}\\
+C.2 & \texttt{notebooks/05\_transformer\_block\_cost.ipynb}\\
+C.3 & \texttt{notebooks/06\_lora\_qlora\_cost.ipynb}\\
+C.4 & \texttt{notebooks/07\_dpo\_loss\_gradient.ipynb}\\
+C.1 & \texttt{notebooks/08\_causal\_attention\_example.ipynb}\\
+D.3 & \texttt{notebooks/09\_d3\_sft\_kaggle.ipynb} (cần release D.2)\\
+Phần B & \texttt{tectonic docs/theory/part-b.tex}\\
+Báo cáo & \texttt{tectonic docs/report/report.tex}\\
+Toàn bộ phép kiểm CPU & \texttt{python scripts/reproduce.py}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Các notebook C.1--C.4 không cần GPU, mạng, trọng số hay dữ liệu QA; chúng chạy tuần
+tự trên CPU và tự tìm gốc kho mã.

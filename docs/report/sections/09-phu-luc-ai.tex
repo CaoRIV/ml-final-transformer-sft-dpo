@@ -1,0 +1,140 @@
+\appendix
+\section{Phụ lục --- Khai báo phạm vi dùng AI tạo sinh}
+\label{sec:phu-luc-ai}
+
+Đề yêu cầu khai báo phạm vi dùng AI tạo sinh trong phụ lục; từng thành viên có thể
+bị vấn đáp; không dùng bản AI miễn phí \cite[tr.~2, mục II]{de}. Phụ lục này khai
+báo trung thực, kể cả những phần AI làm phần lớn công việc.
+
+Nguồn chi tiết theo từng phiên là \texttt{docs/progress/ai-use.md}, được cập nhật
+liên tục trong suốt dự án.
+
+\subsection{Công cụ và trạng thái xác minh}
+
+Công cụ: một trợ lý lập trình AI chạy trong workspace của nhóm, có hỗ trợ soạn tài
+liệu.
+
+\textbf{Điểm cần nêu rõ:} nhóm \textbf{chưa xác minh} loại tài khoản hay gói dịch
+vụ AI đang dùng có phù hợp quy định ``không dùng bản AI miễn phí'' hay không. Nhóm
+không diễn giải quy định này thành cấm dùng Colab hay Kaggle bản miễn phí, vì đó là
+nền tảng tính toán, không phải công cụ AI tạo sinh. Việc xác minh tài khoản là hạng
+mục còn mở.
+
+\subsection{Phạm vi AI đã làm}
+
+\subsubsection{Tài liệu, kế hoạch và hồ sơ}
+
+AI kiểm kê Git và tài liệu; đọc và đối chiếu các PDF trong \texttt{references/};
+soạn ma trận yêu cầu, đề cương, kế hoạch dữ liệu, hướng dẫn kho mã, bối cảnh bàn
+giao, kế hoạch phối hợp nhóm và lịch chuẩn bị vấn đáp; tạo mẫu LaTeX, bộ lọc Pandoc
+và script sinh/biên dịch PDF; tổ chức lại README.
+
+\subsubsection{Mã Phần A và bộ kiểm}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{A.1:} AI viết \texttt{src/attention.py}, notebook dẫn xuất và bộ
+kiểm; thư viện chuẩn của PyTorch chỉ dùng ở phía đối chiếu. Chạy trên CPU cục bộ.
+\item \textbf{A.2:} AI viết LM dùng decoder A.1, mã đọc dữ liệu có kiểm quyền, vòng
+huấn luyện, tính PPL, lưu/khôi phục checkpoint, notebook và bộ kiểm. AI không chạy
+Kaggle thay nhóm.
+\item \textbf{A.3:} AI triển khai lớp LoRA, notebook và bộ kiểm CPU; chạy đối chiếu
+số tham số và phép hợp nhất sau cập nhật khác $0$.
+\item \textbf{A.4:} AI triển khai hàm DPO, notebook và bộ kiểm CPU bằng số minh
+họa; đối chiếu mất mát và gradient.
+\end{itemize}
+
+AI cũng đã phát hiện, tái hiện và sửa một lỗi trong script corpus (theo redirect
+trước khi kiểm URL đích), kèm kiểm thử hồi quy.
+
+\subsubsection{Phần B và Phần C}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Phần B:} AI đối chiếu sáu yêu cầu với đề tr.~18, đọc các phần liên
+quan của \cite{attention}, \cite{lora}, \cite{dpo}, và \textbf{soạn toàn bộ bản
+nháp LaTeX B.1--B.6}: phát biểu, giả thiết, các bước chứng minh, diễn giải và ví dụ
+minh họa. Ở một lượt rà sau đó, AI tìm ra lỗ hổng số chiều lẻ của B.3 và soạn phần
+bổ sung ở Mục~\ref{sec:b3-odd}.
+\item \textbf{C.1:} theo yêu cầu của nhóm, AI sinh ma trận Q/K/V với seed
+\texttt{577893521}, lưu đầu vào tái lập, soạn phép tính tay từng token và đối chiếu
+với mã A.1. Việc giảng viên không cung cấp ma trận là thông tin do nhóm báo.
+\item \textbf{C.2:} AI dẫn xuất số tham số và MAC theo kích thước tensor của
+\texttt{DecoderBlock}, rồi chạy notebook CPU đối chiếu \texttt{numel()} và FLOP do
+profiler ước lượng.
+\item \textbf{C.3:} AI đối chiếu cấu hình Qwen khóa revision, mã Qwen2 trong
+Transformers và giả định double quantization của \cite{qlora}; viết notebook và
+chạy trên CPU để kiểm số tham số bằng lớp A.3.
+\item \textbf{C.4:} AI tự đặt bốn log-xác suất minh họa, trình bày phép thế số, và
+kiểm mất mát/gradient với A.4 và autograd.
+\end{itemize}
+
+\subsubsection{Phần D}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{D.1:} AI truy tìm văn bản công khai, đối chiếu số hiệu, ngày, phạm
+vi, phụ lục và căn cứ quyền tác giả; lưu URL, thời điểm và SHA-256; kiểm chữ ký CMS
+về toàn vẹn nội dung trên bốn PDF Hà Nội. AI không đăng nhập, không lấy hồ sơ công
+dân, không tự phê duyệt nguồn.
+\item \textbf{D.2:} AI soạn recipe từ chính văn, kiểm SHA-256 và đoạn trích, triển
+khai CLI chọn mẫu phân tầng và cổng xuất SFT, cài công cụ kiểm tách
+\texttt{USER\_TEST}. AI biên soạn 20 QA nghiên cứu và đối chiếu 21 đoạn trích.
+\item \textbf{D.3:} AI chuẩn bị bộ nạp release D.2, mã QLoRA, notebook Kaggle,
+script đóng gói và kế hoạch so cấu hình trên validation; chạy kiểm phần mềm trên
+CPU.
+\item AI soạn bộ tài liệu đồng ý, khảo sát, quy trình riêng tư và rubric/phiếu
+chấm.
+\end{itemize}
+
+\subsubsection{Báo cáo này}
+
+AI soạn cấu trúc và toàn bộ bản nháp của báo cáo này từ các hiện vật đã có trong
+kho mã, kèm datasheet và model card. AI đối chiếu lại từng con số với notebook, tệp
+tài liệu nguồn và ma trận yêu cầu; chạy bộ kiểm tự động và ghi kết quả thực tế. AI
+không tạo kết quả thực nghiệm mới và không đổi trạng thái của hạng mục nào.
+
+\subsection{Phạm vi AI \emph{không} làm}
+
+Danh sách này quan trọng ngang danh sách trên:
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Không thực hiện khảo sát con người} và không tạo bản ghi khảo sát.
+Chưa mời hay thu dữ liệu của bất kỳ người tham gia nào.
+\item \textbf{Không gán nhãn ưu tiên thật} và không tạo mức đồng thuận.
+\item \textbf{Không điền phiếu kiểm thủ công.} Trong vòng rà pilot, AI chạy
+validator ngoại tuyến và lưu báo cáo riêng, nhưng số QA được người duyệt vẫn giữ
+bằng $0$. Nhận xét của AI \emph{không} được tính vào quota kiểm thủ công $\ge20\%$.
+\item \textbf{Không chạy huấn luyện thay nhóm} trên Colab hay Kaggle, không tạo
+dataset/notebook trên tài khoản nền tảng của nhóm.
+\item \textbf{Không tự phê duyệt quyền dùng nguồn} và không ký xác nhận thay người
+có thẩm quyền. Kết quả audit kỹ thuật không được dùng làm attestation về quyền.
+\item \textbf{Không thay bộ Q/K/V chính thức của Phần C} --- bộ minh họa luôn được
+ghi nhãn là minh họa.
+\item \textbf{Không tạo kết quả đánh giá} hay số đo GPU.
+\end{enumerate}
+
+\subsection{Dữ liệu đầu vào cho AI}
+
+Yêu cầu của nhóm; sáu PDF có sẵn trong workspace (PDF đề gốc và năm bài báo); các
+trang web công khai đã ghi URL và thời điểm trong nhật ký nguồn; và những thông số
+phiên Kaggle/Colab \emph{do thành viên nhóm cung cấp}. Các thông số do thành viên
+cung cấp được ghi là thông tin người dùng cung cấp, \emph{không} nhận là kết quả do
+AI đo.
+
+\subsection{Trách nhiệm của nhóm}
+
+Những việc sau thuộc trách nhiệm thành viên và \emph{không} được chuyển cho AI:
+
+\begin{itemize}[leftmargin=2em]
+\item Đọc lại nguồn và xác minh các giả thiết.
+\item Lựa chọn phạm vi dự án và mô hình.
+\item \textbf{Hiểu và giải thích được toàn bộ mã và chứng minh khi vấn đáp.} Mỗi
+thành viên tự giải lại các chứng minh của Phần~B và chạy lại các phép kiểm, không
+dựa vào việc AI đã viết chúng.
+\item Thực hiện kiểm định thủ công, khảo sát, gán nhãn ưu tiên và đánh giá mù.
+\item Ghi nhận sửa đổi do thành viên thực hiện, công cụ/phiên bản và phạm vi AI ở
+các phiên sau.
+\end{itemize}
+
+\textbf{Trạng thái tại thời điểm viết:} nhóm chưa ghi tên người kiểm duyệt nội dung
+cuối vì chưa có xác nhận. Phần~B vẫn mang nhãn bản nháp chưa được nhóm duyệt
+(Mục~\ref{sec:phan-b}). Văn bản do AI soạn \textbf{không} được coi là nguồn học
+thuật thay cho năm bài báo và đề gốc.

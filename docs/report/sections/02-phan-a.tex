@@ -1,0 +1,414 @@
+\section{Phần A --- Cài đặt từ đầu}
+\label{sec:phan-a}
+
+Đề yêu cầu Phần~A phải \emph{dẫn xuất từ bài toán tối ưu hoặc mô hình xác suất},
+cài đặt từ đầu bằng NumPy hoặc PyTorch mà không dùng hàm huấn luyện dựng sẵn, rồi
+đối chiếu với thư viện chuẩn \cite[tr.~1, mục I]{de}. Mục này theo đúng ba bước đó
+cho từng hạng mục. Thư viện chuẩn chỉ xuất hiện ở phía đối chiếu, không xuất hiện
+trong đường tính toán của nhóm.
+
+Mã dùng lại nằm trong \texttt{src/}; notebook điều khiển và giải thích nằm trong
+\texttt{notebooks/}. Toàn bộ phép kiểm ở mục này chạy trên CPU cục bộ.
+
+%--------------------------------------------------------------------
+\subsection{A.1 --- Các thành phần của khối decoder}
+\label{sec:a1}
+
+\subsubsection{Dẫn xuất: attention như một phép lấy trung bình có trọng số}
+
+Xuất phát từ bài toán truy xuất mềm. Cho một truy vấn $q\in\R^{d_k}$ và $n$ cặp
+khóa--giá trị $(k_j,v_j)$, ta muốn lấy ra giá trị ứng với khóa ``giống'' truy vấn
+nhất. Phép lấy cứng $v_{\argmax_j\langle q,k_j\rangle}$ không khả vi, nên thay bằng
+một phân phối trên các khóa rồi lấy kỳ vọng. Chọn họ phân phối Gibbs với thế năng
+là tích vô hướng:
+\[
+  \alpha_j=\frac{\exp(\langle q,k_j\rangle/T)}{\sum_{a=1}^{n}\exp(\langle q,k_a\rangle/T)},
+  \qquad \text{đầu ra} = \sum_{j=1}^{n}\alpha_j v_j .
+\]
+Đây chính là nghiệm của bài toán tối ưu có phạt entropy
+\[
+  \max_{\alpha\in\Delta^{n-1}}\ \sum_j \alpha_j\langle q,k_j\rangle
+    + T\Bigl(-\sum_j\alpha_j\log\alpha_j\Bigr),
+\]
+với $\Delta^{n-1}$ là simplex xác suất; nghiệm là softmax của $\langle q,k_j\rangle/T$.
+Cấu trúc này lặp lại ở Mục~\ref{sec:b5} với $T=\beta$ và thế năng là reward, nên
+attention và DPO dùng cùng một dạng nghiệm Gibbs.
+
+Chọn $T=\sqrt{d_k}$ không phải tùy ý. Dưới giả thiết các thành phần của $q,k$ độc
+lập, kỳ vọng $0$, phương sai $1$, ta chứng minh ở Mục~\ref{sec:b1} rằng
+$\Var(q^\top k)=d_k$; chia cho $\sqrt{d_k}$ đưa phương sai mỗi điểm về $1$ và thu
+nhỏ mọi chênh lệch điểm theo cùng hệ số, nhờ đó giảm bão hòa softmax
+\cite[§3.2.1]{attention}.
+
+Viết theo ma trận cho cả $n$ truy vấn:
+\begin{equation}
+  \Attn(Q,K,V)=\softmax\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V,
+  \label{eq:sdpa}
+\end{equation}
+đúng phương trình (1) của \cite{attention}.
+
+\subsubsection{Mặt nạ nhân quả như một ràng buộc hỗ trợ}
+
+Mô hình ngôn ngữ nhân quả phân rã xác suất chuỗi theo quy tắc dây chuyền:
+\begin{equation}
+  p_\theta(y_1,\ldots,y_T)=\prod_{t=1}^{T}p_\theta(y_t\mid y_{<t}).
+  \label{eq:chain}
+\end{equation}
+Để \eqref{eq:chain} đúng, biểu diễn tại vị trí $t$ không được phụ thuộc
+$y_{>t}$. Ràng buộc này áp vào \eqref{eq:sdpa} bằng cách buộc $\alpha_{tj}=0$ với
+$j>t$, tương đương cộng $-\infty$ vào điểm số trước softmax. Vi phạm ràng buộc này
+làm \eqref{eq:chain} sai, nên hàm mất mát không còn là log-hợp lý của mô hình nào
+cả --- đây là lý do mặt nạ là vấn đề đúng/sai, không phải lựa chọn.
+
+Cài đặt đặt mặt nạ dưới dạng boolean ``bị chặn'', giữ nguyên đường chéo:
+
+\begin{quote}\small\ttfamily
+def causal\_mask(length, *, device=None):\\
+\hspace*{2em}return torch.ones(length, length, dtype=torch.bool, device=device).triu\_(1)
+\end{quote}
+
+Hàm \texttt{scaled\_dot\_product\_attention} nhận mặt nạ này và dùng
+\texttt{masked\_fill\_} với $-\infty$ trước \texttt{softmax}. Mỗi truy vấn luôn còn
+ít nhất một khóa hợp lệ (chính nó), nên mẫu số softmax dương và không sinh
+\texttt{NaN}. Tham số \texttt{blocked=None} nghĩa là \emph{không che}, không phải
+chế độ nhân quả --- phân biệt này được ghi trong docstring để tránh dùng sai.
+
+\subsubsection{Chú ý nhiều đầu}
+
+Một đầu attention chỉ tạo được một phân phối trọng số trên mỗi vị trí. Để mô hình
+dùng nhiều quan hệ song song, chia $\dmodel$ thành $h$ đầu, mỗi đầu có
+$d_h=\dmodel/h$, tính attention riêng rồi ghép và chiếu
+\cite[§3.2.2]{attention}:
+\[
+  \mathrm{MHA}(X)=\mathrm{Concat}(H_1,\ldots,H_h)W_O,\qquad
+  H_i=\Attn(XW_Q^{(i)},XW_K^{(i)},XW_V^{(i)}).
+\]
+Vì $h\cdot d_h=\dmodel$, tổng chi phí các phép chiếu không đổi so với một đầu có
+cùng $\dmodel$ --- một điểm thường bị hỏi ở vấn đáp và được dùng lại ở
+Mục~\ref{sec:c2}.
+
+Cài đặt chiếu Q/K/V \emph{một lần} bằng \texttt{nn.Linear(d\_model, 3*d\_model)} rồi
+tách, thay vì ba lớp riêng. Phép biến đổi hình dạng giữ đúng thứ tự trục:
+
+\begin{quote}\small\ttfamily
+q, k, v = self.qkv(x).view(batch, length, 3, self.n\_heads, self.head\_dim)\\
+\hspace*{6em}.permute(2, 0, 3, 1, 4).unbind(0)
+\end{quote}
+
+Cho \texttt{[B,T,3,H,Dh]} $\to$ ba tensor \texttt{[B,H,T,Dh]}. Trục đầu và trục
+token không bị trộn; nếu trộn, mỗi đầu sẽ nhận một lát đặc trưng sai và kết quả vẫn
+có hình dạng đúng nhưng sai về ngữ nghĩa. Đây là lỗi im lặng nên notebook A.1 kiểm
+riêng bằng cách so với \texttt{nn.MultiheadAttention} dùng \emph{cùng trọng số}.
+
+\subsubsection{Mã hóa vị trí hình sin}
+
+Self-attention không có mã hóa vị trí là đẳng biến hoán vị (chứng minh ở
+Mục~\ref{sec:b2}), nên không phân biệt được thứ tự token. Transformer gốc cộng một
+bảng cố định \cite[§3.5]{attention}:
+\[
+  \PE(p)_{2i}=\sin\!\left(p\,\omega_i\right),\quad
+  \PE(p)_{2i+1}=\cos\!\left(p\,\omega_i\right),\quad
+  \omega_i=10000^{-2i/\dmodel}.
+\]
+Tần số được tính trong miền log để tránh tràn số:
+
+\begin{quote}\small\ttfamily
+freq = torch.exp(torch.arange(0, d\_model, 2, dtype=torch.float32)\\
+\hspace*{6em}* (-math.log(10000.0) / d\_model))
+\end{quote}
+
+Bảng được đăng ký bằng \texttt{register\_buffer(\ldots, persistent=False)}: nó là
+hằng số, không phải tham số học, và không cần lưu vào \texttt{state\_dict} vì tái
+tạo được từ cấu hình. PE được cộng \emph{đúng một lần} trước chồng block.
+
+Cài đặt chấp nhận $\dmodel$ lẻ; khi đó tọa độ $\sin$ cuối không có $\cos$ đi kèm.
+Mục~\ref{sec:b3} chứng minh rằng \emph{tính chất dịch vị trí không còn đúng} trong
+trường hợp đó. Thí nghiệm A.2 dùng $\dmodel=64$ nên không chạm phải giới hạn này,
+nhưng giới hạn được ghi rõ thay vì bỏ qua.
+
+\subsubsection{Khối decoder pre-LN}
+
+Khối ghép hai nhánh residual, chuẩn hóa \emph{trước} mỗi nhánh:
+\[
+  x \leftarrow x + \mathrm{Attn}(\mathrm{LN}_1(x)),\qquad
+  x \leftarrow x + \mathrm{FFN}(\mathrm{LN}_2(x)).
+\]
+Nhóm chọn pre-LN thay vì post-LN của bài gốc vì gradient đi qua nhánh residual
+không bị LayerNorm chắn, nên huấn luyện ổn định hơn ở learning rate cố định mà
+không cần warmup. Đây là lựa chọn thiết kế của nhóm, được ghi nhận là khác bài gốc.
+
+FFN theo từng vị trí, hai lớp tuyến tính với ReLU ở giữa
+\cite[§3.3]{attention}. Không có cross-attention vì mô hình chỉ có decoder.
+
+\subsubsection{Đối chiếu \dalam}
+
+\begin{center}
+\begin{tabular}{p{0.26\textwidth}p{0.30\textwidth}p{0.34\textwidth}}
+\toprule
+\textbf{Hạng mục} & \textbf{Đối chiếu với} & \textbf{Kết quả}\\
+\midrule
+A.1a attention & \texttt{F.scaled\_dot\_product\_}\allowbreak\texttt{attention} &
+Khớp cả khi có và không có mặt nạ\\
+A.1b nhiều đầu & \texttt{nn.MultiheadAttention} cùng trọng số &
+Khớp đầu ra \emph{và} gradient theo đầu vào\\
+A.1c mặt nạ & Trung bình tiền tố tính tay &
+Đạt; kiểm thêm đổi hậu tố và cắt ngắn chuỗi\\
+A.1d PE & \texttt{sin}/\texttt{cos} vô hướng &
+Khớp bảng đã cộng vào embedding, kể cả $\dmodel$ lẻ\\
+A.1e decoder & Chạy tiền tố trên CPU &
+Luồng mặt nạ và các thành phần tự cài được dùng trực tiếp\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Phép kiểm \emph{đổi hậu tố} đáng chú ý: giữ nguyên $y_{\le t}$ và thay đổi
+$y_{>t}$, đầu ra tại vị trí $t$ phải không đổi. Phép kiểm này bắt được rò rỉ tương
+lai mà phép so sánh hình dạng không bắt được.
+
+%--------------------------------------------------------------------
+\subsection{A.2 --- Mô hình ngôn ngữ ký tự và perplexity}
+\label{sec:a2}
+
+\subsubsection{Dẫn xuất: hợp lý cực đại trên chuỗi ký tự}
+
+Mục tiêu là cực đại log-hợp lý của dữ liệu dưới \eqref{eq:chain}, tương đương cực
+tiểu cross-entropy trung bình theo token. Mục~\ref{sec:b6} chứng minh mục tiêu này
+chỉ khác $\KL(\pdata\|p_\theta)$ một hằng số không phụ thuộc $\theta$, nên hai cách
+phát biểu cho cùng tập nghiệm. Perplexity là hàm mũ của cross-entropy trung bình
+theo token, tức nghịch đảo trung bình nhân của xác suất token đúng.
+
+\subsubsection{Dữ liệu và quyền sử dụng}
+
+Corpus là bản \emph{Truyện Kiều} do Trương Vĩnh Ký phiên âm, in năm 1911, thuộc
+phạm vi công cộng theo thời hạn bảo hộ. Nhóm chuyển sang bản này sau khi rà soát
+cho thấy căn cứ quyền đối với bản số hóa trước đó (revision \texttt{206607}) chưa
+đủ. Toàn bộ quá trình rà soát, kể cả kết luận ``chưa đủ căn cứ'', được giữ trong
+\texttt{docs/data/char-corpus.md} thay vì xóa đi.
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+\textbf{Chỉ số} & \textbf{Giá trị}\\
+\midrule
+Số dòng thơ & 3.254\\
+Số code point NFC cả corpus & 104.181\\
+Tách train (prefix 90\%) & 93.762 code point\\
+Tách validation (suffix 10\%) & 10.419 code point\\
+Kích thước từ vựng & 127 (gồm UNK, chỉ học từ train)\\
+Độ dài ngữ cảnh / stride & 128 / 128\\
+Số cửa sổ train / validation & 732 / 81\\
+Code point đuôi không dùng (train / validation) & 65 / 50\\
+Target được chấm ở validation / số UNK & 10.368 / 1\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Ba quyết định về dữ liệu đáng nêu, vì mỗi quyết định chặn một đường rò rỉ:
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Tách train/validation \emph{trước} khi học từ vựng.} Nếu học từ vựng
+trên toàn corpus, thông tin về ký tự chỉ xuất hiện ở validation sẽ lọt vào mô hình
+qua bảng embedding. Từ vựng được học chỉ từ train; ký tự validation chưa gặp nhận
+ID \texttt{<UNK>} bằng $0$.
+\item \textbf{Tách trước khi tạo cửa sổ.} Nếu tạo cửa sổ trước rồi chia, một cửa sổ
+có thể bắc qua ranh giới và đưa ký tự validation vào đầu vào train.
+\item \textbf{\texttt{<UNK>} vẫn được chấm.} Có đúng một đích \texttt{<UNK>} trong
+validation; nó không bị loại khỏi mẫu số perplexity. Loại nó ra sẽ làm PPL tốt hơn
+một cách giả tạo.
+\end{enumerate}
+
+\subsubsection{Tổng hợp perplexity}
+
+Quy tắc tổng hợp quan trọng ngang với công thức: cộng tổng log-xác suất âm rồi chia
+tổng số token được chấm, \emph{không} lấy trung bình các PPL từng batch
+(Mục~\ref{sec:b6} giải thích vì sao). Cài đặt tích lũy ở \texttt{float64} với
+\texttt{reduction='sum'}:
+
+\begin{quote}\small\ttfamily
+nll\_sum += F.cross\_entropy(logits.flatten(0, 1), batch[:, 1:].reshape(-1),\\
+\hspace*{6em}reduction='sum')\\
+token\_count = windows.size(0) * (windows.size(1) - 1)\\
+nll = nll\_sum.item() / token\_count\\
+\ldots 'validation\_ppl': math.exp(nll)
+\end{quote}
+
+\subsubsection{Kết quả \dalam}
+
+Năm seed độc lập, mỗi seed 5 epoch với 2 decoder block, $\dmodel=64$, 4 đầu,
+$d_{ff}=128$, batch size 16, AdamW learning rate $0{,}001$. Các seed dùng cùng một
+split; mỗi lượt chấm 10.368 ký tự đích (81 cửa sổ $\times$ 128).
+
+\begin{center}
+\begin{tabular}{rrr}
+\toprule
+\textbf{Seed} & \textbf{NLL validation (nat/ký tự)} & \textbf{PPL validation}\\
+\midrule
+41 & 2,326985 & 10,2470\\
+42 & 2,328789 & 10,2655\\
+43 & 2,321075 & 10,1866\\
+44 & 2,318854 & 10,1640\\
+45 & 2,313612 & 10,1109\\
+\midrule
+\multicolumn{2}{r}{\textbf{Trung bình $\pm$ SD mẫu}} & $\mathbf{10{,}1948 \pm 0{,}0628}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Con số $\pm 0{,}0628$ là độ lệch chuẩn mẫu (mẫu số $4$) của 5 lần huấn luyện độc
+lập \emph{trên cùng một split}. Nó đo độ biến thiên do khởi tạo và thứ tự trộn,
+không phải khoảng tin cậy, và không phải đánh giá trên tập test độc lập. Việc này
+thỏa yêu cầu tái lập ở phần~II của đề (ít nhất 5 lần chạy, báo cáo trung bình $\pm$
+độ lệch chuẩn) cho riêng hạng mục A.2.
+
+\textbf{Giới hạn cần nêu.} Huấn luyện chạy trên Kaggle, phiên hiển thị cấu hình
+\texttt{GPU T4 x2}; đây là cấu hình nền tảng hiển thị, không phải xác nhận mô hình
+đã dùng cả hai GPU. Tệp \texttt{summary.json} nhận được không chứa phiên bản
+PyTorch/CUDA và không kèm checkpoint, nên nhóm \emph{chưa} đối chiếu được log môi
+trường. Mục~\ref{sec:tai-lap} ghi việc này là hạng mục còn thiếu.
+
+%--------------------------------------------------------------------
+\subsection{A.3 --- Lớp LoRA có hợp nhất trọng số}
+\label{sec:a3}
+
+\subsubsection{Dẫn xuất: giới hạn cập nhật vào một không gian hạng thấp}
+
+Tinh chỉnh toàn phần cập nhật cả $W\in\R^{d\times k}$, tức $dk$ tham số cho mỗi
+lớp. LoRA ràng buộc cập nhật nằm trong tập các ma trận hạng không quá $r$
+\cite[§4.1]{lora}:
+\[
+  W'=W+\Delta W,\qquad \Delta W=\frac{\alpha}{r}BA,\qquad
+  B\in\R^{d\times r},\ A\in\R^{r\times k}.
+\]
+Đây là bài toán tối ưu trên một đa tạp tham số nhỏ hơn hẳn: thay vì $dk$ chiều,
+chỉ còn $r(d+k)$ chiều (Mục~\ref{sec:b4}). Hệ số $\alpha/r$ giữ độ lớn cập nhật
+tương đối ổn định khi đổi $r$, nên learning rate không phải điều chỉnh lại theo
+từng rank.
+
+\subsubsection{Cài đặt}
+
+Lớp bọc trực tiếp \texttt{nn.Linear} nền và đóng băng \emph{cả weight lẫn bias}:
+
+\begin{quote}\small\ttfamily
+self.scale = alpha / rank\\
+self.A = nn.Parameter(base.weight.new\_empty(rank, base.in\_features))\\
+self.B = nn.Parameter(base.weight.new\_zeros(base.out\_features, rank))\\
+nn.init.normal\_(self.A, std=base.in\_features ** -0.5)\\
+self.base = base.requires\_grad\_(False)
+\end{quote}
+
+Bốn chi tiết có chủ đích:
+
+\begin{enumerate}[leftmargin=2em]
+\item $B$ khởi tạo bằng $0$ nên $W'=W$ tại bước đầu, bất kể $A$
+(Mục~\ref{sec:b4}). Mô hình xuất phát đúng bằng mô hình nền.
+\item $A$ khởi tạo ngẫu nhiên với $\mathrm{std}=k^{-1/2}$. Nếu khởi tạo \emph{cả
+hai} bằng $0$ thì gradient theo cả $A$ và $B$ đều triệt tiêu và adapter không bao
+giờ học --- câu hỏi thường gặp ở vấn đáp.
+\item Lan truyền xuôi \emph{không} tạo ma trận $BA$ kích thước $d\times k$:
+\begin{quote}\small\ttfamily
+return torch.add(self.base(x), linear(linear(x, self.A), self.B), alpha=self.scale)
+\end{quote}
+Tính $Ah$ rồi $B(Ah)$ tốn $r(d+k)$ phép nhân, so với $dk$ nếu dựng $BA$ trước.
+\item Ràng buộc $1\le r\le\min(d,k)$ được kiểm ở hàm khởi tạo. Chặn trên không cần
+cho tính đúng đắn của Mục~\ref{sec:b4}, nhưng $r>\min(d,k)$ không thêm biểu diễn
+nào mà vẫn tốn tham số.
+\end{enumerate}
+
+Hợp nhất xuất ra một \texttt{nn.Linear} độc lập, giữ bias gốc:
+
+\begin{quote}\small\ttfamily
+merged = deepcopy(self.base)\\
+merged.weight.addmm\_(self.B, self.A, alpha=self.scale)\\
+return merged.eval()
+\end{quote}
+
+Hàm trả lớp mới và \emph{không} thay đổi wrapper, nên vẫn học tiếp được sau khi đã
+xuất bản suy luận.
+
+\subsubsection{Đối chiếu \dalam}
+
+Notebook A.3 kiểm trên CPU: số tham số học đúng bằng $r(d+k)$; đầu ra của lớp đã
+hợp nhất khớp đầu ra hai nhánh \emph{sau khi cập nhật khác $0$} (nếu kiểm lúc
+$B$ vẫn bằng $0$ thì phép kiểm vô nghĩa, vì cả hai đều bằng lớp nền); gradient
+không chảy vào weight và bias của lớp nền.
+
+%--------------------------------------------------------------------
+\subsection{A.4 --- Hàm mất mát DPO}
+\label{sec:a4}
+
+\subsubsection{Dẫn xuất}
+
+Mục~\ref{sec:b5} chứng minh hai kết quả rồi ghép lại: nghiệm của bài toán reward
+có phạt KL là phân phối Gibbs
+$\pi^*\propto\pref\exp(R/\beta)$, và mô hình Bradley--Terry cho xác suất ưu tiên
+là $\sigma(R_w-R_l)$. Giải nghịch quan hệ thứ nhất theo reward rồi thế vào quan hệ
+thứ hai, hạng $\beta\log Z(x)$ triệt tiêu vì hai đáp án thuộc \emph{cùng} một câu
+hỏi, và còn lại
+\begin{equation}
+  \mathcal L_{\mathrm{DPO}}(\theta)
+    =-\E\bigl[\log\sigma(z_\theta)\bigr],\qquad
+  z_\theta=\beta\Bigl[
+    \log\tfrac{\pi_\theta(y_w\mid x)}{\pref(y_w\mid x)}
+    -\log\tfrac{\pi_\theta(y_l\mid x)}{\pref(y_l\mid x)}\Bigr],
+  \label{eq:dpo-a4}
+\end{equation}
+đúng phương trình (7) của \cite{dpo}. Không cần tính $Z(x)$ và không cần huấn
+luyện reward model riêng.
+
+\subsubsection{Cài đặt}
+
+\begin{quote}\small\ttfamily
+margin = (pw - pl) - (rw - rl)\\
+return -logsigmoid(beta * margin).mean()
+\end{quote}
+
+Bốn quyết định về tính đúng đắn số học:
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Reference không nhận gradient:} \texttt{ref\_chosen.detach()} và
+\texttt{ref\_rejected.detach()}. $\pref$ cố định theo định nghĩa bài toán; nếu
+gradient chảy vào nó thì \eqref{eq:dpo-a4} không còn là mục tiêu đang tối ưu.
+\item \textbf{Dùng \texttt{logsigmoid}, không dùng \texttt{log(sigmoid(\ldots))}.}
+Khi $z_\theta$ âm lớn, \texttt{sigmoid} làm tròn xuống $0$ và log trả $-\infty$.
+\texttt{logsigmoid} tính ổn định trên toàn miền.
+\item \textbf{Không trừ hoặc nhân $\beta$ ở độ chính xác nửa:} tensor \texttt{fp16}
+được nâng lên \texttt{float32} trước khi lấy hiệu. Hiệu hai log-xác suất chuỗi là
+hiệu hai số lớn gần nhau --- trường hợp xấu nhất của sai số làm tròn.
+\item \textbf{$\beta$ phải hữu hạn và dương:} kiểm ở đầu hàm.
+Mục~\ref{sec:b5} cần $\beta>0$ ở ba chỗ (để $Z(x)$ hữu hạn, để chia $R_y/\beta$,
+và để $\argmax J=\argmin\KL$), nên đây là ràng buộc toán học chứ không phải phòng
+vệ đầu vào.
+\end{enumerate}
+
+Mỗi đầu vào là \emph{tổng} log-xác suất các token đáp án cho cùng prompt, không
+gồm prompt và padding, và \emph{không} chia cho độ dài. Mục~\ref{sec:b6} giải thích
+vì sao DPO cộng còn perplexity lại chia.
+
+\subsubsection{Đối chiếu \dalam\ và hạng mục còn thiếu \chualam}
+
+Notebook A.4 so mất mát và \emph{cả hai} gradient theo log-xác suất policy với
+cross-entropy hai lớp trên CPU, dùng số minh họa. Bài C.4
+(Mục~\ref{sec:c4}) kiểm lại trên ba dấu của margin và bốn giá trị $\beta$, khớp
+autograd.
+
+Tuy nhiên yêu cầu G5 của đề --- ít nhất một cài đặt Phần~A được dùng hoặc so sánh
+\emph{trực tiếp trong quy trình Phần~D} --- \textbf{chưa} được đáp ứng: hàm này
+chưa chạy trên một minibatch dữ liệu ưu tiên thật của Phần~D, vì chưa có dữ liệu
+đó. Đây là cầu nối A$\leftrightarrow$D mà nhóm dự định dùng, và nó bị chặn bởi
+D.3/D.4 (Mục~\ref{sec:phan-d}).
+
+%--------------------------------------------------------------------
+\subsection{Tổng hợp trạng thái Phần A}
+
+\begin{center}
+\begin{tabular}{llp{0.42\textwidth}}
+\toprule
+\textbf{Mã} & \textbf{Trạng thái} & \textbf{Bằng chứng}\\
+\midrule
+A.1a--A.1e & \dalam & \texttt{src/attention.py}; đối chiếu SDPA và MultiheadAttention\\
+A.2 & \dalam & PPL $10{,}1948\pm0{,}0628$, 5 seed; chưa đối chiếu log môi trường\\
+A.3 & \dalam & \texttt{src/lora.py}; đếm tham số và kiểm hợp nhất\\
+A.4 & \motphan & \texttt{src/dpo.py} đã kiểm số học; chưa chạy trên minibatch thật của D\\
+\bottomrule
+\end{tabular}
+\end{center}

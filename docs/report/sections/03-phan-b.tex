@@ -1,0 +1,561 @@
+\section{Phần B --- Chứng minh lý thuyết}
+\label{sec:phan-b}
+
+Mục này chứng minh sáu mệnh đề của Đề tài 9 \cite[tr.~18]{de}. Mỗi mệnh đề nêu
+giả thiết, kích thước các đối tượng, các bước suy luận và kết luận. Các chứng minh
+không cần đầu vào của Phần~C. Mọi logarit là logarit tự nhiên. Ví dụ số trong mục
+này chỉ để minh họa.
+
+Bản độc lập của mục này nằm ở \texttt{docs/theory/part-b.tex} và biên dịch riêng
+được.
+
+%--------------------------------------------------------------------
+\subsection{B.1 --- Phương sai tích vô hướng và hệ số chia tỷ lệ}
+\label{sec:b1}
+
+\textbf{Mệnh đề.} Cho $d_k\ge 1$ và $q,k\in\R^{d_k}$. Giả sử toàn bộ $2d_k$ thành
+phần của $q$ và $k$ độc lập lẫn nhau, mỗi thành phần có kỳ vọng $0$ và phương sai
+$1$. Khi đó $\Var(q^\top k)=d_k$. Hệ số $1/\sqrt{d_k}$ giữ phương sai của mỗi điểm
+chú ý đã chia tỷ lệ bằng $1$ trong mô hình giả thiết này
+\cite[§3.2.1, chú thích 4]{attention}.
+
+\subsubsection{Tính phương sai}
+
+Đặt $Z_i=q_i k_i$ với $1\le i\le d_k$. Từ $\Var(q_i)=\E[q_i^2]-(\E[q_i])^2$ và
+$\E[q_i]=0$, suy ra $\E[q_i^2]=1$; tương tự $\E[k_i^2]=1$. Vì $q_i$ và $k_i$ độc
+lập,
+\[
+  \E[Z_i]=\E[q_i]\E[k_i]=0,\qquad
+  \E[Z_i^2]=\E[q_i^2]\E[k_i^2]=1,
+\]
+nên $\Var(Z_i)=1$. Với $i\ne j$, hai biến $Z_i$ và $Z_j$ là hàm của hai nhóm biến
+độc lập $(q_i,k_i)$ và $(q_j,k_j)$, do đó $\Cov(Z_i,Z_j)=0$. Vì
+$q^\top k=\sum_{i=1}^{d_k} Z_i$,
+\begin{align}
+  \E[q^\top k]&=0,\notag\\
+  \Var(q^\top k)
+    &=\sum_{i=1}^{d_k}\Var(Z_i)+2\!\!\sum_{1\le i<j\le d_k}\!\!\Cov(Z_i,Z_j)=d_k,
+    \label{eq:b1-var}\\
+  \Var\!\left(\frac{q^\top k}{\sqrt{d_k}}\right)
+    &=\frac{1}{d_k}\Var(q^\top k)=1.\notag
+\end{align}
+
+Chú ý rằng giả thiết độc lập được dùng \emph{hai lần} với hai vai trò khác nhau:
+lần thứ nhất để tách $\E[q_ik_i]$ thành tích hai kỳ vọng, lần thứ hai để triệt tiêu
+hiệp phương sai giữa các chỉ số khác nhau. Chỉ giả thiết ``không tương quan'' là
+không đủ cho lần thứ nhất.
+
+\subsubsection{Vì sao điều này giúp giảm bão hòa softmax?}
+
+Xét $m\ge2$ điểm chú ý $z_1,\ldots,z_m$ trong một hàng, với
+$s_i=e^{z_i}/\sum_{j=1}^m e^{z_j}$. Dùng quy tắc đạo hàm thương, với
+$\delta_{ij}=1$ nếu $i=j$ và $0$ nếu $i\ne j$:
+\begin{equation}
+  \frac{\partial s_i}{\partial z_j}
+  =\frac{\delta_{ij}e^{z_i}}{\sum_a e^{z_a}}
+   -\frac{e^{z_i}e^{z_j}}{(\sum_a e^{z_a})^2}
+  =s_i(\delta_{ij}-s_j).
+  \label{eq:b1-jac}
+\end{equation}
+Nếu điểm lớn nhất $z_a$ hơn mọi điểm khác ít nhất $g>0$ thì
+\begin{equation}
+  s_a=\frac{1}{1+\sum_{j\ne a} e^{-(z_a-z_j)}}
+    \ \ge\ \frac{1}{1+(m-1)e^{-g}}.
+  \label{eq:b1-sat}
+\end{equation}
+Giữ $m$ cố định và cho $g$ tăng, $s_a\to1$, các $s_j$ còn lại $\to0$, và theo
+\eqref{eq:b1-jac} toàn bộ Jacobian của softmax tiến đến $0$. Khi đó trọng số chú ý
+gần như không phản ứng với nhiễu nhỏ ở điểm số, tức gradient qua lớp attention bị
+triệt tiêu.
+
+Điểm then chốt: bão hòa phụ thuộc vào \emph{chênh lệch} điểm, không phụ thuộc việc
+cộng một hằng số chung vào cả hàng --- softmax bất biến với phép dịch đó. Với các
+tích vô hướng thô, độ lệch chuẩn của từng điểm là $\sqrt{d_k}$ theo
+\eqref{eq:b1-var}. Chia cả hàng cho $\sqrt{d_k}$ đưa độ lệch chuẩn mỗi điểm về $1$
+và thu nhỏ mọi chênh lệch theo cùng hệ số khi $d_k>1$.
+
+\textbf{Phạm vi kết luận.} Kết quả phương sai giải thích \emph{lý do chọn} thang
+điểm. Nó không khẳng định mọi hàng đều không bão hòa, cũng không khẳng định các tọa
+độ của query và key trong mô hình đã huấn luyện là độc lập hay có phương sai đơn
+vị. Giả thiết ở đây là một mô hình giả định tại khởi tạo.
+
+%--------------------------------------------------------------------
+\subsection{B.2 --- Tính đẳng biến hoán vị của self-attention}
+\label{sec:b2}
+
+\textbf{Mệnh đề.} Xét self-attention không mã hóa vị trí, không mặt nạ, dùng cùng
+trọng số chiếu cho mọi hàng. Với $X\in\R^{n\times \dmodel}$ mà mỗi hàng là biểu
+diễn một token, nếu $P\in\R^{n\times n}$ là ma trận hoán vị thì
+$\Attn(PX)=P\Attn(X)$.
+
+Đây là tính \emph{đẳng biến} (equivariance): đầu ra đổi thứ tự theo đầu vào. Nó
+khác tính \emph{bất biến} (invariance), trong đó đầu ra không đổi.
+
+\subsubsection{Theo dõi phép hoán vị đến ma trận điểm}
+
+Dùng $W_Q,W_K\in\R^{\dmodel\times d_k}$ và $W_V\in\R^{\dmodel\times d_v}$, với
+$n,\dmodel,d_k,d_v>0$. Đặt
+\[
+  Q=XW_Q,\quad K=XW_K,\quad V=XW_V,\qquad
+  S=\frac{QK^\top}{\sqrt{d_k}}\in\R^{n\times n}.
+\]
+Theo \eqref{eq:sdpa}, $\Attn(X)=\softmax_{\mathrm{row}}(S)V$. Với đầu vào $PX$, vì
+các phép chiếu tác động \emph{bên phải} còn hoán vị tác động \emph{bên trái}, ta có
+$Q'=PQ$, $K'=PK$, $V'=PV$, và do đó
+\[
+  S'=\frac{(PQ)(PK)^\top}{\sqrt{d_k}}=P\,\frac{QK^\top}{\sqrt{d_k}}\,P^\top=PSP^\top.
+\]
+
+\subsubsection{Hoán vị đi qua softmax theo hàng}
+
+Chọn quy ước $(PX)_{i,:}=X_{\tau(i),:}$ với $\tau$ là song ánh trên
+$\{1,\ldots,n\}$. Khi đó $(PSP^\top)_{ij}=S_{\tau(i),\tau(j)}$ và
+\begin{align}
+  [\softmax_{\mathrm{row}}(PSP^\top)]_{ij}
+    &=\frac{\exp(S_{\tau(i),\tau(j)})}{\sum_{a=1}^{n}\exp(S_{\tau(i),\tau(a)})}
+     \notag\\
+    &=\frac{\exp(S_{\tau(i),\tau(j)})}{\sum_{b=1}^{n}\exp(S_{\tau(i),b})}
+     \label{eq:b2-key}\\
+    &=[P\softmax_{\mathrm{row}}(S)P^\top]_{ij}.\notag
+\end{align}
+Đẳng thức \eqref{eq:b2-key} là bước quyết định: nó đúng vì $\tau$ là song ánh, nên
+$a\mapsto\tau(a)$ đi qua đúng một lần mỗi chỉ số cột và tổng ở mẫu số không đổi
+giá trị. Nếu $\tau$ không phải song ánh, bước này sai.
+
+Do $P^\top P=I_n$,
+\begin{align*}
+  \Attn(PX)
+    &=\softmax_{\mathrm{row}}(PSP^\top)\,PV
+     =P\softmax_{\mathrm{row}}(S)P^\top PV\\
+    &=P\softmax_{\mathrm{row}}(S)V=P\Attn(X).
+\end{align*}
+
+Trong chú ý nhiều đầu, lập luận trên đúng cho từng đầu. Ghép các đầu theo chiều đặc
+trưng rồi nhân bên phải với $W_O$ vẫn cho đúng phép hoán vị hàng, vì ghép các
+$PH_i$ bằng $P$ nhân với ma trận ghép các $H_i$.
+
+\subsubsection{Giới hạn: mặt nạ nhân quả phá đẳng biến}
+
+Với mặt nạ cộng $M\in(\R\cup\{-\infty\})^{n\times n}$ có ít nhất một vị trí không
+bị che ở mỗi hàng, đặt $\Attn_M(X)=\softmax_{\mathrm{row}}(S+M)V$. Lập luận trên
+vẫn cho
+\begin{equation}
+  \Attn_{PMP^\top}(PX)=P\Attn_M(X),
+  \label{eq:b2-mask}
+\end{equation}
+nghĩa là \emph{nếu hoán vị cả mặt nạ} thì đẳng biến được giữ.
+
+Điều này \emph{không} cho phép giữ nguyên một mặt nạ nhân quả cố định. Phản ví dụ:
+lấy hai token vô hướng, $X=(0,2)^\top$, $W_Q=W_K=0$, $W_V=1$, và $P$ đổi chỗ hai
+hàng. Vì $W_Q=W_K=0$, mọi điểm số bằng $0$, nên softmax chia đều trên các khóa
+được phép. Giữ mặt nạ nhân quả (hàng một nhìn chính nó; hàng hai nhìn cả hai):
+\[
+  \Attn_M(X)=(0,1)^\top,\qquad
+  \Attn_M(PX)=(2,1)^\top\ \ne\ (1,0)^\top=P\Attn_M(X).
+\]
+Vậy mệnh đề phổ quát ``attention có mặt nạ nhân quả cố định là đẳng biến'' bị bác
+bỏ. Nguyên nhân cấu trúc: mặt nạ nhân quả gắn với \emph{vị trí}, không gắn với
+token, nên đổi thứ tự token mà giữ mặt nạ là đổi bài toán.
+
+Tương tự, khi cộng bảng mã hóa vị trí cố định $E$, đổi thứ tự token nhưng giữ
+nguyên vị trí cho $PX+E$, nói chung khác $P(X+E)$. Vì thế định lý về attention
+không PE không suy ra đẳng biến cho mô hình thực tế có PE và có mặt nạ.
+
+\textbf{Về phản ví dụ suy biến.} Phản ví dụ dùng $d_{\mathrm{model}}=1$ và phép
+chiếu bằng $0$. Điều này hợp lệ: để bác bỏ một mệnh đề phổ quát chỉ cần một ví dụ,
+và kết quả dương \eqref{eq:b2-mask} vẫn được giữ nguyên bên cạnh.
+
+%--------------------------------------------------------------------
+\subsection{B.3 --- Ma trận quay khối của mã hóa vị trí hình sin}
+\label{sec:b3}
+
+\textbf{Mệnh đề.} Xét vector cột $\PE(p)\in\R^{2m}$ gồm $m\ge1$ cặp đầy đủ theo
+thứ tự sin trước, cos sau: với tần số cố định $\omega_i$, $i=0,\ldots,m-1$, đặt
+$\PE(p)_{2i}=\sin(p\omega_i)$ và $\PE(p)_{2i+1}=\cos(p\omega_i)$. Khi đó tồn tại
+$M_\Delta\in\R^{2m\times 2m}$ chỉ phụ thuộc độ dịch $\Delta$ (với hệ tần số đã cố
+định) sao cho $\PE(p+\Delta)=M_\Delta\PE(p)$ với mọi $p$. Trong Transformer gốc,
+$\omega_i=10000^{-2i/\dmodel}$ \cite[§3.5]{attention}.
+
+\subsubsection{Chứng minh cho một cặp tọa độ}
+
+Đặt $a=p\omega_i$ và $b=\Delta\omega_i$. Công thức cộng góc cho
+\begin{align*}
+  \sin(a+b)&=\cos b\,\sin a+\sin b\,\cos a,\\
+  \cos(a+b)&=-\sin b\,\sin a+\cos b\,\cos a.
+\end{align*}
+Vậy nếu $u_i(p)=(\sin(p\omega_i),\cos(p\omega_i))^\top$ thì
+$u_i(p+\Delta)=M_{\Delta,i}\,u_i(p)$ với
+\begin{equation}
+  M_{\Delta,i}=
+    \begin{pmatrix}
+      \cos(\Delta\omega_i)&\sin(\Delta\omega_i)\\
+      -\sin(\Delta\omega_i)&\cos(\Delta\omega_i)
+    \end{pmatrix}.
+  \label{eq:b3-block}
+\end{equation}
+Hai cột của khối này có chuẩn $1$ vì $\cos^2 b+\sin^2 b=1$; tích vô hướng của chúng
+bằng $\cos b\sin b-\sin b\cos b=0$; định thức bằng $\cos^2 b+\sin^2 b=1$. Do đó
+\eqref{eq:b3-block} là ma trận quay --- theo quy ước vector cột $(\sin,\cos)^\top$,
+nó là phép quay góc $-b$ trong mặt phẳng tọa độ chuẩn.
+
+\subsubsection{Ghép các cặp thành vector đầy đủ}
+
+Lấy $M_\Delta=\diag(M_{\Delta,0},\ldots,M_{\Delta,m-1})$. Vì các khối ngoài đường
+chéo bằng $0$, phép nhân tác động riêng lên từng cặp tọa độ, đúng bằng
+$u_i(p)\mapsto u_i(p+\Delta)$. Ghép lại theo thứ tự ban đầu được
+$M_\Delta\PE(p)=\PE(p+\Delta)$. Các phần tử của $M_\Delta$ chỉ chứa $\Delta$ và
+các tần số đã cố định, \emph{không} chứa $p$ --- đây là điều cần chứng minh.
+
+Kết quả cho thấy độ dịch cố định có \emph{biểu diễn tuyến tính} trên PE. Nó không
+khẳng định mô hình đã học được cách khai thác biểu diễn đó.
+
+\subsubsection{Phạm vi: mệnh đề cần số chiều chẵn}
+\label{sec:b3-odd}
+
+Giả thiết ``$m$ cặp đầy đủ'' là điều kiện thực sự cần, không phải quy ước trình
+bày. Cài đặt \texttt{SinusoidalPositionEncoding} của nhóm chấp nhận $\dmodel$ lẻ:
+với $\dmodel=2m+1$, mã sinh $m+1$ tần số, đặt $\sin$ vào $m+1$ cột chỉ số chẵn và
+$\cos$ vào $m$ cột chỉ số lẻ, nên
+\[
+  \PE(p)=\bigl(\sin p\omega_0,\ \cos p\omega_0,\ \ldots,\
+                \sin p\omega_{m-1},\ \cos p\omega_{m-1},\
+                \sin p\omega_m\bigr)^\top .
+\]
+Tọa độ cuối không có $\cos(p\omega_m)$ đi kèm. Ta chứng minh khi đó \emph{không tồn
+tại} $M_\Delta$ nào thỏa mệnh đề, trừ khi $\sin(\Delta\omega_m)=0$.
+
+\textbf{Bổ đề.} Cho các tần số phân biệt $\omega_0,\ldots,\omega_m\in(0,\pi)$. Nếu
+$L\ge 2m+2$ thì $2m+2$ hàm $p\mapsto\sin(p\omega_i)$ và $p\mapsto\cos(p\omega_i)$,
+$0\le i\le m$, độc lập tuyến tính trên $\R$ khi xét như hàm trên
+$\{0,1,\ldots,L-1\}$.
+
+\emph{Chứng minh.} Đặt $z_i=e^{\mathrm i\omega_i}$. Mỗi tổ hợp tuyến tính thực của
+các hàm trên viết được thành
+$\sum_{i=0}^{m}\bigl(\gamma_i z_i^{\,p}+\overline{\gamma_i}\,\overline{z_i}^{\,p}\bigr)$.
+Vì các $\omega_i\in(0,\pi)$ phân biệt, $2m+2$ số
+$z_0,\overline{z_0},\ldots,z_m,\overline{z_m}$ đôi một khác nhau. Nếu tổng triệt
+tiêu tại $p=0,\ldots,2m+1$ thì hệ Vandermonde với các nút phân biệt đó khả nghịch,
+buộc mọi $\gamma_i=0$. \hfill$\square$
+
+Với lựa chọn của Transformer gốc, $\omega_i=10000^{-2i/\dmodel}\in(0,1]\subset(0,\pi)$
+và đôi một phân biệt, nên bổ đề áp dụng khi $\texttt{max\_len}\ge\dmodel+1$.
+
+\textbf{Suy ra.} Giả sử có $M_\Delta\in\R^{(2m+1)\times(2m+1)}$ với
+$\PE(p+\Delta)=M_\Delta\PE(p)$ cho mọi $p$ trong miền vị trí. Đọc hàng cuối (chỉ số
+$2m$) và dùng công thức cộng góc:
+\[
+  \cos(\Delta\omega_m)\sin(p\omega_m)+\sin(\Delta\omega_m)\cos(p\omega_m)
+  =\sum_{i=0}^{m-1}\bigl(a_i\sin(p\omega_i)+b_i\cos(p\omega_i)\bigr)
+   +a_m\sin(p\omega_m),
+\]
+với $a_i,b_i$ là các phần tử của hàng đó, không phụ thuộc $p$. Chuyển vế:
+\[
+  \sin(\Delta\omega_m)\cos(p\omega_m)
+  =\sum_{i=0}^{m-1}\bigl(a_i\sin(p\omega_i)+b_i\cos(p\omega_i)\bigr)
+   +\bigl(a_m-\cos(\Delta\omega_m)\bigr)\sin(p\omega_m).
+\]
+Theo bổ đề, $\cos(p\omega_m)$ độc lập tuyến tính với mọi hàm ở vế phải, nên đẳng
+thức chỉ đúng với mọi $p$ khi $\sin(\Delta\omega_m)=0$, tức
+$\Delta\omega_m\in\pi\mathbb Z$. Vì $0<\omega_m\le1$, điều này loại mọi độ dịch
+nguyên $\Delta$ với $|\Delta|<\pi/\omega_m$, trong đó có $\Delta=1$. Mệnh đề thất
+bại ở số chiều lẻ.
+
+\textbf{Hệ quả cho cài đặt.} Thí nghiệm A.2 dùng $\dmodel=64$ (chẵn) nên bảng PE
+được dùng thực tế vẫn thỏa mệnh đề; phần kiểm thử $\dmodel$ lẻ của nhóm chỉ đối
+chiếu giá trị bảng, không kiểm tính chất dịch vị trí. Muốn giữ tính chất cho số
+chiều lẻ, cần bỏ tọa độ $\sin$ lẻ cặp hoặc đệm lên số chiều chẵn; đó là lựa chọn
+thiết kế, không phải hệ quả của chứng minh.
+
+%--------------------------------------------------------------------
+\subsection{B.4 --- Khởi tạo, hạng, số tham số và hợp nhất LoRA}
+\label{sec:b4}
+
+\textbf{Thiết lập.} Lớp tuyến tính có $W\in\R^{d\times k}$ với $d,k\ge1$, đầu vào
+cột $h\in\R^k$. LoRA đóng băng $W$, học $A\in\R^{r\times k}$ và $B\in\R^{d\times r}$
+với $r\ge1$ nguyên và $\alpha$ cố định. Không huấn luyện bias; nếu có bias cố định
+$b\in\R^d$, nó được cộng như nhau trong cả hai cách tính. Đặt
+$\Delta W=(\alpha/r)BA$ và $W'=W+\Delta W$ \cite[§4.1--4.2]{lora}.
+
+\subsubsection{Khởi tạo không thay đổi lớp gốc}
+
+Khi $B=0_{d\times r}$, mỗi phần tử $(BA)_{ij}=\sum_{a=1}^{r}B_{ia}A_{aj}$ bằng $0$
+bất kể giá trị của $A$. Do đó $\Delta W=0_{d\times k}$ và $W'=W$. Bài báo LoRA chọn
+$A$ ngẫu nhiên và $B=0$; kết luận $W'=W$ chỉ cần điều kiện thứ hai.
+
+Ngược lại, nếu khởi tạo \emph{cả hai} bằng $0$ thì
+$\partial\mathcal L/\partial A\propto B^\top(\cdot)=0$ và
+$\partial\mathcal L/\partial B\propto(\cdot)(Ah)^\top=0$, nên adapter không bao giờ
+rời khỏi điểm $0$. Vì vậy một trong hai ma trận phải khác $0$ lúc khởi tạo.
+
+\subsubsection{Hạng của cập nhật bị chặn bởi $r$}
+
+Xem $A$ là ánh xạ $\R^k\to\R^r$ và $B$ là ánh xạ $\R^r\to\R^d$. Với mọi $h$,
+$BAh=B(Ah)\in\im(B)$. Vì $\im(B)$ sinh bởi $r$ cột của $B$,
+\[
+  \rank(BA)=\dim\im(BA)\le\dim\im(B)=\rank(B)\le r,
+\]
+suy ra $\rank(\Delta W)\le r$. Mệnh đề chặn hạng của \emph{phần cập nhật}, không
+chặn hạng của $W'$: tổng của một ma trận hạng đầy và một ma trận hạng thấp nói
+chung vẫn hạng đầy.
+
+\subsubsection{Đếm tham số thực sự được huấn luyện}
+
+Học trực tiếp toàn bộ $W$ cần cập nhật $dk$ hệ số. Với LoRA, $A$ có $rk$ phần tử và
+$B$ có $dr$ phần tử; vì $W$, $\alpha$ và bias không được huấn luyện, số tham số cập
+nhật là
+\begin{equation}
+  rk+dr=r(d+k).
+  \label{eq:b4-count}
+\end{equation}
+Số này nhỏ hơn $dk$ khi $r<dk/(d+k)$; tỷ lệ chính xác so với học cả $W$ là
+$r(d+k)/(dk)$. Đây không phải tổng dung lượng mô hình, vì vẫn cần lưu trọng số gốc.
+
+\subsubsection{Hợp nhất không thêm phép tính trong lan truyền xuôi}
+
+Trong suy luận xác định với adapter đã cố định, hai nhánh cho cùng ánh xạ như một
+lớp tuyến tính duy nhất:
+\begin{equation}
+  Wh+\frac{\alpha}{r}B(Ah)=\left(W+\frac{\alpha}{r}BA\right)h=W'h.
+  \label{eq:b4-merge}
+\end{equation}
+Đây là tính phân phối của phép nhân ma trận, không phải xấp xỉ. Tính và lưu $W'$
+một lần trước khi phục vụ; sau đó mỗi đầu vào dùng đúng một phép nhân
+ma trận--vector $d\times k$ như lớp gốc ($dk$ phép nhân và $d(k-1)$ phép cộng nếu
+tính trực tiếp, cộng cùng chi phí bias nếu có). Không còn các phép nhân phụ $Ah$,
+$B(Ah)$ hay phép cộng hai nhánh trên mỗi đầu vào.
+
+\textbf{Phạm vi kết luận.} Kết luận nói về chi phí số học \emph{sau hợp nhất}, với
+giả thiết cùng kiểu thực thi lớp tuyến tính. Nó không bao gồm chi phí tạo $W'$,
+không bảo đảm khớp từng bit trong số học dấu phẩy động, và không tự mở rộng thành
+kết luận về độ trễ khi đổi kernel hay tái lượng tử hóa.
+
+\subsubsection{Đối chiếu với cài đặt A.3}
+
+Bốn tiểu mệnh đề trên khớp từng dòng với \texttt{src/lora.py}: $B$ khởi tạo bằng
+\texttt{new\_zeros}; hệ số \texttt{scale = alpha / rank}; lớp nền gọi
+\texttt{requires\_grad\_(False)} nên cả weight và bias bị đóng băng, đúng giả thiết
+đếm tham số \eqref{eq:b4-count}; và \texttt{merge()} dùng
+\texttt{addmm\_(B, A, alpha=scale)} trên bản sao, cho đúng
+$W+(\alpha/r)BA$ với bias gốc, như \eqref{eq:b4-merge}. Cài đặt ràng buộc thêm
+$r\le\min(d,k)$, điều mà chứng minh không cần.
+
+%--------------------------------------------------------------------
+\subsection{B.5 --- Nghiệm tối ưu có phạt KL và hàm mất mát DPO}
+\label{sec:b5}
+
+\textbf{Thiết lập.} Cố định câu hỏi $x$. Ký hiệu $R(x,y)$ là reward của đáp án $y$
+(đề dùng $r(x,y)$), $\beta>0$, và $\pref(\cdot\mid x)$ là phân phối tham chiếu cố
+định. Xét tập đáp án hữu hạn, không rỗng $\mathcal Y_x$, với reward hữu hạn trên
+hỗ trợ $S_x=\{y\in\mathcal Y_x:\pref(y\mid x)>0\}$. Tối ưu trên mọi phân phối
+$\pi(\cdot\mid x)$ có hỗ trợ nằm trong $S_x$; chính sách gán khối lượng dương cho
+$y\notin S_x$ có KL vô hạn nên không thể là nghiệm hữu hạn. Quy ước: hạng tử có hệ
+số xác suất bằng $0$ trong KL bằng $0$. Theo
+\cite[§3--4, phương trình (1)--(7), Phụ lục A.1--A.2]{dpo}.
+
+\subsubsection{Xây dựng một phân phối ứng viên}
+
+Viết tắt $\pi_y=\pi(y\mid x)$, $q_y=\pref(y\mid x)$, $R_y=R(x,y)$ trên $S_x$. Hàm
+mục tiêu là
+\begin{equation}
+  J_x(\pi)=\sum_{y\in S_x}\pi_y R_y
+    -\beta\!\!\sum_{y\in S_x:\,\pi_y>0}\!\!\pi_y\log\frac{\pi_y}{q_y}.
+  \label{eq:b5-obj}
+\end{equation}
+Đặt $Z(x)=\sum_{y\in S_x}q_y\exp(R_y/\beta)$. Vì tập hữu hạn, hỗ trợ không rỗng và
+các số hạng dương hữu hạn, $0<Z(x)<\infty$. Định nghĩa
+\begin{equation}
+  \pi^*(y\mid x)=\frac{\pref(y\mid x)\exp(R(x,y)/\beta)}{Z(x)}
+  \quad(y\in S_x),
+  \label{eq:b5-gibbs}
+\end{equation}
+và $\pi^*(y\mid x)=0$ ngoài $S_x$. Tổng tử số trên $S_x$ chính bằng $Z(x)$, nên
+$\pi^*$ là một phân phối, dương trên toàn bộ $S_x$.
+
+\subsubsection{Chứng minh tối ưu toàn cục và tính duy nhất}
+
+Ký hiệu $\pi_y^*=\pi^*(y\mid x)$. Từ \eqref{eq:b5-gibbs},
+$\log(\pi_y^*/q_y)=R_y/\beta-\log Z(x)$. Thế vào và dùng $\sum_y\pi_y=1$:
+\begin{align}
+  \beta\KL(\pi\|\pi^*)
+     &=\beta\!\!\sum_{y:\,\pi_y>0}\!\!\pi_y\log\frac{\pi_y}{\pi_y^*}\notag\\
+     &=\beta\!\!\sum_{y:\,\pi_y>0}\!\!\pi_y\log\frac{\pi_y}{q_y}
+       -\sum_y\pi_y R_y+\beta\log Z(x)\notag\\
+     &=\beta\log Z(x)-J_x(\pi).
+  \label{eq:b5-central}
+\end{align}
+Đẳng thức \eqref{eq:b5-central} là trục của chứng minh: cực đại hóa $J_x$ tương
+đương cực tiểu hóa $\KL(\pi\|\pi^*)$, vì $\beta\log Z(x)$ không phụ thuộc $\pi$.
+
+Để thấy điều kiện dấu bằng mà không cần KKT, dùng $-\log t\ge 1-t$ với $t>0$, dấu
+bằng chỉ tại $t=1$. Với $T=\{y:\pi_y>0\}$, áp dụng cho $t=\pi_y^*/\pi_y$:
+\begin{equation}
+  \KL(\pi\|\pi^*)\ \ge\ \sum_{y\in T}(\pi_y-\pi_y^*)
+       \ =\ 1-\sum_{y\in T}\pi_y^*\ \ge\ 0.
+  \label{eq:b5-unique}
+\end{equation}
+Nếu $\KL=0$, bất đẳng thức đầu buộc $\pi_y^*=\pi_y$ trên $T$, và bất đẳng thức sau
+buộc $\pi^*$ không gán khối lượng ngoài $T$. Ngược lại, $\pi=\pi^*$ cho $\KL=0$.
+Vì $\beta>0$, hàm $J_x$ đạt cực đại $\beta\log Z(x)$ \emph{đúng tại} $\pi^*$; không
+còn nghiệm nào khác, kể cả ở biên của miền phân phối.
+
+\textbf{Miền đếm được.} Một điều kiện đủ để dùng nguyên lập luận là reward bị chặn
+hai phía trên hỗ trợ: nếu $a\le R_y\le b$ thì
+$0<e^{a/\beta}\le Z(x)\le e^{b/\beta}<\infty$, nên kỳ vọng reward hữu hạn và
+$\log(\pi_y^*/q_y)$ bị chặn. Đẳng thức \eqref{eq:b5-central} vẫn đúng khi KL nhận
+giá trị $+\infty$, cho mục tiêu $-\infty$ chứ không tạo hiệu $\infty-\infty$. Nếu
+reward không bị chặn, phải kiểm riêng việc chuẩn hóa và tính xác định của mục tiêu.
+
+\subsubsection{Từ Bradley--Terry tới xác suất ưu tiên}
+
+Xét cặp $y_w,y_l\in S_x$ cho cùng $x$, trong đó $y_w$ được ưu tiên. Mô hình
+Bradley--Terry gán
+\begin{align}
+  \Pr(y_w\succ y_l\mid x,y_w,y_l)
+   &=\frac{\exp(R(x,y_w))}{\exp(R(x,y_w))+\exp(R(x,y_l))}\notag\\
+   &=\sigma\bigl(R(x,y_w)-R(x,y_l)\bigr),
+   \qquad \sigma(z)=\frac{1}{1+e^{-z}}.
+  \label{eq:b5-bt}
+\end{align}
+Giải \eqref{eq:b5-gibbs} theo reward:
+\begin{equation}
+  R(x,y)=\beta\log\frac{\pi^*(y\mid x)}{\pref(y\mid x)}+\beta\log Z(x).
+  \label{eq:b5-invert}
+\end{equation}
+Lấy hiệu giữa hai đáp án \emph{cùng} $x$, hai hạng $\beta\log Z(x)$ triệt tiêu. Do
+đó xác suất ưu tiên chỉ còn phụ thuộc hiệu hai log-tỷ số chính sách tối ưu trên
+tham chiếu. Bước triệt tiêu \emph{không} áp dụng cho hai đáp án của hai câu hỏi
+khác nhau --- đây là lý do dữ liệu ưu tiên phải ghép theo cùng một prompt.
+
+\subsubsection{Hợp lý cực đại theo chính sách tham số hóa}
+
+Dùng $\pi_\theta$ thay cho $\pi^*$ chưa biết trong \eqref{eq:b5-bt}. Hai đáp án của
+mỗi cặp phải có xác suất dương dưới \emph{cả} $\pi_\theta$ và $\pref$ để log-tỷ số
+hữu hạn. Đặt
+\begin{equation}
+  z_\theta(x,y_w,y_l)
+   =\beta\left[
+      \log\frac{\pi_\theta(y_w\mid x)}{\pref(y_w\mid x)}
+      -\log\frac{\pi_\theta(y_l\mid x)}{\pref(y_l\mid x)}
+   \right].
+  \label{eq:b5-logit}
+\end{equation}
+Với tập $\mathcal D$ các bộ ba đã sắp theo nhãn ưu tiên, mỗi quan sát đóng góp xác
+suất $\sigma(z_\theta)$ vào hợp lý của nhãn, có điều kiện trên câu hỏi và cặp đáp
+án. Với các quan sát độc lập có điều kiện, hợp lý là tích các xác suất đó; lấy log,
+đổi dấu và lấy trung bình trên $\mathcal D$:
+\begin{equation}
+  \boxed{\ \mathcal L_{\mathrm{DPO}}(\theta)
+    =-\E_{(x,y_w,y_l)\sim\mathcal D}\bigl[\log\sigma(z_\theta(x,y_w,y_l))\bigr].\ }
+  \label{eq:b5-loss}
+\end{equation}
+
+Không cần tính $Z(x)$ và không cần huấn luyện reward model riêng để tính mất mát.
+Kiểm dấu: nếu hai log-tỷ số trong \eqref{eq:b5-logit} bằng nhau thì mất mát một cặp
+bằng $-\log(1/2)=\log 2\approx0{,}693$; nếu hiệu tăng thì $\sigma$ tăng và mất mát
+giảm.
+
+\textbf{Phân biệt hai loại duy nhất.} Tính duy nhất ở \eqref{eq:b5-unique} là duy
+nhất của $\pi^*$ \emph{với reward đã cho} khi tối ưu trên các phân phối. Nó không
+phải tính duy nhất của tham số $\theta$ khi học từ hữu hạn cặp.
+
+\subsubsection{Đối chiếu với cài đặt A.4}
+
+Biểu thức \eqref{eq:b5-logit} khớp đúng \texttt{src/dpo.py}: mã tính
+\texttt{margin = (pw - pl) - (rw - rl)} rồi \texttt{-logsigmoid(beta * margin)
+.mean()}, tức $-\log\sigma(z_\theta)$ lấy trung bình trên các cặp, đúng
+\eqref{eq:b5-loss}. Ràng buộc $\beta$ hữu hạn và dương trong mã tương ứng với giả
+thiết $\beta>0$ ở đây.
+
+%--------------------------------------------------------------------
+\subsection{B.6 --- Cross-entropy, KL và perplexity}
+\label{sec:b6}
+
+\textbf{Thiết lập.} Phân phối dữ liệu cố định $\pdata$ và họ phân phối mô hình
+$p_\theta$ trên cùng miền rời rạc hữu hạn $\mathcal Y$. Giả sử $p_\theta(y)>0$ với
+mọi $y$ sao cho $\pdata(y)>0$ khi cần giá trị hữu hạn. Hạng tử có $\pdata(y)=0$
+được bỏ khỏi tổng; nếu $\pdata(y)>0$ nhưng $p_\theta(y)=0$ thì cả cross-entropy và
+KL đều là $+\infty$.
+
+\subsubsection{Phân rã cross-entropy kỳ vọng}
+
+Đặt $S=\{y:\pdata(y)>0\}$. Theo định nghĩa,
+\begin{align*}
+  H(\pdata,p_\theta)&=-\sum_{y\in S}\pdata(y)\log p_\theta(y),\\
+  H(\pdata)&=-\sum_{y\in S}\pdata(y)\log\pdata(y).
+\end{align*}
+Khai triển tỷ số trong KL thành hiệu hai logarit:
+\begin{equation}
+  \KL(\pdata\|p_\theta)
+   =\sum_{y\in S}\pdata(y)\log\frac{\pdata(y)}{p_\theta(y)}
+   =-H(\pdata)+H(\pdata,p_\theta).
+  \label{eq:b6-decomp}
+\end{equation}
+Vì $H(\pdata)$ hữu hạn và không phụ thuộc $\theta$, hai mục tiêu khác nhau đúng một
+hằng số: chúng xếp thứ tự các mô hình như nhau và có cùng tập nghiệm cực tiểu (nếu
+cực tiểu đạt được):
+\begin{equation}
+  \argmin_\theta H(\pdata,p_\theta)=\argmin_\theta \KL(\pdata\|p_\theta).
+  \label{eq:b6-equiv}
+\end{equation}
+Trên miền đếm được, lập luận trừ hằng số vẫn dùng được khi $H(\pdata)$ hữu hạn.
+Không được lấy hiệu $\infty-\infty$ nếu entropy dữ liệu vô hạn.
+
+\subsubsection{Phiên bản có ngữ cảnh cho dự đoán token}
+
+Ký hiệu $C$ là ngữ cảnh và $Y$ là token đích. Giữ phân phối của $C$ cố định, áp
+dụng \eqref{eq:b6-decomp} cho mỗi ngữ cảnh $c$ rồi lấy kỳ vọng:
+\begin{align}
+  \E_{(C,Y)\sim\pdata}[-\log p_\theta(Y\mid C)]
+   &= H_{\pdata}(Y\mid C)\notag\\
+   &\quad+\E_{C\sim\pdata}\bigl[\KL(\pdata(\cdot\mid C)\|p_\theta(\cdot\mid C))\bigr],
+  \label{eq:b6-ctx}
+\end{align}
+trong đó $H_{\pdata}(Y\mid C)=\E_{C}[H(\pdata(\cdot\mid C))]$ không phụ thuộc mô
+hình và hữu hạn vì từ vựng hữu hạn. Đây là phát biểu tương ứng khi mô hình ngôn ngữ
+được huấn luyện dự đoán token tiếp theo theo ngữ cảnh đúng từ dữ liệu.
+
+\subsubsection{Từ log-xác suất trung bình theo token đến PPL}
+
+Trên tập đánh giá, gọi $(c_t,y_t)$ là ngữ cảnh và token đích ở vị trí được chấm thứ
+$t$, tổng cộng $N>0$ token. Với logarit tự nhiên và xác suất dương tại các vị trí
+này,
+\begin{equation}
+  \bar H=-\frac{1}{N}\sum_{t=1}^{N}\log p_\theta(y_t\mid c_t),\qquad
+  \PPL=e^{\bar H}
+    =\left(\prod_{t=1}^{N} p_\theta(y_t\mid c_t)\right)^{-1/N}.
+  \label{eq:b6-ppl}
+\end{equation}
+Đẳng thức cuối dùng $\exp(\sum_t\log a_t)=\prod_t a_t$. Vậy PPL là nghịch đảo
+trung bình nhân của xác suất token đúng; vì hàm mũ tăng chặt, cross-entropy theo
+token thấp hơn tương đương PPL thấp hơn \emph{trên cùng thiết lập chấm}.
+
+\emph{Ví dụ minh họa.} Hai token có xác suất đúng $1/2$ và $1/8$ cho
+$\bar H=\tfrac12(\log 2+\log 8)=\log 4$ và $\PPL=4$.
+
+\subsubsection{Quy tắc tổng hợp và phân biệt với DPO}
+\label{sec:b6-agg}
+
+Khi cộng qua nhiều batch hoặc nhiều câu: cộng tổng log-xác suất âm rồi chia tổng số
+token được chấm; \emph{không} lấy trung bình các PPL riêng lẻ. Lý do: $\PPL$ là hàm
+mũ lồi của $\bar H$, nên trung bình các PPL không bằng PPL của trung bình (bất đẳng
+thức Jensen), và các batch nói chung có số token khác nhau. Loại các vị trí padding
+khỏi cả tử và mẫu. Khi so sánh, dùng cùng tokenizer, dữ liệu và quy ước chấm token.
+
+Ngược lại, $\log\pi_\theta(y\mid x)$ trong \eqref{eq:b5-logit} là log-xác suất
+\emph{cả câu trả lời}. Theo quy tắc dây chuyền nó bằng
+$\sum_{t=1}^{T}\log\pi_\theta(y_t\mid x,y_{<t})$ với $T$ là số token của đáp án
+theo cùng quy ước kết thúc chuỗi cho hai mô hình. Không tính log-xác suất của prompt
+cố định, và \emph{không} chia tổng này cho $T$ trong DPO chuẩn.
+
+Lý do của sự khác biệt: PPL đo \emph{chất lượng trên mỗi token} nên phải chuẩn hóa
+theo độ dài để so sánh được giữa các tập; còn $\log\pi_\theta(y\mid x)$ trong DPO
+là xác suất của \emph{một lựa chọn} trong mô hình Bradley--Terry
+\eqref{eq:b5-bt}, và chia cho $T$ sẽ thay đổi bài toán so sánh ưu tiên theo độ dài
+đáp án.
+
+\subsubsection{Đối chiếu với cài đặt A.2}
+
+Quy tắc ở Mục~\ref{sec:b6-agg} khớp \texttt{validation\_metrics} trong
+\texttt{src/char\_lm.py}: mã tích lũy \texttt{nll\_sum} ở \texttt{float64} với
+\texttt{reduction='sum'}, chia cho \texttt{token\_count} rồi mới lấy
+\texttt{math.exp}. Docstring ghi rõ ``không lấy trung bình PPL các batch''.
