@@ -1,0 +1,109 @@
+\section{Giới thiệu}
+\label{sec:gioi-thieu}
+
+\subsection{Bài toán và động cơ}
+
+Thủ tục hộ tịch và chứng thực là nhóm thủ tục hành chính mà người dân tiếp xúc
+nhiều nhất: khai sinh, khai tử, kết hôn, cấp trích lục, chứng thực bản sao và
+chứng thực chữ ký. Thông tin về trình tự, thành phần hồ sơ, thời hạn giải quyết
+và lệ phí đều được công bố công khai, nhưng phân tán trên nhiều văn bản ở nhiều
+cấp hiệu lực khác nhau, và thay đổi theo thời gian. Người dân thường không biết
+điều kiện áp dụng nào tương ứng với trường hợp của mình.
+
+Một trợ lý hỏi đáp có thể giảm chi phí tra cứu, nhưng chỉ khi nó thỏa ba điều
+kiện. Thứ nhất, câu trả lời phải nêu đúng điều kiện áp dụng, không chỉ nêu kết
+luận chung. Thứ hai, câu trả lời phải \emph{dẫn nguồn} để người dùng tự kiểm tra,
+vì giá trị pháp lý thuộc về văn bản gốc chứ không thuộc về mô hình. Thứ ba, khi
+câu hỏi ngoài phạm vi hoặc chưa đủ căn cứ, trợ lý phải nói rõ thay vì đoán. Điều
+kiện thứ ba quan trọng hơn điều thứ nhất về mặt rủi ro: một câu trả lời sai nhưng
+tự tin gây hại nhiều hơn một lời từ chối.
+
+Ba điều kiện này định hình toàn bộ thiết kế Phần~D. Chúng không đạt được bằng cách
+huấn luyện mô hình cho đúng nhiều hơn, mà cần một tín hiệu học phân biệt được
+``đúng và có dẫn nguồn'' với ``trôi chảy nhưng không kiểm được''. Đó chính là lý do
+đề tài ghép SFT với tối ưu hóa theo ưu tiên: SFT dạy định dạng và nội dung, còn DPO
+dạy thứ tự ưu tiên giữa hai câu trả lời mà con người đã xếp hạng.
+
+\subsection{Phạm vi bắt buộc theo đề}
+
+Đề tài 9 \cite[tr.~18--19]{de} yêu cầu bốn phần trên cùng một chủ đề, với trọng số
+điểm như sau.
+
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+\textbf{Phần} & \textbf{Nội dung} & \textbf{Điểm}\\
+\midrule
+A & Cài đặt từ đầu, có dẫn xuất và đối chiếu thư viện chuẩn & 20\\
+B & Chứng minh chặt chẽ, đầy đủ giả thiết & 25\\
+C & Bài tập tính toán, phân tích, thực nghiệm có kiểm soát & 15\\
+D & Ứng dụng: thu thập/gán nhãn, tinh chỉnh, đánh giá & 30\\
+\midrule
+ & Báo cáo, tái lập, bảo vệ & 10\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Phần~D có trọng số lớn nhất. Đề cũng ràng buộc rằng ít nhất một cài đặt của
+Phần~A phải được dùng trực tiếp hoặc so sánh trong quy trình Phần~D; Phần~D được
+phép dùng thư viện chuẩn nhưng điều đó không thay thế nghĩa vụ tự cài đặt ở
+Phần~A.
+
+Hai phần lý thuyết B và C phải dựa trên năm bài báo trong danh mục tài liệu tham
+khảo của đề: \cite{attention}, \cite{lora}, \cite{qlora}, \cite{rlhf},
+\cite{dpo}. Báo cáo ghi rõ mục và phương trình được dùng ở từng chỗ.
+
+\subsection{Đầu vào và đầu ra của sản phẩm}
+
+Sản phẩm Phần~D là một trợ lý hỏi đáp.
+
+\begin{description}[leftmargin=2em,style=nextline]
+\item[Đầu vào] Một câu hỏi tiếng Việt về thủ tục hộ tịch hoặc chứng thực tại
+Hà Nội, do người dùng tự diễn đạt. Không giả định người dùng biết tên thủ tục,
+số hiệu văn bản hay thuật ngữ hành chính.
+\item[Đầu ra mong muốn] Câu trả lời nêu đúng thông tin và điều kiện áp dụng, kèm
+dẫn nguồn để người dùng kiểm tra. Nếu câu hỏi ngoài phạm vi hộ tịch -- chứng thực
+tại Hà Nội, hoặc chưa đủ căn cứ trong dữ liệu đã thu thập, trợ lý nêu rõ điều đó
+thay vì đoán.
+\end{description}
+
+Hai điều kiện ``dẫn nguồn'' và ``từ chối khi chưa đủ căn cứ'' là tiêu chí đánh giá
+chính, không phải tính năng phụ. Chúng xuất hiện trong rubric chấm cặp ưu tiên
+(Mục~\ref{sec:phan-d}) và trong giao thức đánh giá cuối.
+
+\subsection{Cấu trúc báo cáo và quy ước trình bày}
+
+Mục~\ref{sec:phan-a} trình bày Phần~A theo trình tự dẫn xuất $\to$ cài đặt $\to$
+đối chiếu. Mục~\ref{sec:phan-b} là sáu chứng minh. Mục~\ref{sec:phan-c} là bốn
+bài tập tính toán. Mục~\ref{sec:phan-d} là Phần~D, trình bày theo trạng thái thực
+tế. Mục~\ref{sec:tai-lap} ghi điều kiện tái lập. Mục~\ref{sec:dao-duc} ghi các
+ràng buộc đạo đức và pháp lý. Mục~\ref{sec:gioi-han} nêu giới hạn và hướng mở
+rộng. Phụ lục~\ref{sec:phu-luc-ai} khai báo phạm vi dùng AI tạo sinh.
+
+Ba quy ước áp dụng xuyên suốt:
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Mọi logarit là logarit tự nhiên}, kể cả trong perplexity và trong
+các log-tỷ số của DPO.
+\item \textbf{Nhãn trạng thái.} Mỗi hạng mục được gắn \dalam, \motphan{} hoặc
+\chualam{} theo bằng chứng trong kho mã. Nhãn không phải dự báo; một hạng mục đã
+lập kế hoạch nhưng chưa chạy vẫn là \chualam.
+\item \textbf{Phân biệt số đo với số minh họa.} Những ví dụ số dùng để minh họa
+phép tính được ghi rõ là minh họa. Chúng không được trình bày như dữ liệu đề chính
+thức hay như kết quả thực nghiệm.
+\end{enumerate}
+
+\subsection{Phân công trong nhóm}
+
+Nhóm không chia cứng bốn phần cho ba thành viên. Cao Văn Hà thực hiện bản đầu
+xuyên suốt A--D, tổng hợp và nộp bài. Hà Mạnh Thế và Trần Duy Hưng luân phiên rà
+soát từng đầu việc: chạy lại một phép kiểm mã, tự giải lại một bước chứng minh
+hoặc tính toán, hoặc đối chiếu một bản ghi QA với URL và đúng mục trong nguồn.
+Cách này nhằm bảo đảm cả ba thành viên đều giải thích được bất kỳ đoạn mã hoặc
+chứng minh nào khi vấn đáp, theo yêu cầu phần~II của đề.
+
+Riêng bước tạo nhãn ưu tiên cho Phần~D có quy trình khác và không luân phiên: Hà
+Mạnh Thế và Trần Duy Hưng \emph{đều} chấm từng cặp một cách độc lập, không chia
+đôi số cặp; Cao Văn Hà chỉ phân xử \emph{sau} khi nhãn độc lập đã bị khóa và mức
+đồng thuận đã được đo. Lý do là yêu cầu của đề về hai người đánh giá độc lập chỉ
+có nghĩa khi hai nhãn thực sự được tạo độc lập trên cùng một cặp.

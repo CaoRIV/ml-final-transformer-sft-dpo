@@ -1,0 +1,388 @@
+\section{Phần D --- Ứng dụng: trợ lý thủ tục hành chính}
+\label{sec:phan-d}
+
+Phần~D là bài toán Việt Nam, trọng số 30 điểm, gồm năm hạng mục D.1--D.5
+\cite[tr.~19]{de}. Mục này trình bày \emph{trạng thái thực tế}: những gì đã làm có
+bằng chứng trong kho mã, và những ngưỡng của đề chưa đạt được. Nhóm không trình
+bày kế hoạch như kết quả.
+
+\textbf{Tóm tắt trạng thái.} D.1 \motphan; D.2 \motphan\ (400 QA ứng viên, 24 đã
+duyệt); D.3 \motphan\ (pilot 24 QA đã chạy trên Kaggle, chưa chạy tập chính);
+D.4 \chualam; D.5 \chualam.
+
+%--------------------------------------------------------------------
+\subsection{D.1 --- Thu thập mô tả thủ tục công khai}
+\label{sec:d1}
+
+\textbf{Yêu cầu.} Thu thập trình tự, hồ sơ, thời hạn, lệ phí và căn cứ pháp lý từ
+Cổng Dịch vụ công quốc gia và cổng địa phương; lưu truy xuất và phiên bản.
+
+\subsubsection{Năm họ thủ tục đã rà \motphan}
+
+\begin{center}
+\small
+\begin{tabular}{p{0.40\textwidth}lp{0.28\textwidth}}
+\toprule
+\textbf{Họ thủ tục} & \textbf{Mã} & \textbf{Trạng thái căn cứ}\\
+\midrule
+Cấp bản sao trích lục hộ tịch / bản sao giấy khai sinh & \texttt{2.000635} &
+Đã xác minh QĐ 1818 và QĐ 2163; \emph{thời hạn chưa thống nhất}\\
+Chứng thực bản sao từ bản chính & \texttt{2.000815} &
+Đã xác minh Điều 20 NĐ 23/2015 hợp nhất 753/VBHN-BTP\\
+Chứng thực chữ ký & \texttt{2.000884} &
+Đã xác minh phụ lục QĐ 858; chưa chốt quy trình tại Hà Nội\\
+Thay đổi, cải chính, bổ sung hộ tịch, xác định lại dân tộc & \texttt{1.004859} &
+Đã xác minh QĐ 163 và biểu lệ phí NQ 98/2026/NQ-HĐND\\
+Xác nhận thông tin hộ tịch & \texttt{2.002516} &
+Đã xác minh QĐ 1852; chuyển dẫn chứng từ video sang văn bản\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Mỗi bản ghi lưu URL, thời điểm truy xuất và SHA-256 của bản tải. Nhóm cũng kiểm
+chữ ký CMS về toàn vẹn nội dung trên bốn PDF Hà Nội --- đây là kiểm toàn vẹn tệp,
+\emph{không} phải thẩm định chuỗi tin cậy.
+
+\subsubsection{Hai khác biệt phải xử lý trước khi huấn luyện}
+
+Quá trình rà phát hiện hai mâu thuẫn mà nếu bỏ qua sẽ sinh dữ liệu sai:
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Thời hạn cấp trích lục không thống nhất giữa các văn bản.} Phụ lục
+QĐ 1818/QĐ-TTPVHCC (hiệu lực 01/01/2026) ghi \emph{dự kiến 3 ngày làm việc}, tối đa
+10 ngày nếu phải xác minh. QĐ 2163/QĐ-BTP (30/09/2026) ghi \emph{trong ngày tiếp
+nhận, hoặc ngày làm việc kế tiếp nếu sau 15 giờ}. Nhóm \emph{chưa} tìm được văn bản
+triển khai 2163 tại Hà Nội, cũng chưa tìm được văn bản xác nhận 1818 đã bị thay
+thế. Xử lý: không dùng ``3/10 ngày'' làm đáp án chung hiện hành; chỉ soạn câu hỏi
+gắn với \emph{từng văn bản và phạm vi của nó}.
+\item \textbf{Lệ phí không phải con số hiển thị trên cổng.} Thông tư
+226/2016/TT-BTC là căn cứ phí \emph{chứng thực}, không phải biểu lệ phí hộ tịch Hà
+Nội; biểu hiện hành của Hà Nội nằm ở Nghị quyết 98/2026/NQ-HĐND. Trộn hai khái niệm
+này tạo ra đáp án sai một cách khó phát hiện.
+\end{enumerate}
+
+Hai phát hiện này minh họa vì sao hạng mục D.1 không thể rút gọn thành ``cào trang
+thủ tục'': nội dung hiển thị trên cổng không đồng nhất với văn bản có hiệu lực.
+
+\subsubsection{Căn cứ quyền sử dụng}
+
+Nhóm phân loại nội dung trước khi đưa vào dữ liệu:
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Chính văn quy phạm và văn bản hành chính do cơ quan ban hành:} theo
+khoản 2 Điều 15 Luật Sở hữu trí tuệ (VBHN 160/2026) và khoản 2 Điều 8 VBHN
+6154/2026, nhóm văn bản này \emph{không} thuộc phạm vi bảo hộ quyền tác giả. Có
+căn cứ để dùng phần chính văn công khai đã xác minh làm nguồn soạn QA, kèm số hiệu,
+điều/mục, phiên bản và URL.
+\item \textbf{Trang chi tiết của cổng, bài tin, bài hướng dẫn, video, bản lưu
+pilot:} dùng để \emph{tìm} văn bản và đối chiếu cách hiển thị. Điều khoản Cổng quốc
+gia yêu cầu dùng lại đúng pháp luật; footer cổng Hà Nội ghi
+\emph{All Rights Reserved} và yêu cầu ghi nguồn. Nhóm \textbf{chưa} chốt căn cứ để
+lấy nguyên văn toàn trang hoặc phân phối lại chúng, nên khi cần cùng một quy định
+thì trích từ văn bản chính thức, không chuyển snapshot web sang tập train.
+\end{itemize}
+
+Về truy cập: \texttt{robots.txt} của cổng Hà Nội cho \texttt{Allow: /} với
+\texttt{Crawl-delay: 5}, nên nhóm truy xuất tuần tự cách ít nhất 5 giây và không
+crawl toàn cổng. Với các host trả HTTP 404 cho \texttt{robots.txt}, nhóm ghi rõ
+rằng \emph{không có tệp robots không đồng nghĩa có giấy phép nội dung}.
+
+\textbf{Còn thiếu.} Chưa phát hành bộ nguồn huấn luyện; còn phải kiểm các kênh và
+phiên bản triển khai thực tế tại Hà Nội.
+
+%--------------------------------------------------------------------
+\subsection{D.2 --- Bộ dữ liệu chỉ dẫn có trích dẫn}
+\label{sec:d2}
+
+\textbf{Yêu cầu của đề.} Tạo $\ge 2.000$ QA có trích dẫn bằng phương pháp bán tự
+động; kiểm thủ công $\ge20\%$; tập test là câu hỏi của \emph{người dùng thực} thu
+qua khảo sát, tách hoàn toàn khỏi train.
+
+\subsubsection{Đã làm \motphan}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Quy trình sinh có cổng kiểm.} Nhóm viết recipe soạn QA từ chính văn,
+kiểm SHA-256 và từng đoạn trích, CLI chọn mẫu phân tầng, và một cổng xuất SFT từ
+chối phát hành khi dữ liệu chưa đạt điều kiện.
+\item \textbf{Công cụ chặn rò rỉ test.} Kiểm tách \texttt{USER\_TEST}, chặn đường
+dẫn thiếu, trùng họ thủ tục và trùng câu.
+\item \textbf{Lô pilot chính văn v2 đã duyệt và phát hành nội bộ:} 24 QA, nhóm
+kiểm thủ công \textbf{24/24}, có biên bản chung của lô. Cổng D.2 trả
+\texttt{pilot\_sft\_ready}; đầu vào D.3 kiểm \texttt{release-valid} với 18 train
+và 6 validation. Đây là lô duy nhất đã phát hành.
+\item \textbf{Lô pilot v1 trước đó:} 20 QA, 21 đoạn trích, 9 nguồn; đã rà riêng.
+Validator ngoại tuyến xác nhận 20/20 qua kiểm cấu trúc và 21/21 đoạn trích khớp
+bản lưu --- nhưng kiểm tự động không được tính vào quota kiểm thủ công.
+\item \textbf{Tập chính đang mở rộng theo từng lô:} b01 thêm 57 QA train, b02
+thêm 54, b03 thêm 265. Tích lũy \textbf{394 QA train và 6 validation ứng viên},
+\emph{chưa phát hành}. Các lô mới gồm cả câu cần từ chối hoặc nói rõ giới hạn
+nguồn.
+\end{itemize}
+
+\subsubsection{Khoảng cách tới ngưỡng của đề}
+
+\begin{center}
+\begin{tabular}{lrrl}
+\toprule
+\textbf{Ngưỡng} & \textbf{Yêu cầu} & \textbf{Hiện có} & \textbf{Trạng thái}\\
+\midrule
+Số QA có trích dẫn & $\ge2.000$ & 400 ứng viên & \chualam\\
+Kiểm thủ công & $\ge20\%$ ($\ge400$) & 24 đã duyệt & \chualam\\
+Tập test từ khảo sát người thật & có & chưa có & \chualam\\
+Tách train/validation/test & có & có cho lô pilot & \motphan\\
+Datasheet & có & đã soạn khung & \motphan\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Vì sao tập test không thể sinh bằng máy.} Đề yêu cầu test là câu hỏi của
+người dùng thực. Mục đích là đo khả năng tổng quát hóa sang \emph{cách người dân
+thật diễn đạt} --- thường thiếu thuật ngữ, thiếu bối cảnh, hoặc mô tả tình huống cá
+nhân thay vì hỏi tên thủ tục. Dùng AI sinh câu hỏi thay khảo sát sẽ phá chính phép
+đo đó, vì câu hỏi sinh ra mang phân phối của mô hình, không phải của người dùng.
+Quy tắc nội bộ của nhóm cấm việc này.
+
+Thu dữ liệu người cần văn bản đồng ý và ẩn danh trước khi lưu
+(Mục~\ref{sec:dao-duc}), nên hạng mục này có một \emph{sàn thời gian} không nén
+được bằng công sức.
+
+%--------------------------------------------------------------------
+\subsection{D.3 --- Tinh chỉnh có giám sát bằng QLoRA}
+\label{sec:d3}
+
+\textbf{Yêu cầu.} Chọn LM mã nguồn mở hỗ trợ tiếng Việt, 0,5--3B tham số, giấy phép
+cho nghiên cứu; SFT bằng LoRA hoặc QLoRA; tối ưu $r$, $\alpha$, learning rate,
+epochs \emph{chỉ trên validation}.
+
+\subsubsection{Đã chuẩn bị \motphan}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Mô hình:} Qwen2.5-1.5B-Instruct, Apache-2.0, revision được khóa
+trong \texttt{scripts/}. Nằm trong khoảng 0,5--3B và hỗ trợ tiếng Việt. Giấy phép
+và revision đã đối chiếu với model card \cite{qwen}.
+\item \textbf{Mã:} bộ nạp dữ liệu có che prompt, mã QLoRA, notebook Kaggle, script
+đóng gói tối thiểu, và kế hoạch so cấu hình $r$, $\alpha$, LR, epoch trên
+validation.
+\item \textbf{Cổng an toàn đã kiểm:} ZIP chỉ chứa mã thì không train; sai hash thì
+dừng; CLI từ chối manifest \texttt{candidate\_only} của lô 24 QA. Nghĩa là quy
+trình \emph{không thể} vô tình huấn luyện trên dữ liệu chưa được duyệt.
+\item \textbf{Kiểm phần mềm trên CPU:} 7 test bộ nạp và mặt nạ đều qua. Với một câu
+minh họa dùng tokenizer Qwen đúng revision: 71 token prompt bị che, giải mã 19
+token đích khớp nguyên đáp án có dấu và trích dẫn, đúng một EOS. Đã chạy forward
+trên một Qwen thu nhỏ với trọng số khởi tạo và adapter Q/V.
+\item \textbf{Kiểm resume:} với mô hình thu nhỏ, checkpoint khôi phục đúng trọng số
+adapter, trạng thái AdamW, RNG CPU và thứ tự trộn.
+\end{itemize}
+
+\subsubsection{Kết quả pilot đã chạy trên Kaggle \dalam}
+
+Nhóm đã chạy một lượt SFT pilot thật trên lô 24 QA đã phát hành. Số liệu dưới đây
+đối chiếu từ \texttt{metrics.jsonl} và \texttt{summary.json} do nhóm gửi.
+
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Epoch} & \textbf{Validation NLL} & \textbf{Validation PPL}\\
+\midrule
+1 & 1,509630 & 4,525054\\
+2 & \textbf{1,242314} & \textbf{3,463617}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Seed 41 hoàn thành $2/2$ epoch, không dừng sớm; mỗi epoch giám sát 1.235 token
+train và 388 token validation. Epoch 2 được chọn theo validation NLL. PPL khớp
+$e^{\mathrm{NLL}}$ theo \eqref{eq:b6-ppl}.
+
+\textbf{Cấu hình đã chạy:} QLoRA NF4 double quantization, FP16, adapter ở Q/V,
+$r=8$, $\alpha=16$, dropout $0$, learning rate $10^{-4}$, batch $1$, độ dài tối đa
+$512$. Môi trường: Tesla T4, Python 3.13.16, torch 2.11.0+cu130, CUDA 13.0.
+
+\textbf{Bộ nhớ đã đo:} peak allocated $2{,}402$ GiB, peak reserved $2{,}725$ GiB
+theo PyTorch. Đây là số của tiến trình, không phải tổng VRAM toàn thiết bị. Con số
+này nay \emph{thay thế} phần ước lượng ở Mục~\ref{sec:c3} cho đúng cấu hình trên.
+
+\textbf{Tái lập đã kiểm:} bốn SHA-256 (manifest release-01, hai tệp Python trong
+ZIP mã, chat template tokenizer) đều khớp. Resume từ \texttt{epoch-0001} tái lập
+đúng epoch 2: cùng 1.235 token train (train NLL $1{,}750317$), cùng 388 token
+validation, NLL $1{,}242314$ và PPL $3{,}463617$; chỉ hai trường peak VRAM lệch.
+Resume \emph{không} được tính là một seed độc lập.
+
+%--------------------------------------------------------------------
+\subsubsection{Hỏi thử adapter pilot: hai lỗi quan sát được}
+
+Nhóm chạy một notebook hỏi thử riêng, suy luận từ \texttt{best\_adapter/} và
+\emph{không} huấn luyện lại. Mô hình sinh được hai đáp án, nhưng \textbf{cả hai
+đều không đạt} mục tiêu đặt ra ở Mục~\ref{sec:gioi-thieu}:
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Sai thời hạn và tự nhận là mới nhất.} Với câu hỏi về xác nhận
+thông tin hộ tịch, mô hình trả ``15/30 ngày làm việc'' và tự nhận đây là quy định
+mới nhất. Phụ lục 1852/QĐ-TTPVHCC, B.4 tr.~3 ghi \emph{dự kiến 03 ngày}, và không
+quá 10 ngày làm việc nếu cần kiểm tra, xác minh.
+\item \textbf{Không từ chối câu ngoài phạm vi.} Với câu hỏi về thị thực du lịch
+Nhật Bản --- hoàn toàn ngoài phạm vi hộ tịch và chứng thực tại Hà Nội --- mô hình
+\emph{hướng dẫn} thay vì nêu rõ là ngoài phạm vi.
+\end{enumerate}
+
+Thêm nữa, cả hai đáp án chỉ ghi \texttt{[1]} mà không kèm nguồn truy xuất được.
+
+\textbf{Vì sao hai lỗi này đáng ghi vào báo cáo.} Lỗi thứ hai chính là hiện tượng
+mà Mục~\ref{sec:d5} đặt giả thuyết: SFT dạy mô hình \emph{luôn} trả lời, nên
+``từ chối đúng cách'' là thứ SFT khó dạy. Quan sát này \emph{ủng hộ} giả thuyết
+nhưng không chứng minh nó, và nhất định không phải điểm D.5.
+
+\textbf{Đây là quan sát định tính, không phải phép đo.} Hai câu, một adapter huấn
+luyện trên 24 QA, không có người đánh giá mù. Nhóm cũng \emph{không} chuyển hai QA
+validation cùng dẫn đoạn B.4 sang train để làm đẹp kết quả demo --- làm vậy là rò
+rỉ validation.
+
+\subsubsection{Hạng mục D.3 còn lại \chualam}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Chưa chọn cấu hình.} Đề yêu cầu tối ưu $r$, $\alpha$, learning rate
+và epochs trên validation. Hiện chỉ có \emph{một} cấu hình đã chạy ($r=8$,
+$\alpha=16$, LR $10^{-4}$), nên chưa có việc chọn nào diễn ra.
+\item \textbf{Chưa chạy trên tập chính.} Lượt pilot dùng 24 QA; 394 QA train của
+tập chính chưa phát hành nên chưa huấn luyện.
+\item \textbf{Chưa đủ 5 lần chạy độc lập.} Chỉ có seed 41. Yêu cầu tái lập ở
+Mục~\ref{sec:tai-lap} cần ít nhất 5 seed; resume không tính là seed thứ hai.
+\end{itemize}
+
+\subsection{D.4 --- Dữ liệu ưu tiên và huấn luyện DPO}
+\label{sec:d4}
+
+\textbf{Yêu cầu.} Thu tối thiểu \textbf{500 cặp} so sánh: hai đáp án SFT cho cùng
+một câu hỏi; \textbf{ít nhất hai người đánh giá độc lập} theo đúng/đầy đủ/trích
+dẫn; báo cáo mức đồng thuận; huấn luyện DPO.
+
+\textbf{Trạng thái: \chualam.}
+
+\subsubsection{Quy trình đã thiết kế}
+
+Nhóm đã viết hướng dẫn chấm và rubric, và chốt quy trình:
+
+\begin{enumerate}[leftmargin=2em]
+\item Với mỗi câu hỏi \emph{ngoài tập test}, sinh hai đáp án từ checkpoint SFT
+\emph{thật}. Khóa checkpoint, template và cấu hình sinh trước khi chấm.
+\item Hà Mạnh Thế và Trần Duy Hưng chấm \emph{độc lập} theo ba tiêu chí: đúng nội
+dung, đủ ý, trích dẫn đúng. \textbf{Không chia đôi 500 cặp cho hai người} --- mỗi
+người chấm toàn bộ.
+\item Không ai được xem nhãn của người kia trước khi khóa.
+\item Khóa nhãn, \emph{đo mức đồng thuận}, rồi Cao Văn Hà mới phân xử. Giữ nguyên
+nhãn gốc và lý do loại cặp; không ghi đè nhãn raw.
+\item Dùng các cặp ưu tiên để huấn luyện DPO, giữ mô hình SFT tham chiếu cố định,
+và chọn $\beta$ \emph{trên validation DPO}.
+\end{enumerate}
+
+Thiết kế này trực tiếp phản ánh Mục~\ref{sec:b5}: $\pref$ phải là một mô hình xác
+định và cố định, vì \eqref{eq:b5-gibbs} định nghĩa nghiệm tối ưu \emph{tương đối}
+với nó; hai đáp án phải thuộc cùng một prompt để hạng $\beta\log Z(x)$ triệt tiêu
+ở \eqref{eq:b5-invert}.
+
+\subsubsection{Hai lý do hạng mục này bị chặn}
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Chặn kỹ thuật --- đã gỡ một phần.} Trước đây không có checkpoint SFT
+nào, nên không sinh được hai đáp án để so sánh. Nay đã có adapter pilot
+(\texttt{best\_adapter/}, seed 41, epoch 2), nên \emph{về mặt kỹ thuật} nhóm đã
+sinh được cặp đáp án. Giới hạn còn lại là chất lượng: adapter này huấn luyện trên
+24 QA và hỏi thử cho thấy nó sai thời hạn và không từ chối câu ngoài phạm vi, nên
+cặp sinh từ nó chưa đại diện cho mô hình cuối. Nhóm có thể dùng nó để \emph{hiệu
+chuẩn rubric và tập chấm thử}, nhưng 500 cặp chính thức nên lấy từ checkpoint huấn
+luyện trên tập chính.
+\item \textbf{Chặn về khối lượng người:} yêu cầu ``hai người đánh giá độc lập'' có
+nghĩa là \emph{hai con người}, mỗi người chấm toàn bộ số cặp. Phân tích tải nội bộ
+của nhóm (dùng giả định 2 phút/cặp, không phải số đo) cho thấy 700 cặp thô cần
+khoảng 23 giờ cho mỗi người chấm. Đây là một \emph{sàn thời gian}, không phải vấn
+đề hiệu suất.
+\end{enumerate}
+
+\textbf{Điều nhóm không làm.} Không sinh nhãn bằng AI để thay người chấm. Nếu làm
+vậy, con số ``mức đồng thuận'' sẽ không đo gì cả, và toàn bộ D.4 cùng D.5 (dựa lên
+D.4) mất giá trị. Quy tắc nội bộ ghi rõ: không bịa điểm người chấm hay mức đồng
+thuận.
+
+\subsubsection{Hệ quả cho cầu nối A$\leftrightarrow$D (G5)}
+
+Đề yêu cầu ít nhất một cài đặt Phần~A được dùng hoặc so sánh trực tiếp trong
+Phần~D. Thiết kế của nhóm là đối chiếu \texttt{src/dpo.py} (A.4) với cách tính
+chuẩn trên \emph{một minibatch dữ liệu ưu tiên thật} của D.4, so cả mất mát và
+gradient. Phép đối chiếu này \textbf{chưa} thực hiện được vì chưa có dữ liệu đó.
+Đây là hạng mục còn thiếu rõ ràng nhất của báo cáo.
+
+%--------------------------------------------------------------------
+\subsection{D.5 --- Đánh giá ba mốc mô hình}
+\label{sec:d5}
+
+\textbf{Yêu cầu.} So sánh base, SFT, SFT+DPO về độ chính xác đối chiếu nguồn,
+hallucination, và từ chối khi ngoài phạm vi; blind human pairwise evaluation với
+win rate kèm khoảng tin cậy; nêu giới hạn khi kiến thức thay đổi nhanh và hướng
+RAG.
+
+\textbf{Trạng thái: \chualam.}
+
+\subsubsection{Giao thức dự kiến}
+
+\begin{itemize}[leftmargin=2em]
+\item Ba mốc model đánh giá trên \emph{cùng} tập test (tập khảo sát người thật của
+D.2).
+\item Ba nhóm chỉ số có định nghĩa trước: (i) đáp án nêu đúng điều kiện áp dụng và
+dẫn đúng nguồn; (ii) tỷ lệ phát biểu không có căn cứ trong nguồn đã dẫn;
+(iii) tỷ lệ từ chối đúng khi câu hỏi ngoài phạm vi hoặc chưa đủ căn cứ.
+\item \textbf{Người đánh giá không biết đáp án thuộc model nào} (blind), thứ tự
+trình bày được xáo.
+\item Win rate báo cáo kèm khoảng tin cậy, ghi rõ đơn vị lấy mẫu.
+\end{itemize}
+
+\subsubsection{Vì sao chỉ số thứ ba quan trọng nhất}
+
+Chỉ số (iii) đo đúng điều kiện thứ ba trong đặc tả sản phẩm
+(Mục~\ref{sec:gioi-thieu}). Một mô hình đạt điểm cao ở (i) nhưng thấp ở (iii) là mô
+hình nguy hiểm: nó trả lời tự tin cả khi không có căn cứ. Giả thuyết của nhóm là
+DPO giúp nhiều nhất ở (iii), vì ``từ chối đúng cách'' là thứ khó dạy bằng SFT ---
+dữ liệu SFT gồm các cặp câu hỏi--đáp án, nên nó dạy mô hình \emph{luôn} trả lời.
+
+Đây là \emph{giả thuyết}, không phải kết quả. Nhóm không hứa DPO tốt hơn SFT và sẽ
+báo cả kết quả âm nếu có.
+
+\subsubsection{Phụ thuộc và giới hạn}
+
+D.5 cần cả ba mốc model (phụ thuộc D.3 và D.4), tập test khảo sát thật (phụ thuộc
+D.2), và người đánh giá mù --- là người thứ ba ngoài nhóm hoặc thành viên không
+tham gia tạo nhãn. Không có đủ các điều kiện này thì bảng ba hệ không thể lập.
+
+Về RAG: Đề tài 11 trong danh mục của đề là hướng truy xuất tăng cường. Nhóm chỉ
+\emph{thảo luận} đây là hướng mở rộng hợp lý cho vấn đề kiến thức thay đổi nhanh
+(xem hai mâu thuẫn ở Mục~\ref{sec:d1}), và \textbf{không} trình bày RAG như một
+hạng mục đã triển khai.
+
+%--------------------------------------------------------------------
+\subsection{Tổng hợp trạng thái Phần D}
+
+\begin{center}
+\begin{tabular}{llp{0.46\textwidth}}
+\toprule
+\textbf{Mã} & \textbf{Trạng thái} & \textbf{Khoảng cách còn lại}\\
+\midrule
+D.1 & \motphan & Chưa phát hành bộ nguồn; còn kiểm kênh/phiên bản tại Hà Nội\\
+D.2 & \motphan & 400/2.000 QA ứng viên; 24/400 kiểm thủ công; chưa có test khảo sát thật\\
+D.3 & \motphan & Pilot 24 QA đã chạy (PPL validation 3,46; peak 2,402 GiB); chưa chọn cấu hình, chưa chạy tập chính, chưa đủ 5 seed\\
+D.4 & \chualam & Đã có adapter pilot để sinh cặp; cần hai người chấm toàn bộ $\ge500$ cặp\\
+D.5 & \chualam & Bị chặn bởi D.4 và tập test khảo sát; cần người đánh giá mù\\
+\midrule
+G5 & \chualam & Chưa đối chiếu A.4 trên minibatch ưu tiên thật của D\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Đánh giá trung thực.} Phần~D chưa đạt, nhưng đường ống đã chạy hết một
+vòng ở quy mô pilot: dữ liệu có dẫn nguồn $\to$ cổng phát hành $\to$ SFT trên GPU
+$\to$ adapter sinh được đáp án. Điều này chứng minh thiết kế hoạt động.
+
+Phần còn lại bị chặn bởi hai thứ khác nhau. Thứ nhất là \emph{khối lượng}: 394 QA
+train cần người duyệt, và tập chính cần huấn luyện lại với nhiều cấu hình và $\ge5$
+seed. Thứ hai, và không nén được bằng công sức của mã, là \emph{người thật}: người
+khảo sát có văn bản đồng ý cho tập test (D.2), hai người chấm độc lập cho
+$\ge500$ cặp (D.4), và người đánh giá mù (D.5). Nhóm chọn báo cáo đúng trạng thái
+này thay vì điền số liệu không có nguồn.

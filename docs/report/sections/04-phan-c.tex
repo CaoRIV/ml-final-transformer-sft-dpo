@@ -1,0 +1,427 @@
+\section{Phần C --- Bài tập tính toán và phân tích}
+\label{sec:phan-c}
+
+Phần~C nối lý thuyết ở Phần~B với mã ở Phần~A: mỗi bài được giải bằng tay hoặc
+bằng công thức tường minh, rồi đối chiếu số với cài đặt của nhóm trên CPU
+\cite[tr.~19]{de}.
+
+\textbf{Về đầu vào chính thức.} Đề ghi C.1 dùng ``ma trận Q/K/V do giảng viên cung
+cấp''. Theo thông tin nhóm nhận được, giảng viên không phát bộ ma trận riêng; C.4
+nêu ``cho log-xác suất'' nhưng không kèm số. Nhóm vì vậy dùng \emph{bộ minh họa có
+ghi nguồn và tái lập được}, và ghi rõ đây không phải số liệu chính thức. Nếu nhận
+được đầu vào riêng, chỉ cần thay số ở ô đầu vào của notebook; toàn bộ phép tính và
+phần đối chiếu giữ nguyên.
+
+%--------------------------------------------------------------------
+\subsection{C.1 --- Tính tay một đầu attention có mặt nạ nhân quả}
+\label{sec:c1}
+
+\textbf{Đề bài.} Ba token, một đầu chú ý, $d_k=2$, có mặt nạ nhân quả.
+
+\textbf{Đầu vào minh họa.} Sinh bằng \texttt{random.Random(577893521)}, lấy số
+nguyên trong $[-2,2]$ theo hàng, lần lượt $Q$, $K$, $V$; không lấy mẫu lại. Mỗi
+hàng là một token; chọn $d_v=2$.
+\[
+  Q=\begin{bmatrix}-2&0\\-1&-2\\1&-2\end{bmatrix},\quad
+  K=\begin{bmatrix}-1&-1\\2&1\\0&2\end{bmatrix},\quad
+  V=\begin{bmatrix}-1&0\\-1&1\\0&-1\end{bmatrix}.
+\]
+
+\subsubsection{Bước 1: điểm số, chia tỷ lệ, che tương lai}
+
+Phần tử $(i,j)$ của $QK^\top$ là tích vô hướng của query token $i$ với key token
+$j$. Ví dụ hàng 2: $(-1)(-1)+(-2)(-1)=3$; $(-1)2+(-2)1=-4$; $(-1)0+(-2)2=-4$.
+Đặt $c=1/\sqrt{2}$:
+\[
+  QK^\top=\begin{bmatrix}2&-4&0\\3&-4&-4\\1&0&-4\end{bmatrix},
+  \qquad
+  S=c\,QK^\top+M=\begin{bmatrix}
+      2c&-\infty&-\infty\\
+      3c&-4c&-\infty\\
+      c&0&-4c\end{bmatrix}.
+\]
+Mặt nạ cộng $M_{ij}=0$ nếu $j\le i$ và $-\infty$ nếu $j>i$. Việc che xảy ra
+\emph{trước} khi chuẩn hóa từng hàng: vì $e^{-\infty}=0$, token tương lai không góp
+vào cả tử \emph{và} mẫu. Đường chéo được giữ, nên mỗi hàng luôn còn ít nhất một
+khóa hợp lệ.
+
+\subsubsection{Bước 2: softmax từng hàng và tổng có trọng số}
+
+Gọi $A=\softmax_{\mathrm{hàng}}(S)$ và $o_i=\sum_{j\le i}A_{ij}v_j$. Trừ điểm lớn
+nhất của hàng trước khi lấy mũ không làm đổi softmax (tính bất biến dịch), và
+tránh tràn số.
+
+\begin{description}[leftmargin=2em,style=nextline]
+\item[Token 1] Chỉ $v_1$ hợp lệ, nên $A_{1,:}=(1,0,0)$ và $o_1=v_1=(-1,0)$.
+\item[Token 2] Trừ $3c$ khỏi hàng 2. Đặt $t=e^{-7c}$, khi đó
+$A_{2,:}=(1,t,0)/(1+t)$ và
+$o_2=\bigl[(-1,0)+t(-1,1)\bigr]/(1+t)=\bigl(-1,\ t/(1+t)\bigr)$.
+Tọa độ đầu vẫn đúng bằng $-1$ vì cả hai value hợp lệ đều có tọa độ đầu bằng $-1$.
+\item[Token 3] Trừ $c$ khỏi hàng 3. Đặt $u=e^{-c}$, $v=e^{-5c}$, $D=1+u+v$. Khi đó
+$A_{3,:}=(1,u,v)/D$ và
+$o_3=\bigl[(-1,0)+u(-1,1)+v(0,-1)\bigr]/D=\bigl(-(1+u)/D,\ (u-v)/D\bigr)$.
+\end{description}
+
+\begin{center}
+\begin{tabular}{crr}
+\toprule
+\textbf{Token} & \textbf{Trọng số trên key 1, 2, 3} & \textbf{Đầu ra hai chiều}\\
+\midrule
+1 & $(1,\ 0,\ 0)$ & $(-1,\ 0)$\\
+2 & $(0{,}992965,\ 0{,}007035,\ 0)$ & $(-1,\ 0{,}007035)$\\
+3 & $(0{,}656939,\ 0{,}323916,\ 0{,}019145)$ & $(-0{,}980855,\ 0{,}304771)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Bảng được làm tròn \emph{sau} khi tính $O=AV$; không dùng trọng số đã làm tròn để
+tính tiếp.
+
+\subsubsection{Đối chiếu \dalam}
+
+Notebook C.1 chạy \texttt{scaled\_dot\_product\_attention} và \texttt{causal\_mask}
+của A.1 ở \texttt{float64} trên CPU, so với biểu thức đóng ở trên bằng
+\texttt{torch.testing.assert\_close} với \texttt{atol=1e-12}, và kiểm thêm
+\texttt{weights.triu(1).count\_nonzero() == 0} --- tức không có trọng số dương nào
+ở phần tam giác trên, xác nhận không rò rỉ tương lai.
+
+\textbf{Nhận xét đáng nêu ở vấn đáp.} Trọng số của token 2 đặt $99{,}3\%$ khối
+lượng vào key 1 vì chênh lệch điểm là $7c\approx4{,}95$ --- đúng hiện tượng bão hòa
+mô tả ở \eqref{eq:b1-sat} với $m=2$, $g=7c$. Đây là ví dụ cụ thể cho thấy vì sao
+hệ số $1/\sqrt{d_k}$ có ý nghĩa.
+
+%--------------------------------------------------------------------
+\subsection{C.2 --- Đếm tham số và phép tính của một khối Transformer}
+\label{sec:c2}
+
+\textbf{Phạm vi.} Một lần forward của \emph{một khối} trên một chuỗi
+$X\in\R^{n\times d}$, với $d=\dmodel$, $f=d_{ff}$, $h$ đầu, $h\mid d$,
+$d_h=d/h$. Không tính embedding, PE, LayerNorm cuối mô hình, đầu đọc từ vựng,
+backward hay optimizer. Mặt nạ nhân quả là buffer cố định, không phải tham số.
+
+\subsubsection{Số tham số}
+
+\texttt{Linear(a,b)} học $ab$ trọng số và $b$ bias. LayerNorm trên $d$ chiều học cả
+$\gamma$ và $\beta$, mỗi vector dài $d$. Phép reshape chia đầu chỉ tổ chức lại cùng
+$d$ chiều, \emph{không} nhân số tham số lên $h$ lần.
+
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Thành phần} & \textbf{Trọng số} & \textbf{Bias} & \textbf{Tổng}\\
+\midrule
+Chiếu Q,K,V gộp ($d\to3d$) & $3d^2$ & $3d$ & $3d^2+3d$\\
+Chiếu đầu ra ($d\to d$) & $d^2$ & $d$ & $d^2+d$\\
+FFN lớp 1 ($d\to f$) & $df$ & $f$ & $df+f$\\
+FFN lớp 2 ($f\to d$) & $df$ & $d$ & $df+d$\\
+Hai LayerNorm & $2d$ & $2d$ & $4d$\\
+\midrule
+\multicolumn{3}{r}{\textbf{Tổng}} & $\mathbf{4d^2+2df+9d+f}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{equation}
+  N_{\mathrm{params}}=4d^2+2df+9d+f.
+  \label{eq:c2-params}
+\end{equation}
+
+Với $d,f$ cố định, số tham số \emph{không} phụ thuộc $n$ hay $h$. ReLU, softmax,
+phép cộng residual và mặt nạ không có tham số học.
+
+\subsubsection{Số phép tính forward}
+
+Quy ước MAC: tích $(a\times b)(b\times c)$ dùng $abc$ lượt nhân--tích lũy; khi đối
+chiếu profiler dùng 1 MAC $=$ 2 FLOP theo quy ước GEMM.
+
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+\textbf{Thành phần} & \textbf{Kích thước tích} & \textbf{MAC cả khối}\\
+\midrule
+Chiếu Q,K,V & $(n\times d)(d\times 3d)$ & $3nd^2$\\
+Điểm $QK^\top$ & mỗi đầu $(n\times d_h)(d_h\times n)$ & $hn^2d_h=n^2d$\\
+Tổng có trọng số $PV$ & mỗi đầu $(n\times n)(n\times d_h)$ & $hn^2d_h=n^2d$\\
+Chiếu đầu ra & $(n\times d)(d\times d)$ & $nd^2$\\
+FFN hai lớp & $(n\times d)(d\times f)$, $(n\times f)(f\times d)$ & $2ndf$\\
+\midrule
+\multicolumn{2}{r}{\textbf{Tổng}} & $\mathbf{4nd^2+2ndf+2n^2d}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{equation}
+  \mathrm{MAC}_{\mathrm{matmul}}=4nd^2+2ndf+2n^2d.
+  \label{eq:c2-mac}
+\end{equation}
+
+Lưu ý phép triệt tiêu $h\,d_h=d$: chi phí attention \emph{không} phụ thuộc số đầu
+khi $d$ giữ nguyên. Đây là điểm bị hỏi thường xuyên.
+
+\textbf{Ngoài các tích ma trận:} cộng bias $n(5d+f)$; hai residual $2nd$; ReLU
+$\Theta(nf)$; hai LayerNorm $\Theta(nd)$; chia tỷ lệ điểm $hn^2$ phép nhân và
+softmax xử lý $hn^2$ phần tử, chi phí $\Theta(hn^2)$.
+
+\subsubsection{Hạng tử bậc hai theo $n$}
+
+Trong \eqref{eq:c2-mac}, hai hạng $n^2d$ đến từ $QK^\top$ và $PV$; phần chiếu và
+FFN tăng \emph{tuyến tính} theo $n$. Vì $h\le d$, độ phức tạp toàn khối là
+$\Theta(nd^2+ndf+n^2d)$, và score cùng xác suất attention có kích thước
+$h\times n\times n$ --- tức bộ nhớ cũng bậc hai. Với batch $B$, số phép tính nhân
+$B$ còn số tham số giữ nguyên.
+
+\textbf{Vì sao mặt nạ nhân quả không chia đôi chi phí?} Cài đặt A.1 tính đủ ma trận
+$n\times n$ rồi mới điền $-\infty$ phía trên đường chéo, và $PV$ vẫn là phép nhân
+dense đủ kích thước dù các trọng số bị che bằng $0$. Chỉ thuật toán \emph{thực sự
+bỏ qua} ô bị che mới khai thác được $n(n+1)/2$ cặp hợp lệ; mặt nạ trong A.1 không
+làm việc đó. Đây là khác biệt giữa đúng về ngữ nghĩa và tối ưu về chi phí.
+
+\subsubsection{Thay số theo cấu hình A.2 \dalam}
+
+Với $d=64$, $f=128$, $h=4$, $n=128$:
+\begin{align*}
+  N_{\mathrm{params}}&=4(64)^2+2(64)(128)+9(64)+128\\
+   &=16{.}384+16{.}384+576+128=\mathbf{33{.}472},\\
+  \mathrm{MAC}&=4(128)(64)^2+2(128)(64)(128)+2(128)^2(64)\\
+   &=2{.}097{.}152+2{.}097{.}152+2{.}097{.}152=\mathbf{6{.}291{.}456}.
+\end{align*}
+Tương đương $12{.}582{.}912$ FLOP theo quy ước trên. Ở cấu hình này hai tích
+attention chiếm \emph{đúng} $1/3$ tổng MAC; tỷ lệ đó tăng khi chuỗi dài hơn.
+
+Notebook C.2 đối chiếu hai chiều: \texttt{numel()} của từng submodule khớp
+\eqref{eq:c2-params} cho cả $h=4$ và $h=8$ (xác nhận tính độc lập với $h$), và FLOP
+mà PyTorch Profiler ước lượng cho \texttt{aten::addmm} (chiếu, FFN) cùng
+\texttt{aten::bmm} (hai tích attention) khớp đúng $2\times$ \eqref{eq:c2-mac} với
+$n\in\{64,128,256\}$. Khi $n$ gấp đôi, chiếu và FFN gấp đôi còn hai tích attention
+gấp bốn --- xác nhận hạng tử $O(n^2)$ bằng số.
+
+Không dùng số FLOP của một khối forward làm FLOP huấn luyện toàn mô hình.
+
+%--------------------------------------------------------------------
+\subsection{C.3 --- Tham số LoRA ở Q/V và bộ nhớ QLoRA 4 bit}
+\label{sec:c3}
+
+\textbf{Mô hình nền dùng để tính.} Qwen2.5-1.5B-Instruct, khóa theo revision
+\texttt{989aa7980e4cf806f80c7fef2b1adb7bc71aa306} \cite{qwen}. Đây là mô hình dùng
+cho \emph{phép tính} C.3; nó không đồng nghĩa với quyết định mô hình của D.3.
+
+Kiến trúc: $L=28$ khối, chiều ẩn $d=1536$, 12 đầu Q nhưng chỉ 2 đầu K/V
+(grouped-query attention), mỗi đầu 128 chiều. Do đó trọng số Q có dạng
+$1536\times1536$ còn V là $256\times1536$ (đầu ra $\times$ đầu vào). Việc lặp K/V
+khi tính attention \emph{không} tạo thêm trọng số.
+
+\subsubsection{Đếm tham số học}
+
+Theo \cite[§4.1]{lora}, với $W$ kích thước $o\times i$, hai ma trận học có kích
+thước $r\times i$ và $o\times r$, tức $r(i+o)$ tham số --- đúng
+\eqref{eq:b4-count}. Đóng băng toàn bộ mô hình nền kể cả bias; chỉ gắn adapter vào
+\texttt{q\_proj} và \texttt{v\_proj} ở mỗi khối, không học K, O, embedding hay đầu
+đọc. Hệ số $\alpha/r$ không làm đổi số tham số.
+\begin{align*}
+  P_Q&=28(1536+1536)r=86{.}016\,r,\\
+  P_V&=28(1536+256)r=50{.}176\,r,\\
+  P&=136{.}192\,r.
+\end{align*}
+
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+$r$ & \textbf{Q} & \textbf{V} & \textbf{Tổng}\\
+\midrule
+4 & 344.064 & 200.704 & \textbf{544.768}\\
+8 & 688.128 & 401.408 & \textbf{1.089.536}\\
+16 & 1.376.256 & 802.816 & \textbf{2.179.072}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Với $r=8$, tỷ lệ tham số học so với $1{,}54$ tỷ tham số của mô hình nền là khoảng
+$0{,}071\%$.
+
+Notebook C.3 kiểm số này bằng chính lớp \texttt{LoRALinear} của A.3 trên
+\emph{meta tensor} --- tức kiểm kích thước mà không cấp vùng nhớ, không lượng tử
+hóa và không tải Qwen.
+
+\subsubsection{Ước lượng bộ nhớ khi kết hợp QLoRA 4 bit}
+
+\textbf{Kịch bản:} SFT, không offload, không có reference policy của DPO. Phân biệt
+rõ \emph{trọng số lưu} NF4 với \emph{kiểu tính toán} 16 bit.
+
+Bảy ma trận lớn mỗi khối (Q/K/V/O và gate/up/down) lưu NF4 với double
+quantization. Gọi $k=256$ là chiều ra K/V và $f=8960$ là chiều trung gian. Số phần
+tử lượng tử hóa là
+\[
+  N_4=L\,(2d^2+2dk+3df).
+\]
+Theo \cite[§3, tr.~5]{qlora}, mỗi phần tử dùng trung bình
+$4+\tfrac{8}{64}+\tfrac{32}{64\cdot256}$ bit, kể cả scale hai cấp. Bỏ qua codebook,
+offset và padding theo tensor.
+
+Giả sử embedding và đầu đọc dùng chung trọng số
+(\texttt{tie\_word\_embeddings=true}), RMSNorm và bias lưu 16 bit:
+\[
+  N_{16}=V_{\mathrm{ocab}}\,d+(2L+1)d+L(d+2k),
+\]
+gồm một embedding, hai norm mỗi khối, một norm cuối, và bias Q/K/V. Không đếm
+\texttt{lm\_head} lần thứ hai. Đây là \emph{giả định lưu trữ}, không phải mặc định
+của mọi thư viện: nếu chuyển phần này sang FP32 thì cộng thêm $2N_{16}$ byte.
+
+Adapter lưu FP32, gradient FP32, hai moment AdamW FP32 thường trú, tức
+\textbf{16 byte cho mỗi tham số học}; không tính gradient hay optimizer cho
+backbone đóng băng. Sau khi trạng thái optimizer đã cấp phát và gradient còn sống:
+\begin{equation}
+  M_{\mathrm{tĩnh}}=\frac{N_4\,b_4}{8}+2N_{16}+16P \quad\text{byte}.
+  \label{eq:c3-static}
+\end{equation}
+
+Notebook C.3 có một đối chứng độc lập đáng chú ý: $N_4+N_{16}=1{.}543{.}714{.}304$,
+khớp đúng tổng số phần tử BF16 của checkpoint trên Hub trước khi lượng tử hóa. Đây
+là phép kiểm bắt được lỗi đếm thiếu hoặc đếm trùng một họ ma trận.
+
+\subsubsection{Từ bộ nhớ tĩnh tới kịch bản có activation}
+
+Chọn microbatch $B=1$, chiều dài $T=512$, checkpoint từng khối, không KV cache.
+Ước lượng các tensor chính ở pha tính loss: một đầu vào FP16 cho mỗi khối
+($2LBTd$ byte), cùng logits FP32 và một tensor FP32 cùng cỡ cho loss không fused
+($2\times4BTV_{\mathrm{ocab}}$ byte).
+
+\textbf{Kết luận định tính.} Tăng rank từ 4 lên 16 làm số tham số học tăng 4 lần
+nhưng chỉ thêm khoảng 25 MiB trạng thái adapter theo \eqref{eq:c3-static}, không
+nhân bốn bộ nhớ cả mô hình. Phần chi phối ngân sách là backbone lượng tử hóa và các
+tensor từ vựng, không phải adapter.
+
+\textbf{Giới hạn \chualam.} Đây là \emph{ước lượng theo các tensor được nêu}, không
+phải phép đo. Chưa cộng: tái tính activation và backward của block, buffer giải
+lượng tử, workspace GEMM/attention, CUDA context, tensor tạm của optimizer, và phân
+mảnh allocator. Khi $T$ tăng, hai khoản activation tăng tuyến tính; nếu attention
+lưu điểm dense thì riêng một ma trận điểm FP16 cỡ $B\times h\times T\times T$ tăng
+\emph{bậc hai}. Vì vậy \textbf{không} được suy từ bảng rằng một GPU cụ thể chạy vừa
+SFT hay DPO. Muốn xác nhận VRAM cho D.3 phải đo cấu hình thật qua ít nhất một bước
+forward, backward và optimizer sau khi cấp phát trạng thái, ghi cả peak allocated
+và peak reserved.
+
+%--------------------------------------------------------------------
+\subsection{C.4 --- Mất mát DPO, gradient và ảnh hưởng của $\beta$}
+\label{sec:c4}
+
+\subsubsection{Lời giải cho một cặp bất kỳ}
+
+Cùng một prompt $x$, gọi $w$ là đáp án được ưa thích, $l$ là đáp án bị từ chối.
+Đặt $p_i=\log\pi_\theta(y_i\mid x)$ và $r_i=\log\pref(y_i\mid x)$ với
+$i\in\{w,l\}$. Đây là \emph{tổng} log-xác suất tự nhiên của token đáp án, không gồm
+prompt hay padding, và không phải trung bình theo độ dài như trong perplexity
+(Mục~\ref{sec:b6-agg}). Các log-xác suất hữu hạn; $\beta>0$; reference đóng băng.
+
+Theo \eqref{eq:b5-logit} và \cite[§4, Eq. (7)]{dpo}:
+\begin{equation}
+  m=(p_w-p_l)-(r_w-r_l),\qquad z=\beta m,\qquad
+  L=-\log\sigma(z)=\log(1+e^{-z}).
+  \label{eq:c4-loss}
+\end{equation}
+Điểm cần nhấn: $m$ so \emph{tỷ số} xác suất của hai đáp án giữa policy và
+reference, không chỉ so $p_w$ với $p_l$. Và $\sigma(z)$ là xác suất \emph{ưu tiên},
+khác xác suất policy sinh ra riêng đáp án $w$.
+
+Vì $\mathrm dL/\mathrm dz=-\sigma(-z)$ và
+$\partial z/\partial p_w=\beta=-\partial z/\partial p_l$, đặt $g=\beta\sigma(-z)$:
+\begin{equation}
+  \frac{\partial L}{\partial p_w}=-g,\qquad
+  \frac{\partial L}{\partial p_l}=+g,\qquad
+  \frac{\partial L}{\partial r_w}=\frac{\partial L}{\partial r_l}=0 .
+  \label{eq:c4-grad}
+\end{equation}
+Hai gradient đối nhau: mất mát đẩy log-xác suất của $w$ lên và của $l$ xuống với
+cùng độ lớn. Gradient theo reference bằng $0$ vì reference bị
+\texttt{detach} --- phép kiểm trong notebook xác nhận điều này bằng
+\texttt{assert grw is None and grl is None}.
+
+\subsubsection{Thế số --- ví dụ minh họa}
+
+Chọn $(p_w,p_l,r_w,r_l)=(\log 0{,}2,\ \log 0{,}1,\ \log 0{,}4,\ \log 0{,}1)$ và
+$\beta=1$. Hai đáp án không phải toàn bộ không gian đầu ra, nên hai xác suất của
+mỗi mô hình không cần cộng thành $1$.
+
+Policy ưu tiên $w$ so với $l$ theo tỷ số $2:1$, nhưng reference ưu tiên mạnh hơn,
+$4:1$. Vậy
+\[
+  m=\log 2-\log 4=-\log 2,\quad z=-\log 2,\quad \sigma(z)=\tfrac13,
+\]
+\[
+  \boxed{L=\log 3\approx 1{,}098612},\qquad
+  g=\tfrac23,\qquad
+  \left(\frac{\partial L}{\partial p_w},\frac{\partial L}{\partial p_l}\right)
+   =\left(-\tfrac23,\ +\tfrac23\right).
+\]
+
+\textbf{Quan sát quan trọng:} mất mát $\log 3$ \emph{lớn hơn} $\log 2$ dù
+$p_w>p_l$. Lý do: policy đã ưu tiên $w$, nhưng chưa ưu tiên mạnh \emph{bằng}
+reference, nên $m<0$. Đây là điểm dễ bị hỏi vặn nhất ở C.4, và nó chính là hệ quả
+của việc \eqref{eq:b5-logit} so hai log-tỷ số chứ không so hai log-xác suất.
+
+\subsubsection{Ảnh hưởng của $\beta$ tại một cặp cố định}
+
+Ở một cặp cố định, $\partial L/\partial\beta=-m\,\sigma(-\beta m)$. Khi
+$\beta\to0^+$, mất mát tiến tới $\log 2$ và $g\sim\beta/2$: tín hiệu gradient yếu
+cho \emph{mọi} cặp.
+
+\begin{center}
+\begin{tabular}{p{0.32\textwidth}p{0.28\textwidth}p{0.26\textwidth}}
+\toprule
+\textbf{Policy so với reference} & \textbf{Khi tăng $\beta$} & \textbf{Khi $\beta$ rất lớn}\\
+\midrule
+$m<0$: chênh lệch chưa đủ & Mất mát tăng; $|g|$ tăng & $L\sim\beta|m|$, $g\sim\beta$\\
+$m=0$: hai tỷ số bằng nhau & $L=\log2$ không đổi, nhưng gradient \emph{không} bằng $0$ & $g=\beta/2$\\
+$m>0$: đã vượt reference & Mất mát giảm; $g$ không tăng đơn điệu & $L\to0$, $g\to0$ do bão hòa\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Hàng giữa đáng chú ý: khi hai tỷ số bằng nhau, mất mát bằng $\log 2$ \emph{bất kể}
+$\beta$, nhưng gradient bằng $\beta/2\ne0$ --- mô hình vẫn bị đẩy đi. Đây là khác
+biệt giữa ``mất mát không đổi'' và ``không học gì''.
+
+\textbf{Phân biệt hai cách đọc $\beta$.} Bảng trên chỉ đổi $\beta$ tại policy cố
+định. Trong mục tiêu gốc $\E[R]-\beta\KL(\pi\|\pref)$ ở \eqref{eq:b5-obj}, giữ cố
+định reward và reference thì $\beta$ lớn đặt trọng số cao hơn lên phạt KL. Với cùng
+prompt và hai đáp án có xác suất reference dương, \eqref{eq:b5-gibbs} cho tỷ số tối
+ưu
+\[
+  \frac{\pi^*(y_w\mid x)}{\pi^*(y_l\mid x)}
+   =\frac{\pref(y_w\mid x)}{\pref(y_l\mid x)}
+    \exp\!\left(\frac{R_w-R_l}{\beta}\right).
+\]
+Nghiệm thay đổi theo $\beta$ \emph{nếu} reward không hằng trên hỗ trợ của reference.
+Nếu $R(x,y)=c(x)$ trên hỗ trợ đó thì hệ số $e^{c(x)/\beta}$ là chung cho mọi đáp án,
+bị triệt tiêu khi chuẩn hóa, và $\pi^*=\pref$ với mọi $\beta>0$. Hai cách đọc này
+không được lẫn.
+
+\subsubsection{Đối chiếu \dalam}
+
+Notebook C.4 kiểm trên CPU ở \texttt{float64}, dùng hai dạng ổn định số cho
+$\mathrm{softplus}(-z)$ và $\sigma(-z)$, so với \texttt{src/dpo.py} và với
+\texttt{torch.autograd.grad}: mất mát và cả hai gradient policy khớp ở
+\texttt{rel\_tol=1e-12}; gradient theo reference xác nhận là \texttt{None}. Phép
+kiểm chạy qua \textbf{ba dấu của margin} ($m=-\log2,\ 0,\ +\log2$, bằng cách đổi
+xác suất policy cho $w$ thành $0{,}2$, $0{,}4$, $0{,}8$) và \textbf{bốn giá trị}
+$\beta\in\{0{,}1;\ 1;\ 2;\ 8\}$. Mỗi hàng là một cặp riêng; không lấy trung bình
+giữa các ví dụ.
+
+\textbf{Giới hạn.} Bộ số là minh họa, không phải số giảng viên cấp, không phải đầu
+ra của một checkpoint, và không phải nhãn người chấm ở D.4. Không dùng bảng này để
+chọn $\beta$ cho D.4 hay kết luận DPO cải thiện chất lượng.
+
+%--------------------------------------------------------------------
+\subsection{Tổng hợp trạng thái Phần C}
+
+\begin{center}
+\begin{tabular}{llp{0.42\textwidth}}
+\toprule
+\textbf{Mã} & \textbf{Trạng thái} & \textbf{Kết quả chính}\\
+\midrule
+C.1 & \dalam & Ba token giải từng hàng, khớp A.1 ở \texttt{atol=1e-12}; đầu vào minh họa seed \texttt{577893521}\\
+C.2 & \dalam & 33.472 tham số, 6.291.456 MAC tại $n=128$; hạng tử $O(n^2)$ xác nhận bằng profiler\\
+C.3 & \dalam & 544.768 / 1.089.536 / 2.179.072 tham số học; ước lượng QLoRA, chưa đo VRAM\\
+C.4 & \dalam & $L=\log3$, gradient $(-2/3,+2/3)$; khớp A.4 và autograd trên 3 dấu margin $\times$ 4 giá trị $\beta$\\
+\bottomrule
+\end{tabular}
+\end{center}

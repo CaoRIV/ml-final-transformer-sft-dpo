@@ -1,0 +1,48 @@
+\section*{Tóm tắt}
+\addcontentsline{toc}{section}{Tóm tắt}
+
+Báo cáo trình bày bốn phần bắt buộc của Đề tài 9 \cite{de}: cài đặt từ đầu các
+thành phần Transformer và hai hàm mục tiêu tinh chỉnh (Phần~A), chứng minh sáu
+mệnh đề lý thuyết nền (Phần~B), bài tập tính toán nối lý thuyết với cài đặt
+(Phần~C), và ứng dụng tinh chỉnh một mô hình ngôn ngữ thành trợ lý hỏi đáp thủ
+tục hộ tịch -- chứng thực tại Hà Nội (Phần~D).
+
+\textbf{Phần A \dalam.} Nhóm cài đặt bằng PyTorch, không dùng lớp attention hay
+vòng huấn luyện dựng sẵn: chú ý tích vô hướng có chia tỷ lệ, chú ý nhiều đầu,
+mặt nạ nhân quả, mã hóa vị trí hình sin, một khối decoder pre-LN, lớp LoRA có
+hợp nhất trọng số, và hàm mất mát DPO. Mỗi cài đặt được đối chiếu với thư viện
+chuẩn trên cùng đầu vào. Mô hình ngôn ngữ ký tự huấn luyện trên bản
+\emph{Truyện Kiều} Trương Vĩnh Ký 1911 đạt perplexity validation
+$\mathbf{10{,}1948 \pm 0{,}0628}$ (trung bình $\pm$ độ lệch chuẩn mẫu của 5 seed
+độc lập).
+
+\textbf{Phần B \dalam.} Sáu chứng minh đầy đủ giả thiết: phương sai tích vô hướng
+bằng $d_k$ và vai trò hệ số $1/\sqrt{d_k}$; tính đẳng biến hoán vị của
+self-attention cùng phản ví dụ cho thấy mặt nạ nhân quả phá tính chất này; biểu
+diễn độ dịch vị trí bằng ma trận quay khối, kèm chứng minh mệnh đề \emph{thất bại}
+ở số chiều lẻ; bốn tiểu mệnh đề LoRA; nghiệm duy nhất của bài toán reward có phạt
+KL và dẫn xuất mất mát DPO qua Bradley--Terry; tương đương giữa cực tiểu
+cross-entropy và cực tiểu $\KL(\pdata\|p_\theta)$ cùng quan hệ với perplexity.
+
+\textbf{Phần C \dalam.} Bốn bài tập được giải và đối chiếu số với mã Phần~A: một
+đầu attention nhân quả trên chuỗi 3 token; đếm $\mathbf{33{.}472}$ tham số và
+$\mathbf{6{.}291{.}456}$ phép nhân--cộng cho một khối decoder theo cấu hình A.2 ở
+độ dài 128, kèm phân tích hạng tử $O(n^2)$; số tham số LoRA ở Q/V của
+Qwen2.5-1.5B-Instruct là $\mathbf{544{.}768}$, $\mathbf{1{.}089{.}536}$,
+$\mathbf{2{.}179{.}072}$ cho $r=4,8,16$ cùng ước lượng bộ nhớ khi kết hợp QLoRA
+4-bit; tính mất mát và gradient DPO, phân tích ảnh hưởng của $\beta$.
+
+\textbf{Phần D \motphan.} Nhóm đã rà năm họ thủ tục từ nguồn chính văn, dựng quy
+trình sinh QA bán tự động có cổng phát hành, và \textbf{chạy xong một lượt SFT
+pilot thật} trên Kaggle: lô 24 QA đã duyệt 24/24, QLoRA $r=8$ ở Q/V, validation
+PPL giảm $4{,}53\to3{,}46$ sau 2 epoch, peak allocated $2{,}402$ GiB, resume tái
+lập đúng chỉ số. Tập chính đã lên \textbf{400 QA ứng viên} nhưng chưa phát hành.
+Hỏi thử adapter pilot cho thấy hai lỗi thật: sai thời hạn, và \emph{không từ chối}
+câu ngoài phạm vi. Chưa thu cặp so sánh, chưa huấn luyện DPO, chưa đánh giá ba mốc.
+Mục~\ref{sec:phan-d} ghi rõ từng ngưỡng và khoảng cách còn lại.
+
+\textbf{Kết luận trung thực.} Ba phần lý thuyết và cài đặt (A, B, C) có bằng chứng
+kiểm chứng được trong kho mã. Phần ứng dụng còn thiếu các hạng mục phụ thuộc vào
+con người thật: người khảo sát có văn bản đồng ý cho tập test, hai người chấm độc
+lập cho tối thiểu 500 cặp ưu tiên, và người đánh giá mù cho so sánh cuối. Báo cáo
+không trình bày số liệu giả định như kết quả đo được.

@@ -1,0 +1,149 @@
+\section{Giới hạn và hướng mở rộng}
+\label{sec:gioi-han}
+
+\subsection{Giới hạn của các kết quả đã có}
+
+\subsubsection{Phần A}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{PPL của A.2 không so sánh được ra ngoài.} Giá trị $10{,}1948$ gắn với
+một corpus cụ thể, một từ vựng ký tự 133 phần tử, một split cố định và một quy ước
+chấm token. Nó không so được với PPL của mô hình khác dùng tokenizer khác. So sánh
+perplexity chỉ có nghĩa khi cùng tokenizer, cùng dữ liệu và cùng quy ước chấm
+(Mục~\ref{sec:b6-agg}).
+\item \textbf{Độ lệch chuẩn $0{,}0628$ đo biến thiên hẹp.} Nó đo biến thiên giữa
+các lần huấn luyện \emph{trên cùng một split}. Nó không bao gồm biến thiên do chọn
+split khác, và không phải khoảng tin cậy.
+\item \textbf{Chưa đối chiếu môi trường của A.2.} Thiếu log PyTorch/CUDA và
+checkpoint, nên hạng mục tái lập của A.2 chưa đóng được
+(Mục~\ref{sec:tai-lap}).
+\item \textbf{Mô hình A.2 rất nhỏ} (2 khối, $\dmodel=64$). Nó là bằng chứng rằng
+cài đặt đúng và huấn luyện được, không phải một mô hình ngôn ngữ hữu dụng.
+\end{itemize}
+
+\subsubsection{Phần B}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{B.1 dựa trên một mô hình giả định.} Giả thiết độc lập, kỳ vọng $0$,
+phương sai $1$ mô tả trạng thái tại khởi tạo, không phải phân phối của $q,k$ trong
+mô hình đã huấn luyện. Kết quả giải thích lý do chọn thang điểm, không bảo đảm
+không bão hòa.
+\item \textbf{B.3 chỉ đúng với số chiều chẵn}, và Mục~\ref{sec:b3-odd} chứng minh
+mệnh đề \emph{thất bại} ở chiều lẻ --- mà cài đặt của nhóm lại chấp nhận chiều lẻ.
+Thí nghiệm hiện tại dùng chiều chẵn nên không chạm phải, nhưng đây là một lỗ hổng
+thật giữa chứng minh và mã, không phải chi tiết hình thức.
+\item \textbf{B.4 nói về chi phí số học, không nói về độ trễ.} Kết luận hợp nhất
+không bảo đảm khớp từng bit trong số học dấu phẩy động, không tính chi phí tạo
+$W'$, và không mở rộng thành kết luận về tốc độ khi đổi kernel hay tái lượng tử
+hóa.
+\item \textbf{B.5 chứng minh tính duy nhất của $\pi^*$, không phải của $\theta$.}
+Việc mất mát DPO có nghiệm $\theta$ duy nhất hay không là câu hỏi khác, và không
+được suy ra từ Mục~\ref{sec:b5}. Với miền đáp án không bị chặn reward, cần kiểm
+riêng việc chuẩn hóa.
+\end{itemize}
+
+\subsubsection{Phần C}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{C.1 và C.4 dùng đầu vào minh họa}, không phải bộ số giảng viên cấp.
+Nhóm đã ghi rõ nguồn và cách tái lập, nhưng nếu nhận được đầu vào chính thức thì
+phải thay số.
+\item \textbf{C.2 chỉ đếm MAC của các tích ma trận} trên \emph{một} khối,
+\emph{một} chuỗi, \emph{forward}. Không phải FLOP huấn luyện toàn mô hình. Các thao
+tác không phải matmul (LayerNorm, softmax, ReLU, cộng bias) được nêu bằng
+$\Theta(\cdot)$ chứ không cộng vào tổng.
+\item \textbf{C.3 là ước lượng bộ nhớ, không phải phép đo.} Chưa cộng tái tính
+activation, buffer giải lượng tử, workspace GEMM, CUDA context, tensor tạm của
+optimizer và phân mảnh allocator. \textbf{Không} được kết luận từ bảng rằng một GPU
+cụ thể chạy vừa SFT hay DPO.
+\end{itemize}
+
+\subsubsection{Phần D}
+
+Giới hạn lớn nhất của báo cáo nằm ở đây: Phần~D chưa có kết quả thực nghiệm. Chi
+tiết ở Mục~\ref{sec:phan-d}; tóm lại là D.2 còn 24/2.000 QA, D.3 chưa huấn luyện,
+D.4 và D.5 chưa bắt đầu, và cầu nối A$\leftrightarrow$D (G5) chưa đóng.
+
+\subsection{Rủi ro thiết kế đã nhận diện}
+
+\subsubsection{Kiến thức thủ tục thay đổi nhanh}
+
+Đây là rủi ro cấu trúc, không phải lỗi triển khai. Hai mâu thuẫn tìm được ở
+Mục~\ref{sec:d1} đã minh họa: trong vòng chưa đầy một năm, thời hạn cấp trích lục
+được quy định khác nhau ở hai quyết định, và nhóm không tìm được văn bản triển khai
+tại Hà Nội để kết luận văn bản nào đang áp dụng.
+
+Một mô hình được tinh chỉnh \emph{đóng băng} kiến thức tại thời điểm huấn luyện.
+Khi văn bản thay đổi, mô hình trả lời sai mà không có cách nào tự biết. Ba cách
+giảm nhẹ nhóm áp dụng trong phạm vi hiện tại:
+
+\begin{enumerate}[leftmargin=2em]
+\item Buộc câu trả lời dẫn số hiệu văn bản và phiên bản, để người dùng tự thấy đáp
+án gắn với văn bản nào.
+\item Soạn QA gắn với \emph{từng văn bản và phạm vi của nó}, thay vì phát biểu
+chung ``hiện hành''.
+\item Dạy mô hình từ chối khi chưa đủ căn cứ, thay vì nội suy.
+\end{enumerate}
+
+\subsubsection{Rủi ro về nhãn ưu tiên}
+
+Nhãn ưu tiên là tín hiệu học duy nhất của DPO, nên chất lượng nhãn quyết định chất
+lượng mô hình. Ba rủi ro:
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Hai người chấm có thể lệch hệ thống} (ví dụ một người khắt khe hơn về
+trích dẫn). Vì vậy phải \emph{đo} mức đồng thuận, không chỉ phân xử.
+\item \textbf{Phân xử trước khi khóa nhãn sẽ làm hỏng phép đo đồng thuận.} Quy
+trình đặt bước khóa trước bước phân xử chính vì lý do này.
+\item \textbf{Cặp phải cùng prompt.} Theo \eqref{eq:b5-invert}, hạng
+$\beta\log Z(x)$ chỉ triệt tiêu khi hai đáp án thuộc cùng một câu hỏi. Ghép đáp án
+của hai câu hỏi khác nhau làm sai mô hình xác suất, không chỉ làm dữ liệu kém.
+\end{itemize}
+
+\subsubsection{Rủi ro đánh giá}
+
+Nếu người đánh giá biết đáp án nào thuộc mô hình nào, win rate mất ý nghĩa. Nếu
+người chấm nhãn D.4 cũng là người đánh giá D.5 và đã xem tập test, phép đo bị nhiễm.
+Đây là lý do nhóm tách quyền truy cập \texttt{USER\_TEST}
+(Mục~\ref{sec:dao-duc}).
+
+\subsection{Hướng mở rộng}
+
+\subsubsection{Truy xuất tăng cường (RAG)}
+
+Hướng tự nhiên nhất cho vấn đề kiến thức thay đổi nhanh là truy xuất tăng cường:
+thay vì ghi nội dung thủ tục vào trọng số, cho mô hình truy xuất văn bản tại thời
+điểm trả lời và sinh đáp án dựa trên đoạn đã truy xuất. Cách này có hai lợi thế
+đúng với bài toán: cập nhật văn bản không cần huấn luyện lại, và trích dẫn trở thành
+hệ quả tự nhiên của kiến trúc chứ không phải hành vi phải dạy.
+
+Đây là Đề tài 11 trong danh mục của đề. Nhóm \textbf{chỉ thảo luận} đây là hướng mở
+rộng và \textbf{không} trình bày RAG như hạng mục đã triển khai; mở rộng sang RAG
+không nằm trong phạm vi Đề tài 9.
+
+\subsubsection{Các mở rộng khác trong phạm vi Đề tài 9}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Vá B.3 trong mã:} buộc $\dmodel$ chẵn, hoặc bỏ tọa độ $\sin$ lẻ cặp,
+để tính chất dịch vị trí đúng với mọi cấu hình mà mã cho phép.
+\item \textbf{Mở rộng adapter ngoài Q/V:} C.3 tính cho Q/V theo đề. Gắn thêm
+adapter vào K, O hoặc các ma trận FFN làm tăng số tham số học theo
+\eqref{eq:b4-count} và có thể đổi kết quả; đây là câu hỏi thực nghiệm chưa trả lời.
+\item \textbf{Đo peak VRAM thật} để thay ước lượng C.3 bằng số đo, ghi cả peak
+allocated và peak reserved.
+\item \textbf{Mở rộng tập test khảo sát} sang nhiều nhóm người dùng, vì cách diễn
+đạt khác nhau giữa các nhóm tuổi và mức quen thuộc với thủ tục hành chính.
+\end{itemize}
+
+\subsection{Nhóm không hứa điều gì}
+
+Để tránh ngộ nhận, nhóm nêu rõ ba điều \emph{không} được suy ra từ báo cáo này:
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Không hứa DPO tốt hơn SFT.} Giả thuyết ở Mục~\ref{sec:d5} là giả
+thuyết. Nhóm sẽ báo cả kết quả âm nếu đo được.
+\item \textbf{Không coi bằng chứng kỹ thuật là bằng chứng quyền.} Việc audit chạy
+được không có nghĩa nhóm có quyền huấn luyện hay phân phối dữ liệu đó.
+\item \textbf{Không coi kế hoạch là kết quả.} Mọi hạng mục đã lập kế hoạch nhưng
+chưa chạy đều mang nhãn \chualam.
+\end{enumerate}

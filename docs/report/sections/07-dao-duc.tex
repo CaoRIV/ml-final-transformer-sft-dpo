@@ -1,0 +1,125 @@
+\section{Đạo đức và pháp lý}
+\label{sec:dao-duc}
+
+Đề yêu cầu tuân thủ điều khoản nguồn, \texttt{robots.txt}, giới hạn truy cập và quy
+định dữ liệu cá nhân; dữ liệu có yếu tố con người cần văn bản đồng ý và ẩn danh
+trước khi lưu \cite[tr.~2, mục II]{de}. Mục này ghi những gì nhóm đã làm và những
+ranh giới nhóm tự đặt.
+
+\subsection{Nguồn và quyền sử dụng}
+
+\subsubsection{Corpus của A.2}
+
+Bản \emph{Truyện Kiều} Trương Vĩnh Ký 1911 thuộc phạm vi công cộng theo thời hạn
+bảo hộ. Nhóm chuyển sang bản này \emph{sau khi} rà soát cho thấy căn cứ quyền đối
+với một bản số hóa khác (revision \texttt{206607}) chưa đủ --- việc công khai để
+đọc không đồng nghĩa được phân phối lại. Kết luận ``chưa đủ căn cứ'' được giữ lại
+trong tài liệu thay vì xóa, để người đọc thấy đường ra quyết định.
+
+Trong quá trình audit kỹ thuật, nhóm phát hiện \texttt{robots.txt} chặn đường
+\texttt{/w/} của nguồn đó. Sau khi phát hiện, nhóm \emph{không} lặp lại truy cập
+API hay raw và chỉ dùng route \texttt{/wiki/} được cho phép. Giới hạn này được ghi
+rõ, không che giấu.
+
+\subsubsection{Nguồn thủ tục của Phần D}
+
+Nhóm phân loại nội dung theo quyền trước khi đưa vào dữ liệu
+(Mục~\ref{sec:d1}): chính văn quy phạm và văn bản hành chính không thuộc phạm vi
+bảo hộ quyền tác giả, nên có căn cứ dùng làm nguồn soạn QA kèm dẫn chứng đầy đủ;
+còn trang tin, bài hướng dẫn và video thì chỉ dùng để \emph{tìm} và đối chiếu văn
+bản, không chuyển nguyên trạng vào tập train.
+
+Về truy cập: tuân thủ \texttt{Crawl-delay: 5} của cổng Hà Nội, truy xuất tuần tự,
+không crawl toàn cổng, không truy cập các đường dẫn hồ sơ cá nhân, nộp/sửa hồ sơ,
+SSO hay đăng nhập mà \texttt{robots.txt} chặn. Khi một host trả HTTP 404 cho
+\texttt{robots.txt}, nhóm ghi rõ rằng \emph{không có tệp robots không phải là giấy
+phép}.
+
+Có một cơ chế trong pháp luật Việt Nam cho phép dùng có điều kiện dữ liệu được bảo
+hộ cho nghiên cứu và huấn luyện AI (khoản 5 Điều 7 Luật SHTT; Điều 37a--37c
+NĐ 17/2023 sửa bởi 134/2026). Nhóm ghi nhận cơ chế này nhưng \textbf{không} dựa vào
+nó để duyệt các hiện vật pilot: nó không phải giấy phép cào hay phân phối snapshot.
+
+\subsection{Dữ liệu có yếu tố con người}
+
+Hai nhóm dữ liệu người xuất hiện trong Phần~D: câu hỏi khảo sát cho tập test của
+D.2, và nhãn ưu tiên của D.4.
+
+\subsubsection{Quy trình đồng ý và ẩn danh}
+
+\begin{itemize}[leftmargin=2em]
+\item Thu dữ liệu người cần \textbf{văn bản đồng ý} trước khi thu.
+\item Dữ liệu được \textbf{ẩn danh trước khi lưu} làm dữ liệu nghiên cứu.
+\item \textbf{Phiếu đồng ý có định danh để riêng, không đưa vào Git.} Kho mã có
+quy tắc bỏ qua \texttt{/consent/} và \texttt{/surveys\_raw/}.
+\item Có mốc để người tham gia \emph{rút} dữ liệu.
+\end{itemize}
+
+\subsubsection{Phân quyền trong nhóm}
+
+Nhóm tách quyền truy cập theo vai trò, không theo mức tin cậy:
+
+\begin{itemize}[leftmargin=2em]
+\item Cao Văn Hà phụ trách lưu trữ vận hành: kho riêng mã hóa và sổ token liên kết
+định danh.
+\item Hà Mạnh Thế và Trần Duy Hưng \textbf{không} nhận phiếu đồng ý, bảng liên kết
+định danh, hay khảo sát thô. Họ chỉ nhận dữ liệu DPO đã được phân quyền, và
+\textbf{không} xem tập \texttt{USER\_TEST} trước khi giao thức đánh giá yêu cầu.
+\item Hai người này phải \emph{xác nhận riêng bằng văn bản} rằng họ chỉ nhận dữ
+liệu DPO được phân quyền.
+\end{itemize}
+
+Lý do: người chấm nhãn không cần biết ai đã trả lời khảo sát để làm việc của mình.
+Giảm phạm vi truy cập giảm rủi ro, và việc xem trước tập test sẽ phá phép đo ở D.5.
+
+\textbf{Trạng thái \chualam:} chưa có người tham gia nào được mời, chưa thu phiếu
+đồng ý nào, và chưa có nhãn ưu tiên nào được tạo. Bộ công cụ đã soạn, hoạt động
+thật thì chưa diễn ra.
+
+\subsection{Ranh giới nhóm tự đặt về AI tạo sinh}
+
+Ngoài các ràng buộc của đề, nhóm tự đặt bốn ranh giới và ghi chúng thành quy tắc
+nội bộ:
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Không dùng AI tạo sinh thay khảo sát người thật.} Câu hỏi test phải
+đến từ người dùng thật, vì mục đích của tập test là đo khả năng tổng quát sang cách
+người dân diễn đạt (Mục~\ref{sec:d2}).
+\item \textbf{Không bịa} nguồn, QA đã kiểm chứng, khảo sát người thật, điểm người
+chấm, kết quả huấn luyện hay mức đồng thuận.
+\item \textbf{Nhận xét của AI không được tính vào quota kiểm thủ công.} Trong vòng
+rà pilot, AI có đối chiếu QA với đoạn trích và đề xuất sửa từng câu, nhưng số QA
+``được người duyệt'' vẫn giữ bằng $0$ cho tới khi người thật điền phiếu.
+\item \textbf{Không điền vào cột kết luận của người kiểm.} Phiếu kiểm có cột mẫu
+minh họa, nhưng cột kết luận của người kiểm để trống.
+\end{enumerate}
+
+Ranh giới thứ ba và thứ tư là lý do báo cáo này ghi ``0 QA được người duyệt'' dù đã
+có 20 QA qua kiểm cấu trúc tự động.
+
+\subsection{Những gì không đưa vào kho mã}
+
+Theo quy tắc riêng tư và quy định của đề, kho mã \emph{không} chứa: secret và khóa
+truy cập; dữ liệu cá nhân, khảo sát thô, phiếu đồng ý; checkpoint và mô hình nền.
+Hệ quả là một số hiện vật pilot chỉ còn báo cáo JSON đã commit, và người tái lập
+cần nhận bàn giao riêng (Mục~\ref{sec:tai-lap}).
+
+Về năm bài báo trong \texttt{references/}: chúng đã được theo dõi trong Git từ
+trước. Quyền phân phối lại chưa được kiểm chứng, nên nhóm ghi nhận đây là rủi ro và
+xin quyết định trước khi công khai kho mã, thay vì tự xóa hoặc tự công khai.
+
+\subsection{Giới hạn về tính chính xác của nội dung pháp lý}
+
+Sản phẩm là trợ lý tra cứu, không phải nguồn pháp lý. Hai điểm được ghi vào đặc tả
+đầu ra ngay từ đầu (Mục~\ref{sec:gioi-thieu}):
+
+\begin{enumerate}[leftmargin=2em]
+\item Câu trả lời phải \textbf{dẫn nguồn}, vì giá trị pháp lý thuộc về văn bản gốc.
+\item Khi ngoài phạm vi hoặc chưa đủ căn cứ, trợ lý phải \textbf{nói rõ} thay vì
+đoán.
+\end{enumerate}
+
+Hai mâu thuẫn tìm được ở Mục~\ref{sec:d1} --- thời hạn cấp trích lục giữa hai quyết
+định, và việc trộn biểu phí chứng thực với biểu lệ phí hộ tịch --- cho thấy rủi ro
+này không phải lý thuyết. Một hệ thống trả lời tự tin về thời hạn ``3 ngày'' mà
+không nêu văn bản căn cứ sẽ gây hại thật cho người dùng.
