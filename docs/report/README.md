@@ -18,6 +18,16 @@ xelatex -output-directory=docs/report docs/report/report.tex
 Cần font `texgyretermes` (TeX Gyre Termes, có trong TeX Live). Không đặt
 `\setmonofont` để tránh phụ thuộc thêm font.
 
+## Kiểm trước khi nộp
+
+```powershell
+python scripts/reproduce.py
+```
+
+Chạy 48 phép đối chiếu trên CPU: môi trường, bộ kiểm, số liệu C.2/C.3/C.4,
+tổng hợp PPL A.2, đối chiếu số trong báo cáo với tài liệu nguồn, và cấu trúc
+`\input` cùng tham chiếu chéo. Trả mã khác 0 nếu có mục lệch.
+
 ## Cấu trúc
 
 | Tệp | Nội dung | Yêu cầu của đề |

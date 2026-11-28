@@ -54,6 +54,40 @@ image Kaggle và \emph{không} thay thế, để tránh lệch giữa bản đã
 \textbf{Môi trường A.2} là một phiên Kaggle. Phiên hiển thị cấu hình
 \texttt{GPU T4 x2} và trạng thái \emph{Version \#1 --- Successful}.
 
+\subsection{Script tái lập \dalam}
+
+Đề yêu cầu kho Git có \emph{script tái lập}. Script đó là
+\texttt{scripts/reproduce.py}; chạy từ gốc kho mã:
+
+\begin{quote}\small\ttfamily
+python scripts/reproduce.py
+\end{quote}
+
+Script tái lập \emph{những gì tái lập được trên CPU}, không cần GPU, mạng, dữ liệu
+QA hay checkpoint, và trả mã khác $0$ nếu có mục lệch. Tám bước:
+
+\begin{enumerate}[leftmargin=2em]
+\item Ghi nhận môi trường thực tế (Python, PyTorch, CUDA).
+\item Chạy bộ kiểm tự động.
+\item Tính lại tham số và MAC của C.2, đối chiếu \texttt{numel()} thực của
+\texttt{DecoderBlock} ở cả $h=4$ và $h=8$.
+\item Tính lại tham số LoRA của C.3 bằng chính \texttt{LoRALinear} trên meta
+tensor, cho $r=4,8,16$.
+\item Tính lại mất mát và gradient DPO của C.4 bằng \texttt{dpo\_loss} và
+autograd, kể cả ca $m=0$ với bốn giá trị $\beta$.
+\item Tổng hợp lại perplexity A.2 từ NLL từng seed đã ghi.
+\item Đối chiếu các con số trong báo cáo với tài liệu nguồn --- gồm một phép
+kiểm riêng rằng báo cáo \emph{không} dùng lại số của revision \texttt{206607}
+đã bị loại.
+\item Kiểm cấu trúc nguồn báo cáo: mọi \verb|\input| tồn tại, không có tham
+chiếu treo.
+\end{enumerate}
+
+Lần chạy ghi trong báo cáo này: \textbf{48 phép đối chiếu khớp, 0 lệch}.
+
+Script \emph{không} tái lập huấn luyện A.2 trên Kaggle, SFT pilot D.3, hay bất kỳ
+số đo GPU nào; những kết quả đó cần phần cứng và dữ liệu ngoài kho mã.
+
 \subsection{Bộ kiểm tự động \dalam}
 
 Chạy từ gốc kho mã:
@@ -132,6 +166,7 @@ C.1 & \texttt{notebooks/08\_causal\_attention\_example.ipynb}\\
 D.3 & \texttt{notebooks/09\_d3\_sft\_kaggle.ipynb} (cần release D.2)\\
 Phần B & \texttt{tectonic docs/theory/part-b.tex}\\
 Báo cáo & \texttt{tectonic docs/report/report.tex}\\
+Toàn bộ phép kiểm CPU & \texttt{python scripts/reproduce.py}\\
 \bottomrule
 \end{tabular}
 \end{center}
